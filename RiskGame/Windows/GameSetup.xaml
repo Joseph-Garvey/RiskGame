@@ -176,6 +176,9 @@
                                 <!--Normal 190, short is 150-->
                                 <Button x:Name="btnNewGameSettings" Style="{StaticResource btnSettingsThin}" Visibility="Collapsed"></Button>
                             </StackPanel>
+                            <Label x:Name="lblErrorAlt" Margin="5,5,5,0" Style="{StaticResource lblError}" MaxWidth="300" Visibility="Collapsed" >
+                                <TextBlock x:Name="txtErrorAlt">Error message</TextBlock>
+                            </Label>
                         </StackPanel>
                     </Border>
                     <!-- Load Game Panel -->
@@ -185,8 +188,8 @@
                             <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="230" CanUserResizeRows="False" CanUserSortColumns="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Map" Width="55" Binding="{Binding Map}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Mode" Width="55" Binding="{Binding Gamemode}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Map" Width="50" Binding="{Binding Map}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Mode" Width="50" Binding="{Binding Gamemode}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Last Save" Width="85" Binding="{Binding LastSave}"></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
@@ -194,7 +197,7 @@
                                 <Button Content="Load Game" Click="Load_Game" Style="{StaticResource btnCornerUI}" HorizontalAlignment="Stretch" Width="200"></Button>
                                 <Button Style="{StaticResource btnSettings}" HorizontalAlignment="Right"></Button>
                             </StackPanel>
-                            <Label x:Name="lblError" Margin="5,5,5,0" Style="{StaticResource lblError}" MaxWidth="300" Visibility="Collapsed" >
+                            <Label x:Name="lblError" Margin="5" Style="{StaticResource lblError}" MaxWidth="300" Visibility="Collapsed" >
                                 <TextBlock x:Name="txtError">Error message</TextBlock>
                             </Label>
                         </StackPanel>

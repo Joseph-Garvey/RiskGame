@@ -282,13 +282,29 @@ namespace RiskGame
         /// Error message handling, shows error message when exception thrown.
         private void DispErrorMsg(String Message)
         {
-            lblError.Visibility = Visibility.Visible;
-            txtError.Text = Message;
+            if(panel_LoadGame.Visibility == Visibility.Collapsed)
+            {
+                lblErrorAlt.Visibility = Visibility.Visible;
+                txtErrorAlt.Text = Message;
+            }
+            else
+            {
+                lblError.Visibility = Visibility.Visible;
+                txtError.Text = Message;
+            }
         }
         private void ClearError()
         {
-            lblError.Visibility = Visibility.Collapsed;
-            txtError.Text = "";
+            if (panel_LoadGame.Visibility == Visibility.Collapsed)
+            {
+                lblErrorAlt.Visibility = Visibility.Collapsed;
+                txtErrorAlt.Text = "";
+            }
+            else
+            {
+                lblError.Visibility = Visibility.Collapsed;
+                txtError.Text = "";
+            }
         }
     }
 }
