@@ -1,0 +1,26 @@
+﻿<Window x:Class="RiskGame.Windows.WelcomeScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RiskGame.Windows"
+        mc:Ignorable="d"
+        Title="Risk"
+        WindowStartupLocation="CenterScreen" Height="644" Width="800">
+    <Border>
+        <Viewbox>
+            <StackPanel>
+                <Image Source="pack://siteoforigin:,,,/Images/RiskLogo.png" Width="300" Margin="50,25,50,10"></Image>
+                <Button Style="{StaticResource btnUI}" Height="40" Margin="100,0,100,15" Click="Play_Game">Play Game</Button>
+                <Button Style="{StaticResource btnUI}" Height="40" Margin="150,0,150,50" Click="Quit_Game">Quit</Button>
+            </StackPanel>
+        </Viewbox>
+        <Border.Background>
+            <VisualBrush Stretch="UniformToFill">
+                <VisualBrush.Visual>
+                    <MediaElement x:Name="BackgroundVideo" Source="pack://siteoforigin:,,,/Images/RetroCommercial.mp4" MediaEnded="Media_Ended"></MediaElement>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Border.Background>
+    </Border>
+</Window>

@@ -1,0 +1,153 @@
+﻿<Window x:Class="RiskGame.GameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RiskGame"
+        mc:Ignorable="d"
+        Title="GameWindow" Width="1280" Height="720" WindowStyle="None"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+    <Viewbox>
+        <StackPanel Background="LightBlue">
+            <Grid x:Name="GameGrid" Grid.Row="0" Grid.Column="1">
+                <Grid.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="BorderThickness" Value="3"></Setter>
+                        <Setter Property="FontWeight" Value="Bold"></Setter>
+                        <Setter Property="Background" Value="White"></Setter>
+                    </Style>
+                </Grid.Resources>
+                <Grid.Background>
+                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Images/Risk_game_map_fixed.png"/>
+                </Grid.Background>
+                <Button x:Name="Alaska" Content="Alaska" Margin="79,48,1159,468" Click="Click" Width="42" Height="24"/>
+                <Button x:Name="Alberta" Content="Alberta" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="130,85,1100,425" Click="Click"  Width="50" Height="30"/>
+                <Button x:Name="Central_America" Content="Central America"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="102,205,1090,311" Click="Click"  Height="24"/>
+                <Button x:Name="Eastern_US" Content="Eastern US" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="185,150,1029,364" Click="Click"  Width="66" Height="26"/>
+                <Button x:Name="Greenland" Content="Greenland" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="319,30,640,481" Click="Click"  Width="65" Height="29"/>
+                <Button x:Name="Northwest_Canada" Content="Northwest Canada"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="143,53,1027,467" Click="Click"  Height="20" Width="110"/>
+                <Button x:Name="Ontario" Content="Ontario"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="222,96,1005,420" Click="Click"  Width="53" Height="24"/>
+                <Button x:Name="Quebec" Content="Quebec"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="166,98,804,423" Click="Click" Width="54"/>
+                <Button x:Name="Western_US" Content="Western US" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="100,141,1105,375" Click="Click"  Width="75" Height="24"/>
+                <Button x:Name="Argentina" Content="Argentina"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="280,425,939,80" Click="Click"  Width="61" Height="35"/>
+                <Button x:Name="Brazil" Content="Brazil"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="322,337,882,173" Click="Click"  Width="76" Height="30"/>
+                <Button x:Name="Peru" Content="Peru"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="256,357,983,153" Click="Click"  Width="41" Height="30"/>
+                <Button x:Name="Venezuela" Content="Venezuela"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="248,279,966,232" Click="Click"  Width="66" Height="29"/>
+                <Button x:Name="UK_Ireland" Content="UK and Ireland"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="367,98,565,418" Click="Click"   Height="24" Width="92"></Button>
+                <Button x:Name="Iceland" Content="Iceland"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="369,69,608,452" Click="Click"  Width="47"/>
+                <Button x:Name="Northern_Europe" Content="Northern Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="484,106,437,413" Click="Click" Height="21" Width="103"/>
+                <Button x:Name="Scandinavia" Content="Scandinavia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="471,59,481,458" Click="Click"  Height="23" Width="72"/>
+                <Button x:Name="Southern_Europe" Content="Southern Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="485,137,443,383" Click="Click"  Height="20" Width="96"/>
+                <Button x:Name="Soviet_Bloc" Content="Soviet Bloc"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="681,85,519,436" Click="Click"  Height="19" Width="80"/>
+                <Button x:Name="Western_Europe" Content="Western Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="395,128,539,388" Click="Click"  Height="24" Width="90"/>
+                <Button x:Name="Central_Africa" Content="Central Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="489,299,450,213" Click="Click" Height="28" Width="85"/>
+                <Button x:Name="East_Africa" Content="East Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="566,270,388,241" Click="Click"  Height="29" Width="70"/>
+                <Button x:Name="Madagascar" Content="Madagascar"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="731,375,469,140" Click="Click"  Height="25" Width="80"/>
+                <Button x:Name="Egypt" Content="Egypt"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="517,196,456,319" Click="Click"  Height="25" Width="51"/>
+                <Button x:Name="North_Africa" Content="North Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="419,230,515,288" Click="Click"  Height="22" Width="90"/>
+                <Button x:Name="South_Africa" Content="South Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="512,382,432,129" Click="Click"  Height="29" Width="80"/>
+                <Button x:Name="Afghanistan" Content="Afghanistan"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="631,132,314,384" Click="Click"  Height="24" Width="79"/>
+                <Button x:Name="China" Content="China"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="963,175,259,345" Click="Click" Height="20" Width="58"/>
+                <Button x:Name="India" Content="India"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="899,205,331,311" Click="Click" Height="24" Width="50"/>
+                <Button x:Name="Japan" Content="Japan"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1117,151,117,360" Click="Click"  Height="29" Width="46"/>
+                <Button x:Name="Middle_East" Content="Middle East"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="553,171,388,344" Width="83" Click="Click"  Height="25"/>
+                <Button x:Name="Mongolia" Content="Mongolia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="980,126,234,390" Width="66" Click="Click" Height="24"/>
+                <Button x:Name="Southeast_Asia" Content="Southeast Asia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="967,234,219,282" Width="94" Click="Click"  Height="24"/>
+                <Button x:Name="Siberia" Content="Siberia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="871,55,354,465" Width="55" Click="Click" Height="20"/>
+                <Button x:Name="Ural" Content="Ural"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="811,70,424,445" Width="45" Click="Click" Height="25"/>
+                <Button x:Name="Eastern_Australia" Content="Eastern Australia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1120,396,40,119" Width="120" Click="Click"  Height="25"/>
+                <Button x:Name="Western_Australia" Content="Western Australia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1030,411,144,105" Width="106" Click="Click"  Height="24"/>
+                <Button x:Name="New_Guinea" Content="New Guinea"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1141,325,54,196" Width="85" Click="Click"  Height="19"/>
+                <Button x:Name="Indonesia" Content="Indonesia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1035,305,174,216" Width="71" Click="Click"  Height="19"/>
+                <Button x:Name="Irkutsk" Content="Irkutsk"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="962,94,256,424" Width="62" Click="Click"  Height="22"/>
+                <Button x:Name="Kamchatka" Content="Kamchatka"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1062,50,139,461" Width="79" Click="Click"  Height="29"/>
+                <Button x:Name="Yakutsk" Content="Yakutsk"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="980,52,246,463" Width="54" Click="Click" Height="25"/>
+            </Grid>
+            <StackPanel x:Name="panel_UI" Orientation="Horizontal" Background="Gray">
+                <StackPanel x:Name="panel_Players" VerticalAlignment="Center" Margin="20,00,10,20">
+                    <StackPanel.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="FontSize" Value="11"></Setter>
+                        </Style>
+                        <Style TargetType="Rectangle">
+                            <Setter Property="Margin" Value="10,5,0,5"></Setter>
+                            <Setter Property="Height" Value="20"></Setter>
+                            <Setter Property="Width" Value="30"></Setter>
+                        </Style>
+                        <Style TargetType="StackPanel" x:Key="PlayerPanel">
+                            <Setter Property="Background" Value="LightGray"></Setter>
+                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                            <Setter Property="Margin" Value="0,15,0,0"></Setter>
+                            <Setter Property="Orientation" Value="Horizontal"></Setter>
+                        </Style>
+                    </StackPanel.Resources>
+                    <StackPanel x:Name="panel_Player1" Style="{StaticResource PlayerPanel}">
+                        <Rectangle x:Name="rectPlayerColor1" Fill="LimeGreen"></Rectangle>
+                        <Label x:Name="lblPlayerName1" Content="Player 1" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
+                        <Label Content="Territories Owned:"></Label>
+                        <Label x:Name="lblPlayer1Territories" Width="40"></Label>
+                        <Label Content="Army Strength:"></Label>
+                        <Label x:Name="lblPlayer1Strength" Width="40" Margin="0,0,2,0"></Label>
+                    </StackPanel>
+                    <StackPanel x:Name="panel_Player2" Style="{StaticResource PlayerPanel}">
+                        <Rectangle x:Name="rectPlayerColor2" Fill="OrangeRed"></Rectangle>
+                        <Label x:Name="lblPlayerName2" Content="Player 2" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
+                        <Label Content="Territories Owned:"></Label>
+                        <Label x:Name="lblPlayer2Territories" Width="40"></Label>
+                        <Label Content="Army Strength:"></Label>
+                        <Label x:Name="lblPlayer2Strength" Width="40" Margin="0,0,2,0"></Label>
+                    </StackPanel>
+                    <StackPanel x:Name="panel_Player3" Style="{StaticResource PlayerPanel}">
+                        <Rectangle x:Name="rectPlayerColor3" Fill="DeepSkyBlue" ></Rectangle>
+                        <Label x:Name="lblPlayerName3" Content="Player 3" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
+                        <Label Content="Territories Owned:"></Label>
+                        <Label x:Name="lblPlayer3Territories" Width="40"></Label>
+                        <Label Content="Army Strength:"></Label>
+                        <Label x:Name="lblPlayer3Strength" Width="40" Margin="0,0,2,0"></Label>
+                    </StackPanel>
+                    <StackPanel x:Name="panel_Player4"  Visibility="Collapsed" Style="{StaticResource PlayerPanel}">
+                        <Rectangle x:Name="rectPlayerColor4" Fill="Gold" ></Rectangle>
+                        <Label x:Name="lblPlayerName4" Content="Player 4" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
+                        <Label Content="Territories Owned:"></Label>
+                        <Label x:Name="lblPlayer4Territories" Width="40"></Label>
+                        <Label Content="Army Strength:"></Label>
+                        <Label x:Name="lblPlayer4Strength" Width="40" Margin="0,0,2,0"></Label>
+                    </StackPanel>
+                    <StackPanel Visibility="Collapsed" x:Name="panel_Player5"  Style="{StaticResource PlayerPanel}">
+                        <Rectangle x:Name="rectPlayerColor5" Fill="Gold"></Rectangle>
+                        <Label x:Name="lblPlayerName5" Content="Player 5" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
+                        <Label Content="Territories Owned:"></Label>
+                        <Label x:Name="lblPlayer5Territories" Width="40"></Label>
+                        <Label Content="Army Strength:"></Label>
+                        <Label x:Name="lblPlayer5Strength" Width="40" Margin="0,0,2,0"></Label>
+                    </StackPanel>
+                    <StackPanel Visibility="Collapsed" x:Name="panel_Player6"  Style="{StaticResource PlayerPanel}">
+                        <Rectangle x:Name="rectPlayerColor6" Fill="Gold"></Rectangle>
+                        <Label x:Name="lblPlayerName6" Content="Player 6" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
+                        <Label Content="Territories Owned:"></Label>
+                        <Label x:Name="lblPlayer6Territories" Width="40"></Label>
+                        <Label Content="Army Strength:"></Label>
+                        <Label x:Name="lblPlayer6Strength" Width="40" Margin="0,0,2,0"></Label>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="20" Background="LightGray">
+                    <Label x:Name="lblState" Margin="20" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center">GameState</Label>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,20,0">
+                        <Button VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="20" Width="50" Height="40" Click="Decrease">-</Button>
+                        <Label x:Name="lblNumber" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="ExtraBold" FontSize="20" Width="70" Height="40">0</Label>
+                        <Button VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="20" Width="50" Height="40" Click="Increase">+</Button>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="20" Background="LightGray">
+                    <Button Margin="20,10,20,0" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="16" Width="150" Click="Confirm">Confirm</Button>
+                    <Button Margin="20,5,20,0" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="16" Width="150" Click="Continue">Continue</Button>
+                    <Button Margin="20,5,20,0" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="16" Width="150" Click="Cancel">Cancel</Button>
+                    <Button Margin="20,5,20,10" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="16" Width="150" Click="SaveGame">Save Game</Button>
+                    <Button Margin="20,5,20,10" VerticalAlignment="Center" FontWeight="ExtraBold" FontSize="16" Width="150" Click="Button_Click">Win</Button>
+                </StackPanel>
+                <TextBlock x:Name="txtOutput" Margin="20" Width="350" Foreground="White" Background="Black"></TextBlock>
+            </StackPanel>
+        </StackPanel>
+    </Viewbox>
+</Window>

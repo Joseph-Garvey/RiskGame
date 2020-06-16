@@ -1,0 +1,56 @@
+﻿<Window x:Class="RiskGame.Windows.Highscores"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RiskGame.Windows"
+        mc:Ignorable="d"
+        Title="Highscores" Height="800" Width="600" WindowStartupLocation="CenterScreen">
+    <Border>
+        <Border.Background>
+            <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
+                <VisualBrush.Visual>
+                    <Image Source="pack://siteoforigin:,,,/Resources/RiskBackground.jpg">
+                        <Image.Effect>
+                            <BlurEffect Radius="20" />
+                        </Image.Effect>
+                    </Image>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Border.Background>
+        <Viewbox>
+            <StackPanel>
+                <Label Style="{StaticResource lblHeader}">Leaderboard</Label>
+                <DataGrid Name="ScoreList" Width="295">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Score" Width="35" Binding="{Binding score}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding noPlayers}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Map" Width="40"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Game Mode" Width="60"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Date" Width="55" Binding="{Binding lastsave}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Label x:Name="lblPlayerScore" Style="{StaticResource lblHeader}" FontSize="8" Width="100" HorizontalAlignment="Left" Visibility="Collapsed">Your Score :</Label>
+                <DataGrid Name="PlayerScoreList" HeadersVisibility="None" Visibility="Collapsed" Width="295">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding NoPlayers}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Map" Width="40"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Game Mode" Width="60"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Date" Width="55" Binding="{Binding LastSave}"></DataGridTextColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Style="{StaticResource btnUI}" FontSize="10" Margin="10" Click="New_Game">New Game</Button>
+                    <Button Style="{StaticResource btnUI}" FontSize="10" Margin="10" Grid.Column="1" Click="Quit">Quit</Button>
+                </Grid>
+            </StackPanel>
+        </Viewbox>
+    </Border>
+</Window>
