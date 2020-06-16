@@ -563,13 +563,6 @@ namespace RiskGame
         }
 
         //// Backend Methods ////
-        private void SelectTerritory(String territoryname)
-        { // Matches name of selected territory to territory in game code. //
-            // can be made more efficient as is finding button that has already been registered.
-            slctTerritory = RetrieveTerritory(territoryname);
-            Button b = SelectButton(slctTerritory.name);
-            b.BorderBrush = Brushes.Lime;
-        }
         private Territory RetrieveTerritory(String territoryname)
         {
             for (int i = 0; i < territories.Count; i++)
@@ -577,6 +570,12 @@ namespace RiskGame
                 if (territoryname == territories[i].name) { return territories[i]; }
             }
             throw new Exception("Territory does not exist");
+        }
+        private void SelectTerritory(Territory t, Button b, Brush color, bool next)
+        {
+            if (next) { nextTerritory = t; }
+            else { slctTerritory = t; }
+            b.BorderBrush = color;
         }
         private Button SelectButton(String territoryname)
         { // Retrieves a button from the Game Grid so that it's UI can be updated.
@@ -744,10 +743,11 @@ namespace RiskGame
         {   // Called when a territory is clicked on and performs an action based on the
             // context in which it was clicked.
             Button btnTerritory = (Button)sender;
+            Territory t = RetrieveTerritory(btnTerritory.Name);
             switch (gameState)
             {
                 case GameState.InitialArmyPlace:
-                    SelectTerritory(btnTerritory.Name);
+                    slctTerritory = RetrieveTerritory(btnTerritory.Name);
                     if (slctTerritory.owner == null || slctTerritory.owner == currentplayer)
                     {
                         Place_Reinforce(slctTerritory, 1);
@@ -759,23 +759,25 @@ namespace RiskGame
                     else { Output("You cannot capture this territory."); slctTerritory = null; }
                     break;
                 case GameState.PlacingArmy:
-                    ClearSelectionsUI();
-                    SelectTerritory(btnTerritory.Name);
-                    if (slctTerritory.owner == null || slctTerritory.owner == currentplayer)
+                    if(t == slctTerritory) { PlayerActions(true); break; }
+                    else
                     {
-                        UpdateNumOutput();
-                        btnTerritory.BorderBrush = Brushes.Lime;
+                        ClearSelectionsUI();
+                        if (t.owner == null || t.owner == currentplayer)
+                        {
+                            SelectTerritory(t, btnTerritory, Brushes.Lime, false);
+                            UpdateNumOutput();
+                        }
+                        else { Output("This is not your territory."); slctTerritory = null; }
+                        break;
                     }
-                    else { Output("This is not your territory."); slctTerritory = null; }
-                    break;
                 case GameState.Attacking:
-                    Territory t = RetrieveTerritory(btnTerritory.Name);
                     if(t.owner == currentplayer)
                     {
                         if(t.currentarmies > 1)
                         {
                             ClearSelections();
-                            SelectTerritory(t.name);
+                            SelectTerritory(t, btnTerritory, Brushes.Lime, false);
                             ShowAttack();
                         }
                         else { Output("You do not have enough armies to attack from here."); break; }
@@ -786,13 +788,12 @@ namespace RiskGame
                         {
                             if(btnTerritory.BorderBrush == Brushes.Aqua)
                             {
-                                nextTerritory = t;
-                                btnTerritory.BorderBrush = Brushes.Red;
+                                SelectTerritory(t, btnTerritory, Brushes.Red, true);
                                 AdjustAttackMoves((slctTerritory.currentarmies - 1));
                                 Output("Select the number of armies you wish to attack with.");
                             }
                             else if(btnTerritory.BorderBrush == Brushes.Red){
-                                // do the stuff for adding / subtracting how many armies on click
+                                PlayerActions(true);
                             }
                             else { Output("You cannot attack this territory from here"); break; }
                         }
@@ -802,12 +803,11 @@ namespace RiskGame
                         Output("Select where you wish to attack from"); }
                     break;
                 case GameState.Move:
-                    t = RetrieveTerritory(btnTerritory.Name);
                     if(t.owner != currentplayer) { Output("You do not own this territory."); break; }
                     else if(slctTerritory == null)
                     {
                         ClearSelectionsUI();
-                        SelectTerritory(t.name);
+                        SelectTerritory(t, btnTerritory, Brushes.Lime, false);
                         if (ShowMoves(slctTerritory)) { Output("You can move armies to the highlighted territories."); }
                         else { Output("There are no friendly territories to move to from here."); ClearSelectionsUI(); }
                         List<Territory> blank = new List<Territory>();
@@ -815,15 +815,54 @@ namespace RiskGame
                     }
                     else if (btnTerritory.BorderBrush == Brushes.Aqua)
                     {
-                        nextTerritory = t;
-                        btnTerritory.BorderBrush = Brushes.Green;
+                        SelectTerritory(t, btnTerritory, Brushes.Green, true);
                         AdjustAttackMoves(1);
+                    }
+                    else if(btnTerritory.BorderBrush == Brushes.Green)
+                    {
+                        PlayerActions(true);
                     }
                     else { Output("You cannot move armies to here from your selected territory."); }
                     break;
             }
         }
-        private void RightClick(object sender, RoutedEventArgs e) { }
+        private void RightClick(object sender, MouseEventArgs e)
+        {
+            Button btnTerritory = (Button)sender;
+            Territory t = RetrieveTerritory(btnTerritory.Name);
+            switch (gameState)
+            {
+                case GameState.PlacingArmy:
+                    if (t == slctTerritory) { PlayerActions(false); }
+                    // error will be output if temp = 0 from player actions script as is shared by decrease button.
+                    break;
+                case GameState.Attacking:
+                    // error is output by adjust attack moves if invalid
+                    try
+                    {
+                        // if nextterritory null break otherwise continue
+                        if (t == nextTerritory) { PlayerActions(false); }
+                        else if(t == slctTerritory) { PlayerActions(true); }
+                        break;
+                    }
+                    catch (NullReferenceException) { break; }
+                case GameState.Conquer:
+                    try
+                    {
+                        if(t == nextTerritory) { PlayerActions(false); }
+                        else if (t == slctTerritory) { PlayerActions(true); }
+                        break;
+                    }
+                    catch (NullReferenceException) { break; }
+                case GameState.Move:
+                    if((slctTerritory != null) && (nextTerritory != null))
+                    {
+                        if(t == slctTerritory) { PlayerActions(true); }
+                        else if(t == nextTerritory) { PlayerActions(false); }
+                    }
+                    break;
+            }
+        }
         private void Confirm(object sender, RoutedEventArgs e)
         { // Confirms the current action(s)
             switch (gameState)
@@ -935,6 +974,7 @@ namespace RiskGame
                 switch (gameState)
                 {
                     case GameState.PlacingArmy:
+                        // if increase == false ensure no negatives
                         if (increase == true)
                         {
                             if (currentplayer.army_undeployed > 0) { i = 1; }
@@ -990,5 +1030,7 @@ namespace RiskGame
         {
             Win();
         }
+
+
     }
 }
