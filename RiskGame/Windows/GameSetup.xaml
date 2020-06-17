@@ -133,15 +133,18 @@
                         </StackPanel>
                     </Border>
                     <Label Content="Map" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                    <ComboBox>
+                    <ComboBox x:Name="cmbMap">
                         <ComboBoxItem>
                             <TextBlock Text="Default"></TextBlock>
                         </ComboBoxItem>
                     </ComboBox>
                     <Label Content="GameMode" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                    <ComboBox>
+                    <ComboBox x:Name="cmbGameMode">
                         <ComboBoxItem>
-                            <TextBlock Text="Default"></TextBlock>
+                            <TextBlock Text="Classic Risk (Not yet implemented)"></TextBlock>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <TextBlock Text="New Risk"></TextBlock>
                         </ComboBoxItem>
                     </ComboBox>
                     <StackPanel Orientation="Horizontal">
@@ -153,7 +156,7 @@
                 </StackPanel>
                 <StackPanel>
                     <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
-                    <DataGrid Name="GameList">
+                    <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>

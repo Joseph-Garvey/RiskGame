@@ -64,12 +64,10 @@ namespace RiskGame
         private Territory slctTerritory;
         private Territory nextTerritory;
         private Player currentplayer;
-        private Player defendplayer;
         private GameState gameState;
         private static Random rng = new Random();
         private static int turn = 0;
         private static List<Territory> scanterritories = new List<Territory>();
-        private bool action = false; // temporary measure for saving during testing.
 
         //// Constructors ////
         // Load Game // Finish later
@@ -610,7 +608,6 @@ namespace RiskGame
             // without, however it protects against human error in the code.
             slctTerritory = null;
             nextTerritory = null;
-            defendplayer = null;
         }
         private void UpdateState(GameState g)
         {
@@ -1013,7 +1010,7 @@ namespace RiskGame
         private void SaveGame(object sender, RoutedEventArgs e)
         { // Creates a gamemanager instance, serializes it and saves it to a file. Reporting back to the player if the save was successful.
             if(gameState == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
-            else if(action == true) { Output("You must finish your current action before saving"); }
+            //else if(action == true) { Output("You must finish your current action before saving"); }
             else
             {
                 try

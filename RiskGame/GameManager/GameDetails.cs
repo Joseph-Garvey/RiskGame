@@ -17,7 +17,7 @@ namespace RiskGame.Game
         private static readonly String FileName = "Leaderboard.bin";
         private readonly String gameID;
         private String lastsave;
-        private readonly String player;
+        private readonly String player; // stores owner of save file on load, winning player for saves.
         private readonly String noPlayers;
         private readonly String score;
         private readonly String turns;

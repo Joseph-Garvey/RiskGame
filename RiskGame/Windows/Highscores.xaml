@@ -21,18 +21,18 @@
         <Viewbox>
             <StackPanel>
                 <Label Style="{StaticResource lblHeader}">Leaderboard</Label>
-                <DataGrid Name="ScoreList" Width="295">
+                <DataGrid Name="ScoreList" Width="295" HorizontalScrollBarVisibility="Disabled">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Score" Width="35" Binding="{Binding score}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding noPlayers}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding NoPlayers}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Map" Width="40"></DataGridTextColumn>
                         <DataGridTextColumn Header="Game Mode" Width="60"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Date" Width="55" Binding="{Binding lastsave}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="Date" Width="55" Binding="{Binding LastSave}"></DataGridTextColumn>
                     </DataGrid.Columns>
                 </DataGrid>
                 <Label x:Name="lblPlayerScore" Style="{StaticResource lblHeader}" FontSize="8" Width="100" HorizontalAlignment="Left" Visibility="Collapsed">Your Score :</Label>
-                <DataGrid Name="PlayerScoreList" HeadersVisibility="None" Visibility="Collapsed" Width="295">
+                <DataGrid Name="PlayerScoreList" HeadersVisibility="None" Visibility="Collapsed" Width="295" HorizontalScrollBarVisibility="Disabled">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
                         <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>

@@ -27,7 +27,7 @@ namespace RiskGame
         public int army_undeployed;
         public int territoriesowned = 0;
         public int army_strength;
-        public int score;
+        public int score = 0;
         private byte r;
         private byte g;
         private byte b;

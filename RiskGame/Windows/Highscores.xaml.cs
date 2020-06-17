@@ -22,13 +22,15 @@ namespace RiskGame.Windows
     public partial class Highscores : Window
     {
         // Variables //
-        List<Player> players;
-
+        List<Player> players; // used for when highscores is clicked from within gamesetup?
+        ObservableCollection<GameDetails> playergame;
         // Constructor(s) //
         public Highscores(GameDetails gameDetails)
         {
+            // If loading from completed game show the current players game.
+            GameDetails.Save(gameDetails);
+            playergame = new ObservableCollection<GameDetails>() { gameDetails };
             Initialise();
-            ObservableCollection<GameDetails> playergame = new ObservableCollection<GameDetails>() { gameDetails };
             PlayerScoreList.ItemsSource = playergame;
             lblPlayerScore.Visibility = Visibility.Visible;
             PlayerScoreList.Visibility = Visibility.Visible;
@@ -37,9 +39,11 @@ namespace RiskGame.Windows
 
         private void Initialise()
         {
+            // Initialise UI and show list of saved scores.
             InitializeComponent();
             ScoreList.ItemsSource = GameDetails.RetrieveGames();
         }
+
         // Button Events //
         private void New_Game(object sender, RoutedEventArgs e)
         {

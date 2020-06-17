@@ -160,18 +160,33 @@ namespace RiskGame
         private void New_Game(object sender, RoutedEventArgs e)
         {
             ClearError();
-            players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
             if (players.Count >= 2)
             {
-                players[1].Color = (SolidColorBrush)rectPlayer2Color.Fill;
-                if (players.Count >= 3) { players[2].Color = (SolidColorBrush)rectPlayer3Color.Fill; }
-                if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
-                if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
-                if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
-                GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
-                App.Current.MainWindow = Game;
-                this.Close();
-                Game.Show();
+                if(cmbMap.SelectedIndex == 0)
+                {
+                    switch (cmbGameMode.SelectedIndex)
+                    {
+                        case -1:
+                            ShowError("Please select a Gamemode.");
+                            break;
+                        case 0:
+                            ShowError("Classic Risk has not yet been implemented.");
+                            break;
+                        case 1:
+                            players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
+                            players[1].Color = (SolidColorBrush)rectPlayer2Color.Fill;
+                            if (players.Count >= 3) { players[2].Color = (SolidColorBrush)rectPlayer3Color.Fill; }
+                            if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
+                            if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
+                            if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
+                            GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
+                            App.Current.MainWindow = Game;
+                            this.Close();
+                            Game.Show();
+                            break;
+                    }
+                }
+                else { ShowError("Please select a map."); }
             }
             else { ShowError("There must be at least two players to start a game."); }
         }

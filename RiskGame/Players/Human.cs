@@ -19,7 +19,6 @@ namespace RiskGame
             Password = password ?? throw new ArgumentNullException(nameof(password));
         }
         // Variables //
-        public int score = 0;
         private String password;
         public String Password { set => password = value; } // Makes password write-only
         // Account Management //
