@@ -16,6 +16,7 @@ using RiskGame.Game;
 using System.Collections.ObjectModel;
 using System.Threading;
 using RiskGame.Windows;
+using RiskGame.Locations;
 
 namespace RiskGame
 {
@@ -61,6 +62,7 @@ namespace RiskGame
         // these will be ported to the gamemanager object to increase efficiency when loading and saving //
         private List<Player> players;
         private List<Territory> territories;
+        private List<Continent> continents;
         private Territory slctTerritory;
         private Territory nextTerritory;
         private Player currentplayer;
@@ -184,6 +186,13 @@ namespace RiskGame
                 Indonesia,New_Guinea,Eastern_Australia,Western_Australia,
                 Middle_East,Afghanistan,India,Ural,Siberia,China,Southeast_Asia,Mongolia,Irkutsk,Yakutsk,Kamchatka,Japan
             };
+            Continent North_America = new Continent("North America",(new List<Territory> { Alaska, Alberta, Central_America, Eastern_US, Greenland, Northwest_Canada, Ontario, Quebec, Western_US }), 5);
+            Continent South_America = new Continent("South America",(new List<Territory> { Argentina, Brazil, Peru, Venezuela }), 2);
+            Continent Europe = new Continent("Europe",(new List<Territory> { UK_Ireland, Iceland, Northern_Europe, Scandinavia, Southern_Europe, Soviet_Bloc, Western_Europe }), 5);
+            Continent Africa = new Continent("Africa",(new List<Territory> { Central_Africa, East_Africa, Egypt, Madagascar, North_Africa, South_Africa}), 3);
+            Continent Asia = new Continent("Asia",(new List<Territory>  { Afghanistan, China, India, Irkutsk, Japan, Kamchatka, Middle_East, Mongolia, Southeast_Asia, Siberia, Ural, Yakutsk }), 7);
+            Continent Australia = new Continent("Australia",(new List<Territory> { Eastern_Australia, Indonesia, New_Guinea, Western_Australia }), 2);
+            continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Austrailia };
             SetupGame(randomise_initial);
         }
 
@@ -408,7 +417,18 @@ namespace RiskGame
             {
                 turn += 1;
                 CyclePlayers();
-                currentplayer.army_undeployed += (currentplayer.territoriesowned / 3);
+                List<string> ownedcontinents = new List<string>();
+                int bonus = 0;
+                foreach (Continent c in continents)
+                {
+                    if (ContinentOwned(c))
+                    {
+                        ownedcontinents.Add(c.name);
+                        bonus += c.bonus;
+                    }
+                }
+                currentplayer.army_undeployed += (currentplayer.territoriesowned / 3) + bonus;
+                // if bonus output why
                 UpdatePlayerPanelUI();
                 UpdateState(GameState.PlacingArmy);
             }
@@ -733,6 +753,15 @@ namespace RiskGame
                     break;
             }
             ClearSelectionsUI();
+        }
+        private bool ContinentOwned(Continent c)
+        {
+            bool owned = true;
+            foreach(Territory t in c.territories)
+            {
+                if(t.owner != currentplayer) { owned = false; break; }
+            }
+            return owned;
         }
 
         ////  Button Events  ////

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RiskGame
+namespace RiskGame.Locations
 {
     [Serializable]
     public class Territory
@@ -20,6 +20,5 @@ namespace RiskGame
             this.name = territoryname ?? throw new ArgumentNullException(nameof(territoryname));
             this.links = links ?? throw new ArgumentNullException(nameof(links));
         }
-
     }
 }
