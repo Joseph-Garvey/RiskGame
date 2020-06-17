@@ -47,7 +47,7 @@ namespace RiskGame.Game
             using (FileStream sr = new FileStream(FileName, FileMode.Append))
             {
                 BinaryFormatter bf = new BinaryFormatter();
-                gameDetails.lastsave = DateTime.Now.ToString();
+                gameDetails.lastsave = DateTime.Now.ToString("g");
                 bf.Serialize(sr, gameDetails);
             }
         }

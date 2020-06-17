@@ -132,7 +132,7 @@ namespace RiskGame.Game
                     while (sr.Position < sr.Length)
                     {
                         GameManager tmp = ((GameManager)bf.Deserialize(sr));
-                        GameDetails game = new GameDetails(tmp.GameID.ToString(), tmp.lastsave.ToString(), tmp.players[0].Username, tmp.players.Count().ToString());
+                        GameDetails game = new GameDetails(tmp.GameID.ToString(), tmp.lastsave.ToString("g"), tmp.players[0].Username, tmp.players.Count().ToString());
                         games.Add(game);
                     }
                 }
