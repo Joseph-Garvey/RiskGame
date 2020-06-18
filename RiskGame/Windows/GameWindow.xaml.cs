@@ -584,7 +584,6 @@ namespace RiskGame
                     break;
                 case GameState.Conquer:
                     lblState.Content = "Conquer";
-                    Output("You have won this battle.");
                     Output("Use + - and confirm to send armies to the newly captured territory.");
                     break;
             }
@@ -932,7 +931,7 @@ namespace RiskGame
                     if((slctTerritory != null) && (nextTerritory != null))
                     {
                         double num = rng.NextDouble();
-                        double prob = 1 / (1 + Math.Exp(-((nextTerritory.temparmies - nextTerritory.currentarmies) - 0.5)));
+                        double prob = 1 / (1 + Math.Exp(-0.7*((nextTerritory.temparmies - nextTerritory.currentarmies) - 0.5)));
                         if(num <= prob)
                         {
                             // add in loss of troops
@@ -947,9 +946,21 @@ namespace RiskGame
                                 if(p.territoriesowned > 0) { won = false; }
                             }
                             if (won) { Win(); }
+                            int lost = nextTerritory.temparmies - (int)Math.Ceiling(prob * nextTerritory.temparmies);
+                            nextTerritory.temparmies -= lost;
+                            Output(String.Format("You have captured this territory and lost {0} armies in battle.", lost));
                             UpdateState(GameState.Conquer);
                         }
-                        else { Output("Lose"); nextTerritory.temparmies = 0; ClearSelectionsUI(); }
+                        else
+                        {
+                            nextTerritory.temparmies = 0;
+                            int survived = (int)(Math.Ceiling(1 - prob) * nextTerritory.currentarmies);
+                            int loss = nextTerritory.currentarmies - survived;
+                            nextTerritory.currentarmies = survived; // can be simplified /\
+                            Output(String.Format("You have lost this battle, the enemy suffered {0} casualties.", loss ));
+                            SelectButton(nextTerritory.name).Content = nextTerritory.currentarmies;
+                            ClearSelectionsUI();
+                        }
                     }
                     else { Output("You must select the territories you wish to attack to/from first."); }
                     break;
