@@ -46,12 +46,17 @@
                     <Border>
                         <StackPanel Style="{StaticResource panel_Background}">
                             <StackPanel Orientation="Horizontal">
-                                <Label Style="{StaticResource lblHeader}" Width="100">Register</Label>
-                                <Button Style="{StaticResource btnUI}" Width="25">?</Button>
+                                <Label Style="{StaticResource lblHeader}" Width="140">Register</Label>
                             </StackPanel>
-                            <Label Style="{StaticResource lblSubHeading}">Username:</Label>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Style="{StaticResource lblSubHeading}" Width="110">Username:</Label>
+                                <Button Style="{StaticResource btnUI}" Width="25" Margin="0,0,5,0" ToolTip="Usernames must be 3-10 characters, unique and consist of letters, numbers and separator characters.">?</Button>
+                            </StackPanel>
                             <TextBox x:Name="txtRegName"></TextBox>
-                            <Label Style="{StaticResource lblSubHeading}">Password:</Label>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Style="{StaticResource lblSubHeading}" Width="110">Password:</Label>
+                                <Button Style="{StaticResource btnUI}" Width="25" Margin="0,0,5,0" ToolTip="Passwords must be 8-20 characters and consist of letters, numbers and symbols. Passwords must contain at least one capital letter, number and symbol.">?</Button>
+                            </StackPanel>
                             <PasswordBox x:Name="txtRegPass" GotKeyboardFocus="ClearPwdText" ></PasswordBox>
                             <Label Style="{StaticResource lblSubHeading}">Confirm Password:</Label>
                             <PasswordBox x:Name="txtRegPassConf"  GotKeyboardFocus="ClearPwdText"></PasswordBox>
