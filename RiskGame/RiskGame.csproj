@@ -198,6 +198,7 @@
     <Content Include="Images\RiskLogo.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\Settingsicon.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Images\RiskRetroThumbnail2.gif">
