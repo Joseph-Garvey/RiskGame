@@ -35,7 +35,7 @@ namespace RiskGame.Windows
             lblPlayerScore.Visibility = Visibility.Visible;
             PlayerScoreList.Visibility = Visibility.Visible;
         }
-        public Highscores() { Initialise(); }
+        public Highscores(List<Player> _players) { Initialise(); players = _players; }
 
         private void Initialise()
         {
@@ -47,7 +47,7 @@ namespace RiskGame.Windows
         // Button Events //
         private void New_Game(object sender, RoutedEventArgs e)
         {
-            if(players == null) // Verified working
+            if(players == null || players.Count == 0) // Verified working
             {
                 Window Login = new MainWindow();
                 App.Current.MainWindow = Login;

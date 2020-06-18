@@ -165,7 +165,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Button Content="Load Game" Click="Load_Game" Style="{StaticResource btnUI}"></Button>
-                    <Label x:Name="txtError" Margin="5,5,5,0" Opacity="0.8" Background="#FFF00303" BorderBrush="Black" BorderThickness="2" FontSize="10" Content="This is the error text." Foreground="White" Width="250" Visibility="Collapsed"/>
+                    <Label x:Name="txtError" Margin="5,5,5,0" Style="{StaticResource lblError}"  Visibility="Collapsed"/>
                 </StackPanel>
             </StackPanel>
         </Viewbox>

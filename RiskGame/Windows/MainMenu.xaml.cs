@@ -32,7 +32,6 @@ namespace RiskGame
             // Called on first launch
             // Clears empty save files to prevent crashes, hides the error message.
             InitializeComponent();
-            txtError.Visibility = Visibility.Hidden;
             GameManager.ClearEmptyFile();
             players = new List<Player>();
         }
@@ -41,7 +40,6 @@ namespace RiskGame
             // Called when adding a new player via gamesetup windwow.
             InitializeComponent();
             players = _players;
-            txtError.Visibility = Visibility.Hidden;
         }
 
         // Methods //
@@ -49,16 +47,16 @@ namespace RiskGame
         private void DispErrorMsg(String message)
         {
             // Shows error box with message //
-            txtError.Background = Brushes.Red;
+            lblError.Background = Brushes.Red;
             txtError.Text = message;
-            txtError.Visibility = Visibility.Visible;
+            lblError.Visibility = Visibility.Visible;
         }
         private void DispSuccessMsg(String message)
         {
             // Shows message on succesful registration //
-            txtError.Background = Brushes.Green;
+            lblError.Background = Brushes.Green;
             txtError.Text = message;
-            txtError.Visibility = Visibility.Visible;
+            lblError.Visibility = Visibility.Visible;
         }
 
         // Function calls for I/O //
@@ -67,6 +65,7 @@ namespace RiskGame
             // Signs player in when Login button is clicked //
             try
             {
+                lblError.Visibility = Visibility.Collapsed;
                 // DEV OPTIONS // to be removed before publish // used for quick testing
                 if((String)((Button)sender).Content == "DEVUSER")
                 { txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
@@ -111,6 +110,7 @@ namespace RiskGame
         {
             try
             {
+                lblError.Visibility = Visibility.Collapsed;
                 // If passwords match, attempt to register the player.
                 if(txtRegPass.Password == txtRegPassConf.Password)
                 {
@@ -130,20 +130,19 @@ namespace RiskGame
                 DispErrorMsg("An error reading or writing from the file has occurred. Please try again or delete the Usersaves.txt file in the game directory.");
             }
         }
-        // Clear Text on Focus //
-        private void ClearDefautText(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            TextBox  T = (TextBox)sender;
-            if(T.Text == "Enter Username")
-            {
-                T.Text = "";
-            }
-        }
         // Clear password on keyboard focus to prevent user error and/or copying password.
         private void ClearPwdText(object sender, KeyboardFocusChangedEventArgs e)
         {
             PasswordBox P = (PasswordBox)sender;
             P.Password = "";
+        }
+
+        private void Leaderboard(object sender, RoutedEventArgs e)
+        {
+            Highscores highscores = new Highscores(players);
+            App.Current.MainWindow = highscores;
+            this.Close();
+            highscores.Show();
         }
     }
 }

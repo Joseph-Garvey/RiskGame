@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RiskGame"
         mc:Ignorable="d"
-        Title="Login and Register" WindowStartupLocation="CenterScreen" Height="800" Width="800">
+        Title="Login and Register" WindowStartupLocation="CenterScreen" Width="600" Height="600" >
     <Border>
         <Border.Background>
             <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
@@ -18,9 +18,9 @@
                 </VisualBrush.Visual>
             </VisualBrush>
         </Border.Background>
-        <Viewbox>
+        <Viewbox Margin="10">
             <StackPanel>
-                <Border BorderBrush="Black" CornerRadius="5" BorderThickness="1" Background="#7F00D1FF" Margin="5" Width="150" Height="60">
+                <Border BorderBrush="Black" CornerRadius="10" BorderThickness="1" Background="#66FFFFFF" Margin="5" Width="150" Height="60">
                     <Image Source="pack://siteoforigin:,,,/Images/RiskLogo.png"></Image>
                 </Border>
                 <StackPanel Orientation="Horizontal">
@@ -50,26 +50,25 @@
                                 <Button Style="{StaticResource btnUI}" Width="25">?</Button>
                             </StackPanel>
                             <Label Style="{StaticResource lblSubHeading}">Username:</Label>
-                            <TextBox></TextBox>
+                            <TextBox x:Name="txtRegName"></TextBox>
                             <Label Style="{StaticResource lblSubHeading}">Password:</Label>
-                            <PasswordBox></PasswordBox>
+                            <PasswordBox x:Name="txtRegPass" GotKeyboardFocus="ClearPwdText" ></PasswordBox>
                             <Label Style="{StaticResource lblSubHeading}">Confirm Password:</Label>
-                            <PasswordBox></PasswordBox>
-                            <Button Style="{StaticResource btnUI}">Register</Button>
+                            <PasswordBox x:Name="txtRegPassConf"  GotKeyboardFocus="ClearPwdText"></PasswordBox>
+                            <Button Style="{StaticResource btnUI}" Click="Register">Register</Button>
                         </StackPanel>
                     </Border>
                     <StackPanel>
                         <Border>
                             <StackPanel Style="{StaticResource panel_Background}">
                                 <StackPanel Orientation="Horizontal">
-                                    <Label Style="{StaticResource lblHeader}" Width="100">Login</Label>
-                                    <Button Style="{StaticResource btnUI}" Width="25">?</Button>
+                                    <Label Style="{StaticResource lblHeader}" Width="130">Login</Label>
                                 </StackPanel>
                                 <Label Style="{StaticResource lblSubHeading}">Username:</Label>
-                                <TextBox></TextBox>
+                                <TextBox x:Name="txtLogName"></TextBox>
                                 <Label Style="{StaticResource lblSubHeading}">Password:</Label>
-                                <PasswordBox></PasswordBox>
-                                <Button Style="{StaticResource btnUI}">Login</Button>
+                                <PasswordBox x:Name="txtLogPass"  GotKeyboardFocus="ClearPwdText"></PasswordBox>
+                                <Button Style="{StaticResource btnUI}" Click="Login">Login</Button>
                             </StackPanel>
                         </Border>
                         <Grid>
@@ -77,13 +76,16 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Width="100" FontSize="12">Leaderboard</Button>
+                            <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Width="100" FontSize="12" Click="Leaderboard">Leaderboard</Button>
                             <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Grid.Column="1">
                                 <Image Source="pack://siteoforigin:,,,/Images/Settingsicon.png" Height="20" Margin="5"></Image>
                             </Button>
                         </Grid>
                     </StackPanel>
                 </StackPanel>
+                <Label x:Name="lblError" Style="{StaticResource lblError}" Width="290" Visibility="Collapsed" >
+                    <TextBlock x:Name="txtError" TextWrapping="Wrap">Error message</TextBlock>
+                </Label>
             </StackPanel>
         </Viewbox>
     </Border>
