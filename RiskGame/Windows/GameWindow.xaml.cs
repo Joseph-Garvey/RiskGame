@@ -192,7 +192,7 @@ namespace RiskGame
             Continent Africa = new Continent("Africa",(new List<Territory> { Central_Africa, East_Africa, Egypt, Madagascar, North_Africa, South_Africa}), 3);
             Continent Asia = new Continent("Asia",(new List<Territory>  { Afghanistan, China, India, Irkutsk, Japan, Kamchatka, Middle_East, Mongolia, Southeast_Asia, Siberia, Ural, Yakutsk }), 7);
             Continent Australia = new Continent("Australia",(new List<Territory> { Eastern_Australia, Indonesia, New_Guinea, Western_Australia }), 2);
-            continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Austrailia };
+            continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Australia };
             SetupGame(randomise_initial);
         }
 
@@ -417,20 +417,39 @@ namespace RiskGame
             {
                 turn += 1;
                 CyclePlayers();
-                List<string> ownedcontinents = new List<string>();
+                List<String> ownedContinents = new List<string>();
                 int bonus = 0;
                 foreach (Continent c in continents)
                 {
                     if (ContinentOwned(c))
                     {
-                        ownedcontinents.Add(c.name);
+                        ownedContinents.Add(c.name);
                         bonus += c.bonus;
                     }
                 }
-                currentplayer.army_undeployed += (currentplayer.territoriesowned / 3) + bonus;
-                // if bonus output why
+                currentplayer.army_undeployed += ((currentplayer.territoriesowned / 3) + bonus);
                 UpdatePlayerPanelUI();
                 UpdateState(GameState.PlacingArmy);
+                switch(ownedContinents.Count)
+                {
+                    case 1:
+                        Output(String.Format("You have received {0} bonus armies from capturing all of {1}", bonus, ownedContinents[0]));
+                        break;
+                    case 2:
+                        Output(String.Format("You have received {0} bonus armies from capturing all of {1} and {2}", bonus, ownedContinents[0], ownedContinents[1]));
+                        break;
+                    case 3:
+                        Output(String.Format("You have received {0} bonus armies from {1}, {2}, and {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
+                        break;
+                    case 4:
+                        Output(String.Format("You have received {0} bonus armies from {1}, {2}, {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
+                        Output(String.Format("and {0}", ownedContinents[3]));
+                        break;
+                    case 5:
+                        Output(String.Format("You have received {0} bonus armies from {1}, {2}, {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
+                        Output(String.Format("{0} and {1}", ownedContinents[3], ownedContinents[4]));
+                        break;
+                }
             }
         }
         private void Win()
