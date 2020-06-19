@@ -52,15 +52,15 @@
                                 <Label Style="{StaticResource lblSubHeading}" Width="110">Username:</Label>
                                 <Button Style="{StaticResource btnUI}" Width="25" Margin="0,0,5,0" ToolTip="Usernames must be 3-10 characters, unique and consist of letters, numbers and separator characters.">?</Button>
                             </StackPanel>
-                            <TextBox x:Name="txtRegName"></TextBox>
+                            <TextBox x:Name="txtRegName" TabIndex="0" KeyDown="RegisterKeyDown"></TextBox>
                             <StackPanel Orientation="Horizontal">
                                 <Label Style="{StaticResource lblSubHeading}" Width="110">Password:</Label>
                                 <Button Style="{StaticResource btnUI}" Width="25" Margin="0,0,5,0" ToolTip="Passwords must be 8-20 characters and consist of letters, numbers and symbols. Passwords must contain at least one capital letter, number and symbol.">?</Button>
                             </StackPanel>
-                            <PasswordBox x:Name="txtRegPass" GotKeyboardFocus="ClearPwdText" ></PasswordBox>
+                            <PasswordBox x:Name="txtRegPass" GotKeyboardFocus="ClearPwdText" TabIndex="1" KeyDown="RegisterKeyDown"></PasswordBox>
                             <Label Style="{StaticResource lblSubHeading}">Confirm Password:</Label>
-                            <PasswordBox x:Name="txtRegPassConf"  GotKeyboardFocus="ClearPwdText"></PasswordBox>
-                            <Button Style="{StaticResource btnUI}" Click="Register">Register</Button>
+                            <PasswordBox x:Name="txtRegPassConf"  GotKeyboardFocus="ClearPwdText" TabIndex="2" KeyDown="RegisterKeyDown"></PasswordBox>
+                            <Button Style="{StaticResource btnUI}" Click="Register" TabIndex="3">Register</Button>
                         </StackPanel>
                     </Border>
                     <StackPanel>
@@ -70,10 +70,10 @@
                                     <Label Style="{StaticResource lblHeader}" Width="130">Login</Label>
                                 </StackPanel>
                                 <Label Style="{StaticResource lblSubHeading}">Username:</Label>
-                                <TextBox x:Name="txtLogName"></TextBox>
+                                <TextBox x:Name="txtLogName" TabIndex="4" KeyDown="LoginKeyDown"></TextBox>
                                 <Label Style="{StaticResource lblSubHeading}">Password:</Label>
-                                <PasswordBox x:Name="txtLogPass"  GotKeyboardFocus="ClearPwdText"></PasswordBox>
-                                <Button Style="{StaticResource btnUI}" Click="Login">Login</Button>
+                                <PasswordBox x:Name="txtLogPass"  GotKeyboardFocus="ClearPwdText" TabIndex="5"></PasswordBox>
+                                <Button Style="{StaticResource btnUI}" Click="Login" TabIndex="6">Login</Button>
                             </StackPanel>
                         </Border>
                         <Grid>
@@ -81,8 +81,8 @@
                                 <ColumnDefinition></ColumnDefinition>
                                 <ColumnDefinition></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Width="100" FontSize="12" Click="Leaderboard">Leaderboard</Button>
-                            <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Grid.Column="1">
+                            <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Width="100" FontSize="12" Click="Leaderboard" TabIndex="7">Leaderboard</Button>
+                            <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Grid.Column="1" TabIndex="8" >
                                 <Image Source="pack://siteoforigin:,,,/Images/Settingsicon.png" Height="20" Margin="5"></Image>
                             </Button>
                         </Grid>

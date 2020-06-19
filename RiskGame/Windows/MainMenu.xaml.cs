@@ -59,26 +59,12 @@ namespace RiskGame
             lblError.Visibility = Visibility.Visible;
         }
 
-        // Function calls for I/O //
+        // Event calls //
         private void Login(object sender, RoutedEventArgs e)
         {
-            // Signs player in when Login button is clicked //
             try
             {
-                lblError.Visibility = Visibility.Collapsed;
-                // DEV OPTIONS // to be removed before publish // used for quick testing
-                if((String)((Button)sender).Content == "DEVUSER")
-                { txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
-                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                    players.Add(player);
-                    txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
-                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                    players.Add(player);
-                    txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
-                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                    players.Add(player);
-                    txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
-                }
+            // Signs player in when Login button is clicked //
                 // Checks entered details against those on file, retrieves the player's details, returning a player object.
                 player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
                 players.Add(player);
@@ -130,6 +116,15 @@ namespace RiskGame
                 DispErrorMsg("An error reading or writing from the file has occurred. Please try again or delete the Usersaves.txt file in the game directory.");
             }
         }
+        private void RegisterKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Return) { Register(sender, e); }
+        }
+        private void LoginKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return) { Login(sender, e); }
+        }
+
         // Clear password on keyboard focus to prevent user error and/or copying password.
         private void ClearPwdText(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -144,5 +139,22 @@ namespace RiskGame
             this.Close();
             highscores.Show();
         }
-    }
+
+            //        try
+            //{
+            //    lblError.Visibility = Visibility.Collapsed;
+            //    // DEV OPTIONS // to be removed before publish // used for quick testing
+            //    if((String)((Button) sender).Content == "DEVUSER")
+            //    { txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
+            //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+            //        players.Add(player);
+            //        txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
+            //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+            //        players.Add(player);
+            //        txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
+            //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+            //        players.Add(player);
+            //        txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
+            //    }
+}
 }
