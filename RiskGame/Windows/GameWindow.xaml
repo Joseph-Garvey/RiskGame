@@ -15,53 +15,270 @@
                         <Setter Property="BorderThickness" Value="3"></Setter>
                         <Setter Property="FontWeight" Value="Bold"></Setter>
                         <Setter Property="Background" Value="White"></Setter>
+                        <EventSetter Event="Click" Handler="Click"></EventSetter>
+                        <EventSetter Event="MouseRightButtonDown" Handler="RightClick"></EventSetter>
+                        <Style.Resources>
+                            <Style TargetType="StackPanel">
+                                <Setter Property="Orientation" Value="Horizontal"></Setter>
+                            </Style>
+                        </Style.Resources>
                     </Style>
                 </Grid.Resources>
                 <Grid.Background>
                     <ImageBrush ImageSource="pack://siteoforigin:,,,/Images/Risk_game_map_fixed.png"/>
                 </Grid.Background>
-                <Button x:Name="btnAlaska" Content="Alaska" Margin="79,48,1159,468" Click="Click" MouseRightButtonDown="RightClick" Width="42" Height="24"/>
-                <Button x:Name="btnAlberta" Content="Alberta" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="130,85,1100,425"  Click="Click" MouseRightButtonDown="RightClick" Width="50" Height="30"/>
-                <Button x:Name="btnCentral_America" Content="Central America"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="102,205,1090,311"  Click="Click" MouseRightButtonDown="RightClick" Height="24"/>
-                <Button x:Name="btnEastern_US" Content="Eastern US" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="185,150,1029,364"  Click="Click" MouseRightButtonDown="RightClick" Width="66" Height="26"/>
-                <Button x:Name="btnGreenland" Content="Greenland" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="319,30,640,481"  Click="Click" MouseRightButtonDown="RightClick"  Width="65" Height="29"/>
-                <Button x:Name="btnNorthwest_Canada" Content="Northwest Canada"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="143,53,1027,467"  Click="Click" MouseRightButtonDown="RightClick"  Height="20" Width="110"/>
-                <Button x:Name="btnOntario" Content="Ontario"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="222,96,1005,420"  Click="Click" MouseRightButtonDown="RightClick"  Width="53" Height="24"/>
-                <Button x:Name="btnQuebec" Content="Quebec"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="166,98,804,423"  Click="Click" MouseRightButtonDown="RightClick" Width="54"/>
-                <Button x:Name="btnWestern_US" Content="Western US" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="100,141,1105,375"  Click="Click" MouseRightButtonDown="RightClick"  Width="75" Height="24"/>
-                <Button x:Name="btnArgentina" Content="Argentina"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="280,425,939,80"  Click="Click" MouseRightButtonDown="RightClick"  Width="61" Height="35"/>
-                <Button x:Name="btnBrazil" Content="Brazil"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="322,337,882,173"  Click="Click" MouseRightButtonDown="RightClick" Width="76" Height="30"/>
-                <Button x:Name="btnPeru" Content="Peru"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="256,357,983,153"  Click="Click" MouseRightButtonDown="RightClick" Width="41" Height="30"/>
-                <Button x:Name="btnVenezuela" Content="Venezuela"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="248,279,966,232"  Click="Click" MouseRightButtonDown="RightClick"  Width="66" Height="29"/>
-                <Button x:Name="btnUK_Ireland" Content="UK and Ireland"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="367,98,565,418"  Click="Click" MouseRightButtonDown="RightClick"  Height="24" Width="92"></Button>
-                <Button x:Name="btnIceland" Content="Iceland"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="369,69,608,452"  Click="Click" MouseRightButtonDown="RightClick"  Width="47"/>
-                <Button x:Name="btnNorthern_Europe" Content="Northern Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="484,106,437,413"  Click="Click" MouseRightButtonDown="RightClick" Height="21" Width="103"/>
-                <Button x:Name="btnScandinavia" Content="Scandinavia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="471,59,481,458"  Click="Click" MouseRightButtonDown="RightClick"  Height="23" Width="72"/>
-                <Button x:Name="btnSouthern_Europe" Content="Southern Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="485,137,443,383"  Click="Click" MouseRightButtonDown="RightClick"  Height="20" Width="96"/>
-                <Button x:Name="btnSoviet_Bloc" Content="Soviet Bloc"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="681,85,519,436"  Click="Click" MouseRightButtonDown="RightClick" Height="19" Width="80"/>
-                <Button x:Name="btnWestern_Europe" Content="Western Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="395,128,539,388"  Click="Click" MouseRightButtonDown="RightClick"  Height="24" Width="90"/>
-                <Button x:Name="btnCentral_Africa" Content="Central Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="489,299,450,213"  Click="Click" MouseRightButtonDown="RightClick" Height="28" Width="85"/>
-                <Button x:Name="btnEast_Africa" Content="East Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="566,270,388,241"  Click="Click" MouseRightButtonDown="RightClick"  Height="29" Width="70"/>
-                <Button x:Name="btnMadagascar" Content="Madagascar"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="731,375,469,140"  Click="Click" MouseRightButtonDown="RightClick" Height="25" Width="80"/>
-                <Button x:Name="btnEgypt" Content="Egypt"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="517,196,456,319"  Click="Click" MouseRightButtonDown="RightClick"  Height="25" Width="51"/>
-                <Button x:Name="btnNorth_Africa" Content="North Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="419,230,515,288"  Click="Click" MouseRightButtonDown="RightClick"  Height="22" Width="90"/>
-                <Button x:Name="btnSouth_Africa" Content="South Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="512,382,432,129"  Click="Click" MouseRightButtonDown="RightClick" Height="29" Width="80"/>
-                <Button x:Name="btnAfghanistan" Content="Afghanistan"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="631,132,314,384"  Click="Click" MouseRightButtonDown="RightClick" Height="24" Width="79"/>
-                <Button x:Name="btnChina" Content="China"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="963,175,259,345"  Click="Click" MouseRightButtonDown="RightClick" Height="20" Width="58"/>
-                <Button x:Name="btnIndia" Content="India"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="899,205,331,311"  Click="Click" MouseRightButtonDown="RightClick" Height="24" Width="50"/>
-                <Button x:Name="btnJapan" Content="Japan"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1117,151,117,360"  Click="Click" MouseRightButtonDown="RightClick"  Height="29" Width="46"/>
-                <Button x:Name="btnMiddle_East" Content="Middle East"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="553,171,388,344" Width="83"  Click="Click" MouseRightButtonDown="RightClick"  Height="25"/>
-                <Button x:Name="btnMongolia" Content="Mongolia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="980,126,234,390" Width="66"  Click="Click" MouseRightButtonDown="RightClick" Height="24"/>
-                <Button x:Name="btnSoutheast_Asia" Content="Southeast Asia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="967,234,219,282" Width="94"  Click="Click" MouseRightButtonDown="RightClick"  Height="24"/>
-                <Button x:Name="btnSiberia" Content="Siberia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="871,55,354,465" Width="55"  Click="Click" MouseRightButtonDown="RightClick" Height="20"/>
-                <Button x:Name="btnUral" Content="Ural"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="811,70,424,445" Width="45"  Click="Click" MouseRightButtonDown="RightClick" Height="25"/>
-                <Button x:Name="btnEastern_Australia" Content="Eastern Australia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1120,396,40,119" Width="120"  Click="Click" MouseRightButtonDown="RightClick"  Height="25"/>
-                <Button x:Name="btnWestern_Australia" Content="Western Australia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1030,411,144,105" Width="106"  Click="Click" MouseRightButtonDown="RightClick"  Height="24"/>
-                <Button x:Name="btnNew_Guinea" Content="New Guinea"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1141,325,54,196" Width="85"  Click="Click" MouseRightButtonDown="RightClick"  Height="19"/>
-                <Button x:Name="btnIndonesia" Content="Indonesia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1035,305,174,216" Width="71"  Click="Click" MouseRightButtonDown="RightClick"  Height="19"/>
-                <Button x:Name="btnIrkutsk" Content="Irkutsk"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="962,94,256,424" Width="62"  Click="Click" MouseRightButtonDown="RightClick"  Height="22"/>
-                <Button x:Name="btnKamchatka" Content="Kamchatka"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1062,50,139,461" Width="79"  Click="Click" MouseRightButtonDown="RightClick"  Height="29"/>
-                <Button x:Name="btnYakutsk" Content="Yakutsk"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="980,52,246,463" Width="54"  Click="Click" MouseRightButtonDown="RightClick" Height="25"/>
+                <Button x:Name="btnAlaska" Margin="79,48,1159,468">
+                    <StackPanel>
+                        <Label x:Name="Alaska_current">Alaska</Label>
+                        <Label x:Name="Alaska_temp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnAlberta" Margin="130,85,1100,425" Width="50" Height="30">
+                    <StackPanel>
+                        <Label x:Name="Alberta_current">Alberta</Label>
+                        <Label x:Name="Alberta_temp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnCentral_America" Margin="102,205,1090,311" Height="30">
+                    <StackPanel>
+                        <Label x:Name="CentralAmerica_current">Central America</Label>
+                        <Label x:Name="CentralAmerica_temp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnEastern_US" Margin="185,150,1029,364" Width="66" Height="26">
+                    <StackPanel>
+                        <Label x:Name="EasternUS_current">Eastern US</Label>
+                        <Label x:Name="EasternUS_temp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnGreenland" Margin="319,30,640,481" Width="65" Height="29">
+                    <StackPanel>
+                        <Label x:Name="Greenland_current">Greenland</Label>
+                        <Label x:Name="Greenland_temp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnNorthwest_Canada" Margin="143,53,1027,467" Height="20" Width="110">
+                    <StackPanel>
+                        <Label x:Name="NorthwestCanadacurrent">Northwest Canada</Label>
+                        <Label x:Name="NorthwestCanada_temp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnOntario" Margin="222,96,1005,420"    Width="53" Height="24">
+                    <StackPanel>
+                        <Label x:Name="Ontariocurrent">Ontario</Label>
+                        <Label x:Name="Ontariotemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnQuebec" Margin="166,98,804,423"   Width="54">
+                    <StackPanel>
+                        <Label x:Name="Quebeccurrent">Quebec</Label>
+                        <Label x:Name="Quebectemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnWestern_US" Margin="100,141,1105,375"    Width="75" Height="24">
+                    <StackPanel>
+                        <Label x:Name="WesternUScurrent">Western US</Label>
+                        <Label x:Name="WesternUStemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnArgentina" Margin="280,425,939,80"    Width="61" Height="35">
+                    <StackPanel>
+                        <Label x:Name="Argentinacurrent">Argentina</Label>
+                        <Label x:Name="Argentinatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnBrazil" Margin="322,337,882,173"   Width="76" Height="30">
+                    <StackPanel>
+                        <Label x:Name="Brazilcurrent">Brazil</Label>
+                        <Label x:Name="Braziltemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnPeru" Margin="256,357,983,153"   Width="41" Height="30">
+                    <StackPanel>
+                        <Label x:Name="Perucurrent">Peru</Label>
+                        <Label x:Name="Perutemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnVenezuela" Margin="248,279,966,232"    Width="66" Height="29">
+                    <StackPanel>
+                        <Label x:Name="Venezuelacurrent">Venezuela</Label>
+                        <Label x:Name="Venezuelatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnUK_Ireland" Margin="367,98,565,418"    Height="24" Width="92">
+                    <StackPanel>
+                        <Label x:Name="UKIrelandcurrent">UK Ireland</Label>
+                        <Label x:Name="UKIrelandtemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnIceland" Margin="369,69,608,452"    Width="47">
+                    <StackPanel>
+                        <Label x:Name="Icelandcurrent">Iceland</Label>
+                        <Label x:Name="Icelandtemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnNorthern_Europe"  Margin="484,106,437,413"   Height="21" Width="103">
+                    <StackPanel>
+                        <Label x:Name="NorthernEuropencurrent">Northern Europe</Label>
+                        <Label x:Name="NorthernEuropeantemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnScandinavia"  Margin="471,59,481,458" Height="23" Width="72">
+                    <StackPanel>
+                        <Label x:Name="Scandinaviacurrent">Scandinavia</Label>
+                        <Label x:Name="Scandinaviatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnSouthern_Europe" Margin="485,137,443,383"    Height="20" Width="96">
+                    <StackPanel>
+                        <Label x:Name="SouthernEuropecurrent">Southern Europe</Label>
+                        <Label x:Name="SouthernEuropetemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnSoviet_Bloc" Margin="681,85,519,436"   Height="19" Width="80">
+                    <StackPanel>
+                        <Label x:Name="SovietBloccurrent">Soviet Bloc</Label>
+                        <Label x:Name="SovietBloctemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnWestern_Europe" Margin="395,128,539,388"    Height="24" Width="90">
+                    <StackPanel>
+                        <Label x:Name="WesternEuropecurrent">Western Europe</Label>
+                        <Label x:Name="WesternEuropetemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnCentral_Africa" Margin="489,299,450,213"   Height="28" Width="85">
+                    <StackPanel>
+                        <Label x:Name="CentralAfricacurrent">Scandinavia</Label>
+                        <Label x:Name="CentralAfricatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnEast_Africa" Margin="566,270,388,241"    Height="29" Width="70">
+                    <StackPanel>
+                        <Label x:Name="EastAfricacurrent">East Africa</Label>
+                        <Label x:Name="EastAfricatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnMadagascar" Margin="731,375,469,140"   Height="25" Width="80">
+                    <StackPanel>
+                        <Label x:Name="Madagascarcurrent">Madagascar</Label>
+                        <Label x:Name="Madagascartemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnEgypt"  Margin="517,196,456,319"    Height="25" Width="51">
+                    <StackPanel>
+                        <Label x:Name="Egyptcurrent">Egypt</Label>
+                        <Label x:Name="Egypttemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnNorth_Africa"  Margin="419,230,515,288"    Height="22" Width="90">
+                    <StackPanel>
+                        <Label x:Name="NorthAfricacurrent">North Africa</Label>
+                        <Label x:Name="NorthAfricatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnSouth_Africa" Margin="512,382,432,129"   Height="29" Width="80">
+                    <StackPanel>
+                        <Label x:Name="SouthAfricacurrent">South Africa</Label>
+                        <Label x:Name="SouthAfricatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnAfghanistan"  Margin="631,132,314,384"   Height="24" Width="79">
+                    <StackPanel>
+                        <Label x:Name="Afghanistancurrent">Afghanistan</Label>
+                        <Label x:Name="Afghanistantemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnChina" Margin="963,175,259,345"   Height="20" Width="58">
+                    <StackPanel>
+                        <Label x:Name="Chinacurrent">China</Label>
+                        <Label x:Name="Chinatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnIndia" Margin="899,205,331,311"   Height="24" Width="50">
+                    <StackPanel>
+                        <Label x:Name="Indiacurrent">India</Label>
+                        <Label x:Name="Indiatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnJapan" Margin="1117,151,117,360"    Height="29" Width="46">
+                    <StackPanel>
+                        <Label x:Name="Japanacurrent">Japan</Label>
+                        <Label x:Name="Japantemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnMiddle_East" Margin="553,171,388,344" Width="83"    Height="25">
+                    <StackPanel>
+                        <Label x:Name="MiddleEastacurrent">MiddleEast</Label>
+                        <Label x:Name="MiddleEasttemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnMongolia"  Margin="980,126,234,390" Width="66"   Height="24">
+                    <StackPanel>
+                        <Label x:Name="Mongoliacurrent">Mongolia</Label>
+                        <Label x:Name="Mongoliatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnSoutheast_Asia"  Margin="967,234,219,282" Width="94"    Height="24">
+                    <StackPanel>
+                        <Label x:Name="Southeastcurrent">Southeast</Label>
+                        <Label x:Name="Southeasttemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnSiberia" Margin="871,55,354,465" Width="55"   Height="20">
+                    <StackPanel>
+                        <Label x:Name="Siberiacurrent">Siberia</Label>
+                        <Label x:Name="Siberiatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnUral" Margin="811,70,424,445" Width="45"   Height="25">
+                    <StackPanel>
+                        <Label x:Name="Uralcurrent">Ural</Label>
+                        <Label x:Name="Uraltemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnEastern_Australia"  Margin="1120,396,40,119" Width="120"    Height="25">
+                    <StackPanel>
+                        <Label x:Name="EasternAustraliacurrent">Eastern Australia</Label>
+                        <Label x:Name="EasternAustraliatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnWestern_Australia" Margin="1030,411,144,105" Width="106"    Height="24">
+                    <StackPanel>
+                        <Label x:Name="WesternAustraliacurrent">Western Australia</Label>
+                        <Label x:Name="WesternAustraliatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnNew_Guinea" Margin="1141,325,54,196" Width="85"    Height="19">
+                    <StackPanel>
+                        <Label x:Name="NewGuineacurrent">New Guinea</Label>
+                        <Label x:Name="NewGuineatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnIndonesia" Margin="1035,305,174,216" Width="71"    Height="19">
+                    <StackPanel>
+                        <Label x:Name="Indonesiacurrent">Indonesia</Label>
+                        <Label x:Name="Indonesiatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnIrkutsk" Margin="962,94,256,424" Width="62">
+                    <StackPanel>
+                        <Label x:Name="Irkutskcurrent">Irkutsk</Label>
+                        <Label x:Name="Irkutsktemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnKamchatka" Margin="1062,50,139,461" Width="79">
+                    <StackPanel>
+                        <Label x:Name="Kamchatkacurrent">Kamchatka</Label>
+                        <Label x:Name="Kamchatkatemp"></Label>
+                    </StackPanel>
+                </Button>
+                <Button x:Name="btnYakutsk" Margin="980,52,246,463" Width="54">
+                    <StackPanel>
+                        <Label x:Name="Yakutskcurrent">Yakutsk</Label>
+                        <Label x:Name="Yakutsktemp"></Label>
+                    </StackPanel>
+                </Button>
             </Grid>
             <StackPanel x:Name="panel_UI" Orientation="Horizontal" Background="Gray">
                 <StackPanel x:Name="panel_Players" VerticalAlignment="Center" Margin="20,00,10,20">

@@ -94,89 +94,89 @@ namespace RiskGame
             players = _players;
             // Creation of Territories and Map Setup //
             List<String> links = new List<string>{ "Kamchatka", "Alberta", "Northwest_Canada" };
-            Territory Alaska = new Territory("Alaska",links, btnAlaska);
+            Territory Alaska = new Territory("Alaska",links, btnAlaska, Alaska_current, Alaska_temp);
             links = new List<string>{ "Alaska", "Alberta", "Quebec","Greenland" };
-            Territory Northwest_Canada = new Territory("Northwest_Canada", links, btnNorthwest_Canada);
+            Territory Northwest_Canada = new Territory("Northwest_Canada", links, btnNorthwest_Canada,NorthwestCanadacurrent,NorthwestCanada_temp);
             links = new List<string> { "Northwest_Canada","Quebec","Ontario","Iceland"};
-            Territory Greenland = new Territory("Greenland", links, btnGreenland);
+            Territory Greenland = new Territory("Greenland", links, btnGreenland, Greenland_current, Greenland_temp);
             links = new List<string> {"Alaska","Northwest_Canada","Quebec","Western_US"};
-            Territory Alberta = new Territory("Alberta", links, btnAlberta);
+            Territory Alberta = new Territory("Alberta", links, btnAlberta, Alberta_current, Alberta_temp);
             links = new List<string> {"Alberta","Ontario","Greenland","Northwest_Canada","Western_US","Eastern_US" };
-            Territory Quebec = new Territory("Quebec", links, btnQuebec);
+            Territory Quebec = new Territory("Quebec", links, btnQuebec, Quebeccurrent, Quebectemp);
             links = new List<string> {"Greenland","Quebec","Eastern_US" };
-            Territory Ontario = new Territory("Ontario", links, btnOntario);
+            Territory Ontario = new Territory("Ontario", links, btnOntario, Ontariocurrent, Ontariotemp);
             links = new List<string> {"Alberta","Quebec","Eastern_US","Central_America"};
-            Territory Western_US = new Territory("Western_US", links, btnWestern_US);
+            Territory Western_US = new Territory("Western_US", links, btnWestern_US, WesternUScurrent,WesternUStemp);
             links = new List<string> {"Western_US","Ontario","Central America"};
-            Territory Eastern_US = new Territory("Eastern_US", links, btnEastern_US);
+            Territory Eastern_US = new Territory("Eastern_US", links, btnEastern_US, EasternUS_current, EasternUS_temp);
             links = new List<string> {"Western_US","Eastern_US","Venezuela"};
-            Territory Central_America = new Territory("Central_America", links, btnCentral_America);
+            Territory Central_America = new Territory("Central_America", links, btnCentral_America, CentralAfricacurrent, CentralAfricatemp);
             links = new List<string> {"Central_America","Peru","Brazil"};
-            Territory Venezuela = new Territory("Venezuela", links, btnVenezuela);
+            Territory Venezuela = new Territory("Venezuela", links, btnVenezuela, Venezuelacurrent, Venezuelatemp);
             links = new List<string> {"Venezuela","Brazil","Argentina"};
-            Territory Peru = new Territory("Peru", links, btnPeru);
+            Territory Peru = new Territory("Peru", links, btnPeru, Perucurrent, Perutemp);
             links = new List<string> {"Venezuela","Peru","Argentina","North_Africa"};
-            Territory Brazil = new Territory("Brazil", links, btnBrazil);
+            Territory Brazil = new Territory("Brazil", links, btnBrazil, Brazilcurrent, Braziltemp);
             links = new List<string> {"Peru","Brazil" };
-            Territory Argentina = new Territory("Argentina", links, btnArgentina);
+            Territory Argentina = new Territory("Argentina", links, btnArgentina, Argentinacurrent, Argentinatemp);
             links = new List<string> {"Greenland","Scandinavia","UK_Ireland" };
-            Territory Iceland = new Territory("Iceland", links, btnIceland);
+            Territory Iceland = new Territory("Iceland", links, btnIceland, Icelandcurrent, Icelandtemp);
             links = new List<string> {"Iceland","Western_Europe","Northern_Europe","Scandinavia" };
-            Territory UK_Ireland = new Territory("UK_Ireland", links, btnUK_Ireland);
+            Territory UK_Ireland = new Territory("UK_Ireland", links, btnUK_Ireland, UKIrelandcurrent,UKIrelandtemp);
             links = new List<string> {"Iceland","UK_Ireland","Northern_Europe","Soviet_Bloc" };
-            Territory Scandinavia = new Territory("Scandinavia", links, btnScandinavia);
+            Territory Scandinavia = new Territory("Scandinavia", links, btnScandinavia, Scandinaviacurrent, Scandinaviatemp);
             links = new List<string> { "Scandinavia","Northern_Europe","Southern_Europe","Ural","Afghanistan","Middle_East" };
-            Territory Soviet_Bloc  = new Territory( "Soviet_Bloc" , links, btnSoviet_Bloc);
+            Territory Soviet_Bloc  = new Territory( "Soviet_Bloc" , links, btnSoviet_Bloc, SovietBloccurrent, SovietBloctemp);
             links = new List<string> {"Western_Europe","Northern_Europe","Soviet_Bloc","Middle_East","Egypt"   };
-            Territory Southern_Europe = new Territory("Southern_Europe", links, btnSouthern_Europe);
+            Territory Southern_Europe = new Territory("Southern_Europe", links, btnSouthern_Europe, SouthernEuropecurrent, SouthernEuropetemp);
             links = new List<string> { "UK_Ireland","Scandinavia","Soviet_Bloc","Southern_Europe","Western_Europe" };
-            Territory Northern_Europe = new Territory("Northern_Europe", links, btnNorthern_Europe);
+            Territory Northern_Europe = new Territory("Northern_Europe", links, btnNorthern_Europe, NorthernEuropeantemp, NorthernEuropencurrent);
             links = new List<string> {"UK_Ireland","Northern_Europe","Southern_Europe","North_Africa" };
-            Territory Western_Europe = new Territory("Western_Europe", links, btnWestern_Europe);
+            Territory Western_Europe = new Territory("Western_Europe", links, btnWestern_Europe, WesternEuropecurrent, WesternEuropetemp);
             links = new List<string> {"Brazil","Egypt","East_Africa","Central_Africa","Western_Europe" };
-            Territory North_Africa = new Territory("North_Africa", links, btnNorth_Africa);
+            Territory North_Africa = new Territory("North_Africa", links, btnNorth_Africa, NorthAfricacurrent, NorthAfricatemp);
             links = new List<string> {"North_Africa","Southern_Europe","Middle_East","East_Africa"};
-            Territory Egypt = new Territory("Egypt", links, btnEgypt);
+            Territory Egypt = new Territory("Egypt", links, btnEgypt, Egyptcurrent, Egypttemp);
             links = new List<string> {"North_Africa","East_Africa","South_Africa" };
-            Territory Central_Africa = new Territory("Central_Africa", links, btnCentral_Africa);
+            Territory Central_Africa = new Territory("Central_Africa", links, btnCentral_Africa, CentralAfricacurrent, CentralAfricatemp);
             links = new List<string> {"Egypt","Middle_East","Madagascar","South_Africa","Central_Africa","North_Africa" };
-            Territory East_Africa = new Territory("East_Africa", links, btnEast_Africa);
+            Territory East_Africa = new Territory("East_Africa", links, btnEast_Africa, EastAfricacurrent, EastAfricatemp);
             links = new List<string> { "Central_Africa","East_Africa","Madagascar" };
-            Territory South_Africa = new Territory("South_Africa", links, btnSouth_Africa);
+            Territory South_Africa = new Territory("South_Africa", links, btnSouth_Africa, SouthAfricacurrent, SouthAfricatemp);
             links = new List<string> { "South_Africa","East_Africa"};
-            Territory Madagascar = new Territory("Madagascar", links, btnMadagascar);
+            Territory Madagascar = new Territory("Madagascar", links, btnMadagascar, Madagascarcurrent, Madagascartemp);
             links = new List<string> {"Southern_Europe","Soviet_Bloc","Afghanistan","India","East_Africa","Egypt" };
-            Territory Middle_East= new Territory("Middle_East", links, btnMiddle_East);
+            Territory Middle_East= new Territory("Middle_East", links, btnMiddle_East, MiddleEastacurrent, MiddleEasttemp);
             links = new List<string> {"Middle_East","Soviet_Bloc","Ural","China","India" };
-            Territory Afghanistan = new Territory("Afghanistan", links, btnAfghanistan);
+            Territory Afghanistan = new Territory("Afghanistan", links, btnAfghanistan, Afghanistancurrent, Afghanistantemp);
             links = new List<string> {"Middle_East","Afghanistan","China","Southeast_Asia" };
-            Territory India = new Territory("India", links, btnIndia);
+            Territory India = new Territory("India", links, btnIndia, Indiacurrent, Indiatemp);
             links = new List<string> {"India","China","Indonesia" };
-            Territory Southeast_Asia = new Territory("Southeast_Asia", links, btnSoutheast_Asia);
+            Territory Southeast_Asia = new Territory("Southeast_Asia", links, btnSoutheast_Asia, Southeastcurrent, Southeasttemp);
             links = new List<string> {"Afghanistan","Ural","Siberia","Mongolia","Southeast_Asia","India" };
-            Territory China = new Territory("China", links, btnChina);
+            Territory China = new Territory("China", links, btnChina, Chinacurrent, Chinatemp);
             links = new List<string> {"Soviet_Bloc","Siberia","China","Afghanistan" };
-            Territory Ural = new Territory("Ural", links, btnUral);
+            Territory Ural = new Territory("Ural", links, btnUral, Uralcurrent, Uraltemp);
             links = new List<string> {"Ural","Yakutsk","Irkutsk","Mongolia","China" };
-            Territory Siberia = new Territory("Siberia", links, btnSiberia);
+            Territory Siberia = new Territory("Siberia", links, btnSiberia, Siberiacurrent, Siberiatemp);
             links = new List<string> {"China","Siberia","Irkutsk","Kamchatka","Japan" };
-            Territory Mongolia = new Territory("Mongolia", links, btnMongolia);
+            Territory Mongolia = new Territory("Mongolia", links, btnMongolia, Mongoliacurrent, Mongoliatemp);
             links = new List<string> {"Mongolia","Kamchatka" };
-            Territory Japan = new Territory("Japan", links, btnJapan);
+            Territory Japan = new Territory("Japan", links, btnJapan, Japanacurrent, Japantemp);
             links = new List<string> {"Siberia","Yakutsk","Kamchatka","Mongolia" };
-            Territory Irkutsk = new Territory("Irkutsk", links, btnIrkutsk);
+            Territory Irkutsk = new Territory("Irkutsk", links, btnIrkutsk, Irkutskcurrent, Irkutsktemp);
             links = new List<string> {"Siberia","Kamchatka","Irkutsk" };
-            Territory Yakutsk = new Territory("Yakutsk", links, btnYakutsk);
+            Territory Yakutsk = new Territory("Yakutsk", links, btnYakutsk, Yakutskcurrent, Yakutsktemp);
             links = new List<string> {"Yakutsk", "Alaska","Japan","Mongolia","Irkutsk"};
-            Territory Kamchatka = new Territory("Kamchatka", links, btnKamchatka);
+            Territory Kamchatka = new Territory("Kamchatka", links, btnKamchatka, Kamchatkacurrent, Kamchatkatemp);
             links = new List<string> {"New_Guinea","Southeast_Asia" };
-            Territory Indonesia = new Territory("Indonesia", links, btnIndonesia);
+            Territory Indonesia = new Territory("Indonesia", links, btnIndonesia, Indonesiacurrent, Indonesiatemp);
             links = new List<string> {"Indonesia","Eastern_Australia","Western_Australia"};
-            Territory New_Guinea = new Territory("New_Guinea", links, btnNew_Guinea);
+            Territory New_Guinea = new Territory("New_Guinea", links, btnNew_Guinea, NewGuineacurrent, NewGuineatemp);
             links = new List<string> {"Eastern_Australia","New_Guinea" };
-            Territory Western_Australia = new Territory("Western_Australia", links, btnWestern_Australia);
+            Territory Western_Australia = new Territory("Western_Australia", links, btnWestern_Australia, WesternAustraliacurrent, WesternAustraliatemp);
             links = new List<string> {"Western_Australia","New_Guinea" };
-            Territory Eastern_Australia = new Territory("Eastern_Australia", links, btnEastern_Australia);
+            Territory Eastern_Australia = new Territory("Eastern_Australia", links, btnEastern_Australia, EasternAustraliacurrent, EasternAustraliatemp);
             territories = new List<Territory>
             {
                 Alaska, Northwest_Canada,Greenland,Alberta,Quebec,Ontario,Western_US,Eastern_US,Central_America,
@@ -477,7 +477,7 @@ namespace RiskGame
             foreach(Territory t in territories)
             {
                 t.button.Background = t.owner.Color;
-                t.button.Content = t.currentarmies;
+                t.button.Content = t.Currentarmies;
                 // if place, show temp
                 // if attack show moving etc
                 // put in code that allows the current action to be done
@@ -487,27 +487,27 @@ namespace RiskGame
         private void ConquerTerritoryUI()
         {
             nextTerritory.button.Background = nextTerritory.owner.Color;
-            nextTerritory.button.Content = nextTerritory.temparmies;
+            //nextTerritory.button.temp = nextTerritory.Temparmies;
         }
         private void AttackTerritoryUI()
         {
-            slctTerritory.button.Content = slctTerritory.currentarmies;
+            //slctTerritory.button.Content = slctTerritory.Currentarmies;
         }
         private void UpdateNumOutput()
         {
             switch (gameState)
             {
                 case GameState.PlacingArmy:
-                    lblNumber.Content = slctTerritory.temparmies;
+                    lblNumber.Content = slctTerritory.Temparmies;
                     break;
                 case GameState.Attacking:
-                    lblNumber.Content = nextTerritory.temparmies;
+                    lblNumber.Content = nextTerritory.Temparmies;
                     break;
                 case GameState.Conquer:
-                    lblNumber.Content = nextTerritory.temparmies;
+                    lblNumber.Content = nextTerritory.Temparmies;
                     break;
                 case GameState.Move:
-                    lblNumber.Content = nextTerritory.temparmies;
+                    lblNumber.Content = nextTerritory.Temparmies;
                     break;
             }
         }
@@ -541,7 +541,7 @@ namespace RiskGame
         private void UpdatePlayerUI()
         {
             if(gameState == GameState.PlacingArmy) { UpdatePlayerUndeployed(); }
-            if(gameState == GameState.Conquer) { nextTerritory.button.Content = nextTerritory.currentarmies; }
+            if(gameState == GameState.Conquer) { /*nextTerritory.button.Content = nextTerritory.Currentarmies;*/ }
             UpdatePlayerTerritories(true);
             UpdatePlayerArmies(true);
         }
@@ -687,7 +687,7 @@ namespace RiskGame
         {
             if(i >= 1)
             {
-                if (slctTerritory.currentarmies < 2)
+                if (slctTerritory.Currentarmies < 2)
                 {
                     Output("At least one army must remain in a friendly territory.");
                     return;
@@ -695,7 +695,7 @@ namespace RiskGame
             }
             if(i <= -1)
             {
-                if(nextTerritory.temparmies <= 1)
+                if(nextTerritory.Temparmies <= 1)
                 {
                     switch (gameState)
                     {
@@ -713,8 +713,8 @@ namespace RiskGame
                     return;
                 }
             }
-            slctTerritory.currentarmies -= i;
-            nextTerritory.temparmies += i;
+            slctTerritory.Currentarmies -= i;
+            nextTerritory.Temparmies += i;
             UpdateNumOutput();
             AttackTerritoryUI();
             if(gameState == GameState.Conquer) { ConquerTerritoryUI(); }
@@ -728,8 +728,8 @@ namespace RiskGame
                     {
                         if (t.owner == currentplayer)
                         {
-                            currentplayer.army_undeployed += t.temparmies;
-                            t.temparmies = 0;
+                            currentplayer.army_undeployed += t.Temparmies;
+                            t.Temparmies = 0;
                         }
                     }
                     break;
@@ -738,8 +738,8 @@ namespace RiskGame
                     {
                         if(nextTerritory != null)
                         {
-                            slctTerritory.currentarmies += nextTerritory.temparmies;
-                            nextTerritory.temparmies = 0;
+                            slctTerritory.Currentarmies += nextTerritory.Temparmies;
+                            nextTerritory.Temparmies = 0;
                         }
                         ClearSelectionsUI();
                     }
@@ -752,8 +752,8 @@ namespace RiskGame
                     {
                         if(nextTerritory != null)
                         {
-                            slctTerritory.currentarmies += nextTerritory.temparmies;
-                            nextTerritory.temparmies = 0;
+                            slctTerritory.Currentarmies += nextTerritory.Temparmies;
+                            nextTerritory.Temparmies = 0;
                         }
                         ClearSelectionsUI();
                     }
@@ -807,7 +807,7 @@ namespace RiskGame
                 case GameState.Attacking:
                     if(t.owner == currentplayer)
                     {
-                        if(t.currentarmies > 1)
+                        if(t.Currentarmies > 1)
                         {
                             ClearSelections();
                             SelectTerritory(t, btnTerritory, Brushes.Lime, false);
@@ -822,7 +822,7 @@ namespace RiskGame
                             if(btnTerritory.BorderBrush == Brushes.Aqua)
                             {
                                 SelectTerritory(t, btnTerritory, Brushes.Red, true);
-                                AdjustAttackMoves((slctTerritory.currentarmies - 1));
+                                AdjustAttackMoves((slctTerritory.Currentarmies - 1));
                                 Output("Select the number of armies you wish to attack with.");
                             }
                             else if(btnTerritory.BorderBrush == Brushes.Red){
@@ -905,9 +905,9 @@ namespace RiskGame
                     {
                         if(t.owner == currentplayer)
                         {
-                            Place_Reinforce(t, t.temparmies);
-                            currentplayer.army_strength += t.temparmies;
-                            t.temparmies = 0;
+                            Place_Reinforce(t, t.Temparmies);
+                            currentplayer.army_strength += t.Temparmies;
+                            t.Temparmies = 0;
                         }
                     }
                     if(currentplayer.army_undeployed == 0) {
@@ -920,13 +920,13 @@ namespace RiskGame
                     if((slctTerritory != null) && (nextTerritory != null))
                     {
                         double num = rng.NextDouble();
-                        double prob = 1 / (1 + Math.Exp(-0.7*((nextTerritory.temparmies - nextTerritory.currentarmies) - 0.5)));
+                        double prob = 1 / (1 + Math.Exp(-0.7*((nextTerritory.Temparmies - nextTerritory.Currentarmies) - 0.5)));
                         if(num <= prob)
                         {
                             // add in loss of troops
                             nextTerritory.owner.territoriesowned -= 1;
-                            nextTerritory.owner.army_strength -= nextTerritory.currentarmies;
-                            nextTerritory.currentarmies = 0;
+                            nextTerritory.owner.army_strength -= nextTerritory.Currentarmies;
+                            nextTerritory.Currentarmies = 0;
                             nextTerritory.owner = currentplayer;
                             currentplayer.territoriesowned += 1;
                             bool won = true;
@@ -935,33 +935,33 @@ namespace RiskGame
                                 if(p.territoriesowned > 0) { won = false; }
                             }
                             if (won) { Win(); }
-                            int lost = nextTerritory.temparmies - (int)Math.Ceiling(prob * nextTerritory.temparmies);
-                            nextTerritory.temparmies -= lost;
+                            int lost = nextTerritory.Temparmies - (int)Math.Ceiling(prob * nextTerritory.Temparmies);
+                            nextTerritory.Temparmies -= lost;
                             Output(String.Format("You have captured this territory and lost {0} armies in battle.", lost));
                             UpdateState(GameState.Conquer);
                         }
                         else
                         {
-                            nextTerritory.temparmies = 0;
-                            int survived = (int)(Math.Ceiling(1 - prob) * nextTerritory.currentarmies);
-                            int loss = nextTerritory.currentarmies - survived;
-                            nextTerritory.currentarmies = survived; // can be simplified /\
+                            nextTerritory.Temparmies = 0;
+                            int survived = (int)(Math.Ceiling(1 - prob) * nextTerritory.Currentarmies);
+                            int loss = nextTerritory.Currentarmies - survived;
+                            nextTerritory.Currentarmies = survived; // can be simplified /\
                             Output(String.Format("You have lost this battle, the enemy suffered {0} casualties.", loss ));
-                            nextTerritory.button.Content = nextTerritory.currentarmies;
+                            //nextTerritory.button.Content = nextTerritory.Currentarmies;
                             ClearSelectionsUI();
                         }
                     }
                     else { Output("You must select the territories you wish to attack to/from first."); }
                     break;
                 case GameState.Conquer:
-                    Place_Reinforce(nextTerritory, nextTerritory.temparmies);
-                    nextTerritory.temparmies = 0;
+                    Place_Reinforce(nextTerritory, nextTerritory.Temparmies);
+                    nextTerritory.Temparmies = 0;
                     UpdatePlayerUI(); // maybe make this into nextAction();
                     NextAction();
                     break;
                 case GameState.Move:
-                    Place_Reinforce(nextTerritory, nextTerritory.temparmies);
-                    nextTerritory.temparmies = 0;
+                    Place_Reinforce(nextTerritory, nextTerritory.Temparmies);
+                    nextTerritory.Temparmies = 0;
                     UpdatePlayerUI(); // maybe make this into nextAction();
                     NextAction();
                     break;
@@ -984,9 +984,9 @@ namespace RiskGame
                 currentplayer.territoriesowned += num;
             }
             // Sets up game-board, sets owner and places army into territory
-            T.currentarmies += num;
+            T.Currentarmies += num;
             if(gameState == GameState.InitialArmyPlace) { currentplayer.army_undeployed -= num; }
-            T.button.Content = T.currentarmies;
+            //T.button.Content = T.Currentarmies;
         }
         private void NextAction()
         {
@@ -1028,7 +1028,7 @@ namespace RiskGame
                                 break;
                             }
                         }
-                        slctTerritory.temparmies += i;
+                        slctTerritory.Temparmies += i;
                         currentplayer.army_undeployed -= i;
                         UpdateNumOutput();
                         break;
