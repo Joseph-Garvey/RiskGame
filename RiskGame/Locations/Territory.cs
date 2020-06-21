@@ -21,6 +21,7 @@ namespace RiskGame.Locations
         public Label current;
         public Label temp;
         private int currentarmies;
+        private int temparmies; // used for storing number to be placed, number attacking, number to be moved to, moved from
         public int Currentarmies
         {
             get { return this.currentarmies; }
@@ -47,7 +48,6 @@ namespace RiskGame.Locations
             }
         }
 
-        private int temparmies = 0; // used for storing number to be placed, number attacking, number to be moved to, moved from
 
         public Territory(string name, List<string> links, Button button, Label current, Label temp)
         {
@@ -64,7 +64,11 @@ namespace RiskGame.Locations
 
         public void NotifyPropertyChanged(string propName)
         {
-            if(this.PropertyChanged != null) { this.PropertyChanged(this, new PropertyChangedEventArgs(propName)); }
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if(handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(propName));
+            }
         }
         public event PropertyChangedEventHandler PropertyChanged;
 
