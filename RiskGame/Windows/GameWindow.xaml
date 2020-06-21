@@ -33,253 +33,253 @@
                 <Button x:Name="btnAlaska" Margin="79,48,1186,502">
                     <StackPanel>
                         <Label x:Name="Alaska_current">Alaska</Label>
-                        <Label x:Name="Alaska_temp"></Label>
+                        <Label x:Name="Alaska_temp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnAlberta" Margin="127,102,1129,464">
                     <StackPanel>
                         <Label x:Name="Alberta_current">Alberta</Label>
-                        <Label x:Name="Alberta_temp"></Label>
+                        <Label x:Name="Alberta_temp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnCentral_America" Margin="99,230,1119,321">
                     <StackPanel>
                         <Label x:Name="CentralAmerica_current">Central America</Label>
-                        <Label x:Name="CentralAmerica_temp"></Label>
+                        <Label x:Name="CentralAmerica_temp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnEastern_US" Margin="195,158,1039,397">
                     <StackPanel>
                         <Label x:Name="EasternUS_current">Eastern US</Label>
-                        <Label x:Name="EasternUS_temp"></Label>
+                        <Label x:Name="EasternUS_temp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnGreenland" Margin="435,29,800,529">
                     <StackPanel>
                         <Label x:Name="Greenland_current">Greenland</Label>
-                        <Label x:Name="Greenland_temp"></Label>
+                        <Label x:Name="Greenland_temp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnNorthwest_Canada" Margin="160,48,1055,501" >
                     <StackPanel>
                         <Label x:Name="NorthwestCanadacurrent">Northwest Canada</Label>
-                        <Label x:Name="NorthwestCanada_temp"></Label>
+                        <Label x:Name="NorthwestCanada_temp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnOntario" Margin="280,98,957,454">
                     <StackPanel>
                         <Label x:Name="Ontariocurrent">Ontario</Label>
-                        <Label x:Name="Ontariotemp"></Label>
+                        <Label x:Name="Ontariotemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnQuebec" Margin="203,100,1042,455">
                     <StackPanel>
                         <Label x:Name="Quebeccurrent">Quebec</Label>
-                        <Label x:Name="Quebectemp"></Label>
+                        <Label x:Name="Quebectemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnWestern_US" Margin="84,149,1157,405">
                     <StackPanel>
                         <Label x:Name="WesternUScurrent">Western US</Label>
-                        <Label x:Name="WesternUStemp"></Label>
+                        <Label x:Name="WesternUStemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnArgentina" Margin="280,463,972,94">
                     <StackPanel>
                         <Label x:Name="Argentinacurrent">Argentina</Label>
-                        <Label x:Name="Argentinatemp"></Label>
+                        <Label x:Name="Argentinatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnBrazil" Margin="335,375,929,182">
                     <StackPanel>
                         <Label x:Name="Brazilcurrent">Brazil</Label>
-                        <Label x:Name="Braziltemp"></Label>
+                        <Label x:Name="Braziltemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnPeru" Margin="254,396,1006,164">
                     <StackPanel>
                         <Label x:Name="Perucurrent">Peru</Label>
-                        <Label x:Name="Perutemp"></Label>
+                        <Label x:Name="Perutemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnVenezuela" Margin="251,298,987,260">
                     <StackPanel>
                         <Label x:Name="Venezuelacurrent">Venezuela</Label>
-                        <Label x:Name="Venezuelatemp"></Label>
+                        <Label x:Name="Venezuelatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnUK_Ireland" Margin="498,106,734,454">
                     <StackPanel>
                         <Label x:Name="UKIrelandcurrent">UK Ireland</Label>
-                        <Label x:Name="UKIrelandtemp"></Label>
+                        <Label x:Name="UKIrelandtemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnIceland" Margin="508,65,750,493">
                     <StackPanel>
                         <Label x:Name="Icelandcurrent">Iceland</Label>
-                        <Label x:Name="Icelandtemp"></Label>
+                        <Label x:Name="Icelandtemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnNorthern_Europe"  Margin="608,102,613,454">
                     <StackPanel>
                         <Label x:Name="NorthernEuropencurrent">Northern Europe</Label>
-                        <Label x:Name="NorthernEuropeantemp"></Label>
+                        <Label x:Name="NorthernEuropeantemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnSouthern_Europe" Margin="645,149,560,408">
                     <StackPanel>
                         <Label x:Name="SouthernEuropecurrent">Southern Europe</Label>
-                        <Label x:Name="SouthernEuropetemp"></Label>
+                        <Label x:Name="SouthernEuropetemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnSoviet_Bloc" Margin="725,98,519,453">
                     <StackPanel>
                         <Label x:Name="SovietBloccurrent">Soviet Bloc</Label>
-                        <Label x:Name="SovietBloctemp"></Label>
+                        <Label x:Name="SovietBloctemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnWestern_Europe" Margin="525,149,684,409">
                     <StackPanel>
                         <Label x:Name="WesternEuropecurrent">Western Europe</Label>
-                        <Label x:Name="WesternEuropetemp"></Label>
+                        <Label x:Name="WesternEuropetemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnScandinavia" Margin="631,60,587,498">
                     <StackPanel>
                         <Label x:Name="Scandinaviacurrent">Scandinavia</Label>
-                        <Label x:Name="Scandinaviatemp"></Label>
+                        <Label x:Name="Scandinaviatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnEast_Africa" Margin="725,290,519,269">
                     <StackPanel>
                         <Label x:Name="EastAfricacurrent">East Africa</Label>
-                        <Label x:Name="EastAfricatemp"></Label>
+                        <Label x:Name="EastAfricatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnMadagascar" Margin="755,412,481,140">
                     <StackPanel>
                         <Label x:Name="Madagascarcurrent">Madagascar</Label>
-                        <Label x:Name="Madagascartemp"></Label>
+                        <Label x:Name="Madagascartemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnEgypt"  Margin="661,209,587,344">
                     <StackPanel>
                         <Label x:Name="Egyptcurrent">Egypt</Label>
-                        <Label x:Name="Egypttemp"></Label>
+                        <Label x:Name="Egypttemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnNorth_Africa"  Margin="553,247,666,311">
                     <StackPanel>
                         <Label x:Name="NorthAfricacurrent">North Africa</Label>
-                        <Label x:Name="NorthAfricatemp"></Label>
+                        <Label x:Name="NorthAfricatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnCentral_Africa"  Margin="645,326,574,232">
                     <StackPanel>
                         <Label x:Name="CentralAfricacurrent">Central Africa</Label>
-                        <Label x:Name="CentralAfricatemp"></Label>
+                        <Label x:Name="CentralAfricatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnSouth_Africa" Margin="645,411,587,142">
                     <StackPanel>
                         <Label x:Name="SouthAfricacurrent">South Africa</Label>
-                        <Label x:Name="SouthAfricatemp"></Label>
+                        <Label x:Name="SouthAfricatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnAfghanistan"  Margin="811,131,419,430">
                     <StackPanel>
                         <Label x:Name="Afghanistancurrent">Afghanistan</Label>
-                        <Label x:Name="Afghanistantemp"></Label>
+                        <Label x:Name="Afghanistantemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnChina" Margin="1000,184,256,376">
                     <StackPanel>
                         <Label x:Name="Chinacurrent">China</Label>
-                        <Label x:Name="Chinatemp"></Label>
+                        <Label x:Name="Chinatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnIndia" Margin="910,217,342,339">
                     <StackPanel>
                         <Label x:Name="Indiacurrent">India</Label>
-                        <Label x:Name="Indiatemp"></Label>
+                        <Label x:Name="Indiatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnJapan" Margin="1159,184,105,382">
                     <StackPanel>
                         <Label x:Name="Japanacurrent">Japan</Label>
-                        <Label x:Name="Japantemp"></Label>
+                        <Label x:Name="Japantemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnMiddle_East" Margin="765,206,467,351">
                     <StackPanel>
                         <Label x:Name="MiddleEastacurrent">MiddleEast</Label>
-                        <Label x:Name="MiddleEasttemp"></Label>
+                        <Label x:Name="MiddleEasttemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnMongolia"  Margin="1032,135,201,427">
                     <StackPanel>
                         <Label x:Name="Mongoliacurrent">Mongolia</Label>
-                        <Label x:Name="Mongoliatemp"></Label>
+                        <Label x:Name="Mongoliatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnSoutheast_Asia"  Margin="1002,252,219,312">
                     <StackPanel>
                         <Label x:Name="Southeastcurrent">Southeast Asia</Label>
-                        <Label x:Name="Southeasttemp"></Label>
+                        <Label x:Name="Southeasttemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnSiberia" Margin="894,60,359,502">
                     <StackPanel>
                         <Label x:Name="Siberiacurrent">Siberia</Label>
-                        <Label x:Name="Siberiatemp"></Label>
+                        <Label x:Name="Siberiatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnUral" Margin="830,75,444,486">
                     <StackPanel>
                         <Label x:Name="Uralcurrent">Ural</Label>
-                        <Label x:Name="Uraltemp"></Label>
+                        <Label x:Name="Uraltemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnEastern_Australia"  Margin="1169,441,50,119">
                     <StackPanel>
                         <Label x:Name="EasternAustraliacurrent">Eastern Australia</Label>
-                        <Label x:Name="EasternAustraliatemp"></Label>
+                        <Label x:Name="EasternAustraliatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnWestern_Australia" Margin="1057,430,157,129">
                     <StackPanel>
                         <Label x:Name="WesternAustraliacurrent">Western Australia</Label>
-                        <Label x:Name="WesternAustraliatemp"></Label>
+                        <Label x:Name="WesternAustraliatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnNew_Guinea" Margin="1183,347,46,213">
                     <StackPanel>
                         <Label x:Name="NewGuineacurrent">New Guinea</Label>
-                        <Label x:Name="NewGuineatemp"></Label>
+                        <Label x:Name="NewGuineatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnIndonesia" Margin="1043,336,183,225">
                     <StackPanel>
                         <Label x:Name="Indonesiacurrent">Indonesia</Label>
-                        <Label x:Name="Indonesiatemp"></Label>
+                        <Label x:Name="Indonesiatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnIrkutsk" Margin="987,102,238,461">
                     <StackPanel>
                         <Label x:Name="Irkutskcurrent">Irkutsk</Label>
-                        <Label x:Name="Irkutsktemp"></Label>
+                        <Label x:Name="Irkutsktemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnKamchatka" Margin="1117,64,126,497">
                     <StackPanel>
                         <Label x:Name="Kamchatkacurrent">Kamchatka</Label>
-                        <Label x:Name="Kamchatkatemp"></Label>
+                        <Label x:Name="Kamchatkatemp">t</Label>
                     </StackPanel>
                 </Button>
                 <Button x:Name="btnYakutsk" Margin="997,59,234,503">
                     <StackPanel>
                         <Label x:Name="Yakutskcurrent">Yakutsk</Label>
-                        <Label x:Name="Yakutsktemp"></Label>
+                        <Label x:Name="Yakutsktemp">t</Label>
                     </StackPanel>
                 </Button>
             </Grid>

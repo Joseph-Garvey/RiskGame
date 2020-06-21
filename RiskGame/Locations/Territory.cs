@@ -62,19 +62,19 @@ namespace RiskGame.Locations
             Temparmies = 0;
         }
 
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public void NotifyPropertyChanged(string propName)
         {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if(handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propName));
-            }
+            if (this.PropertyChanged != null)
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-        public event PropertyChangedEventHandler PropertyChanged;
 
         private void BindLabel(ref Label label, string bindingsource)
         {
             Binding b = new Binding(bindingsource);
+            b.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
             b.Source = this;
             label.SetBinding(Label.ContentProperty, b);
         }

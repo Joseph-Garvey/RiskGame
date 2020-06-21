@@ -110,7 +110,7 @@ namespace RiskGame
             links = new List<string> {"Western_US","Ontario","Central America"};
             Territory Eastern_US = new Territory("Eastern_US", links, btnEastern_US, EasternUS_current, EasternUS_temp);
             links = new List<string> {"Western_US","Eastern_US","Venezuela"};
-            Territory Central_America = new Territory("Central_America", links, btnCentral_America, CentralAfricacurrent, CentralAfricatemp);
+            Territory Central_America = new Territory("Central_America", links, btnCentral_America, CentralAmerica_current, CentralAmerica_temp);
             links = new List<string> {"Central_America","Peru","Brazil"};
             Territory Venezuela = new Territory("Venezuela", links, btnVenezuela, Venezuelacurrent, Venezuelatemp);
             links = new List<string> {"Venezuela","Brazil","Argentina"};
@@ -1028,7 +1028,7 @@ namespace RiskGame
                                 break;
                             }
                         }
-                        slctTerritory.Temparmies += i;
+                        slctTerritory.Temparmies = slctTerritory.Temparmies + i;
                         currentplayer.army_undeployed -= i;
                         UpdateNumOutput();
                         break;
