@@ -124,6 +124,58 @@ namespace RiskGame
         {
             if (e.Key == Key.Return) { Login(sender, e); }
         }
+        private void ShowHidePassword(object sender, RoutedEventArgs e)
+        {
+            CheckBox checkBox = (CheckBox)sender;
+            PasswordBox passwordBox = new PasswordBox();
+            TextBox textBox = new TextBox();
+            switch (checkBox.Name)
+            {
+                case "chkRegPass":
+                    passwordBox = txtRegPass;
+                    textBox = txtRegPassShow;
+                    break;
+                case "chkRegPassConf":
+                    passwordBox = txtRegPassConf;
+                    textBox = txtRegPassConfShow;
+                    break;
+                case "chkLogPass":
+                    passwordBox = txtLogPass;
+                    textBox = txtLogPassShow;
+                    break;
+            }
+            if (checkBox.IsChecked == true)
+            {
+                textBox.Text = passwordBox.Password;
+                passwordBox.Visibility = Visibility.Collapsed;
+                textBox.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                passwordBox.Password = textBox.Text;
+                passwordBox.Visibility = Visibility.Visible;
+                textBox.Visibility = Visibility.Collapsed;
+
+            }
+        }
+        private void ShowPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            PasswordBox passwordBox = new PasswordBox();
+            TextBox textBox = (TextBox)sender;
+            switch (textBox.Name)
+            {
+                case "chkRegPass":
+                    passwordBox = txtRegPass;
+                    break;
+                case "chkRegPassConf":
+                    passwordBox = txtRegPassConf;
+                    break;
+                case "chkLogPass":
+                    passwordBox = txtLogPass;
+                    break;
+            }
+            passwordBox.Password = textBox.Text;
+        }
 
         // Clear password on keyboard focus to prevent user error and/or copying password.
         private void ClearPwdText(object sender, KeyboardFocusChangedEventArgs e)
@@ -140,21 +192,22 @@ namespace RiskGame
             highscores.Show();
         }
 
-            //        try
-            //{
-            //    lblError.Visibility = Visibility.Collapsed;
-            //    // DEV OPTIONS // to be removed before publish // used for quick testing
-            //    if((String)((Button) sender).Content == "DEVUSER")
-            //    { txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
-            //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-            //        players.Add(player);
-            //        txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
-            //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-            //        players.Add(player);
-            //        txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
-            //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-            //        players.Add(player);
-            //        txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
-            //    }
-}
+
+        //        try
+        //{
+        //    lblError.Visibility = Visibility.Collapsed;
+        //    // DEV OPTIONS // to be removed before publish // used for quick testing
+        //    if((String)((Button) sender).Content == "DEVUSER")
+        //    { txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
+        //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+        //        players.Add(player);
+        //        txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
+        //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+        //        players.Add(player);
+        //        txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
+        //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+        //        players.Add(player);
+        //        txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
+        //    }
+    }
 }
