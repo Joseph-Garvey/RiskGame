@@ -72,7 +72,7 @@ namespace RiskGame
         private static List<Territory> scanterritories = new List<Territory>();
 
         //// Constructors ////
-        // Load Game // Finish later
+        // Load Game //
         public GameWindow(GameManager game)
         {
             // not complete // check at end once all is done
@@ -80,6 +80,9 @@ namespace RiskGame
             InitializeComponent();
             players = game.players;
             territories = game.territories;
+            continents = game.continents;
+            slctTerritory = game.slctTerritory;
+            nextTerritory = game.nextTerritory;
             currentplayer = game.currentplayer;
             turn = game.turn;
             gameState = game.gameState;

@@ -30,7 +30,7 @@
                         <Setter Property="Margin" Value="5"></Setter>
                     </Style>
                 </StackPanel.Resources>
-                <StackPanel x:Name="panel_MainUI" Visibility="Collapsed">
+                <StackPanel x:Name="panel_MainUI">
                     <Border BorderBrush="Black" CornerRadius="10" BorderThickness="1" Background="#66FFFFFF" Margin="5" Width="150" Height="60">
                         <Image Source="pack://siteoforigin:,,,/Images/RiskLogo.png"></Image>
                     </Border>
@@ -150,10 +150,10 @@
                         <TextBlock x:Name="txtSuccess" TextWrapping="Wrap">Success message</TextBlock>
                     </Label>
                 </StackPanel>
-                <DockPanel x:Name="panel_Settings" >
+                <DockPanel x:Name="panel_Settings" Visibility="Collapsed" >
                     <Label Style="{StaticResource lblHeader}" FontSize="12" DockPanel.Dock="Top">Settings:</Label>
                     <Border DockPanel.Dock="Right">
-                        <StackPanel Style="{StaticResource panel_Background}">
+                        <StackPanel Style="{StaticResource panel_Background}" VerticalAlignment="Top" >
                             <StackPanel.Resources>
                                 <Style TargetType="StackPanel" BasedOn="{StaticResource HorizontalCentred}" x:Key="MusicControls">
                                     <Setter Property="Width" Value="145"></Setter>
@@ -161,8 +161,8 @@
                                 </Style>
                             </StackPanel.Resources>
                             <Label Style="{StaticResource lblHeader}">Music:</Label>
-                            <Label>details about song</Label>
-                            <MediaElement x:Name="mediaplayer" Visibility="Collapsed" Source="pack://siteoforigin:,,,/Music/Fallen_Soldier.mp3" LoadedBehavior="Manual" Height="20"></MediaElement>
+                            <Label x:Name="lblMediaDetails" Style="{StaticResource lblSubHeading}"></Label>
+                            <MediaElement x:Name="mediaplayer" Visibility="Collapsed" Source="pack://siteoforigin:,,,/Music/Fallen_Soldier.mp3" LoadedBehavior="Manual" Height="20" MediaEnded="Mediaplayer_MediaEnded" MediaOpened="UpdateMediaText"></MediaElement>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Style="{StaticResource btnCornerUI}" Click="MediaBack">
                                     <Image Source="pack://siteoforigin:,,,/Images/previous.png" Height="14"></Image>
@@ -183,7 +183,7 @@
                             </StackPanel>
                             <StackPanel Style="{StaticResource MusicControls}">
                                 <Label Style="{StaticResource lblSubHeading}">Enabled?</Label>
-                                <CheckBox x:Name="chkMusic" Margin="30,3,30,3" IsChecked="{Binding music_enabled ,Mode=TwoWay}" Click="Music_EnableDisable"/>
+                                <CheckBox x:Name="chkMusicEnabled" Margin="30,3,30,3" Click="Music_EnableDisable" IsChecked="{Binding Music_enabled}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -192,7 +192,7 @@
                             <StackPanel Style="{StaticResource panel_Background}">
                                 <Label Style="{StaticResource lblHeader}">General:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
-                                    <Label Style="{StaticResource lblSubHeading}" Width="55">Fullscreen:</Label>
+                                    <Label Style="{StaticResource lblSubHeading}" Width="75">Fullscreen:</Label>
                                     <CheckBox x:Name="chkFullscreen" Margin="0,0,5,0" Click="Fullscreen_Click"></CheckBox>
                                 </StackPanel>
                             </StackPanel>
@@ -200,6 +200,10 @@
                         <Border>
                             <StackPanel Style="{StaticResource panel_Background}">
                                 <Label Style="{StaticResource lblHeader}">Help:</Label>
+                                <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
+                                    <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
+                                    <CheckBox x:Name="chkHints" Margin="0,0,5,0" Click="Fullscreen_Click"></CheckBox>
+                                </StackPanel>
                                 <Button Style="{StaticResource btnCornerUI}" FontSize="12">Tutorial</Button>
                             </StackPanel>
                         </Border>

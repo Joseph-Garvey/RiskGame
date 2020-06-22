@@ -18,6 +18,9 @@ namespace RiskGame.Game
         private static readonly String FileName = "GameSaves.bin";
         public List<Player> players;
         public List<Territory> territories;
+        public List<Continent> continents;
+        public Territory slctTerritory;
+        public Territory nextTerritory;
         public Player currentplayer;
         public int turn;
         public DateTime lastsave;

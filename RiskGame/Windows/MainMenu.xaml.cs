@@ -39,7 +39,8 @@ namespace RiskGame
                 else { musicIndex = value; }
             }
         }
-        public bool music_enabled;
+        private bool music_enabled;
+        public bool Music_enabled { get => music_enabled; set => music_enabled = value; }
 
         // Constructors //
         public MainWindow()
@@ -49,19 +50,23 @@ namespace RiskGame
             InitializeComponent();
             GameManager.ClearEmptyFile();
             players = new List<Player>();
-            MusicIndex = 0;
-            chkFullscreen.DataContext = this;
+            music_enabled = true;
+            SetupWindow();
         }
         public MainWindow(List<Player> _players)
         {
             // Called when adding a new player via gamesetup window.
             InitializeComponent();
             players = _players;
-            MusicIndex = 0;
-            chkFullscreen.DataContext = this;
             music_enabled = ((Human)players[0]).music_enabled;
+            SetupWindow();
         }
-
+        private void SetupWindow()
+        {
+            this.DataContext = this;
+            MusicIndex = 1;
+            if (music_enabled) { mediaplayer.Play(); }
+        }
         // Methods //
         /// Message management ///
         private void DispErrorMsg(String message)
@@ -230,14 +235,6 @@ namespace RiskGame
             highscores.Show();
         }
 
-
-        /// <summary>
-        /// /////////////////////////////////////
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-
-
         private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) { mediaplayer.Volume = (double)slider_Volume.Value; }
 
         private void MediaBack(object sender, RoutedEventArgs e)
@@ -257,6 +254,10 @@ namespace RiskGame
         }
         private void MediaPause(object sender, RoutedEventArgs e) { mediaplayer.Pause(); }
         private void MediaPlay(object sender, RoutedEventArgs e) { mediaplayer.Play(); }
+        private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            MediaForward(sender, e);
+        }
 
         private void Settings(object sender, RoutedEventArgs e) { Settings(); }
         private void Return(object sender, RoutedEventArgs e) { Return(); }
@@ -325,6 +326,11 @@ namespace RiskGame
         private void Music_EnableDisable(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void UpdateMediaText(object sender, RoutedEventArgs e)
+        {
+            lblMediaDetails.Content = mediaplayer.Source.ToString().Substring(30);
         }
     }
 }
