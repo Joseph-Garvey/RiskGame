@@ -37,7 +37,7 @@ namespace RiskGame
         }
         public MainWindow(List<Player> _players)
         {
-            // Called when adding a new player via gamesetup windwow.
+            // Called when adding a new player via gamesetup window.
             InitializeComponent();
             players = _players;
         }
@@ -47,16 +47,14 @@ namespace RiskGame
         private void DispErrorMsg(String message)
         {
             // Shows error box with message //
-            lblError.Background = Brushes.Red;
             txtError.Text = message;
             lblError.Visibility = Visibility.Visible;
         }
         private void DispSuccessMsg(String message)
         {
-            // Shows message on succesful registration //
-            lblError.Background = Brushes.Green;
-            txtError.Text = message;
-            lblError.Visibility = Visibility.Visible;
+            // Shows message on successful registration //
+            txtSuccess.Text = message;
+            lblSuccess.Visibility = Visibility.Visible;
         }
 
         // Event calls //
@@ -64,6 +62,7 @@ namespace RiskGame
         {
             try
             {
+                lblSuccess.Visibility = Visibility.Hidden;
             // Signs player in when Login button is clicked //
                 // Checks entered details against those on file, retrieves the player's details, returning a player object.
                 player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
@@ -97,6 +96,7 @@ namespace RiskGame
             try
             {
                 lblError.Visibility = Visibility.Collapsed;
+                lblSuccess.Visibility = Visibility.Hidden;
                 // If passwords match, attempt to register the player.
                 if(txtRegPass.Password == txtRegPassConf.Password)
                 {
@@ -160,21 +160,19 @@ namespace RiskGame
         }
         private void ShowPassword_TextChanged(object sender, TextChangedEventArgs e)
         {
-            PasswordBox passwordBox = new PasswordBox();
             TextBox textBox = (TextBox)sender;
             switch (textBox.Name)
             {
-                case "chkRegPass":
-                    passwordBox = txtRegPass;
+                case "txtRegPassShow":
+                    txtRegPass.Password = textBox.Text;
                     break;
-                case "chkRegPassConf":
-                    passwordBox = txtRegPassConf;
+                case "txtRegPassConfShow":
+                    txtRegPassConf.Password = textBox.Text;
                     break;
-                case "chkLogPass":
-                    passwordBox = txtLogPass;
+                case "txtLogPassShow":
+                    txtLogPass.Password = textBox.Text;
                     break;
             }
-            passwordBox.Password = textBox.Text;
         }
 
         // Clear password on keyboard focus to prevent user error and/or copying password.
