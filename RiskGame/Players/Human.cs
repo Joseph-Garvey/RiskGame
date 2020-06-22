@@ -57,7 +57,7 @@ namespace RiskGame
         {
             using (StreamWriter sr = new StreamWriter(FileName, true)) // STREAM ONLY EXISTS FOR EXECUTION
             {
-                String write = String.Format("{0}{1}{2}", (newplayer.Username).PadRight(10), (newplayer.password).PadRight(15), (newplayer.score.ToString()).PadRight(3));
+                String write = String.Format("{0}{1}", (newplayer.Username).PadRight(10), (newplayer.password).PadRight(15));
                 sr.WriteLine(write); /// Format the account as a string and write to file.
             }
         }
@@ -79,7 +79,7 @@ namespace RiskGame
                     if ((tmpplayername == tmpusername) && (tmpplayerpassword == tmppassword)) // if this line matches the player
                     {
                         if (highscore < player.score) { highscore = player.score; } // write the highest of the two scores (saved and new) to the line
-                        lines.Add(String.Format("{0}{1}{2}", tmpplayername, tmpplayerpassword, (highscore.ToString()).PadRight(3)));
+                        lines.Add(String.Format("{0}{1}", tmpplayername, tmpplayerpassword));
                     }
                     else { lines.Add(line); }
                 }

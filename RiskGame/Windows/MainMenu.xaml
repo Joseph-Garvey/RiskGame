@@ -125,7 +125,7 @@
                                     <Button Style="{StaticResource btnUI}" Click="Login" TabIndex="6">Login</Button>
                                     <Button Style="{StaticResource btnCornerUI}" Click="Login">Admin</Button>
                                 </StackPanel>
-                                
+
                             </StackPanel>
                         </Border>
                         <Grid>
