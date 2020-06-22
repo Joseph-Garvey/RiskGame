@@ -63,9 +63,28 @@ namespace RiskGame
             try
             {
                 lblSuccess.Visibility = Visibility.Hidden;
-            // Signs player in when Login button is clicked //
+                // DEV OPTIONS // to be removed before publish // used for quick testing
+                if ((String)((Button)sender).Content == "Admin")
+                {
+                    txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
+                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                    players.Add(player);
+                    txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
+                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                    players.Add(player);
+                    txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
+                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                    players.Add(player);
+                    txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
+                }
+                // Signs player in when Login button is clicked //
                 // Checks entered details against those on file, retrieves the player's details, returning a player object.
                 player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                if (players.Contains(player))
+                {
+                    DispErrorMsg("This player is already signed in");
+                    return;
+                }
                 players.Add(player);
                 // Shows setup window and closes Login/Registration
                 GameSetup Setup = new GameSetup(players);
@@ -104,6 +123,7 @@ namespace RiskGame
                     DispSuccessMsg("Registration successful. Click login to continue.");
                     txtLogName.Text = txtRegName.Text;
                     txtLogPass.Password = txtRegPass.Password;
+                    Login(sender, e);
                 }
                 else { DispErrorMsg("Passwords do not match"); }
             }
@@ -189,23 +209,5 @@ namespace RiskGame
             this.Close();
             highscores.Show();
         }
-
-
-        //        try
-        //{
-        //    lblError.Visibility = Visibility.Collapsed;
-        //    // DEV OPTIONS // to be removed before publish // used for quick testing
-        //    if((String)((Button) sender).Content == "DEVUSER")
-        //    { txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
-        //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-        //        players.Add(player);
-        //        txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
-        //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-        //        players.Add(player);
-        //        txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
-        //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-        //        players.Add(player);
-        //        txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
-        //    }
     }
 }

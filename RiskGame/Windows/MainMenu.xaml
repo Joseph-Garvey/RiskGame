@@ -121,7 +121,11 @@
                                         <CheckBox x:Name="chkLogPass" Height="14" Click="ShowHidePassword"></CheckBox>
                                     </Button>
                                 </StackPanel>
-                                <Button Style="{StaticResource btnUI}" Click="Login" TabIndex="6">Login</Button>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Style="{StaticResource btnUI}" Click="Login" TabIndex="6">Login</Button>
+                                    <Button Style="{StaticResource btnCornerUI}" Click="Login">Admin</Button>
+                                </StackPanel>
+                                
                             </StackPanel>
                         </Border>
                         <Grid>
