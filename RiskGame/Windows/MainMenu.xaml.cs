@@ -23,8 +23,23 @@ namespace RiskGame
     public partial class MainWindow : Window
     {
         // Variables //
-        List<Player> players;
-        Human player;
+        private List<Player> players;
+        private Human player;
+        private int musicIndex;
+        private int MusicIndex
+        {
+            get { return musicIndex; }
+            set
+            {
+                if(value >= Music.sources.Count)
+                {
+                    musicIndex = 0;
+                }
+                else if(value <= 0) { musicIndex = Music.sources.Count - 1; }
+                else { musicIndex = value; }
+            }
+        }
+        public bool music_enabled;
 
         // Constructors //
         public MainWindow()
@@ -34,12 +49,17 @@ namespace RiskGame
             InitializeComponent();
             GameManager.ClearEmptyFile();
             players = new List<Player>();
+            MusicIndex = 0;
+            chkFullscreen.DataContext = this;
         }
         public MainWindow(List<Player> _players)
         {
             // Called when adding a new player via gamesetup window.
             InitializeComponent();
             players = _players;
+            MusicIndex = 0;
+            chkFullscreen.DataContext = this;
+            music_enabled = ((Human)players[0]).music_enabled;
         }
 
         // Methods //
@@ -119,7 +139,7 @@ namespace RiskGame
                 // If passwords match, attempt to register the player.
                 if(txtRegPass.Password == txtRegPassConf.Password)
                 {
-                    Human.Register(txtRegName.Text, txtRegPass.Password); // Ensure details are valid, username is not taken and write details to file.
+                    Human.Register(txtRegName.Text, txtRegPass.Password, music_enabled); // Ensure details are valid, username is not taken and write details to file.
                     DispSuccessMsg("Registration successful. Click login to continue.");
                     txtLogName.Text = txtRegName.Text;
                     txtLogPass.Password = txtRegPass.Password;
@@ -222,18 +242,21 @@ namespace RiskGame
 
         private void MediaBack(object sender, RoutedEventArgs e)
         {
-
+            MusicIndex -= 1;
+            ChangeMedia();
         }
-
         private void MediaForward(object sender, RoutedEventArgs e)
         {
-
+            MusicIndex += 1;
+            ChangeMedia();
         }
-
-        private void MediaPlayPause(object sender, RoutedEventArgs e)
+        private void ChangeMedia()
         {
-
+            mediaplayer.Source = Music.sources[MusicIndex];
+            mediaplayer.Play();
         }
+        private void MediaPause(object sender, RoutedEventArgs e) { mediaplayer.Pause(); }
+        private void MediaPlay(object sender, RoutedEventArgs e) { mediaplayer.Play(); }
 
         private void Settings(object sender, RoutedEventArgs e) { Settings(); }
         private void Return(object sender, RoutedEventArgs e) { Return(); }
@@ -248,27 +271,14 @@ namespace RiskGame
             panel_Settings.Visibility = Visibility.Collapsed;
         }
 
-        private void window_KeyDown(object sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.F11)
-            {
-                if(this.WindowState == WindowState.Maximized)
-                {
-                    MaximiseWindow();
-                }
-                else
-                {
-                    this.ResizeMode = ResizeMode.NoResize;
-                    this.WindowState = WindowState.Normal;
-                    this.WindowStyle = WindowStyle.None;
-                    this.WindowState = WindowState.Maximized;
-                }
-            }
+            if (e.Key == Key.F11) { ChangeWindowState(); }
             if(e.Key == Key.Escape)
             {
                 if (this.WindowState == WindowState.Maximized)
                 {
-                    MaximiseWindow();
+                    ChangeWindowState();
                 }
                 else
                 {
@@ -283,12 +293,38 @@ namespace RiskGame
                 }
             }
         }
-        private void MaximiseWindow()
+        private void ChangeWindowState()
         {
-            this.ResizeMode = ResizeMode.CanResize;
-            this.WindowState = WindowState.Normal;
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.ResizeMode = ResizeMode.CanResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                this.ResizeMode = ResizeMode.NoResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.None;
+                this.WindowState = WindowState.Maximized;
+            }
         }
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                chkFullscreen.IsChecked = true;
+            }
+            else
+            {
+                chkFullscreen.IsChecked = false;
+            }
+        }
+        private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(); }
 
+        private void Music_EnableDisable(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

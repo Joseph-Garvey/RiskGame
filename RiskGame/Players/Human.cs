@@ -14,13 +14,16 @@ namespace RiskGame
         // Global Constants //
         private static readonly String FileName = "Usersaves.txt";
         // Constructors //
-        public Human(String _username, String password) : base (_username)
+        public Human(string username, string password, bool music_enabled) : base(username)
         {
             Password = password ?? throw new ArgumentNullException(nameof(password));
+            this.music_enabled = music_enabled;
         }
         // Variables //
         private String password;
         public String Password { set => password = value; } // Makes password write-only
+        public bool music_enabled;
+
         // Account Management //
         public static Human SignIn(String username, String password) // Must use inside try/catch
         {
@@ -32,11 +35,15 @@ namespace RiskGame
                 {
                     string tmpusername = line.Substring(0, 10); // split line into set length substrings, containing the username and password contained within that line.
                     string tmppassword = line.Substring(10, 15);
+                    string m_enabled = line.Substring(25, 5);
                     tmpusername = tmpusername.Trim();
                     tmppassword = tmppassword.Trim();
+                    m_enabled = m_enabled.Trim();
+                    bool music_enabled = new bool();
+                    bool.TryParse(m_enabled , out music_enabled);
                     if((tmpusername == username) && (tmppassword == password)) // If mathces given details return object.
                     {
-                        Human player = new Human(username, password);
+                        Human player = new Human(username, password, music_enabled);
                         return player;
                     }
                     else if(tmpusername == username) { throw new LoginException(); } // Otherwise throw exception indicating the account does not exist or cannot be found.
@@ -44,12 +51,12 @@ namespace RiskGame
                 throw new AccountNotFoundException();
             }
         }
-        public static void Register(String username, String password) // must be used in try/catch
+        public static void Register(String username, String password, bool music_enabled) // must be used in try/catch
         {
             /// Registers new accounts.
             // Call Validation on the given details to ensure they are valid.
             Validation(username, password);
-            Human newplayer = new Human(username, password);
+            Human newplayer = new Human(username, password, music_enabled);
             Human.Add(newplayer); // Write the new account to file.
         }
         // File Handling //
@@ -57,7 +64,7 @@ namespace RiskGame
         {
             using (StreamWriter sr = new StreamWriter(FileName, true)) // STREAM ONLY EXISTS FOR EXECUTION
             {
-                String write = String.Format("{0}{1}", (newplayer.Username).PadRight(10), (newplayer.password).PadRight(15));
+                String write = String.Format("{0}{1}{2}", (newplayer.Username).PadRight(10), (newplayer.password).PadRight(15), (newplayer.music_enabled.ToString()).PadRight(5));
                 sr.WriteLine(write); /// Format the account as a string and write to file.
             }
         }
@@ -74,12 +81,10 @@ namespace RiskGame
                 while ((line = sr.ReadLine()) != null) // While it has not reached the end of the file.
                 {
                     string tmpusername = line.Substring(0, 10); // Extract the username from the line.
-                    string tmppassword = line.Substring(10, 15); // Extract the passwor from the line.
-                    int highscore = int.Parse(line.Substring(25, 3));
+                    string tmppassword = line.Substring(10, 15); // Extract the password from the line.
                     if ((tmpplayername == tmpusername) && (tmpplayerpassword == tmppassword)) // if this line matches the player
                     {
-                        if (highscore < player.score) { highscore = player.score; } // write the highest of the two scores (saved and new) to the line
-                        lines.Add(String.Format("{0}{1}", tmpplayername, tmpplayerpassword));
+                        lines.Add(String.Format("{0}{1}{2}", tmpplayername, tmpplayerpassword, player.music_enabled.ToString()));
                     }
                     else { lines.Add(line); }
                 }

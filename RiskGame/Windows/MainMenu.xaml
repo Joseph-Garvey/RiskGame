@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RiskGame"
         mc:Ignorable="d"
-        Title="Login and Register" WindowStartupLocation="CenterScreen" Width="600" Height="600" KeyDown="window_KeyDown" >
+        Title="Login and Register" WindowStartupLocation="CenterScreen" Width="600" Height="600" KeyDown="Window_KeyDown" StateChanged="Window_StateChanged" >
     <Border>
         <Border.Background>
             <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
@@ -162,13 +162,16 @@
                             </StackPanel.Resources>
                             <Label Style="{StaticResource lblHeader}">Music:</Label>
                             <Label>details about song</Label>
-                            <MediaElement x:Name="mediaplayer" Visibility="Collapsed" Source="pack://siteoforigin:,,,/Music/Fallen_Soldier.mp3" LoadedBehavior="Play" Height="20"></MediaElement>
+                            <MediaElement x:Name="mediaplayer" Visibility="Collapsed" Source="pack://siteoforigin:,,,/Music/Fallen_Soldier.mp3" LoadedBehavior="Manual" Height="20"></MediaElement>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <Button Style="{StaticResource btnCornerUI}" Click="MediaBack">
                                     <Image Source="pack://siteoforigin:,,,/Images/previous.png" Height="14"></Image>
                                 </Button>
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaPlayPause">
+                                <Button Style="{StaticResource btnCornerUI}" Click="MediaPause">
                                     <Image Source="pack://siteoforigin:,,,/Images/pause.png" Height="14"></Image>
+                                </Button>
+                                <Button Style="{StaticResource btnCornerUI}" Click="MediaPlay">
+                                    <Image Source="pack://siteoforigin:,,,/Images/play.png" Height="14"></Image>
                                 </Button>
                                 <Button Style="{StaticResource btnCornerUI}" Click="MediaForward">
                                     <Image Source="pack://siteoforigin:,,,/Images/Next.png" Height="14"></Image>
@@ -180,7 +183,7 @@
                             </StackPanel>
                             <StackPanel Style="{StaticResource MusicControls}">
                                 <Label Style="{StaticResource lblSubHeading}">Enabled?</Label>
-                                <CheckBox Margin="30,3,30,3"/>
+                                <CheckBox x:Name="chkMusic" Margin="30,3,30,3" IsChecked="{Binding music_enabled ,Mode=TwoWay}" Click="Music_EnableDisable"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -190,7 +193,7 @@
                                 <Label Style="{StaticResource lblHeader}">General:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="55">Fullscreen:</Label>
-                                    <CheckBox Margin="0,0,5,0"></CheckBox>
+                                    <CheckBox x:Name="chkFullscreen" Margin="0,0,5,0" Click="Fullscreen_Click"></CheckBox>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
