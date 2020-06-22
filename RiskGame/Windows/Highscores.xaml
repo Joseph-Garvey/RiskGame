@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RiskGame.Windows"
         mc:Ignorable="d"
-        Title="Highscores" Height="800" Width="600" WindowStartupLocation="CenterScreen">
+        Title="Highscores" Height="800" Width="600" WindowStartupLocation="CenterScreen" KeyDown="window_KeyDown">
     <Border>
         <Border.Background>
             <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">

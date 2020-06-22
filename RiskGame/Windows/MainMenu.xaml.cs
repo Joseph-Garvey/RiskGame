@@ -209,5 +209,86 @@ namespace RiskGame
             this.Close();
             highscores.Show();
         }
+
+
+        /// <summary>
+        /// /////////////////////////////////////
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+
+        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) { mediaplayer.Volume = (double)slider_Volume.Value; }
+
+        private void MediaBack(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MediaForward(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MediaPlayPause(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Settings(object sender, RoutedEventArgs e) { Settings(); }
+        private void Return(object sender, RoutedEventArgs e) { Return(); }
+        private void Settings()
+        {
+            panel_MainUI.Visibility = Visibility.Collapsed;
+            panel_Settings.Visibility = Visibility.Visible;
+        }
+        private void Return()
+        {
+            panel_MainUI.Visibility = Visibility.Visible;
+            panel_Settings.Visibility = Visibility.Collapsed;
+        }
+
+        private void window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F11)
+            {
+                if(this.WindowState == WindowState.Maximized)
+                {
+                    MaximiseWindow();
+                }
+                else
+                {
+                    this.ResizeMode = ResizeMode.NoResize;
+                    this.WindowState = WindowState.Normal;
+                    this.WindowStyle = WindowStyle.None;
+                    this.WindowState = WindowState.Maximized;
+                }
+            }
+            if(e.Key == Key.Escape)
+            {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    MaximiseWindow();
+                }
+                else
+                {
+                    if(panel_MainUI.Visibility == Visibility.Visible)
+                    {
+                        Settings();
+                    }
+                    else
+                    {
+                        Return();
+                    }
+                }
+            }
+        }
+        private void MaximiseWindow()
+        {
+            this.ResizeMode = ResizeMode.CanResize;
+            this.WindowState = WindowState.Normal;
+            this.WindowStyle = WindowStyle.SingleBorderWindow;
+        }
+
     }
 }

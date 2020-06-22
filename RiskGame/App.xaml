@@ -83,5 +83,13 @@
             <Setter Property="FontWeight" Value="Bold"></Setter>
             <Setter Property="AutoGenerateColumns" Value="False"></Setter>
         </Style>
+        <Style TargetType="StackPanel" x:Key="HorizontalCentred">
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="Orientation" Value="Horizontal"></Setter>
+        </Style>
+        <Style TargetType="CheckBox">
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
     </Application.Resources>
 </Application>

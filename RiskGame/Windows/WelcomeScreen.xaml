@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:RiskGame.Windows"
         mc:Ignorable="d"
         Title="Risk"
-        WindowStartupLocation="CenterScreen" Height="644" Width="800">
+        WindowStartupLocation="CenterScreen" Height="644" Width="800" KeyDown="window_KeyDown">
     <Border>
         <Viewbox>
             <StackPanel>
                 <Image Source="pack://siteoforigin:,,,/Images/RiskLogo.png" Width="300" Margin="50,25,50,10"></Image>
-                <Button Style="{StaticResource btnUI}" Height="40" Margin="100,0,100,15" Click="Play_Game">Play Game</Button>
-                <Button Style="{StaticResource btnUI}" Height="40" Margin="150,0,150,50" Click="Quit_Game">Quit</Button>
+                <Button Style="{StaticResource btnCornerUI}" Height="40" Margin="100,0,100,15" Click="Play_Game">Play Game</Button>
+                <Button Style="{StaticResource btnCornerUI}" Height="40" Margin="150,0,150,50" Click="Quit_Game">Quit</Button>
             </StackPanel>
         </Viewbox>
         <Border.Background>

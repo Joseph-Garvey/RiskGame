@@ -63,5 +63,34 @@ namespace RiskGame.Windows
             }
         }
         private void Quit(object sender, RoutedEventArgs e) {  this.Close(); }
+
+        // Window Controls //
+        private void window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F11)
+            {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    MaximiseWindow();
+                }
+                else
+                {
+                    this.ResizeMode = ResizeMode.NoResize;
+                    this.WindowState = WindowState.Normal;
+                    this.WindowStyle = WindowStyle.None;
+                    this.WindowState = WindowState.Maximized;
+                }
+            }
+            if (e.Key == Key.Escape && this.WindowState == WindowState.Maximized)
+            {
+                MaximiseWindow();
+            }
+        }
+        private void MaximiseWindow()
+        {
+            this.ResizeMode = ResizeMode.CanResize;
+            this.WindowState = WindowState.Normal;
+            this.WindowStyle = WindowStyle.SingleBorderWindow;
+        }
     }
 }
