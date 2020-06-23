@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using RiskGame.CustomExceptions.Game;
 using System.Collections.ObjectModel;
-using RiskGame.Locations;
+using RiskGame.Game.Locations;
 
 namespace RiskGame.Game
 {

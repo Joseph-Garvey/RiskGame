@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RiskGame.Locations
+namespace RiskGame.Game.Locations
 {
-    class Continent
+    public class Continent
     {
         // Variables //
         public readonly string name;

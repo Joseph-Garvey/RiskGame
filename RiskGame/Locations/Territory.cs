@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace RiskGame.Locations
+namespace RiskGame.Game.Locations
 {
     [Serializable]
     public class Territory

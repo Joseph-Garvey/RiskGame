@@ -13,10 +13,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using RiskGame.enemyAI;
 using RiskGame.Game;
+using RiskGame.Game.Locations;
 using System.Collections.ObjectModel;
 using System.Threading;
 using RiskGame.Windows;
-using RiskGame.Locations;
 
 namespace RiskGame
 {
