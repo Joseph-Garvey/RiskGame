@@ -5,27 +5,31 @@
              >
     <Application.Resources>
         <Style x:Key="btnUI" TargetType="Button">
-            <Setter Property="Background" Value="#7F00D1FF"></Setter>
-            <Setter Property="FontSize" Value="14"></Setter>
-            <Setter Property="FontWeight" Value="Bold"></Setter>
-            <Setter Property="Margin" Value="5"></Setter>
-            <Setter Property="BorderBrush" Value="Black"></Setter>
-        </Style>
-        <Style x:Key="btnCornerUI" TargetType="Button">
             <Setter Property="Background" Value="#B200D1FF"></Setter>
             <Setter Property="FontSize" Value="14"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
             <Setter Property="BorderBrush" Value="Black"></Setter>
+        </Style>
+        <Style x:Key="btnCornerUI" TargetType="Button" BasedOn="{StaticResource btnUI}">
+            <Setter Property="Background" Value="#B200D1FF"></Setter>
             <Style.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"></Setter>
                 </Style>
             </Style.Resources>
         </Style>
+        <Style x:Key="btnSettings" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/Settingsicon.png" Height="20" Margin="5"></Image>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style x:Key="lblHeader" TargetType="Label">
             <Setter Property="FontSize" Value="10"></Setter>
-            <Setter Property="Background" Value="#7F00D1FF"></Setter>
+            <Setter Property="Background" Value="#B200D1FF"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
             <Setter Property="FontWeight" Value="Bold"></Setter>
             <Setter Property="BorderBrush" Value="Black"></Setter>
@@ -33,7 +37,7 @@
         </Style>
         <Style x:Key="lblSubHeading" TargetType="Label">
             <Setter Property="FontSize" Value="9"></Setter>
-            <Setter Property="Background" Value="#7F00D1FF"></Setter>
+            <Setter Property="Background" Value="#B200D1FF"></Setter>
             <Setter Property="Margin" Value="5,0,5,0"></Setter>
             <Setter Property="BorderBrush" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
@@ -74,6 +78,7 @@
                 </Style>
             </Style.Resources>
         </Style>
+
         <Style TargetType="DataGrid">
             <Setter Property="Margin" Value="5,0,5,0"></Setter>
             <Setter Property="Width" Value="250"></Setter>
@@ -83,10 +88,19 @@
             <Setter Property="FontWeight" Value="Bold"></Setter>
             <Setter Property="AutoGenerateColumns" Value="False"></Setter>
         </Style>
+
         <Style TargetType="StackPanel" x:Key="HorizontalCentred">
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
             <Setter Property="Orientation" Value="Horizontal"></Setter>
         </Style>
+        <Style TargetType="StackPanel" BasedOn="{StaticResource HorizontalCentred}" x:Key="MusicControls">
+            <Setter Property="Width" Value="145"></Setter>
+            <Setter Property="Margin" Value="3"></Setter>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="panel_Background">
+            <Setter Property="Background" Value="#7F00D1FF"></Setter>
+        </Style>
+
         <Style TargetType="CheckBox">
             <Setter Property="BorderBrush" Value="Black"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>

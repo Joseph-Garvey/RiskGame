@@ -21,9 +21,6 @@
         <Viewbox Margin="10">
             <StackPanel>
                 <StackPanel.Resources>
-                    <Style TargetType="StackPanel" x:Key="panel_Background">
-                        <Setter Property="Background" Value="#7F00D1FF"></Setter>
-                    </Style>
                     <Style TargetType="Border">
                         <Setter Property="BorderBrush" Value="Black"></Setter>
                         <Setter Property="BorderThickness" Value="1"></Setter>
@@ -137,9 +134,7 @@
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
                                 <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Width="100" FontSize="12" Click="Leaderboard" TabIndex="7">Leaderboard</Button>
-                                <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Grid.Column="1" TabIndex="8" Click="Settings">
-                                    <Image Source="pack://siteoforigin:,,,/Images/Settingsicon.png" Height="20" Margin="5"></Image>
-                                </Button>
+                                <Button Style="{StaticResource btnSettings}" HorizontalAlignment="Center" Grid.Column="1" TabIndex="8" Click="Settings"/>
                             </Grid>
                         </StackPanel>
                     </StackPanel>
@@ -150,16 +145,10 @@
                         <TextBlock x:Name="txtSuccess" TextWrapping="Wrap">Success message</TextBlock>
                     </Label>
                 </StackPanel>
-                <DockPanel x:Name="panel_Settings" Visibility="Visible" >
+                <DockPanel x:Name="panel_Settings" Visibility="Collapsed" >
                     <Label Style="{StaticResource lblHeader}" FontSize="12" DockPanel.Dock="Top">Settings:</Label>
                     <Border DockPanel.Dock="Right"  VerticalAlignment="Top">
                         <StackPanel Style="{StaticResource panel_Background}">
-                            <StackPanel.Resources>
-                                <Style TargetType="StackPanel" BasedOn="{StaticResource HorizontalCentred}" x:Key="MusicControls">
-                                    <Setter Property="Width" Value="145"></Setter>
-                                    <Setter Property="Margin" Value="3"></Setter>
-                                </Style>
-                            </StackPanel.Resources>
                             <Label Style="{StaticResource lblHeader}">Music:</Label>
                             <Label x:Name="lblMediaDetails" Style="{StaticResource lblSubHeading}"></Label>
                             <MediaElement x:Name="mediaplayer" Visibility="Collapsed" Source="pack://siteoforigin:,,,/Music/Fallen_Soldier.mp3" LoadedBehavior="Manual" Height="20" MediaEnded="Mediaplayer_MediaEnded" MediaOpened="UpdateMediaText"></MediaElement>

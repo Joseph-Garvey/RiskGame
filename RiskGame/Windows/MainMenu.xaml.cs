@@ -74,6 +74,7 @@ namespace RiskGame
             InitializeComponent();
             GameManager.ClearEmptyFile();
             players = new List<Player>();
+            Music.MusicIndex = 2;
             music_enabled = true;
             SetupWindow();
         }
@@ -88,7 +89,6 @@ namespace RiskGame
         private void SetupWindow()
         {
             this.DataContext = this;
-            Music.MusicIndex = 2;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
         }

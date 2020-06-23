@@ -20,8 +20,49 @@ namespace RiskGame
 {
     public partial class GameSetup : Window
     {
+        // Variables //
         private List<Player> players = new List<Player>();
         private List<SolidColorBrush> playercolours = new List<SolidColorBrush>() { Brushes.OrangeRed, Brushes.DeepSkyBlue, Brushes.LimeGreen, Brushes.Gold, Brushes.Red, Brushes.Violet, Brushes.Blue };
+        private bool music_enabled;
+        public bool Music_enabled
+        {
+            get => music_enabled;
+            set
+            {
+
+                if (players.Count != 0)
+                {
+                    try
+                    {
+                        ((Human)players[0]).music_enabled = value;
+                        Human.Update(players[0] as Human);
+                    }
+                    catch { ShowError("An error has occurred. Your music preferences have not been saved."); }
+                }
+                if (value == true) { mediaplayer.Play(); }
+                else if (value == false) { mediaplayer.Pause(); }
+                music_enabled = value;
+            }
+        }
+        private bool hints_enabled;
+        public bool Hints_enabled
+        {
+            get => hints_enabled;
+            set
+            {
+
+                if (players.Count != 0)
+                {
+                    try
+                    {
+                        ((Human)players[0]).hints_enabled = value;
+                        Human.Update(players[0] as Human);
+                    }
+                    catch { ShowError("An error has occurred. Your music preferences have not been saved."); }
+                }
+                hints_enabled = value;
+            }
+        }
 
         // Constructor //
         public GameSetup(List<Player> _players)
@@ -29,6 +70,12 @@ namespace RiskGame
             // Takes in the list of players from Login/Register.
             InitializeComponent();
             players = _players;
+            // Binding setup //
+            this.DataContext = this;
+            // Music Setup //
+            music_enabled = ((Human)players[0]).music_enabled;
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            if (music_enabled) { mediaplayer.Play(); }
             // Retrieves list of games //
             GameList.ItemsSource = GameManager.RetrieveGames();
             // Updates UI with details of currently logged in players, showing new "Player Panels" as required.
@@ -229,33 +276,105 @@ namespace RiskGame
             txtError.Content = "";
         }
 
-        // Window Controls //
-        private void window_KeyDown(object sender, KeyEventArgs e)
+        // Media Controls //
+        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) { mediaplayer.Volume = (double)slider_Volume.Value; }
+        private void MediaBack(object sender, RoutedEventArgs e)
         {
-            if (e.Key == Key.F11)
+            Music.MusicIndex -= 1;
+            ChangeMedia();
+        }
+        private void MediaForward(object sender, RoutedEventArgs e)
+        {
+            Music.MusicIndex += 1;
+            ChangeMedia();
+        }
+        private void ChangeMedia()
+        {
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            mediaplayer.Play();
+        }
+        private void MediaPause(object sender, RoutedEventArgs e) { mediaplayer.Pause(); }
+        private void MediaPlay(object sender, RoutedEventArgs e) { mediaplayer.Play(); }
+        private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            MediaForward(sender, e);
+        }
+        private void UpdateMediaText(object sender, RoutedEventArgs e)
+        {
+            lblMediaDetails.Content = mediaplayer.Source.ToString().Substring(30);
+        }
+
+        // Navigate to and from settings menu //
+        private void Settings(object sender, RoutedEventArgs e) { Settings(); }
+        private void Return(object sender, RoutedEventArgs e) { Return(); }
+        private void Settings()
+        {
+            panel_MainUI.Visibility = Visibility.Collapsed;
+            panel_Settings.Visibility = Visibility.Visible;
+        }
+        private void Return()
+        {
+            panel_MainUI.Visibility = Visibility.Visible;
+            panel_Settings.Visibility = Visibility.Collapsed;
+        }
+
+        // Window Management //
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F11) { ChangeWindowState(); }
+            if (e.Key == Key.Escape)
             {
                 if (this.WindowState == WindowState.Maximized)
                 {
-                    MaximiseWindow();
+                    ChangeWindowState();
                 }
                 else
                 {
-                    this.ResizeMode = ResizeMode.NoResize;
-                    this.WindowState = WindowState.Normal;
-                    this.WindowStyle = WindowStyle.None;
-                    this.WindowState = WindowState.Maximized;
+                    if (panel_MainUI.Visibility == Visibility.Visible)
+                    {
+                        Settings();
+                    }
+                    else
+                    {
+                        Return();
+                    }
                 }
             }
-            if (e.Key == Key.Escape && this.WindowState == WindowState.Maximized)
+        }
+        private void ChangeWindowState()
+        {
+            if (this.WindowState == WindowState.Maximized)
             {
-                MaximiseWindow();
+                this.ResizeMode = ResizeMode.CanResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                this.ResizeMode = ResizeMode.NoResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.None;
+                this.WindowState = WindowState.Maximized;
             }
         }
-        private void MaximiseWindow()
+        private void Window_StateChanged(object sender, EventArgs e)
         {
-            this.ResizeMode = ResizeMode.CanResize;
-            this.WindowState = WindowState.Normal;
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
+            if (this.WindowState == WindowState.Maximized)
+            {
+                chkFullscreen.IsChecked = true;
+            }
+            else
+            {
+                chkFullscreen.IsChecked = false;
+            }
+        }
+        private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(); }
+
+        private void Tutorial_Window(object sender, RoutedEventArgs e)
+        {
+            Tutorial tutorial = new Tutorial();
+            App.Current.MainWindow = tutorial;
+            tutorial.Show();
         }
     }
 }
