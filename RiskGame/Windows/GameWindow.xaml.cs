@@ -212,8 +212,14 @@ namespace RiskGame
             if (randomise_initial == true) { SetupRandom(); StartGame(); }
             else
             {
-                Output("Place armies around the map using left click.");
-                Output("You can capture any territory not already taken by another player.");
+                if(currentplayer is Human)
+                {
+                    if (((Human)currentplayer).hints_enabled)
+                    {
+                        Output("Place armies around the map using left click.");
+                        Output("You can capture any territory not already taken by another player.");
+                    }
+                }
             }
         }
         private void StartGame()
@@ -566,17 +572,35 @@ namespace RiskGame
             {
                 case GameState.Attacking:
                     lblState.Content = "Attacking";
-                    Output("Click on the territory you wish to attack from.");
-                    Output("The territories you can attack will be highlighted.");
+                    if(currentplayer is Human)
+                    {
+                        if (((Human)currentplayer).hints_enabled)
+                        {
+                            Output("Click on the territory you wish to attack from.");
+                            Output("The territories you can attack will be highlighted.");
+                        }
+                    }
                     break;
                 case GameState.InitialArmyPlace:
                     lblState.Content = "Placing Army";
-                    Output("Click to place army.");
+                    if (currentplayer is Human)
+                    {
+                        if (((Human)currentplayer).hints_enabled)
+                        {
+                            Output(String.Format("{0}, Click to place army.", currentplayer.Username));
+                        }
+                    }
                     break;
                 case GameState.PlacingArmy:
                     lblState.Content = "Placing Army";
-                    Output("Click to select a territory and place armies. Right-click to remove.");
-                    Output("Right-Click to remove.");
+                    if (currentplayer is Human)
+                    {
+                        if (((Human)currentplayer).hints_enabled)
+                        {
+                            Output("Click or + to select a territory and place armies.");
+                            Output("Right-Click or - to remove.");
+                        }
+                    }
                     Output(String.Format("You have {0} armies to place.", currentplayer.army_undeployed));
                     break;
                 case GameState.Move:
@@ -584,7 +608,13 @@ namespace RiskGame
                     break;
                 case GameState.Conquer:
                     lblState.Content = "Conquer";
-                    Output("Use + - and confirm to send armies to the newly captured territory.");
+                    if (currentplayer is Human)
+                    {
+                        if (((Human)currentplayer).hints_enabled)
+                        {
+                            Output("Use + - or left/right click and then confirm to send armies to the newly captured territory.");
+                        }
+                    }
                     break;
             }
         }
@@ -826,7 +856,13 @@ namespace RiskGame
                             {
                                 SelectTerritory(t, btnTerritory, Brushes.Red, true);
                                 AdjustAttackMoves((slctTerritory.currentarmies - 1));
-                                Output("Select the number of armies you wish to attack with.");
+                                if(currentplayer is Human)
+                                {
+                                    if (((Human)currentplayer).hints_enabled)
+                                    {
+                                        Output("Select the number of armies you wish to attack with.");
+                                    }
+                                }
                             }
                             else if(btnTerritory.BorderBrush == Brushes.Red){
                                 PlayerActions(true);
@@ -844,7 +880,16 @@ namespace RiskGame
                     {
                         ClearSelectionsUI();
                         SelectTerritory(t, btnTerritory, Brushes.Lime, false);
-                        if (ShowMoves(slctTerritory)) { Output("You can move armies to the highlighted territories."); }
+                        if (ShowMoves(slctTerritory))
+                        {
+                            if (currentplayer is Human)
+                            {
+                                if (((Human)currentplayer).hints_enabled)
+                                {
+                                    Output("You can move armies to the highlighted territories.");
+                                }
+                            }
+                        }
                         else { Output("There are no friendly territories to move to from here."); ClearSelectionsUI(); }
                         List<Territory> blank = new List<Territory>();
                         scanterritories = blank;

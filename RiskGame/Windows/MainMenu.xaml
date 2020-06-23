@@ -202,9 +202,9 @@
                                 <Label Style="{StaticResource lblHeader}">Help:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
-                                    <CheckBox x:Name="chkHints" Margin="0,0,5,0" Click="Fullscreen_Click"></CheckBox>
+                                    <CheckBox x:Name="chkHints" Margin="0,0,5,0" IsChecked="{Binding Hints_enabled, Mode=TwoWay}"></CheckBox>
                                 </StackPanel>
-                                <Button Style="{StaticResource btnCornerUI}" FontSize="12">Tutorial</Button>
+                                <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Tutorial_Window">Tutorial</Button>
                             </StackPanel>
                         </Border>
                         <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Return">Return</Button>

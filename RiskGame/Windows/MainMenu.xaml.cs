@@ -46,6 +46,25 @@ namespace RiskGame
                     music_enabled = value;
                 }
             }
+        private bool hints_enabled;
+        public bool Hints_enabled
+        {
+            get => hints_enabled;
+            set
+            {
+
+                if (players.Count != 0)
+                {
+                    try
+                    {
+                        ((Human)players[0]).hints_enabled = value;
+                        Human.Update(players[0] as Human);
+                    }
+                    catch { DispErrorMsg("An error has occurred. Your hint preferences have not been saved."); }
+                }
+                hints_enabled = value;
+            }
+        }
 
         // Constructors //
         public MainWindow()
@@ -150,7 +169,7 @@ namespace RiskGame
                 // If passwords match, attempt to register the player.
                 if(txtRegPass.Password == txtRegPassConf.Password)
                 {
-                    Human.Register(txtRegName.Text, txtRegPass.Password, music_enabled); // Ensure details are valid, username is not taken and write details to file.
+                    Human.Register(txtRegName.Text, txtRegPass.Password, music_enabled, hints_enabled); // Ensure details are valid, username is not taken and write details to file.
                     DispSuccessMsg("Registration successful. Click login to continue.");
                     txtLogName.Text = txtRegName.Text;
                     txtLogPass.Password = txtRegPass.Password;
@@ -332,5 +351,12 @@ namespace RiskGame
             }
         }
         private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(); }
+
+        private void Tutorial_Window(object sender, RoutedEventArgs e)
+        {
+            Tutorial tutorial = new Tutorial();
+            App.Current.MainWindow = tutorial;
+            tutorial.Show();
+        }
     }
 }
