@@ -112,7 +112,7 @@ namespace RiskGame
             get { return game.gamemode; }
             set { game.gamemode = value; }
         }
-
+        private bool music_enabled;
         //// Constructors ////
         // Load Game //
         public GameWindow(GameManager _game)
@@ -120,9 +120,11 @@ namespace RiskGame
             // not complete // check at end once all is done
             // takes local variables and matches them to the gamemanager variables to load game. (Incomplete)
             InitializeComponent();
-            game = game;
-            UISetup();
+            game = _game;
             LoadPlayerUI();
+            music_enabled = ((Human)Players[0]).music_enabled;
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            if (music_enabled) { mediaplayer.Play(); }
             Output("The game has loaded.");
         }
         // New Game //
@@ -133,6 +135,9 @@ namespace RiskGame
             game = new GameManager();
             Players = _players;
             Turn = 0;
+            music_enabled = ((Human)Players[0]).music_enabled;
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            if (music_enabled) { mediaplayer.Play(); }
             // Creation of Territories and Map Setup //
             map = "Default";
             gamemode = "New Risk";
@@ -308,6 +313,7 @@ namespace RiskGame
                 }
             }
         }
+        // Game Start UI setup //
         private void UISetup()
         {
             // This code sets up the "player panel" with the players details, resizing certain elements to avoid white borders.
@@ -416,12 +422,12 @@ namespace RiskGame
         }
         private void SetHeight(int i)
         {
-            rectPlayerColor1.Height = 20;
-            rectPlayerColor2.Height = 20;
-            rectPlayerColor3.Height = 20;
-            rectPlayerColor4.Height = 20;
-            rectPlayerColor5.Height = 20;
-            rectPlayerColor6.Height = 20;
+            rectPlayerColor1.Height = i;
+            rectPlayerColor2.Height = i;
+            rectPlayerColor3.Height = i;
+            rectPlayerColor4.Height = i;
+            rectPlayerColor5.Height = i;
+            rectPlayerColor6.Height = i;
         }
 
         //// Game Methods ////
@@ -517,36 +523,39 @@ namespace RiskGame
 
         //// UI /////
         private void LoadPlayerUI()
-        { // to be replaced by more efficient case by case update country UI
+        {  // use binding in future
+            UISetup();
             UpdatePlayerPanelUI();
-            UpdateStateUI();
+            UpdateState(game.gameState);
             if(gamestate == GameState.PlacingArmy)
             {
                 UpdatePlayerUndeployed();
             }
-            UpdatePlayerArmies(false);
-            UpdatePlayerTerritories(false);
             foreach(Territory t in Territories)
             {
+                foreach(Button b in GameGrid.Children)
+                {
+                    if(t.name == b.Name.Substring(3))
+                    {
+                        t.button = b;
+                    }
+                }
                 t.button.Background = t.owner.Color;
                 t.button.Content = t.currentarmies;
-                // if place, show temp
-                // if attack show moving etc
-                // put in code that allows the current action to be done
-                // rn i'm temporarily going to make it so that one cannot save mid-action.
             }
         }
         private void ConquerTerritoryUI()
         {
             NextTerritory.button.Background = NextTerritory.owner.Color;
             NextTerritory.button.Content = NextTerritory.temparmies;
-        }
+        } // Updates nextTerritory UI for Conquer
         private void AttackTerritoryUI()
         {
             SlctTerritory.button.Content = SlctTerritory.currentarmies;
-        }
+        } // Updates selected territory's armies
         private void UpdateNumOutput()
         {
+
             switch (gamestate)
             {
                 case GameState.PlacingArmy:
@@ -562,7 +571,7 @@ namespace RiskGame
                     lblNumber.Content = NextTerritory.temparmies;
                     break;
             }
-        }
+        } // Updates UI Label Number
         private void UpdatePlayerPanelUI()
         {
             int i = Players.IndexOf(CurrentPlayer);
@@ -589,26 +598,11 @@ namespace RiskGame
                     panel_Player6.Background = Brushes.LightBlue;
                     break;
             }
-        }
-        private void UpdatePlayerUI()
-        {
-            if(gamestate == GameState.PlacingArmy) { UpdatePlayerUndeployed(); }
-            if(gamestate == GameState.Conquer) { NextTerritory.button.Content = NextTerritory.currentarmies; }
-            UpdatePlayerTerritories(true);
-            UpdatePlayerArmies(true);
-        }
+        }  // Updates currently highlighted player in UI stack
         private void UpdatePlayerUndeployed()
         { // Updates the UI to show the player's undeployed armies.
             Output(String.Format("You have {0} armies to place.", CurrentPlayer.army_undeployed));
-        }
-        private void UpdatePlayerTerritories(bool single)
-        { // Updates the UI to show the number of territories currently owned by player.
-          // True indicates that only the current player must be updated.
-          // False indicates that multiple players' UI must be updated.
-        }
-        private void UpdatePlayerArmies(bool single)
-        { // Update to show the player(s) army strength
-        }
+        } // Use to update undeployed on place
         private void UpdateStateUI()
         {
             switch (gamestate)
@@ -660,7 +654,7 @@ namespace RiskGame
                     }
                     break;
             }
-        }
+        } // Start of turn instructions and UI State change
         private void ClearSelectionsUI()
         {
             foreach(Button b in GameGrid.Children)
@@ -669,7 +663,7 @@ namespace RiskGame
             }
             lblNumber.Content = 0;
             ClearSelections();
-        }
+        } // Clears Selections and UI
 
         //// Backend Methods ////
         private Territory RetrieveTerritory(String territoryname)
@@ -862,7 +856,6 @@ namespace RiskGame
                         Place_Reinforce(SlctTerritory, 1);
                         CurrentPlayer.army_strength += 1;
                         CyclePlayers();
-                        UpdatePlayerUI();
                         NextTurn();
                     }
                     else { Output("You cannot capture this territory."); SlctTerritory = null; }
@@ -1002,10 +995,8 @@ namespace RiskGame
                         }
                     }
                     if(CurrentPlayer.army_undeployed == 0) {
-                        UpdatePlayerTerritories(true);
-                        UpdatePlayerArmies(true);
                         NextAction(); }
-                    else { UpdatePlayerUI(); ClearSelectionsUI(); }
+                    else { ClearSelectionsUI(); }
                     break;
                 case GameState.Attacking:
                     if((SlctTerritory != null) && (NextTerritory != null))
@@ -1048,13 +1039,12 @@ namespace RiskGame
                 case GameState.Conquer:
                     Place_Reinforce(NextTerritory, NextTerritory.temparmies);
                     NextTerritory.temparmies = 0;
-                    UpdatePlayerUI(); // maybe make this into nextAction();
+                    ConquerTerritoryUI();
                     NextAction();
                     break;
                 case GameState.Move:
                     Place_Reinforce(NextTerritory, NextTerritory.temparmies);
                     NextTerritory.temparmies = 0;
-                    UpdatePlayerUI(); // maybe make this into nextAction();
                     NextAction();
                     break;
             }
@@ -1150,11 +1140,13 @@ namespace RiskGame
         private void SaveGame(object sender, RoutedEventArgs e)
         { // Creates a gamemanager instance, serializes it and saves it to a file. Reporting back to the player if the save was successful.
             if(gamestate == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
+            else if(gamestate == GameState.Conquer) { Output("You must finish conquering before saving."); }
             //else if(action == true) { Output("You must finish your current action before saving"); }
             else
             {
                 try
                 {
+                    CancelUnconfirmedActions();
                     GameManager.SaveGame(game);
                     Output("Game saved successfully");
                 }
@@ -1167,6 +1159,23 @@ namespace RiskGame
             Win();
         }
 
-
+        // Media //
+        private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            MediaForward(sender, e);
+        }
+        private void MediaForward(object sender, RoutedEventArgs e)
+        {
+            Music.MusicIndex += 1;
+            ChangeMedia();
+        }
+        private void ChangeMedia()
+        {
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            mediaplayer.Play();
+        }
+        private void UpdateMediaText(object sender, RoutedEventArgs e)
+        {
+        }
     }
 }

@@ -375,5 +375,6 @@ namespace RiskGame
             App.Current.MainWindow = tutorial;
             tutorial.Show();
         }
+
     }
 }
