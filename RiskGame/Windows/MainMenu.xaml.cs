@@ -25,22 +25,27 @@ namespace RiskGame
         // Variables //
         private List<Player> players;
         private Human player;
-        private int musicIndex;
-        private int MusicIndex
-        {
-            get { return musicIndex; }
-            set
-            {
-                if(value >= Music.sources.Count)
-                {
-                    musicIndex = 0;
-                }
-                else if(value <= 0) { musicIndex = Music.sources.Count - 1; }
-                else { musicIndex = value; }
-            }
-        }
         private bool music_enabled;
-        public bool Music_enabled { get => music_enabled; set => music_enabled = value; }
+        public bool Music_enabled
+            {
+                get => music_enabled;
+                set
+                {
+
+                    if(players.Count != 0)
+                    {
+                        try
+                        {
+                            ((Human)players[0]).music_enabled = value;
+                            Human.Update(players[0] as Human);
+                        }
+                        catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
+                    }
+                    if(value == true) { mediaplayer.Play(); }
+                    else if(value == false) { mediaplayer.Pause(); }
+                    music_enabled = value;
+                }
+            }
 
         // Constructors //
         public MainWindow()
@@ -64,7 +69,8 @@ namespace RiskGame
         private void SetupWindow()
         {
             this.DataContext = this;
-            MusicIndex = 1;
+            Music.MusicIndex = 2;
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
         }
         // Methods //
@@ -235,21 +241,21 @@ namespace RiskGame
             highscores.Show();
         }
 
+        // new stuff //
         private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) { mediaplayer.Volume = (double)slider_Volume.Value; }
-
         private void MediaBack(object sender, RoutedEventArgs e)
         {
-            MusicIndex -= 1;
+            Music.MusicIndex -= 1;
             ChangeMedia();
         }
         private void MediaForward(object sender, RoutedEventArgs e)
         {
-            MusicIndex += 1;
+            Music.MusicIndex += 1;
             ChangeMedia();
         }
         private void ChangeMedia()
         {
-            mediaplayer.Source = Music.sources[MusicIndex];
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
             mediaplayer.Play();
         }
         private void MediaPause(object sender, RoutedEventArgs e) { mediaplayer.Pause(); }
@@ -257,6 +263,10 @@ namespace RiskGame
         private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
         {
             MediaForward(sender, e);
+        }
+        private void UpdateMediaText(object sender, RoutedEventArgs e)
+        {
+            lblMediaDetails.Content = mediaplayer.Source.ToString().Substring(30);
         }
 
         private void Settings(object sender, RoutedEventArgs e) { Settings(); }
@@ -322,15 +332,5 @@ namespace RiskGame
             }
         }
         private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(); }
-
-        private void Music_EnableDisable(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void UpdateMediaText(object sender, RoutedEventArgs e)
-        {
-            lblMediaDetails.Content = mediaplayer.Source.ToString().Substring(30);
-        }
     }
 }

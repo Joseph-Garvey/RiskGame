@@ -223,20 +223,22 @@
     <Content Include="Music\1812Overture.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Music\Air_to_the_Throne.mp3">
+    <Content Include="Music\AirToTheThrone.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Music\Epic_Battle_Speech.mp3">
+    <Content Include="Music\EpicBattleSpeech.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Music\Fallen_Soldier.mp3">
+    <Content Include="Music\FallenSoldier.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Music\Ride_of_the_Valkyries_by_Wagner.mp3">
+    <Content Include="Music\RideOfTheValkyries.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Music\Saving_the_World.mp3" />
-    <Content Include="Music\The_Rising.mp3">
+    <Content Include="Music\SavingTheWorld.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Music\TheRising.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
