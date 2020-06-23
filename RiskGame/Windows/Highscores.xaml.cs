@@ -36,6 +36,7 @@ namespace RiskGame.Windows
             PlayerScoreList.Visibility = Visibility.Visible;
         }
         public Highscores(List<Player> _players) { Initialise(); players = _players; }
+        public Highscores() { Initialise(); }
 
         private void Initialise()
         {

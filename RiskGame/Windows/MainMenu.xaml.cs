@@ -67,15 +67,26 @@ namespace RiskGame
         }
 
         // Constructors //
-        public MainWindow()
+        public MainWindow(bool _music_enabled, bool _hints_enabled, WindowState ws)
         {
             // Called on first launch
             // Clears empty save files to prevent crashes, hides the error message.
             InitializeComponent();
             GameManager.ClearEmptyFile();
             players = new List<Player>();
-            Music.MusicIndex = 2;
-            music_enabled = true;
+            Music_enabled = _music_enabled;
+            SetupWindow();
+            Hints_enabled = _hints_enabled;
+            this.WindowState = ws;
+            Window_StateChanged();
+        }
+        public MainWindow()
+        {
+            // Called on launch from highscores - delete later
+            // Clears empty save files to prevent crashes, hides the error message.
+            InitializeComponent();
+            GameManager.ClearEmptyFile();
+            players = new List<Player>();
             SetupWindow();
         }
         public MainWindow(List<Player> _players)
@@ -340,6 +351,17 @@ namespace RiskGame
             }
         }
         private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                chkFullscreen.IsChecked = true;
+            }
+            else
+            {
+                chkFullscreen.IsChecked = false;
+            }
+        }
+        private void Window_StateChanged()
         {
             if (this.WindowState == WindowState.Maximized)
             {

@@ -26,6 +26,27 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style x:Key="btnSettingsThin" TargetType="Button" BasedOn="{StaticResource btnSettings}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/Settingsicon.png" Height="18" Margin="3"></Image>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnHelp" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/Help.png" Height="20" Margin="5"></Image>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="btnHelpThin" TargetType="Button" BasedOn="{StaticResource btnHelp}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/Help.png" Height="18" Margin="3"></Image>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <Style x:Key="lblHeader" TargetType="Label">
             <Setter Property="FontSize" Value="10"></Setter>
