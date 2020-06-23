@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace RiskGame.Game.Locations
 {
+    [Serializable]
     public class Continent
     {
         // Variables //

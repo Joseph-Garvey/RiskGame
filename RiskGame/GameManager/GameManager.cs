@@ -16,7 +16,7 @@ namespace RiskGame.Game
     public class GameManager
     {
         private static readonly String FileName = "GameSaves.bin";
-        public List<Player> players;
+        public List<Player> players = new List<Player>();
         public List<Territory> territories;
         public List<Continent> continents;
         public Territory slctTerritory;
@@ -25,6 +25,8 @@ namespace RiskGame.Game
         public int turn;
         public DateTime lastsave;
         public GameState gameState;
+        public string gamemode;
+        public string map;
 
         private int gameID;
         public int GameID { get => gameID;}
@@ -55,6 +57,10 @@ namespace RiskGame.Game
         }
 
         // Constructor ///
+        public GameManager()
+        {
+            SetGameID();
+        }
         public GameManager(List<Player> players, List<Territory> territories, Player currentplayer, int turn, GameState gameState)
         {
            // Ensures values aren't saved as null.
@@ -66,6 +72,37 @@ namespace RiskGame.Game
             SetGameID();
         }
 
+        public static void DeleteGame(int _gameID)
+        {
+            ClearEmptyFile();
+            // Loads game objects from the file.
+            if (File.Exists(FileName))
+            {
+                BinaryFormatter bf = new BinaryFormatter();
+                List<GameManager> gm = new List<GameManager>();
+                // If the file exists find the game matching that ID and retrieve the object.
+                using (Stream sr = new FileStream(FileName, FileMode.OpenOrCreate))
+                {
+                    GameManager read;
+                    while (sr.Position < sr.Length)
+                    {
+                        read = (GameManager)bf.Deserialize(sr);
+                        if (read.GameID != _gameID)
+                        {
+                            gm.Add(read);
+                        }
+                    }
+                }
+                using (FileStream sr = File.OpenWrite(FileName)) // STREAM ONLY EXISTS FOR EXECUTION
+                {
+                    foreach (GameManager g in gm)
+                    {
+                        bf.Serialize(sr, g);
+                    }
+                }
+            }
+            else { throw new GameNotFoundException(); } // If the file does not exist you cannot load a game.
+        }
         public static void SaveGame(GameManager newGame)
         {
             /// Saves games to binary file via serialisation.

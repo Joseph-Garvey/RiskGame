@@ -21,6 +21,8 @@ namespace RiskGame.Game
         private readonly String noPlayers;
         private readonly String score;
         private readonly String turns;
+        private readonly String map;
+        private readonly String gamemode;
 
         public GameDetails(string gameID, string lastsave, string player, string noPlayers)
         {
@@ -30,13 +32,15 @@ namespace RiskGame.Game
             this.noPlayers = noPlayers ?? throw new ArgumentNullException(nameof(noPlayers));
         }
 
-        public GameDetails(string lastsave, string player, string noPlayers, string score, string turns)
+        public GameDetails(string lastsave, string player, string noPlayers, string score, string turns, string map, string gamemode)
         {
             this.lastsave = lastsave ?? throw new ArgumentNullException(nameof(lastsave));
             this.player = player ?? throw new ArgumentNullException(nameof(player));
             this.noPlayers = noPlayers ?? throw new ArgumentNullException(nameof(noPlayers));
             this.score = score ?? throw new ArgumentNullException(nameof(score));
             this.turns = turns ?? throw new ArgumentNullException(nameof(turns));
+            this.map = map ?? throw new ArgumentNullException(nameof(map));
+            this.gamemode = gamemode ?? throw new ArgumentNullException(nameof(gamemode));
         }
 
         public static void Save(GameDetails gameDetails)
@@ -78,5 +82,11 @@ namespace RiskGame.Game
         public string LastSave => lastsave;
 
         public string GameID => gameID;
+
+        public string Score => score;
+
+        public string Map => map;
+
+        public string Gamemode => gamemode;
     }
 }

@@ -14,9 +14,10 @@ namespace RiskGame.Game.Locations
         public readonly String name;
         public readonly List<String> links;
         public Player owner;
-        public Button button;
         public int currentarmies = 0;
         public int temparmies = 0; // used for storing number to be placed, number attacking, number to be moved to, moved from
+        [NonSerialized]
+        public Button button;
         public Territory(string name, List<string> links, Button button)
         {
             this.name = name ?? throw new ArgumentNullException(nameof(name));
