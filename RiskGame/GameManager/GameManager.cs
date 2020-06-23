@@ -61,16 +61,7 @@ namespace RiskGame.Game
         {
             SetGameID();
         }
-        public GameManager(List<Player> players, List<Territory> territories, Player currentplayer, int turn, GameState gameState)
-        {
-           // Ensures values aren't saved as null.
-            this.players = players ?? throw new ArgumentNullException(nameof(players));
-            this.territories = territories ?? throw new ArgumentNullException(nameof(territories));
-            this.currentplayer = currentplayer ?? throw new ArgumentNullException(nameof(currentplayer));
-            this.turn = turn;
-            //this.gameState = gameState;
-            SetGameID();
-        }
+
 
         public static void DeleteGame(int _gameID)
         {
@@ -81,7 +72,7 @@ namespace RiskGame.Game
                 BinaryFormatter bf = new BinaryFormatter();
                 List<GameManager> gm = new List<GameManager>();
                 // If the file exists find the game matching that ID and retrieve the object.
-                using (Stream sr = new FileStream(FileName, FileMode.OpenOrCreate))
+                using (Stream sr = new FileStream(FileName, FileMode.Open))
                 {
                     GameManager read;
                     while (sr.Position < sr.Length)
@@ -93,7 +84,8 @@ namespace RiskGame.Game
                         }
                     }
                 }
-                using (FileStream sr = File.OpenWrite(FileName)) // STREAM ONLY EXISTS FOR EXECUTION
+                File.Delete(FileName);
+                using (Stream sr = new FileStream(FileName,FileMode.Create))
                 {
                     foreach (GameManager g in gm)
                     {
@@ -101,7 +93,6 @@ namespace RiskGame.Game
                     }
                 }
             }
-            else { throw new GameNotFoundException(); } // If the file does not exist you cannot load a game.
         }
         public static void SaveGame(GameManager newGame)
         {
@@ -129,7 +120,7 @@ namespace RiskGame.Game
                             sr.Seek(pos, SeekOrigin.Begin);
                             newGame.lastsave = DateTime.Now;
                             bf.Serialize(sr, newGame);
-                            break;
+                            return;
                         }
                     }
                 }

@@ -169,7 +169,7 @@
                             <Button Content="Load Game" Click="Load_Game" Style="{StaticResource btnCornerUI}" HorizontalAlignment="Stretch" Width="200"></Button>
                             <Button Style="{StaticResource btnSettings}" Click="Settings" HorizontalAlignment="Right"></Button>
                         </StackPanel>
-                        <Label x:Name="txtError" Margin="5,5,5,0" Style="{StaticResource lblError}"  Visibility="Collapsed"/>
+                        <Label x:Name="txtError" Margin="5,5,5,0" Style="{StaticResource lblError}"  MaxWidth="300" Visibility="Collapsed"/>
                     </StackPanel>
                 </StackPanel>
                 <DockPanel x:Name="panel_Settings" Visibility="Collapsed">
