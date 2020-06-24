@@ -12,7 +12,6 @@
             <Setter Property="BorderBrush" Value="Black"></Setter>
         </Style>
         <Style x:Key="btnCornerUI" TargetType="Button" BasedOn="{StaticResource btnUI}">
-            <Setter Property="Background" Value="#B200D1FF"></Setter>
             <Style.Resources>
                 <Style TargetType="Border">
                     <Setter Property="CornerRadius" Value="4"></Setter>
@@ -33,17 +32,17 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="btnHelp" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+        <Style x:Key="btnHelp" TargetType="Button" BasedOn="{StaticResource btnSettings}">
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://siteoforigin:,,,/Images/Help.png" Height="20" Margin="5"></Image>
+                    <Image Source="pack://siteoforigin:,,,/Images/Help.png"></Image>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="btnHelpThin" TargetType="Button" BasedOn="{StaticResource btnHelp}">
+        <Style x:Key="btnHelpThin" TargetType="Button" BasedOn="{StaticResource btnSettingsThin}">
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://siteoforigin:,,,/Images/Help.png" Height="18" Margin="3"></Image>
+                    <Image Source="pack://siteoforigin:,,,/Images/Help.png"></Image>
                 </Setter.Value>
             </Setter>
         </Style>
@@ -56,12 +55,9 @@
             <Setter Property="BorderBrush" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
         </Style>
-        <Style x:Key="lblSubHeading" TargetType="Label">
+        <Style x:Key="lblSubHeading" TargetType="Label" BasedOn="{StaticResource lblHeader}">
             <Setter Property="FontSize" Value="9"></Setter>
-            <Setter Property="Background" Value="#B200D1FF"></Setter>
             <Setter Property="Margin" Value="5,0,5,0"></Setter>
-            <Setter Property="BorderBrush" Value="Black"></Setter>
-            <Setter Property="BorderThickness" Value="1"></Setter>
         </Style>
         <Style x:Key="lblError" TargetType="Label">
             <Setter Property="Margin" Value="5"></Setter>
@@ -80,25 +76,12 @@
                 </Style>
             </Style.Resources>
         </Style>
-        <Style x:Key="lblSuccess" TargetType="Label">
-            <Setter Property="Margin" Value="5"></Setter>
-            <Setter Property="Opacity" Value="0.8"></Setter>
+        <Style x:Key="lblSuccess" TargetType="Label" BasedOn="{StaticResource lblError}">
             <Setter Property="Background">
                 <Setter.Value>
                     <SolidColorBrush Color="Green"></SolidColorBrush>
                 </Setter.Value>
             </Setter>
-            <Setter Property="BorderBrush" Value="Black"></Setter>
-            <Setter Property="BorderThickness" Value="2"></Setter>
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="2"></Setter>
-                </Style>
-                <Style TargetType="TextBlock">
-                    <Setter Property="FontSize" Value="10"></Setter>
-                    <Setter Property="Foreground" Value="White"></Setter>
-                </Style>
-            </Style.Resources>
         </Style>
 
         <Style TargetType="DataGrid">
