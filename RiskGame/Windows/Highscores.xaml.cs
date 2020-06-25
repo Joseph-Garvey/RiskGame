@@ -37,14 +37,22 @@ namespace RiskGame.Windows
         }
         public Highscores(List<Player> _players) { Initialise(); players = _players; }
         public Highscores() { Initialise(); }
-
+        // Methods //
         private void Initialise()
         {
             // Initialise UI and show list of saved scores.
             InitializeComponent();
-            ScoreList.ItemsSource = GameDetails.RetrieveGames();
+            try
+            {
+                ScoreList.ItemsSource = GameDetails.RetrieveGames();
+            }
+            catch (Exception) { DispErrorMsg("An error occurred while attempting to retrieve the leaderboard."); }
         }
-
+        private void DispErrorMsg(String Message)
+        {
+            lblError.Visibility = Visibility.Visible;
+            txtError.Text = Message;
+        }
         // Button Events //
         private void New_Game(object sender, RoutedEventArgs e)
         {
@@ -70,28 +78,28 @@ namespace RiskGame.Windows
         {
             if (e.Key == Key.F11)
             {
-                if (this.WindowState == WindowState.Maximized)
-                {
-                    MaximiseWindow();
-                }
-                else
-                {
-                    this.ResizeMode = ResizeMode.NoResize;
-                    this.WindowState = WindowState.Normal;
-                    this.WindowStyle = WindowStyle.None;
-                    this.WindowState = WindowState.Maximized;
-                }
+                ChangeWindowState();
             }
             if (e.Key == Key.Escape && this.WindowState == WindowState.Maximized)
             {
-                MaximiseWindow();
+                ChangeWindowState();
             }
         }
-        private void MaximiseWindow()
+        private void ChangeWindowState()
         {
-            this.ResizeMode = ResizeMode.CanResize;
-            this.WindowState = WindowState.Normal;
-            this.WindowStyle = WindowStyle.SingleBorderWindow;
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.ResizeMode = ResizeMode.CanResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                this.ResizeMode = ResizeMode.NoResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.None;
+                this.WindowState = WindowState.Maximized;
+            }
         }
     }
 }

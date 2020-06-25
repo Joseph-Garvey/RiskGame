@@ -139,7 +139,7 @@
                         </StackPanel>
                     </StackPanel>
                     <Label x:Name="lblError" Style="{StaticResource lblError}" Width="290" Visibility="Collapsed" >
-                        <TextBlock x:Name="txtError" TextWrapping="Wrap">Error message</TextBlock>
+                        <TextBlock x:Name="txtError">Error message</TextBlock>
                     </Label>
                     <Label x:Name="lblSuccess" Style="{StaticResource lblSuccess}" Width="290" Visibility="Collapsed" >
                         <TextBlock x:Name="txtSuccess" TextWrapping="Wrap">Success message</TextBlock>

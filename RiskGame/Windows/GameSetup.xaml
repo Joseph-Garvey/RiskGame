@@ -169,7 +169,9 @@
                             <Button Content="Load Game" Click="Load_Game" Style="{StaticResource btnCornerUI}" HorizontalAlignment="Stretch" Width="200"></Button>
                             <Button Style="{StaticResource btnSettings}" Click="Settings" HorizontalAlignment="Right"></Button>
                         </StackPanel>
-                        <Label x:Name="txtError" Margin="5,5,5,0" Style="{StaticResource lblError}"  MaxWidth="300" Visibility="Collapsed"/>
+                        <Label x:Name="lblError" Margin="5,5,5,0" Style="{StaticResource lblError}" MaxWidth="300" Visibility="Collapsed" >
+                            <TextBlock x:Name="txtError">Error message</TextBlock>
+                        </Label>
                     </StackPanel>
                 </StackPanel>
                 <DockPanel x:Name="panel_Settings" Visibility="Collapsed">
@@ -211,7 +213,7 @@
                                 <Slider x:Name="slider_Volume" Minimum="0" Maximum="1" Value="1" Width="80" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume"></Slider>
                             </StackPanel>
                             <StackPanel Style="{StaticResource MusicControls}">
-                                <Label Style="{StaticResource lblSubHeading}">Enabled?</Label>
+                                <Label Style="{StaticResource lblSubHeading}">Enabled:</Label>
                                 <CheckBox x:Name="chkMusicEnabled" Margin="30,3,30,3" IsChecked="{Binding Music_enabled, Mode=TwoWay}"/>
                             </StackPanel>
                         </StackPanel>

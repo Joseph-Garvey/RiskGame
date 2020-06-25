@@ -50,6 +50,9 @@
                     <Button Style="{StaticResource btnUI}" FontSize="10" Margin="10" Click="New_Game">New Game</Button>
                     <Button Style="{StaticResource btnUI}" FontSize="10" Margin="10" Grid.Column="1" Click="Quit">Quit</Button>
                 </Grid>
+                <Label x:Name="lblError" Style="{StaticResource lblError}" Width="290" Visibility="Collapsed" >
+                    <TextBlock x:Name="txtError">Error message</TextBlock>
+                </Label>
             </StackPanel>
         </Viewbox>
     </Border>

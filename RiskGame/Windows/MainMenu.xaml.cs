@@ -97,13 +97,13 @@ namespace RiskGame
             music_enabled = ((Human)players[0]).music_enabled;
             SetupWindow();
         }
+        // Methods //
         private void SetupWindow()
         {
             this.DataContext = this;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
         }
-        // Methods //
         /// Message management ///
         private void DispErrorMsg(String message)
         {
@@ -123,7 +123,7 @@ namespace RiskGame
         {
             try
             {
-                lblSuccess.Visibility = Visibility.Hidden;
+                lblError.Visibility = Visibility.Collapsed;
                 // DEV OPTIONS // to be removed before publish // used for quick testing
                 if ((String)((Button)sender).Content == "Admin")
                 {
@@ -176,7 +176,7 @@ namespace RiskGame
             try
             {
                 lblError.Visibility = Visibility.Collapsed;
-                lblSuccess.Visibility = Visibility.Hidden;
+                lblSuccess.Visibility = Visibility.Collapsed;
                 // If passwords match, attempt to register the player.
                 if(txtRegPass.Password == txtRegPassConf.Password)
                 {

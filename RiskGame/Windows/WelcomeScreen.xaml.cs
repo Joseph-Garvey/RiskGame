@@ -72,6 +72,13 @@ namespace RiskGame.Windows
         }
         private void Settings(object sender, RoutedEventArgs e) { Settings(); }
         private void Return(object sender, RoutedEventArgs e) { Return(); }
+        private void Tutorial_Window(object sender, RoutedEventArgs e)
+        {
+            Tutorial tutorial = new Tutorial();
+            App.Current.MainWindow = tutorial;
+            tutorial.Show();
+        }
+        // Methods //
         private void Settings()
         {
             panel_MainUI.Visibility = Visibility.Collapsed;
@@ -148,11 +155,5 @@ namespace RiskGame.Windows
             }
         }
         private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(); }
-        private void Tutorial_Window(object sender, RoutedEventArgs e)
-        {
-            Tutorial tutorial = new Tutorial();
-            App.Current.MainWindow = tutorial;
-            tutorial.Show();
-        }
     }
 }

@@ -37,7 +37,7 @@ namespace RiskGame
                         ((Human)players[0]).music_enabled = value;
                         Human.Update(players[0] as Human);
                     }
-                    catch { ShowError("An error has occurred. Your music preferences have not been saved."); }
+                    catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
                 }
                 if (value == true) { mediaplayer.Play(); }
                 else if (value == false) { mediaplayer.Pause(); }
@@ -58,7 +58,7 @@ namespace RiskGame
                         ((Human)players[0]).hints_enabled = value;
                         Human.Update(players[0] as Human);
                     }
-                    catch { ShowError("An error has occurred. Your music preferences have not been saved."); }
+                    catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
                 }
                 hints_enabled = value;
             }
@@ -194,7 +194,7 @@ namespace RiskGame
         /// if + button clicked forward the list of players to a new Login Menu and close this window.
         private void AddPlayer(object sender, RoutedEventArgs e)
         {
-            if(cmbPlayer6.SelectedIndex == 1) { ShowError("AI is not yet implemented. Please select a human player."); } // AI is not yet implemented and thus is not an option.
+            if(cmbPlayer6.SelectedIndex == 1) { DispErrorMsg("AI is not yet implemented. Please select a human player."); } // AI is not yet implemented and thus is not an option.
             else if(cmbPlayer6.SelectedIndex == 0)
             {
                 // Only if selecting human, direct to Login Screen so that human can log in.
@@ -214,10 +214,10 @@ namespace RiskGame
                     switch (cmbGameMode.SelectedIndex)
                     {
                         case -1:
-                            ShowError("Please select a Gamemode.");
+                            DispErrorMsg("Please select a Gamemode.");
                             break;
                         case 0:
-                            ShowError("Classic Risk has not yet been implemented.");
+                            DispErrorMsg("Classic Risk has not yet been implemented.");
                             break;
                         case 1:
                             players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
@@ -233,9 +233,9 @@ namespace RiskGame
                             break;
                     }
                 }
-                else { ShowError("Please select a map."); }
+                else { DispErrorMsg("Please select a map."); }
             }
-            else { ShowError("There must be at least two players to start a game."); }
+            else { DispErrorMsg("There must be at least two players to start a game."); }
         }
 
         //////////////////////////////////////////////////////////
@@ -255,25 +255,25 @@ namespace RiskGame
             }
             catch (NullReferenceException)
             {
-                ShowError("Please select a game to load by clicking on the details of the game you wish to load and then 'Load Game'");
+                DispErrorMsg("Please select a game to load by clicking on the details of the game you wish to load and then 'Load Game'");
             }
             catch(Exception)
             {
-                ShowError("Something went wrong.");
+                DispErrorMsg("Something went wrong.");
             }
         }
 
         ///////////////////////////////////////////////////////////
         /// Error message handling, shows error message when exception thrown.
-        private void ShowError(String Message)
+        private void DispErrorMsg(String Message)
         {
-            txtError.Visibility = Visibility.Visible;
-            txtError.Content = Message;
+            lblError.Visibility = Visibility.Visible;
+            txtError.Text = Message;
         }
         private void ClearError()
         {
-            txtError.Visibility = Visibility.Collapsed;
-            txtError.Content = "";
+            lblError.Visibility = Visibility.Collapsed;
+            txtError.Text = "";
         }
 
         // Media Controls //
@@ -368,7 +368,10 @@ namespace RiskGame
                 chkFullscreen.IsChecked = false;
             }
         }
-        private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(); }
+        private void Fullscreen_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeWindowState();
+        }
         private void Tutorial_Window(object sender, RoutedEventArgs e)
         {
             Tutorial tutorial = new Tutorial();
