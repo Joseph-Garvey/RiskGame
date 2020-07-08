@@ -72,12 +72,7 @@ namespace RiskGame.Windows
         }
         private void Settings(object sender, RoutedEventArgs e) { Settings(); }
         private void Return(object sender, RoutedEventArgs e) { Return(); }
-        private void Tutorial_Window(object sender, RoutedEventArgs e)
-        {
-            Tutorial tutorial = new Tutorial();
-            App.Current.MainWindow = tutorial;
-            tutorial.Show();
-        }
+
         // Methods //
         private void Settings()
         {

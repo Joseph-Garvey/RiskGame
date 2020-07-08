@@ -372,12 +372,5 @@ namespace RiskGame
         {
             ChangeWindowState();
         }
-        private void Tutorial_Window(object sender, RoutedEventArgs e)
-        {
-            Tutorial tutorial = new Tutorial();
-            App.Current.MainWindow = tutorial;
-            tutorial.Show();
-        }
-
     }
 }

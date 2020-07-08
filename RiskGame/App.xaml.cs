@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using RiskGame.Windows;
 
 namespace RiskGame
@@ -41,6 +42,13 @@ namespace RiskGame
                     splashScreen.Close();
                 });
             });
+        }
+
+        public void Tutorial_Window(object sender, RoutedEventArgs e)
+        {
+            Tutorial tutorial = new Tutorial();
+            App.Current.MainWindow = tutorial;
+            tutorial.Show();
         }
     }
 }

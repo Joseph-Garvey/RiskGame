@@ -145,6 +145,8 @@
                         <TextBlock x:Name="txtSuccess" TextWrapping="Wrap">Success message</TextBlock>
                     </Label>
                 </StackPanel>
+
+                <!--Settings Panel-->
                 <DockPanel x:Name="panel_Settings" Visibility="Collapsed" >
                     <Label Style="{StaticResource lblHeader}" FontSize="12" DockPanel.Dock="Top">Settings:</Label>
                     <Border DockPanel.Dock="Right"  VerticalAlignment="Top">
@@ -193,7 +195,7 @@
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
                                     <CheckBox x:Name="chkHints" Margin="0,0,5,0" IsChecked="{Binding Hints_enabled, Mode=TwoWay}"></CheckBox>
                                 </StackPanel>
-                                <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Tutorial_Window">Tutorial</Button>
+                                <Button Style="{StaticResource btnHelp}" FontSize="12">Tutorial</Button>
                             </StackPanel>
                         </Border>
                         <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Return">Return</Button>

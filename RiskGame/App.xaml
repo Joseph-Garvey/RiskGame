@@ -38,11 +38,12 @@
                     <Image Source="pack://siteoforigin:,,,/Images/Help.png"></Image>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="Click" Handler="Tutorial_Window"/>
         </Style>
-        <Style x:Key="btnHelpThin" TargetType="Button" BasedOn="{StaticResource btnSettingsThin}">
+        <Style x:Key="btnHelpThin" TargetType="Button" BasedOn="{StaticResource btnHelp}">
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://siteoforigin:,,,/Images/Help.png"></Image>
+                    <Image Source="pack://siteoforigin:,,,/Images/Help.png" Height="18" Margin="3"></Image>
                 </Setter.Value>
             </Setter>
         </Style>
