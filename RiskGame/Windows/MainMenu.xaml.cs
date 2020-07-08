@@ -100,6 +100,7 @@ namespace RiskGame
         // Methods //
         private void SetupWindow()
         {
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             this.DataContext = this;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }

@@ -239,7 +239,7 @@
                                 <Button Style="{StaticResource btnHelp}" FontSize="12">Tutorial</Button> <!--Event Set in style-->
                             </StackPanel>
                         </Border>
-                        <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Return">Return</Button>
+                        <Button Style="{StaticResource btnReturn}"></Button>
                     </StackPanel>
                 </DockPanel>
             </StackPanel>

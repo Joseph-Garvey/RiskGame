@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RiskGame.Windows"
         mc:Ignorable="d"
         Title="Risk"
-        WindowStartupLocation="CenterScreen" Height="644" Width="800" StateChanged="Window_StateChanged" Style="{StaticResource windowResizeable}">
+        WindowStartupLocation="CenterScreen" Height="644" Width="800" Style="{StaticResource windowResizeable}">
     <Border>
         <Viewbox>
             <StackPanel>
@@ -47,7 +47,7 @@
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Return">Return</Button>
+                        <Button Style="{StaticResource btnReturn}"></Button>
                     </StackPanel>
                     <StackPanel DockPanel.Dock ="Left">
                         <Border>

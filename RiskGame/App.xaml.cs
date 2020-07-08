@@ -60,7 +60,7 @@ namespace RiskGame
                 else { ChangeDisplay(window); }
             }
         }
-        private void b(object sender, EventArgs e)
+        public void Window_StateChanged(object sender, EventArgs e)
         {
             Window window = Application.Current.MainWindow;
             CheckBox chkFullscreen = (CheckBox)window.FindName("chkFullscreen");
@@ -135,11 +135,6 @@ namespace RiskGame
             Tutorial tutorial = new Tutorial();
             App.Current.MainWindow = tutorial;
             tutorial.Show();
-        }
-
-        private void Window_StateChanged(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

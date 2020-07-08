@@ -43,6 +43,7 @@ namespace RiskGame.Windows
         public WelcomeScreen()
         {
             InitializeComponent();
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             Music.MusicIndex = 2;
             Music_enabled = true;
             Hints_enabled = true;
@@ -69,14 +70,6 @@ namespace RiskGame.Windows
             App.Current.MainWindow = highscores;
             this.Close();
             highscores.Show();
-        }
-        private void Return(object sender, RoutedEventArgs e) { Return(); }
-
-        // Methods //
-        private void Return()
-        {
-            panel_MainUI.Visibility = Visibility.Visible;
-            panel_Settings.Visibility = Visibility.Collapsed;
         }
 
         // Media Control //
