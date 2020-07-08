@@ -16,7 +16,6 @@ namespace RiskGame
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-
             // Start Splash Screen and Show
             SplashScreenWindow splashScreen = new SplashScreenWindow();
             this.MainWindow = splashScreen;
@@ -96,8 +95,12 @@ namespace RiskGame
         // Events //
         private void ChangeDisplay(object sender, RoutedEventArgs e)
         {
-            Window window = Application.Current.MainWindow;
-            ChangeDisplay(window);
+            try
+            {
+                Window window = Application.Current.MainWindow;
+                ChangeDisplay(window);
+            }
+            catch(NullReferenceException) { }
         }
         // Methods //
         private void ChangeDisplay(Window window)
@@ -132,9 +135,52 @@ namespace RiskGame
         public void Tutorial_Window(object sender, RoutedEventArgs e)
         {
             // Open Tutorial Window when help button is clicked //
-            Tutorial tutorial = new Tutorial();
+            Tutorial tutorial = new Tutorial(Application.Current.MainWindow);
             App.Current.MainWindow = tutorial;
             tutorial.Show();
+        }
+
+        /// Music Controls ///
+        // Events //
+        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            RetrieveMediaPlayer().Volume = (double)((Slider)sender).Value;
+        }
+        private void MediaBack(object sender, RoutedEventArgs e)
+        {
+            Music.MusicIndex -= 1;
+            ChangeMedia();
+        }
+        private void MediaForward(object sender, RoutedEventArgs e)
+        {
+            Music.MusicIndex += 1;
+            ChangeMedia();
+        }
+        private void MediaPause(object sender, RoutedEventArgs e) { RetrieveMediaPlayer().Pause(); }
+        private void MediaPlay(object sender, RoutedEventArgs e) { RetrieveMediaPlayer().Play(); }
+        private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e) { MediaForward(sender, e); }
+        private void UpdateMediaText(object sender, RoutedEventArgs e)
+        {
+            Window window = Application.Current.MainWindow;
+            ((Label)window.FindName("lblMediaDetails")).Content = ((MediaElement)window.FindName("mediaplayer")).Source.ToString().Substring(30);
+        }
+        // Methods //
+        private MediaElement RetrieveMediaPlayer()
+        {
+            Window window = Application.Current.MainWindow;
+            try
+            {
+                MediaElement m = (MediaElement)window.FindName("mediaplayer");
+                if(m != null) { return m;  }
+                else { throw new NullReferenceException(); }
+            }
+            catch { return new MediaElement(); }
+        }
+        private void ChangeMedia()
+        {
+            MediaElement mediaplayer = RetrieveMediaPlayer();
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            mediaplayer.Play();
         }
     }
 }

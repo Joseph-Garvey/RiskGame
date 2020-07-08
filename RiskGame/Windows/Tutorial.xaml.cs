@@ -19,9 +19,21 @@ namespace RiskGame.Windows
     /// </summary>
     public partial class Tutorial : Window
     {
-        public Tutorial()
+        private Window lastwindow;
+        public Tutorial(Window _sender)
         {
             InitializeComponent();
+            lastwindow = _sender;
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            App.Current.MainWindow = lastwindow;
+        }
+
+        private void Window_LostFocus(object sender, RoutedEventArgs e)
+        {
+            App.Current.MainWindow = lastwindow;
         }
     }
 }

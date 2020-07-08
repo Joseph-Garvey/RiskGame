@@ -70,6 +70,8 @@ namespace RiskGame
             // Takes in the list of players from Login/Register.
             InitializeComponent();
             players = _players;
+            // StateChanged Event Handler //
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             // Binding setup //
             this.DataContext = this;
             // Music Setup //
@@ -274,103 +276,6 @@ namespace RiskGame
         {
             lblError.Visibility = Visibility.Collapsed;
             txtError.Text = "";
-        }
-
-        // Media Controls //
-        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) { mediaplayer.Volume = (double)slider_Volume.Value; }
-        private void MediaBack(object sender, RoutedEventArgs e)
-        {
-            Music.MusicIndex -= 1;
-            ChangeMedia();
-        }
-        private void MediaForward(object sender, RoutedEventArgs e)
-        {
-            Music.MusicIndex += 1;
-            ChangeMedia();
-        }
-        private void ChangeMedia()
-        {
-            mediaplayer.Source = Music.sources[Music.MusicIndex];
-            mediaplayer.Play();
-        }
-        private void MediaPause(object sender, RoutedEventArgs e) { mediaplayer.Pause(); }
-        private void MediaPlay(object sender, RoutedEventArgs e) { mediaplayer.Play(); }
-        private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            MediaForward(sender, e);
-        }
-        private void UpdateMediaText(object sender, RoutedEventArgs e)
-        {
-            lblMediaDetails.Content = mediaplayer.Source.ToString().Substring(30);
-        }
-
-        // Navigate to and from settings menu //
-        private void Settings(object sender, RoutedEventArgs e) { Settings(); }
-        private void Return(object sender, RoutedEventArgs e) { Return(); }
-        private void Settings()
-        {
-            panel_MainUI.Visibility = Visibility.Collapsed;
-            panel_Settings.Visibility = Visibility.Visible;
-        }
-        private void Return()
-        {
-            panel_MainUI.Visibility = Visibility.Visible;
-            panel_Settings.Visibility = Visibility.Collapsed;
-        }
-
-        // Window Management //
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F11) { ChangeWindowState(); }
-            if (e.Key == Key.Escape)
-            {
-                if (this.WindowState == WindowState.Maximized)
-                {
-                    ChangeWindowState();
-                }
-                else
-                {
-                    if (panel_MainUI.Visibility == Visibility.Visible)
-                    {
-                        Settings();
-                    }
-                    else
-                    {
-                        Return();
-                    }
-                }
-            }
-        }
-        private void ChangeWindowState()
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.ResizeMode = ResizeMode.CanResize;
-                this.WindowState = WindowState.Normal;
-                this.WindowStyle = WindowStyle.SingleBorderWindow;
-            }
-            else
-            {
-                this.ResizeMode = ResizeMode.NoResize;
-                this.WindowState = WindowState.Normal;
-                this.WindowStyle = WindowStyle.None;
-                this.WindowState = WindowState.Maximized;
-            }
-        }
-        private void Window_StateChanged(object sender, EventArgs e)
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                chkFullscreen.IsChecked = true;
-            }
-            else
-            {
-                chkFullscreen.IsChecked = false;
-            }
-        }
-        private void Fullscreen_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeWindowState();
         }
     }
 }
