@@ -4,6 +4,12 @@
              xmlns:local="clr-namespace:RiskGame"
              >
     <Application.Resources>
+        <!-- Window Styles -->
+        <Style TargetType="{x:Type Window}" x:Key="windowResizeable">
+            <EventSetter Event="KeyDown" Handler="Window_KeyDown"></EventSetter>
+            <EventSetter Event="StateChanged" Handler="Window_StateChanged"></EventSetter>
+        </Style>
+        <!-- Button Styles -->
         <Style x:Key="btnUI" TargetType="Button">
             <Setter Property="Background" Value="#B200D1FF"></Setter>
             <Setter Property="FontSize" Value="14"></Setter>
@@ -24,6 +30,7 @@
                     <Image Source="pack://siteoforigin:,,,/Images/Settingsicon.png" Height="20" Margin="5"></Image>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="Click" Handler="ChangeDisplay"></EventSetter>
         </Style>
         <Style x:Key="btnSettingsThin" TargetType="Button" BasedOn="{StaticResource btnSettings}">
             <Setter Property="Content">
@@ -48,6 +55,7 @@
             </Setter>
         </Style>
 
+        <!-- Label Styles -->
         <Style x:Key="lblHeader" TargetType="Label">
             <Setter Property="FontSize" Value="10"></Setter>
             <Setter Property="Background" Value="#B200D1FF"></Setter>
@@ -85,16 +93,7 @@
             </Setter>
         </Style>
 
-        <Style TargetType="DataGrid">
-            <Setter Property="Margin" Value="5,0,5,0"></Setter>
-            <Setter Property="Width" Value="250"></Setter>
-            <Setter Property="SelectionMode" Value="Single"></Setter>
-            <Setter Property="IsReadOnly" Value="True"></Setter>
-            <Setter Property="FontSize" Value="8"></Setter>
-            <Setter Property="FontWeight" Value="Bold"></Setter>
-            <Setter Property="AutoGenerateColumns" Value="False"></Setter>
-        </Style>
-
+        <!-- StackPanel Styles -->
         <Style TargetType="StackPanel" x:Key="HorizontalCentred">
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
             <Setter Property="Orientation" Value="Horizontal"></Setter>
@@ -107,9 +106,24 @@
             <Setter Property="Background" Value="#7F00D1FF"></Setter>
         </Style>
 
-        <Style TargetType="CheckBox">
+        <Style TargetType="CheckBox" x:Key="Default">
             <Setter Property="BorderBrush" Value="Black"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
+        <Style TargetType="CheckBox" x:Key="chkFullscreen" BasedOn="{StaticResource Default}">
+            <EventSetter Event="Click" Handler="Fullscreen_Click"></EventSetter>
+        </Style>
+        <!-- Other Styles -->
+
+        <Style TargetType="DataGrid">
+            <Setter Property="Margin" Value="5,0,5,0"></Setter>
+            <Setter Property="Width" Value="250"></Setter>
+            <Setter Property="SelectionMode" Value="Single"></Setter>
+            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Setter Property="FontSize" Value="8"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="AutoGenerateColumns" Value="False"></Setter>
+        </Style>
+
     </Application.Resources>
 </Application>

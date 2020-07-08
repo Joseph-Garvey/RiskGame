@@ -70,15 +70,9 @@ namespace RiskGame.Windows
             this.Close();
             highscores.Show();
         }
-        private void Settings(object sender, RoutedEventArgs e) { Settings(); }
         private void Return(object sender, RoutedEventArgs e) { Return(); }
 
         // Methods //
-        private void Settings()
-        {
-            panel_MainUI.Visibility = Visibility.Collapsed;
-            panel_Settings.Visibility = Visibility.Visible;
-        }
         private void Return()
         {
             panel_MainUI.Visibility = Visibility.Visible;
@@ -98,57 +92,5 @@ namespace RiskGame.Windows
             else if (BackgroundVideo.Source == third) { BackgroundVideo.Source = first; }
             BackgroundVideo.Position = TimeSpan.Zero;
         }
-
-        // Window Management //
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F11) { ChangeWindowState(); }
-            if (e.Key == Key.Escape)
-            {
-                if (this.WindowState == WindowState.Maximized)
-                {
-                    ChangeWindowState();
-                }
-                else
-                {
-                    if (panel_MainUI.Visibility == Visibility.Visible)
-                    {
-                        Settings();
-                    }
-                    else
-                    {
-                        Return();
-                    }
-                }
-            }
-        }
-        private void ChangeWindowState()
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.ResizeMode = ResizeMode.CanResize;
-                this.WindowState = WindowState.Normal;
-                this.WindowStyle = WindowStyle.SingleBorderWindow;
-            }
-            else
-            {
-                this.ResizeMode = ResizeMode.NoResize;
-                this.WindowState = WindowState.Normal;
-                this.WindowStyle = WindowStyle.None;
-                this.WindowState = WindowState.Maximized;
-            }
-        }
-        private void Window_StateChanged(object sender, EventArgs e)
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                chkFullscreen.IsChecked = true;
-            }
-            else
-            {
-                chkFullscreen.IsChecked = false;
-            }
-        }
-        private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(); }
     }
 }

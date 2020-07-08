@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using RiskGame.Windows;
 
 namespace RiskGame
@@ -44,11 +45,101 @@ namespace RiskGame
             });
         }
 
+        /// Window Management ///
+        // Events //
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            Window window = Application.Current.MainWindow;
+            if (e.Key == Key.F11) { ChangeWindowState(window); }
+            if (e.Key == Key.Escape)
+            {
+                if (window.WindowState == WindowState.Maximized)
+                {
+                    ChangeWindowState(window);
+                }
+                else { ChangeDisplay(window); }
+            }
+        }
+        private void b(object sender, EventArgs e)
+        {
+            Window window = Application.Current.MainWindow;
+            CheckBox chkFullscreen = (CheckBox)window.FindName("chkFullscreen");
+            if (window.WindowState == WindowState.Maximized)
+            {
+                chkFullscreen.IsChecked = true;
+            }
+            else
+            {
+                chkFullscreen.IsChecked = false;
+            }
+        }
+        private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(Application.Current.MainWindow); }
+        // Methods //
+        private void ChangeWindowState(Window window)
+        {
+            if (window.WindowState == WindowState.Maximized)
+            {
+                window.ResizeMode = ResizeMode.CanResize;
+                window.WindowState = WindowState.Normal;
+                window.WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                window.ResizeMode = ResizeMode.NoResize;
+                window.WindowState = WindowState.Normal;
+                window.WindowStyle = WindowStyle.None;
+                window.WindowState = WindowState.Maximized;
+            }
+        }
+
+        /// Panel Management ///
+        // Events //
+        private void ChangeDisplay(object sender, RoutedEventArgs e)
+        {
+            Window window = Application.Current.MainWindow;
+            ChangeDisplay(window);
+        }
+        // Methods //
+        private void ChangeDisplay(Window window)
+        {
+            StackPanel panel_MainUI = (StackPanel)window.FindName("panel_MainUI");
+            Panel object_Settings = (Panel)window.FindName("panel_Settings");
+            if (panel_MainUI.Visibility == Visibility.Visible)
+            { Settings(panel_MainUI, object_Settings); }
+            else
+            { Return(panel_MainUI, object_Settings); }
+        }
+        private void Settings(StackPanel panel_MainUI)
+        {
+            panel_MainUI.Visibility = Visibility.Collapsed;
+        }
+        private void Settings(StackPanel panel_MainUI, Panel panel_Settings)
+        {
+            Settings(panel_MainUI);
+            panel_Settings.Visibility = Visibility.Visible;
+        }
+        private void Return(StackPanel panel_MainUI)
+        {
+            panel_MainUI.Visibility = Visibility.Visible;
+        }
+        private void Return(StackPanel panel_MainUI, Panel panel_Settings)
+        {
+            Return(panel_MainUI);
+            panel_Settings.Visibility = Visibility.Collapsed;
+        }
+
+        /// Tutorial Window Pop-up ///
         public void Tutorial_Window(object sender, RoutedEventArgs e)
         {
+            // Open Tutorial Window when help button is clicked //
             Tutorial tutorial = new Tutorial();
             App.Current.MainWindow = tutorial;
             tutorial.Show();
+        }
+
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
