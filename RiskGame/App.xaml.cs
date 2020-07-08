@@ -137,7 +137,7 @@ namespace RiskGame
             tutorial.Show();
         }
 
-        private void Window_StateChanged(object sender, EventArgs e)
+        private void Window_StateChanged(object sender, RoutedEventArgs e)
         {
 
         }
