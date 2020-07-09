@@ -96,7 +96,7 @@ namespace RiskGame
             get { return game.gameState; }
             set { game.gameState = value; }
         }
-        private int time = 6000;
+        private int time = 2000;
         private static Random rng = new Random();
         private int Turn
         {
@@ -123,17 +123,20 @@ namespace RiskGame
             // not complete // check at end once all is done
             // takes local variables and matches them to the gamemanager variables to load game. (Incomplete)
             InitializeComponent();
+            TimerSetup();
             game = _game;
             LoadPlayerUI();
             music_enabled = ((Human)Players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
             Output("The game has loaded.");
+            StartTimer();
         }
         // New Game //
         public GameWindow(List<Player> _players, bool randomise_initial)
         {
             InitializeComponent();
+            TimerSetup();
             GameManager.ClearEmptyFile();
             game = new GameManager();
             Players = _players;
@@ -247,6 +250,15 @@ namespace RiskGame
             SetupGame(randomise_initial);
         }
 
+        private void TimerSetup()
+        {
+            workerthread = new BackgroundWorker();
+            workerthread.WorkerReportsProgress = true;
+            workerthread.WorkerSupportsCancellation = true;
+            workerthread.DoWork += Worker_DoWork;
+            workerthread.ProgressChanged += Worker_ProgressChanged;
+            workerthread.RunWorkerCompleted += Worker_RunWorkerCompleted;
+        }
         // Game Setup and UI Management //
         private void SetupGame(bool randomise_initial)
         {
@@ -274,7 +286,7 @@ namespace RiskGame
         {
             Output("The Game is beginning.");
             gamestate = GameState.PlacingArmy;
-            NextTurn();
+            NextTurnThreaded();
             GameManager.SaveGame(game);
         }
         private void SetupRandom()
@@ -454,8 +466,19 @@ namespace RiskGame
         }
         private void NextTurn()
         {
+            if (workerthread != null && workerthread.IsBusy == true)
+            {
+                workerthread.CancelAsync();
+            }
+            else
+            {
+                NextTurnThreaded();
+            }
+        }
+        private void NextTurnThreaded()
+        {
             ClearSelections();
-            if(gamestate == GameState.InitialArmyPlace)
+            if (gamestate == GameState.InitialArmyPlace)
             {
                 if ((!(CurrentPlayer is NeutralAI)) && CurrentPlayer.army_undeployed > 0)
                 {
@@ -464,7 +487,7 @@ namespace RiskGame
                 }
                 else
                 {
-                    if(CurrentPlayer is NeutralAI) { CyclePlayers(); NextTurn(); }
+                    if (CurrentPlayer is NeutralAI) { CyclePlayers(); NextTurn(); }
                     if (AllPlaced())
                     {
                         // Neutral AI conquer
@@ -489,7 +512,7 @@ namespace RiskGame
                 CurrentPlayer.army_undeployed += ((CurrentPlayer.territoriesowned / 3) + bonus);
                 UpdatePlayerPanelUI();
                 UpdateState(GameState.PlacingArmy);
-                switch(ownedContinents.Count)
+                switch (ownedContinents.Count)
                 {
                     case 1:
                         Output(String.Format("You have received {0} bonus armies from capturing all of {1}", bonus, ownedContinents[0]));
@@ -806,6 +829,7 @@ namespace RiskGame
                             t.temparmies = 0;
                         }
                     }
+                    ClearSelectionsUI();
                     break;
                 case GameState.Attacking:
                     if(SlctTerritory != null)
@@ -833,7 +857,6 @@ namespace RiskGame
                     }
                     break;
             }
-            ClearSelectionsUI();
         }
         private bool ContinentOwned(Continent c)
         {
@@ -849,20 +872,24 @@ namespace RiskGame
         private void StartTimer()
         {
             pb_Timer.Value = 0;
-            workerthread = new BackgroundWorker();
-            workerthread.WorkerReportsProgress = true;
-            workerthread.DoWork += Worker_DoWork;
-            workerthread.ProgressChanged += Worker_ProgressChanged;
-            workerthread.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            workerthread.CancelAsync();
             workerthread.RunWorkerAsync();
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             for(int i = 0; i < time; i++)
             {
-                int progressPercentage = Convert.ToInt32(((double)i / time) * 100);
-                (sender as BackgroundWorker).ReportProgress(progressPercentage);
-                Thread.Sleep(10);
+                if (workerthread.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                else
+                {
+                    int progressPercentage = Convert.ToInt32(((double)i / time) * 100);
+                    (sender as BackgroundWorker).ReportProgress(progressPercentage);
+                    Thread.Sleep(10);
+                }
             }
         }
         void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -871,12 +898,11 @@ namespace RiskGame
         }
         void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Output("Your turn has ended.");
-            if(gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
+            if (gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
             else
             {
                 CancelUnconfirmedActions();
-                NextTurn();
+                NextTurnThreaded();
             }
         }
 
@@ -1079,6 +1105,7 @@ namespace RiskGame
                     Place_Reinforce(NextTerritory, NextTerritory.temparmies);
                     NextTerritory.temparmies = 0;
                     ConquerTerritoryUI();
+                    if(workerthread.IsBusy == false) { NextTurnThreaded(); return; }
                     NextAction();
                     break;
                 case GameState.Move:
