@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RiskGame"
+        xmlns:l="clr-namespace:RiskGame"
         mc:Ignorable="d"
         Title="Game Setup" Height="600" Width="800" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}">
     <Border>
@@ -167,7 +167,7 @@
                         <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
                         <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="170">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID, Converter={l:IntToString}}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Last Save" Width="95" Binding="{Binding LastSave}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="No. Players" Width="60" Binding="{Binding NoPlayers}"></DataGridTextColumn>
