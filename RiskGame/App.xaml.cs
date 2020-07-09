@@ -105,7 +105,7 @@ namespace RiskGame
         {
             try
             {
-                Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
+                Window window = Application.Current.MainWindow;
                 if (window == null) { throw new NullReferenceException(); }
                 return window;
             }
@@ -159,7 +159,6 @@ namespace RiskGame
         {
             // Open Tutorial Window when help button is clicked //
             Tutorial tutorial = new Tutorial(Application.Current.MainWindow);
-            App.Current.MainWindow = tutorial;
             tutorial.Show();
         }
 
@@ -181,73 +180,12 @@ namespace RiskGame
             if (sender is MediaElement) { ChangeMedia((MediaElement)sender); }
             else { ChangeMedia(); }
         }
-        private void MediaPause(object sender, RoutedEventArgs e)
-        {
-            foreach (Window w in Application.Current.Windows)
-            {
-                if(w is GameSetup)
-                {
-                    (w as GameSetup).Music_enabled = true;
-                    RetrieveMediaPlayer(w).Pause();
-                    break;
-                }
-                else if(w is RiskGame.MainWindow)
-                {
-                    (w as RiskGame.MainWindow).Music_enabled = true;
-                    RetrieveMediaPlayer(w).Pause();
-                    break;
-                }
-                /*else if (w is RiskGame.GameWindow)
-                {
-                    (w as RiskGame.GameWindow).Music_enabled = true;
-                }
-                else if (w is RiskGame.Windows.Highscores)
-                {
-                    (w as RiskGame.Windows.Highscores).Music_enabled = true;
-                }*/
-            }
-        }
-        private void MediaPlay(object sender, RoutedEventArgs e)
-        {
-            foreach (Window w in Application.Current.Windows)
-            {
-                if (w is GameSetup)
-                {
-                    (w as GameSetup).Music_enabled = true;
-                    RetrieveMediaPlayer(w).Play();
-                    break;
-                }
-                else if (w is RiskGame.MainWindow)
-                {
-                    (w as RiskGame.MainWindow).Music_enabled = true;
-                    RetrieveMediaPlayer(w).Play();
-                    break;
-                }
-                /*else if (w is RiskGame.GameWindow)
-                {
-                    (w as RiskGame.GameWindow).Music_enabled = true;
-                }
-                else if (w is RiskGame.Windows.Highscores)
-                {
-                    (w as RiskGame.Windows.Highscores).Music_enabled = true;
-                }*/
-            }
-        }
+        private void MediaPause(object sender, RoutedEventArgs e) { RetrieveMediaPlayer().Pause(); }
+        private void MediaPlay(object sender, RoutedEventArgs e) { RetrieveMediaPlayer().Play(); }
         private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e) { MediaForward(sender, e); }
         private void UpdateMediaText(object sender, RoutedEventArgs e)
         {
             Window window = RetrieveActiveWindow();
-            if(window is Tutorial)
-            {
-                foreach (Window w in Application.Current.Windows)
-                {
-                    if ((w is GameSetup) || (w is RiskGame.MainWindow) || (w is RiskGame.GameWindow) || (w is RiskGame.Windows.Highscores))
-                    {
-                        window = w;
-                        break;
-                    }
-                }
-            }
             ((Label)window.FindName("lblMediaDetails")).Content = ((MediaElement)sender).Source.ToString().Substring(30);
         }
         // Methods //
