@@ -16,6 +16,7 @@ using RiskGame.Game;
 using RiskGame.Game.Locations;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.ComponentModel;
 using RiskGame.Windows;
 
 namespace RiskGame
@@ -95,6 +96,7 @@ namespace RiskGame
             get { return game.gameState; }
             set { game.gameState = value; }
         }
+        private int time;
         private static Random rng = new Random();
         private int Turn
         {
@@ -113,6 +115,7 @@ namespace RiskGame
             set { game.gamemode = value; }
         }
         private bool music_enabled;
+        private BackgroundWorker workerthread = null;
         //// Constructors ////
         // Load Game //
         public GameWindow(GameManager _game)
@@ -506,6 +509,7 @@ namespace RiskGame
                         Output(String.Format("{0} and {1}", ownedContinents[3], ownedContinents[4]));
                         break;
                 }
+                StartTimer();
             }
         }
         private void Win()
@@ -608,7 +612,7 @@ namespace RiskGame
             switch (gamestate)
             {
                 case GameState.Attacking:
-                    lblState.Content = "Attacking";
+                    btnState.Content = "Confirm Attack";
                     if(CurrentPlayer is Human)
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
@@ -619,7 +623,7 @@ namespace RiskGame
                     }
                     break;
                 case GameState.InitialArmyPlace:
-                    lblState.Content = "Placing Army";
+                    btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
@@ -629,7 +633,7 @@ namespace RiskGame
                     }
                     break;
                 case GameState.PlacingArmy:
-                    lblState.Content = "Placing Army";
+                    btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
@@ -641,10 +645,10 @@ namespace RiskGame
                     Output(String.Format("You have {0} armies to place.", CurrentPlayer.army_undeployed));
                     break;
                 case GameState.Move:
-                    lblState.Content = "Fortifying";
+                    btnState.Content = "Confirm Fortify";
                     break;
                 case GameState.Conquer:
-                    lblState.Content = "Conquer";
+                    btnState.Content = "Confirm Conquer";
                     if (CurrentPlayer is Human)
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
@@ -839,6 +843,41 @@ namespace RiskGame
                 if(t.owner != CurrentPlayer) { owned = false; break; }
             }
             return owned;
+        }
+
+        // Timer Control //
+        private void StartTimer()
+        {
+            pb_Timer.Value = 0;
+            workerthread = new BackgroundWorker();
+            workerthread.WorkerReportsProgress = true;
+            workerthread.DoWork += Worker_DoWork;
+            workerthread.ProgressChanged += Worker_ProgressChanged;
+            workerthread.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            workerthread.RunWorkerAsync();
+        }
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            for(int i = 0; i < time; i++)
+            {
+                int progressPercentage = Convert.ToInt32(((double)i / time) * 100);
+                (sender as BackgroundWorker).ReportProgress(progressPercentage);
+                Thread.Sleep(10);
+            }
+        }
+        void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            pb_Timer.Value = e.ProgressPercentage;
+        }
+        void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Output("Your turn has ended.");
+            if(gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
+            else
+            {
+                CancelUnconfirmedActions();
+                NextTurn();
+            }
         }
 
         ////  Button Events  ////
@@ -1158,6 +1197,14 @@ namespace RiskGame
         {
             Win();
         }
+
+
+
+
+
+
+
+
 
         // Media //
         private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
