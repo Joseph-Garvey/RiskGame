@@ -16,4 +16,13 @@ namespace RiskGame.Game
         PlacingArmy,
         InitialArmyPlace
     }
+    public enum GameMode
+    {
+        NewRisk,
+        Classic
+    }
+    public enum GameMap
+    {
+        Default
+    }
 }

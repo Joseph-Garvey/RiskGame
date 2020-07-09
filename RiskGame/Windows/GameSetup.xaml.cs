@@ -63,6 +63,25 @@ namespace RiskGame
                 hints_enabled = value;
             }
         }
+        private bool timer_enabled;
+        public bool Timer_enabled
+        {
+            get { return timer_enabled; }
+            set
+            {
+                if(value == false)
+                {
+                    sldTime.Value = 0;
+                    sldTime.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    sldTime.Value = 30;
+                    sldTime.Visibility = Visibility.Visible;
+                }
+                timer_enabled = value;
+            }
+        }
 
         // Constructor //
         public GameSetup(List<Player> _players)
@@ -230,7 +249,7 @@ namespace RiskGame
                             if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
                             if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
                             if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
-                            GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
+                            GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value, (GameMap)cmbMap.SelectedIndex, (GameMode)cmbGameMode.SelectedIndex, (int)sldTime.Value) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
                             App.Current.MainWindow = Game;
                             this.Close();
                             Game.Show();

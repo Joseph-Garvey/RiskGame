@@ -26,8 +26,8 @@ namespace RiskGame.Game
         public int time;
         public DateTime lastsave;
         public GameState gameState;
-        public string gamemode;
-        public string map;
+        public GameMode gamemode;
+        public GameMap map;
 
         private int gameID;
         public int GameID { get => gameID;}

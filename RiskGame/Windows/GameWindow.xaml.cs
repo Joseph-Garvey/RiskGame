@@ -104,12 +104,12 @@ namespace RiskGame
             set { game.turn = value; }
         }
         private static List<Territory> scanterritories = new List<Territory>();
-        public string map
+        private GameMap map
         {
             get { return game.map; }
             set { game.map = value; }
         }
-        public string gamemode
+        private GameMode gamemode
         {
             get { return game.gamemode; }
             set { game.gamemode = value; }
@@ -135,7 +135,7 @@ namespace RiskGame
             StartTimer();
         }
         // New Game //
-        public GameWindow(List<Player> _players, bool randomise_initial)
+        public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration)
         {
             InitializeComponent();
             TimerSetup();
@@ -148,8 +148,13 @@ namespace RiskGame
             if (music_enabled) { mediaplayer.Play(); }
             paused = false;
             // Creation of Territories and Map Setup //
-            map = "Default";
-            gamemode = "New Risk";
+            map = _map;
+            gamemode = mode;
+            if(timerduration == 0)
+            {
+                // disable timer
+            }
+            else { time = timerduration; }
             List<String> links = new List<string>{ "Kamchatka", "Alberta", "Northwest_Canada" };
             Territory Alaska = new Territory("Alaska",links, btnAlaska);
             links = new List<string>{ "Alaska", "Alberta", "Greenland", "Ontario"};
@@ -553,7 +558,7 @@ namespace RiskGame
         {
             CurrentPlayer.score += CurrentPlayer.army_strength / 3;
             int finalscore = CurrentPlayer.score / Turn;
-            GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), map, gamemode);
+            GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), map.ToString(), gamemode.ToString());
             GameDetails.Save(gamedetails);
             GameManager.DeleteGame(game.GameID);
             Highscores Setup = new Highscores(gamedetails);
