@@ -79,6 +79,8 @@ namespace RiskGame
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
             // Retrieves list of games //
+            ObservableCollection<GameDetails> loadedgames = GameManager.RetrieveGames();
+            if (loadedgames == null || loadedgames.Count == 0) { panel_LoadGame.Visibility = Visibility.Collapsed; }
             GameList.ItemsSource = GameManager.RetrieveGames();
             // Updates UI with details of currently logged in players, showing new "Player Panels" as required.
             lblPlayer1.Content = players[0].Username;

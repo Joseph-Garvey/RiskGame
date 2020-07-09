@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RiskGame.Windows"
         mc:Ignorable="d"
-        Title="Highscores" Height="800" Width="600" WindowStartupLocation="CenterScreen" KeyDown="window_KeyDown">
+        Title="Highscores" Height="800" Width="600" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}">
     <Border>
         <Border.Background>
             <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
@@ -20,39 +20,105 @@
         </Border.Background>
         <Viewbox>
             <StackPanel>
-                <Label Style="{StaticResource lblHeader}">Leaderboard</Label>
-                <DataGrid Name="ScoreList" Width="295" HorizontalScrollBarVisibility="Disabled">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding NoPlayers}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Map" Width="40"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Game Mode" Width="60"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Date" Width="55" Binding="{Binding LastSave}"></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Label x:Name="lblPlayerScore" Style="{StaticResource lblHeader}" FontSize="8" Width="100" HorizontalAlignment="Left" Visibility="Collapsed">Your Score :</Label>
-                <DataGrid Name="PlayerScoreList" HeadersVisibility="None" Visibility="Collapsed" Width="295" HorizontalScrollBarVisibility="Disabled">
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding NoPlayers}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Map" Width="40" Binding="{Binding Map}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Game Mode" Width="60" Binding="{Binding Gamemode}"></DataGridTextColumn>
-                        <DataGridTextColumn Header="Date" Width="55" Binding="{Binding LastSave}"></DataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition></ColumnDefinition>
-                        <ColumnDefinition></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Button Style="{StaticResource btnUI}" FontSize="10" Margin="10" Click="New_Game">New Game</Button>
-                    <Button Style="{StaticResource btnUI}" FontSize="10" Margin="10" Grid.Column="1" Click="Quit">Quit</Button>
-                </Grid>
-                <Label x:Name="lblError" Style="{StaticResource lblError}" Width="290" Visibility="Collapsed" >
-                    <TextBlock x:Name="txtError">Error message</TextBlock>
-                </Label>
+                <!-- Main UI panel -->
+                <StackPanel x:Name="panel_MainUI">
+                    <Label Style="{StaticResource lblHeader}">Leaderboard</Label>
+                    <DataGrid Name="ScoreList" Width="295" HorizontalScrollBarVisibility="Disabled">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding NoPlayers}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Map" Width="40"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Game Mode" Width="60"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Date" Width="55" Binding="{Binding LastSave}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Label x:Name="lblPlayerScore" Style="{StaticResource lblHeader}" FontSize="8" Width="100" HorizontalAlignment="Left" Visibility="Collapsed">Your Score :</Label>
+                    <DataGrid Name="PlayerScoreList" HeadersVisibility="None" Visibility="Collapsed" Width="295" HorizontalScrollBarVisibility="Disabled">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding NoPlayers}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Map" Width="40" Binding="{Binding Map}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Game Mode" Width="60" Binding="{Binding Gamemode}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Date" Width="55" Binding="{Binding LastSave}"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Button Style="{StaticResource btnCornerUI}" FontSize="10" Height="20" Click="New_Game">New Game</Button>
+                        <Button Style="{StaticResource btnCornerUI}" FontSize="10"  Height="20"  Grid.Column="2" Click="Quit">Quit</Button>
+                        <Button Style="{StaticResource btnSettingsThin}" FontSize="10" Height="20" Grid.Column="1" >Settings</Button>
+                    </Grid>
+                    <Label x:Name="lblError" Style="{StaticResource lblError}" Width="290" Visibility="Collapsed" >
+                        <TextBlock x:Name="txtError">Error message</TextBlock>
+                    </Label>
+                </StackPanel>
+                <!-- Settings Panel -->
+                <DockPanel x:Name="panel_Settings" Visibility="Collapsed">
+                    <DockPanel.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                            <Setter Property="BorderThickness" Value="1"></Setter>
+                            <Setter Property="Margin" Value="5"></Setter>
+                        </Style>
+                    </DockPanel.Resources>
+                    <Label Style="{StaticResource lblHeader}" FontSize="12" DockPanel.Dock="Top">Settings:</Label>
+                    <Border DockPanel.Dock="Right"  VerticalAlignment="Top">
+                        <StackPanel Style="{StaticResource panel_Background}">
+                            <StackPanel.Resources>
+                                <Style TargetType="StackPanel" BasedOn="{StaticResource HorizontalCentred}" x:Key="MusicControls">
+                                    <Setter Property="Width" Value="145"></Setter>
+                                    <Setter Property="Margin" Value="3"></Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Label Style="{StaticResource lblHeader}">Music:</Label>
+                            <Label x:Name="lblMediaDetails" Style="{StaticResource lblSubHeading}"></Label>
+                            <MediaElement x:Name="mediaplayer" Style="{StaticResource media_Music}"></MediaElement>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Style="{StaticResource btnMusicBack}"/>
+                                <Button Style="{StaticResource btnMusicPause}"/>
+                                <Button Style="{StaticResource btnMusicPlay}"/>
+                                <Button Style="{StaticResource btnMusicForward}"/>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource MusicControls}">
+                                <Label Style="{StaticResource lblSubHeading}" Height="24" Width="48">Volume:</Label>
+                                <Slider x:Name="slider_Volume"></Slider>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource MusicControls}">
+                                <Label Style="{StaticResource lblSubHeading}">Enabled:</Label>
+                                <CheckBox x:Name="chkMusicEnabled" Style="{StaticResource chkMusicEnabled}"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                    <StackPanel DockPanel.Dock ="Left">
+                        <Border>
+                            <StackPanel Style="{StaticResource panel_Background}">
+                                <Label Style="{StaticResource lblHeader}">General:</Label>
+                                <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
+                                    <Label Style="{StaticResource lblSubHeading}" Width="75">Fullscreen:</Label>
+                                    <CheckBox x:Name="chkFullscreen" Style="{StaticResource chkFullscreen}"></CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <Border>
+                            <StackPanel Style="{StaticResource panel_Background}">
+                                <Label Style="{StaticResource lblHeader}">Help:</Label>
+                                <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
+                                    <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
+                                    <CheckBox x:Name="chkHints" Style="{StaticResource chkHints}"></CheckBox>
+                                </StackPanel>
+                                <Button Style="{StaticResource btnHelp}" FontSize="12">Tutorial</Button>
+                                <!--Event Set in style-->
+                            </StackPanel>
+                        </Border>
+                        <Button Style="{StaticResource btnReturn}"></Button>
+                    </StackPanel>
+                </DockPanel>
             </StackPanel>
         </Viewbox>
     </Border>

@@ -133,7 +133,7 @@
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Width="100" FontSize="12" TabIndex="7">Leaderboard</Button>
+                                <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Width="100" FontSize="12" TabIndex="7" Click="Leaderboard">Leaderboard</Button>
                                 <Button Style="{StaticResource btnSettings}" HorizontalAlignment="Center" Grid.Column="1" TabIndex="8"></Button>
                             </Grid>
                         </StackPanel>

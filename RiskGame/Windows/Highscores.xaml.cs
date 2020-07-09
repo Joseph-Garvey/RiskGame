@@ -24,6 +24,46 @@ namespace RiskGame.Windows
         // Variables //
         List<Player> players; // used for when highscores is clicked from within gamesetup?
         ObservableCollection<GameDetails> playergame;
+        private bool music_enabled;
+        public bool Music_enabled
+        {
+            get => music_enabled;
+            set
+            {
+
+                if (players.Count != 0)
+                {
+                    try
+                    {
+                        ((Human)players[0]).music_enabled = value;
+                        Human.Update(players[0] as Human);
+                    }
+                    catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
+                }
+                if (value == true) { mediaplayer.Play(); }
+                else if (value == false) { mediaplayer.Pause(); }
+                music_enabled = value;
+            }
+        }
+        private bool hints_enabled;
+        public bool Hints_enabled
+        {
+            get => hints_enabled;
+            set
+            {
+
+                if (players.Count != 0)
+                {
+                    try
+                    {
+                        ((Human)players[0]).hints_enabled = value;
+                        Human.Update(players[0] as Human);
+                    }
+                    catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
+                }
+                hints_enabled = value;
+            }
+        }
         // Constructor(s) //
         public Highscores(GameDetails gameDetails)
         {
@@ -36,12 +76,24 @@ namespace RiskGame.Windows
             PlayerScoreList.Visibility = Visibility.Visible;
         }
         public Highscores(List<Player> _players) { Initialise(); players = _players; }
-        public Highscores() { Initialise(); }
+        public Highscores(bool _musicenabled)
+        {
+            music_enabled = _musicenabled;
+            Initialise();
+        }
         // Methods //
         private void Initialise()
         {
             // Initialise UI and show list of saved scores.
             InitializeComponent();
+            this.DataContext = this;
+            if (players != null)
+            {
+                music_enabled = ((Human)players[0]).music_enabled;
+            }
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            if (music_enabled) { mediaplayer.Play(); }
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             try
             {
                 ScoreList.ItemsSource = GameDetails.RetrieveGames();
@@ -72,34 +124,5 @@ namespace RiskGame.Windows
             }
         }
         private void Quit(object sender, RoutedEventArgs e) {  this.Close(); }
-
-        // Window Controls //
-        private void window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F11)
-            {
-                ChangeWindowState();
-            }
-            if (e.Key == Key.Escape && this.WindowState == WindowState.Maximized)
-            {
-                ChangeWindowState();
-            }
-        }
-        private void ChangeWindowState()
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.ResizeMode = ResizeMode.CanResize;
-                this.WindowState = WindowState.Normal;
-                this.WindowStyle = WindowStyle.SingleBorderWindow;
-            }
-            else
-            {
-                this.ResizeMode = ResizeMode.NoResize;
-                this.WindowState = WindowState.Normal;
-                this.WindowStyle = WindowStyle.None;
-                this.WindowState = WindowState.Maximized;
-            }
-        }
     }
 }

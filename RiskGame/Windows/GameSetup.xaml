@@ -149,14 +149,16 @@
                                 <TextBlock Text="New Risk"></TextBlock>
                             </ComboBoxItem>
                         </ComboBox>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Style="{StaticResource HorizontalCentred}">
                             <Label Content="Randomise Initial Placement?" FontSize="8" Style="{StaticResource lblHeader}"></Label>
                             <CheckBox x:Name="chkRandomise"  Margin="5,9,5,8"></CheckBox>
                             <Button Style="{StaticResource btnUI}" Width="20" Margin="6" ToolTip="This option speeds up the start of a game by randomly placing all players' initial armies around the map.">?</Button>
                         </StackPanel>
                         <Button Content="New Game" Click="New_Game" Style="{StaticResource btnUI}"></Button>
+
                     </StackPanel>
-                    <StackPanel>
+                    <!-- Load Game Panel -->
+                    <StackPanel x:Name="panel_LoadGame">
                         <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
                         <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="170">
                             <DataGrid.Columns>

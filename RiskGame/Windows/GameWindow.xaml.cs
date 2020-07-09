@@ -116,6 +116,7 @@ namespace RiskGame
         }
         private bool music_enabled;
         private BackgroundWorker workerthread = null;
+        private bool paused;
         //// Constructors ////
         // Load Game //
         public GameWindow(GameManager _game)
@@ -123,6 +124,7 @@ namespace RiskGame
             // not complete // check at end once all is done
             // takes local variables and matches them to the gamemanager variables to load game. (Incomplete)
             InitializeComponent();
+            paused = false;
             TimerSetup();
             game = _game;
             LoadPlayerUI();
@@ -144,6 +146,7 @@ namespace RiskGame
             music_enabled = ((Human)Players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
+            paused = false;
             // Creation of Territories and Map Setup //
             map = "Default";
             gamemode = "New Risk";
@@ -886,6 +889,7 @@ namespace RiskGame
                 }
                 else
                 {
+                    while(paused == true) { Thread.Sleep(100); }
                     int progressPercentage = Convert.ToInt32(((double)i / time) * 100);
                     (sender as BackgroundWorker).ReportProgress(progressPercentage);
                     Thread.Sleep(10);
@@ -1119,6 +1123,18 @@ namespace RiskGame
         private void Cancel(object sender, RoutedEventArgs e) { CancelUnconfirmedActions(); }
         private void Increase(object sender, RoutedEventArgs e) { PlayerActions(true); }
         private void Decrease(object sender, RoutedEventArgs e) { PlayerActions(false); }
+        private void Settings(object sender, RoutedEventArgs e)
+        {
+            paused = true;
+            panel_MainUI.Visibility = Visibility.Collapsed;
+            panel_Settings.Visibility = Visibility.Visible;
+        }
+        private void Return(object sender, RoutedEventArgs e)
+        {
+            paused = false;
+            panel_MainUI.Visibility = Visibility.Visible;
+            panel_Settings.Visibility = Visibility.Collapsed;
+        }
 
         ////  Player Actions ////
         private void Place_Reinforce(Territory T, int num)
