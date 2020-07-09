@@ -8,7 +8,7 @@ using System.Windows.Controls;
 namespace RiskGame.Game.Locations
 {
     [Serializable]
-    public class Territory
+    public class Territory : IComparable<Territory>
     {
         // Variables //
         public readonly String name;
@@ -23,6 +23,10 @@ namespace RiskGame.Game.Locations
             this.name = name ?? throw new ArgumentNullException(nameof(name));
             this.links = links ?? throw new ArgumentNullException(nameof(links));
             this.button = button ?? throw new ArgumentNullException(nameof(button));
+        }
+        public int CompareTo(Territory other)
+        {
+            return string.Compare(this.name, other.name);
         }
     }
 }

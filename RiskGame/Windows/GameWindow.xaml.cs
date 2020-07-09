@@ -272,9 +272,16 @@ namespace RiskGame
             UISetup();
             foreach (Player p in Players) { p.army_undeployed = initialarmies; }
             UpdateState(GameState.InitialArmyPlace);
-            if (randomise_initial == true) { SetupRandom(); StartGame(); }
+            if (randomise_initial == true)
+            {
+                SetupRandom();
+                Territories.Sort();
+                // sort territories
+                StartGame();
+            }
             else
             {
+                Territories.Sort();
                 if(CurrentPlayer is Human)
                 {
                     if (((Human)CurrentPlayer).hints_enabled)
@@ -472,6 +479,7 @@ namespace RiskGame
         }
         private void NextTurn()
         {
+            if(gamestate == GameState.InitialArmyPlace) { NextTurnThreaded(); return; }
             if (workerthread != null && workerthread.IsBusy == true)
             {
                 workerthread.CancelAsync();
@@ -701,10 +709,25 @@ namespace RiskGame
         //// Backend Methods ////
         private Territory RetrieveTerritory(String territoryname)
         {
-            territoryname = territoryname.Replace('_', ' ');
-            for (int i = 0; i < Territories.Count; i++)
+            // Binary Search //
+            int start = 0;
+            int end = Territories.Count - 1;
+            territoryname = territoryname.Replace(' ', '_');
+            while (start <= end)
             {
-                if (territoryname.Replace('_', ' ') == Territories[i].name.Replace('_',' ')) { return Territories[i]; }
+                int mid = (start + end) / 2;
+                if (territoryname == Territories[mid].name)
+                {
+                    return Territories[mid];
+                }
+                else if(String.Compare(territoryname, Territories[mid].name) < 0)
+                {
+                    end = mid - 1;
+                }
+                else
+                {
+                    start = mid + 1;
+                }
             }
             throw new Exception("Territory does not exist");
         }
