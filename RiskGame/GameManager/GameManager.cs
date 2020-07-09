@@ -23,6 +23,7 @@ namespace RiskGame.Game
         public Territory nextTerritory;
         public Player currentplayer;
         public int turn;
+        public int time;
         public DateTime lastsave;
         public GameState gameState;
         public string gamemode;

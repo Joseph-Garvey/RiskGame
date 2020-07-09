@@ -158,7 +158,7 @@
                     </StackPanel>
                     <StackPanel>
                         <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
-                        <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled">
+                        <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="170">
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
