@@ -96,7 +96,7 @@ namespace RiskGame
             get { return game.gameState; }
             set { game.gameState = value; }
         }
-        private int time;
+        private int time = 6000;
         private static Random rng = new Random();
         private int Turn
         {
