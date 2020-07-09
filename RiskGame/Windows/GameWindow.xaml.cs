@@ -322,11 +322,14 @@ namespace RiskGame
                 {
                     foreach (Territory t in Territories)
                     {
-                        if (t.owner == p)
+                        if(p.army_undeployed > 0)
                         {
-                            if(p.army_undeployed > 0) { Place_Reinforce(t, 1); } // temp fix, change to cycling territories but break on an empty cycle
-                            else { break; }
+                            if(t.owner == p)
+                            {
+                                Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed,4)));
+                            }
                         }
+                        else { break; }
                     }
                 }
             }
