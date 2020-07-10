@@ -27,10 +27,10 @@ namespace RiskGame.Game
     }
     public enum Die
     {
-        PlayerDie1,
-        PlayerDie2,
-        PlayerDie3,
-        EnemyDie1,
-        EnemyDie2
+        Player1,
+        Player2,
+        Player3,
+        Enemy1,
+        Enemy2
     }
 }

@@ -1313,5 +1313,51 @@ namespace RiskGame
         {
             Win();
         }
+
+        private void ExampleDieRollusingProperties()
+        {
+            Rolled = 0;
+            List<Dice> dices = new List<Dice> { player1, player2, player3, enemy1 };
+            ToRoll = dices.Count;
+            foreach(Dice d in dices)
+            {
+                d.workerthread.RunWorkerCompleted += dieRollComplete;
+                d.StartRoll();
+            }
+        }
+
+        private void dieRollComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            Rolled += 1;
+        }
+
+        private int rolled;
+        public int Rolled
+        {
+            get { return rolled; }
+            set
+            {
+                rolled = value;
+                if(rolled == toRoll)
+                {
+                    ExampleFinished();
+                }
+            }
+        }
+        Dice player1 = new Dice(Die.Player1, new Image());
+        Dice player2 = new Dice(Die.Player2, new Image());
+        Dice player3 = new Dice(Die.Player3, new Image());
+        Dice enemy1 = new Dice(Die.Enemy1, new Image());
+        private int toRoll;
+        public int ToRoll
+        {
+            get { return toRoll; }
+            set { toRoll = value; }
+        }
+        private void ExampleFinished()
+        {
+            int player = Math.Max(Math.Max(player1.current, player2.current),player3.current);
+            int enemy = enemy1.current;
+        }
     }
 }
