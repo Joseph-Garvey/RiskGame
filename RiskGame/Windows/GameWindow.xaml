@@ -146,12 +146,38 @@
                                 <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}" FontWeight="ExtraBold" FontSize="20" Width="50" Height="40" Click="Increase" >+</Button>
                             </StackPanel>
                         </StackPanel>
-                        <StackPanel x:Name="panel_Die" Style="{StaticResource panel_Background}" VerticalAlignment="Center" Margin="20">
-                            <Label x:Name="lblPlayerDie" Style="{StaticResource lblHeader}" FontSize="14">Your name here</Label>
-                            <StackPanel Style="{StaticResource HorizontalCentred}">
-                                <Image Source="ack://siteoforigin:,,,/Images/Dice1.png"></Image>
+                        <Grid x:Name="panel_Die" Style="{StaticResource grid_Background}" VerticalAlignment="Center" Margin="20">
+                            <Grid.Resources>
+                                <Style TargetType="Image">
+                                    <Setter Property="Source" Value="pack://siteoforigin:,,,/Images/Dice/imgDice6.png"></Setter>
+                                    <Setter Property="Height" Value="45"></Setter>
+                                </Style>
+                            </Grid.Resources>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition></RowDefinition>
+                                <RowDefinition></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <StackPanel Margin="5">
+                                <Label x:Name="lblPlayerDie" Style="{StaticResource lblHeader}" FontSize="14">Your name here</Label>
+                                <StackPanel x:Name="panel_Die_Player" Style="{StaticResource HorizontalCentred}" Background="Green">
+                                    <Image x:Name="imgPlayerDie1"></Image>
+                                    <Image x:Name="imgPlayerDie2"></Image>
+                                    <Image x:Name="imgPlayerDie3"></Image>
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
+                            <Button Style="{StaticResource btnCornerUI}" Grid.Row="1" Grid.ColumnSpan="2">Roll</Button>
+                            <StackPanel Grid.Column="1" Margin="5">
+                                <Label x:Name="lblEnemyDie" Style="{StaticResource lblHeader}" FontSize="14">Enemy name here</Label>
+                                <StackPanel x:Name="panel_Die_Enemy" Style="{StaticResource HorizontalCentred}" Background="IndianRed">
+                                    <Image x:Name="imgEnemyDie1"></Image>
+                                    <Image x:Name="imgEnemyDie2"></Image>
+                                </StackPanel>
+                            </StackPanel>
+                        </Grid>
                     </StackPanel>
                     <StackPanel Margin="20" Style="{StaticResource panel_Background}">
                         <Button Margin="20,5,20,0" VerticalAlignment="Center" FontSize="16" Width="150" Click="Continue" Style="{StaticResource btnCornerUI}">Continue</Button>

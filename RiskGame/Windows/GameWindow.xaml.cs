@@ -993,9 +993,13 @@ namespace RiskGame
                 case GameState.Attacking:
                     if(t.owner == CurrentPlayer)
                     {
+                        if(t == SlctTerritory)
+                        {
+                            
+                        }
                         if(t.currentarmies > 1)
                         {
-                            ClearSelections();
+                            CancelUnconfirmedActions();
                             SelectTerritory(t, btnTerritory, Brushes.Lime, false);
                             ShowAttack();
                         }
@@ -1018,7 +1022,8 @@ namespace RiskGame
                                 }
                             }
                             else if(btnTerritory.BorderBrush == Brushes.Red){
-                                PlayerActions(true);
+                                if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); }
+                                else { PlayerActions(true); }
                             }
                             else { Output("You cannot attack this territory from here"); break; }
                         }

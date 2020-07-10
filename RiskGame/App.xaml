@@ -161,6 +161,9 @@
         </Style>
 
         <!-- Other Styles -->
+        <Style TargetType="Grid" x:Key="grid_Background">
+            <Setter Property="Background" Value="#7F00D1FF"></Setter>
+        </Style>
         <Style TargetType="Slider"> <!-- Music Volume Slider-->
             <Setter Property="Minimum" Value="0"></Setter>
             <Setter Property="Maximum" Value="1"></Setter>

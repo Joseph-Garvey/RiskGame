@@ -18,12 +18,12 @@ namespace RiskGame.Game
         };
         public static List<Uri> sources = new List<Uri>
         {
-            new Uri("pack://siteoforigin:,,,/Images/Dice/dice_1.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/dice_2.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/dice_3.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/dice_4.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/dice_5.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/dice_6.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_1.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_2.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_3.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_4.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_5.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_6.png"),
         };
         public int current;
         Random rng = new Random();
