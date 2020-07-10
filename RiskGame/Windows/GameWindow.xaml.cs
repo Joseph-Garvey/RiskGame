@@ -1251,9 +1251,16 @@ namespace RiskGame
             List<Dice> dices = new List<Dice> { player1, player2, player3, enemy1 };
             foreach(Dice d in dices)
             {
+                d.workerthread.RunWorkerCompleted += dieRollComplete;
                 d.StartRoll();
             }
         }
+
+        private void dieRollComplete(object sender, RunWorkerCompletedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
         private int rolled;
         public int Rolled
         {

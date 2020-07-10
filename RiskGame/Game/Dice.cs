@@ -14,7 +14,7 @@ namespace RiskGame.Game
 {
     public class Dice
     {
-        private BackgroundWorker workerthread = new BackgroundWorker()
+        public BackgroundWorker workerthread = new BackgroundWorker()
         {
             WorkerReportsProgress = true,
             WorkerSupportsCancellation = true
@@ -39,7 +39,6 @@ namespace RiskGame.Game
             dieimage = _dieimage;
             workerthread.DoWork += Worker_DoWork;
             workerthread.ProgressChanged += Worker_ProgressChanged;
-            workerthread.RunWorkerCompleted += Worker_RunWorkerCompleted;
             current = 6;
         }
         public void StartRoll()
@@ -67,10 +66,6 @@ namespace RiskGame.Game
         void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             dieimage.Source = new BitmapImage(sources[current]);
-        }
-        void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            // call the complete method ((GameWindow)Application.Current.MainWindow)
         }
     }
 }
