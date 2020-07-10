@@ -23,6 +23,11 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <Style x:Key="btnReturn" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="FontSize" Value="12"></Setter>
+            <Setter Property="Content" Value="Return"></Setter>
+            <EventSetter Event="Click" Handler="ChangeDisplay"></EventSetter>
+        </Style>
         <Style x:Key="btnSettings" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
             <Setter Property="Content">
                 <Setter.Value>
@@ -38,10 +43,10 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="btnHelp" TargetType="Button" BasedOn="{StaticResource btnSettings}">
+        <Style x:Key="btnHelp" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://siteoforigin:,,,/Images/Help.png"></Image>
+                    <Image Source="pack://siteoforigin:,,,/Images/Help.png" Height="20" Margin="5"></Image>
                 </Setter.Value>
             </Setter>
             <EventSetter Event="Click" Handler="Tutorial_Window"/>
@@ -53,7 +58,39 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
+        <!-- Music Controls -->
+        <Style x:Key="btnMusicBack" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/previous.png" Height="14"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="MediaBack"></EventSetter>
+        </Style>
+        <Style x:Key="btnMusicPause" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/pause.png" Height="14"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="MediaPause"></EventSetter>
+        </Style>
+        <Style x:Key="btnMusicPlay" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/play.png" Height="14"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="MediaPlay"></EventSetter>
+        </Style>
+        <Style x:Key="btnMusicForward" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/Next.png" Height="14"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="MediaForward"></EventSetter>
+        </Style>
         <!-- Label Styles -->
         <Style x:Key="lblHeader" TargetType="Label">
             <Setter Property="FontSize" Value="10"></Setter>
@@ -105,15 +142,33 @@
             <Setter Property="Background" Value="#7F00D1FF"></Setter>
         </Style>
 
+        <!-- CheckBox Styles -->
         <Style TargetType="CheckBox" x:Key="Default">
             <Setter Property="BorderBrush" Value="Black"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
         </Style>
+        <Style TargetType="CheckBox" x:Key="chkMusicEnabled" BasedOn="{StaticResource Default}">
+            <Setter Property="Margin" Value="30,3,30,3"></Setter>
+            <Setter Property="IsChecked" Value="{Binding Music_enabled, Mode=TwoWay}"></Setter>
+        </Style>
         <Style TargetType="CheckBox" x:Key="chkFullscreen" BasedOn="{StaticResource Default}">
+            <Setter Property="Margin" Value="0,0,5,0"></Setter>
             <EventSetter Event="Click" Handler="Fullscreen_Click"></EventSetter>
         </Style>
-        <!-- Other Styles -->
+        <Style TargetType="CheckBox" x:Key="chkHints" BasedOn="{StaticResource Default}">
+            <Setter Property="Margin" Value="0,0,5,0"></Setter>
+            <Setter Property="IsChecked" Value="{Binding Hints_enabled, Mode=TwoWay}"></Setter>
+        </Style>
 
+        <!-- Other Styles -->
+        <Style TargetType="Slider"> <!-- Music Volume Slider-->
+            <Setter Property="Minimum" Value="0"></Setter>
+            <Setter Property="Maximum" Value="1"></Setter>
+            <Setter Property="Value" Value="1"></Setter>
+            <Setter Property="Width" Value="80"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <EventSetter Event="ValueChanged" Handler="ChangeMediaVolume"></EventSetter>
+        </Style>
         <Style TargetType="DataGrid">
             <Setter Property="Margin" Value="5,0,5,0"></Setter>
             <Setter Property="Width" Value="250"></Setter>
@@ -123,6 +178,11 @@
             <Setter Property="FontWeight" Value="Bold"></Setter>
             <Setter Property="AutoGenerateColumns" Value="False"></Setter>
         </Style>
-
+        <Style TargetType="MediaElement" x:Key="media_Music">
+            <Setter Property="Visibility" Value="Collapsed"></Setter>
+            <Setter Property="LoadedBehavior" Value="Manual"></Setter>
+            <EventSetter Event="MediaEnded" Handler="Mediaplayer_MediaEnded"></EventSetter>
+            <EventSetter  Event="MediaOpened" Handler="UpdateMediaText"></EventSetter>
+        </Style>
     </Application.Resources>
 </Application>

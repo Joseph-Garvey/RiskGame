@@ -23,10 +23,11 @@ namespace RiskGame.Game
         public Territory nextTerritory;
         public Player currentplayer;
         public int turn;
+        public int time;
         public DateTime lastsave;
         public GameState gameState;
-        public string gamemode;
-        public string map;
+        public GameMode gamemode;
+        public GameMap map;
 
         private int gameID;
         public int GameID { get => gameID;}
@@ -152,10 +153,10 @@ namespace RiskGame.Game
             }
             else { throw new GameNotFoundException(); } // If the file does not exist you cannot load a game.
         }
-        public static ObservableCollection<GameDetails> RetrieveGames() // Return actual game perhaps? // Can be made more efficient and combined with LoadGame once I learn more about DataBinding to objects.
+        public static ObservableCollection<GameManager> RetrieveGames() // Return actual game perhaps? // Can be made more efficient and combined with LoadGame once I learn more about DataBinding to objects.
         {
             /// Retrieve the list of games for the data grid on GameSetup.
-            ObservableCollection<GameDetails> games = new ObservableCollection<GameDetails>();
+            ObservableCollection<GameManager> games = new ObservableCollection<GameManager>();
             if (File.Exists(FileName))
             {
                 using (Stream sr = new FileStream(FileName, FileMode.Open))
@@ -163,8 +164,7 @@ namespace RiskGame.Game
                     BinaryFormatter bf = new BinaryFormatter();
                     while (sr.Position < sr.Length)
                     {
-                        GameManager tmp = ((GameManager)bf.Deserialize(sr));
-                        GameDetails game = new GameDetails(tmp.GameID.ToString(), tmp.lastsave.ToString("g"), tmp.players[0].Username, tmp.players.Count().ToString());
+                        GameManager game = ((GameManager)bf.Deserialize(sr));
                         games.Add(game);
                     }
                 }

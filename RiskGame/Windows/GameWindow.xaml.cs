@@ -16,6 +16,7 @@ using RiskGame.Game;
 using RiskGame.Game.Locations;
 using System.Collections.ObjectModel;
 using System.Threading;
+using System.ComponentModel;
 using RiskGame.Windows;
 
 namespace RiskGame
@@ -95,6 +96,7 @@ namespace RiskGame
             get { return game.gameState; }
             set { game.gameState = value; }
         }
+        private int time = 2000;
         private static Random rng = new Random();
         private int Turn
         {
@@ -102,17 +104,19 @@ namespace RiskGame
             set { game.turn = value; }
         }
         private static List<Territory> scanterritories = new List<Territory>();
-        public string map
+        private GameMap map
         {
             get { return game.map; }
             set { game.map = value; }
         }
-        public string gamemode
+        private GameMode gamemode
         {
             get { return game.gamemode; }
             set { game.gamemode = value; }
         }
         private bool music_enabled;
+        private BackgroundWorker workerthread = null;
+        private bool paused;
         //// Constructors ////
         // Load Game //
         public GameWindow(GameManager _game)
@@ -120,17 +124,21 @@ namespace RiskGame
             // not complete // check at end once all is done
             // takes local variables and matches them to the gamemanager variables to load game. (Incomplete)
             InitializeComponent();
+            paused = false;
+            TimerSetup();
             game = _game;
             LoadPlayerUI();
             music_enabled = ((Human)Players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
             Output("The game has loaded.");
+            StartTimer();
         }
         // New Game //
-        public GameWindow(List<Player> _players, bool randomise_initial)
+        public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration)
         {
             InitializeComponent();
+            TimerSetup();
             GameManager.ClearEmptyFile();
             game = new GameManager();
             Players = _players;
@@ -138,9 +146,15 @@ namespace RiskGame
             music_enabled = ((Human)Players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
+            paused = false;
             // Creation of Territories and Map Setup //
-            map = "Default";
-            gamemode = "New Risk";
+            map = _map;
+            gamemode = mode;
+            if(timerduration == 0)
+            {
+                // disable timer
+            }
+            else { time = timerduration; }
             List<String> links = new List<string>{ "Kamchatka", "Alberta", "Northwest_Canada" };
             Territory Alaska = new Territory("Alaska",links, btnAlaska);
             links = new List<string>{ "Alaska", "Alberta", "Greenland", "Ontario"};
@@ -244,6 +258,15 @@ namespace RiskGame
             SetupGame(randomise_initial);
         }
 
+        private void TimerSetup()
+        {
+            workerthread = new BackgroundWorker();
+            workerthread.WorkerReportsProgress = true;
+            workerthread.WorkerSupportsCancellation = true;
+            workerthread.DoWork += Worker_DoWork;
+            workerthread.ProgressChanged += Worker_ProgressChanged;
+            workerthread.RunWorkerCompleted += Worker_RunWorkerCompleted;
+        }
         // Game Setup and UI Management //
         private void SetupGame(bool randomise_initial)
         {
@@ -254,9 +277,16 @@ namespace RiskGame
             UISetup();
             foreach (Player p in Players) { p.army_undeployed = initialarmies; }
             UpdateState(GameState.InitialArmyPlace);
-            if (randomise_initial == true) { SetupRandom(); StartGame(); }
+            if (randomise_initial == true)
+            {
+                SetupRandom();
+                Territories.Sort();
+                // sort territories
+                StartGame();
+            }
             else
             {
+                Territories.Sort();
                 if(CurrentPlayer is Human)
                 {
                     if (((Human)CurrentPlayer).hints_enabled)
@@ -271,7 +301,7 @@ namespace RiskGame
         {
             Output("The Game is beginning.");
             gamestate = GameState.PlacingArmy;
-            NextTurn();
+            NextTurnThreaded();
             GameManager.SaveGame(game);
         }
         private void SetupRandom()
@@ -304,11 +334,14 @@ namespace RiskGame
                 {
                     foreach (Territory t in Territories)
                     {
-                        if (t.owner == p)
+                        if(p.army_undeployed > 0)
                         {
-                            if(p.army_undeployed > 0) { Place_Reinforce(t, 1); } // temp fix, change to cycling territories but break on an empty cycle
-                            else { break; }
+                            if(t.owner == p)
+                            {
+                                Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed,4)));
+                            }
                         }
+                        else { break; }
                     }
                 }
             }
@@ -451,8 +484,20 @@ namespace RiskGame
         }
         private void NextTurn()
         {
+            if(gamestate == GameState.InitialArmyPlace) { NextTurnThreaded(); return; }
+            if (workerthread != null && workerthread.IsBusy == true)
+            {
+                workerthread.CancelAsync();
+            }
+            else
+            {
+                NextTurnThreaded();
+            }
+        }
+        private void NextTurnThreaded()
+        {
             ClearSelections();
-            if(gamestate == GameState.InitialArmyPlace)
+            if (gamestate == GameState.InitialArmyPlace)
             {
                 if ((!(CurrentPlayer is NeutralAI)) && CurrentPlayer.army_undeployed > 0)
                 {
@@ -461,7 +506,7 @@ namespace RiskGame
                 }
                 else
                 {
-                    if(CurrentPlayer is NeutralAI) { CyclePlayers(); NextTurn(); }
+                    if (CurrentPlayer is NeutralAI) { CyclePlayers(); NextTurn(); }
                     if (AllPlaced())
                     {
                         // Neutral AI conquer
@@ -486,7 +531,7 @@ namespace RiskGame
                 CurrentPlayer.army_undeployed += ((CurrentPlayer.territoriesowned / 3) + bonus);
                 UpdatePlayerPanelUI();
                 UpdateState(GameState.PlacingArmy);
-                switch(ownedContinents.Count)
+                switch (ownedContinents.Count)
                 {
                     case 1:
                         Output(String.Format("You have received {0} bonus armies from capturing all of {1}", bonus, ownedContinents[0]));
@@ -506,13 +551,14 @@ namespace RiskGame
                         Output(String.Format("{0} and {1}", ownedContinents[3], ownedContinents[4]));
                         break;
                 }
+                StartTimer();
             }
         }
         private void Win()
         {
             CurrentPlayer.score += CurrentPlayer.army_strength / 3;
             int finalscore = CurrentPlayer.score / Turn;
-            GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), map, gamemode);
+            GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), map.ToString(), gamemode.ToString());
             GameDetails.Save(gamedetails);
             GameManager.DeleteGame(game.GameID);
             Highscores Setup = new Highscores(gamedetails);
@@ -608,7 +654,7 @@ namespace RiskGame
             switch (gamestate)
             {
                 case GameState.Attacking:
-                    lblState.Content = "Attacking";
+                    btnState.Content = "Confirm Attack";
                     if(CurrentPlayer is Human)
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
@@ -619,7 +665,7 @@ namespace RiskGame
                     }
                     break;
                 case GameState.InitialArmyPlace:
-                    lblState.Content = "Placing Army";
+                    btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
@@ -629,7 +675,7 @@ namespace RiskGame
                     }
                     break;
                 case GameState.PlacingArmy:
-                    lblState.Content = "Placing Army";
+                    btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
@@ -641,10 +687,10 @@ namespace RiskGame
                     Output(String.Format("You have {0} armies to place.", CurrentPlayer.army_undeployed));
                     break;
                 case GameState.Move:
-                    lblState.Content = "Fortifying";
+                    btnState.Content = "Confirm Fortify";
                     break;
                 case GameState.Conquer:
-                    lblState.Content = "Conquer";
+                    btnState.Content = "Confirm Conquer";
                     if (CurrentPlayer is Human)
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
@@ -668,10 +714,25 @@ namespace RiskGame
         //// Backend Methods ////
         private Territory RetrieveTerritory(String territoryname)
         {
-            territoryname = territoryname.Replace('_', ' ');
-            for (int i = 0; i < Territories.Count; i++)
+            // Binary Search //
+            int start = 0;
+            int end = Territories.Count - 1;
+            territoryname = territoryname.Replace(' ', '_');
+            while (start <= end)
             {
-                if (territoryname.Replace('_', ' ') == Territories[i].name.Replace('_',' ')) { return Territories[i]; }
+                int mid = (start + end) / 2;
+                if (territoryname == Territories[mid].name)
+                {
+                    return Territories[mid];
+                }
+                else if(String.Compare(territoryname, Territories[mid].name) < 0)
+                {
+                    end = mid - 1;
+                }
+                else
+                {
+                    start = mid + 1;
+                }
             }
             throw new Exception("Territory does not exist");
         }
@@ -802,6 +863,7 @@ namespace RiskGame
                             t.temparmies = 0;
                         }
                     }
+                    ClearSelectionsUI();
                     break;
                 case GameState.Attacking:
                     if(SlctTerritory != null)
@@ -829,7 +891,6 @@ namespace RiskGame
                     }
                     break;
             }
-            ClearSelectionsUI();
         }
         private bool ContinentOwned(Continent c)
         {
@@ -839,6 +900,45 @@ namespace RiskGame
                 if(t.owner != CurrentPlayer) { owned = false; break; }
             }
             return owned;
+        }
+
+        // Timer Control //
+        private void StartTimer()
+        {
+            pb_Timer.Value = 0;
+            workerthread.CancelAsync();
+            workerthread.RunWorkerAsync();
+        }
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            for(int i = 0; i < time; i++)
+            {
+                if (workerthread.CancellationPending == true)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                else
+                {
+                    while(paused == true) { Thread.Sleep(100); }
+                    int progressPercentage = Convert.ToInt32(((double)i / time) * 100);
+                    (sender as BackgroundWorker).ReportProgress(progressPercentage);
+                    Thread.Sleep(10);
+                }
+            }
+        }
+        void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            pb_Timer.Value = e.ProgressPercentage;
+        }
+        void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
+            else
+            {
+                CancelUnconfirmedActions();
+                NextTurnThreaded();
+            }
         }
 
         ////  Button Events  ////
@@ -1040,6 +1140,7 @@ namespace RiskGame
                     Place_Reinforce(NextTerritory, NextTerritory.temparmies);
                     NextTerritory.temparmies = 0;
                     ConquerTerritoryUI();
+                    if(workerthread.IsBusy == false) { NextTurnThreaded(); return; }
                     NextAction();
                     break;
                 case GameState.Move:
@@ -1053,6 +1154,18 @@ namespace RiskGame
         private void Cancel(object sender, RoutedEventArgs e) { CancelUnconfirmedActions(); }
         private void Increase(object sender, RoutedEventArgs e) { PlayerActions(true); }
         private void Decrease(object sender, RoutedEventArgs e) { PlayerActions(false); }
+        private void Settings(object sender, RoutedEventArgs e)
+        {
+            paused = true;
+            panel_MainUI.Visibility = Visibility.Collapsed;
+            panel_Settings.Visibility = Visibility.Visible;
+        }
+        private void Return(object sender, RoutedEventArgs e)
+        {
+            paused = false;
+            panel_MainUI.Visibility = Visibility.Visible;
+            panel_Settings.Visibility = Visibility.Collapsed;
+        }
 
         ////  Player Actions ////
         private void Place_Reinforce(Territory T, int num)
@@ -1158,6 +1271,14 @@ namespace RiskGame
         {
             Win();
         }
+
+
+
+
+
+
+
+
 
         // Media //
         private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)

@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RiskGame"
+        xmlns:l="clr-namespace:RiskGame"
         mc:Ignorable="d"
-        Title="Game Setup" Height="600" Width="800" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" StateChanged="Window_StateChanged">
+        Title="Game Setup" Height="600" Width="800" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}">
     <Border>
         <Border.Background>
             <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
@@ -20,6 +20,7 @@
         </Border.Background>
         <Viewbox>
             <StackPanel>
+                <!-- Main UI -->
                 <StackPanel x:Name="panel_MainUI" Orientation="Horizontal">
                     <StackPanel>
                         <StackPanel.Resources>
@@ -142,24 +143,31 @@
                         <Label Content="GameMode" FontSize="8" Style="{StaticResource lblHeader}"></Label>
                         <ComboBox x:Name="cmbGameMode">
                             <ComboBoxItem>
-                                <TextBlock Text="Classic Risk (Not yet implemented)"></TextBlock>
+                                <TextBlock Text="Classic Risk"></TextBlock>
                             </ComboBoxItem>
                             <ComboBoxItem>
                                 <TextBlock Text="New Risk"></TextBlock>
                             </ComboBoxItem>
                         </ComboBox>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Style="{StaticResource HorizontalCentred}">
+                            <Label Content="Turn timer enabled?" FontSize="8" Style="{StaticResource lblHeader}"></Label>
+                            <CheckBox x:Name="chkTimerEnabled"  VerticalAlignment="Center" IsChecked="{Binding Timer_enabled, Mode=TwoWay}"></CheckBox>
+                            <Slider x:Name="sldTime" Minimum="0" Maximum="120" Value="60"></Slider>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource HorizontalCentred}">
                             <Label Content="Randomise Initial Placement?" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                            <CheckBox x:Name="chkRandomise"  Margin="5,9,5,8"></CheckBox>
+                            <CheckBox x:Name="chkRandomise" Margin="5,9,5,8"></CheckBox>
                             <Button Style="{StaticResource btnUI}" Width="20" Margin="6" ToolTip="This option speeds up the start of a game by randomly placing all players' initial armies around the map.">?</Button>
                         </StackPanel>
                         <Button Content="New Game" Click="New_Game" Style="{StaticResource btnUI}"></Button>
+
                     </StackPanel>
-                    <StackPanel>
+                    <!-- Load Game Panel -->
+                    <StackPanel x:Name="panel_LoadGame">
                         <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
-                        <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled">
+                        <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="170">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID}"></DataGridTextColumn>
+                                <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID, Converter={l:IntToString}}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="Last Save" Width="95" Binding="{Binding LastSave}"></DataGridTextColumn>
                                 <DataGridTextColumn Header="No. Players" Width="60" Binding="{Binding NoPlayers}"></DataGridTextColumn>
@@ -167,7 +175,7 @@
                         </DataGrid>
                         <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
                             <Button Content="Load Game" Click="Load_Game" Style="{StaticResource btnCornerUI}" HorizontalAlignment="Stretch" Width="200"></Button>
-                            <Button Style="{StaticResource btnSettings}" Click="Settings" HorizontalAlignment="Right"></Button>
+                            <Button Style="{StaticResource btnSettings}" HorizontalAlignment="Right"></Button>
                         </StackPanel>
                         <Label x:Name="lblError" Margin="5,5,5,0" Style="{StaticResource lblError}" MaxWidth="300" Visibility="Collapsed" >
                             <TextBlock x:Name="txtError">Error message</TextBlock>
@@ -194,28 +202,20 @@
                             </StackPanel.Resources>
                             <Label Style="{StaticResource lblHeader}">Music:</Label>
                             <Label x:Name="lblMediaDetails" Style="{StaticResource lblSubHeading}"></Label>
-                            <MediaElement x:Name="mediaplayer" Visibility="Collapsed" Source="pack://siteoforigin:,,,/Music/Fallen_Soldier.mp3" LoadedBehavior="Manual" Height="20" MediaEnded="Mediaplayer_MediaEnded" MediaOpened="UpdateMediaText"></MediaElement>
+                            <MediaElement x:Name="mediaplayer" Style="{StaticResource media_Music}"></MediaElement>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaBack">
-                                    <Image Source="pack://siteoforigin:,,,/Images/previous.png" Height="14"></Image>
-                                </Button>
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaPause">
-                                    <Image Source="pack://siteoforigin:,,,/Images/pause.png" Height="14"></Image>
-                                </Button>
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaPlay">
-                                    <Image Source="pack://siteoforigin:,,,/Images/play.png" Height="14"></Image>
-                                </Button>
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaForward">
-                                    <Image Source="pack://siteoforigin:,,,/Images/Next.png" Height="14"></Image>
-                                </Button>
+                                <Button Style="{StaticResource btnMusicBack}"/>
+                                <Button Style="{StaticResource btnMusicPause}"/>
+                                <Button Style="{StaticResource btnMusicPlay}"/>
+                                <Button Style="{StaticResource btnMusicForward}"/>
                             </StackPanel>
                             <StackPanel Style="{StaticResource MusicControls}">
                                 <Label Style="{StaticResource lblSubHeading}" Height="24" Width="48">Volume:</Label>
-                                <Slider x:Name="slider_Volume" Minimum="0" Maximum="1" Value="1" Width="80" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume"></Slider>
+                                <Slider x:Name="slider_Volume"></Slider>
                             </StackPanel>
                             <StackPanel Style="{StaticResource MusicControls}">
                                 <Label Style="{StaticResource lblSubHeading}">Enabled:</Label>
-                                <CheckBox x:Name="chkMusicEnabled" Margin="30,3,30,3" IsChecked="{Binding Music_enabled, Mode=TwoWay}"/>
+                                <CheckBox x:Name="chkMusicEnabled" Style="{StaticResource chkMusicEnabled}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -225,7 +225,7 @@
                                 <Label Style="{StaticResource lblHeader}">General:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">Fullscreen:</Label>
-                                    <CheckBox x:Name="chkFullscreen" Margin="0,0,5,0" Click="Fullscreen_Click"></CheckBox>
+                                    <CheckBox x:Name="chkFullscreen" Style="{StaticResource chkFullscreen}"></CheckBox>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -234,12 +234,12 @@
                                 <Label Style="{StaticResource lblHeader}">Help:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
-                                    <CheckBox x:Name="chkHints" Margin="0,0,5,0" IsChecked="{Binding Hints_enabled, Mode=TwoWay}"></CheckBox>
+                                    <CheckBox x:Name="chkHints" Style="{StaticResource chkHints}"></CheckBox>
                                 </StackPanel>
                                 <Button Style="{StaticResource btnHelp}" FontSize="12">Tutorial</Button> <!--Event Set in style-->
                             </StackPanel>
                         </Border>
-                        <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Return">Return</Button>
+                        <Button Style="{StaticResource btnReturn}"></Button>
                     </StackPanel>
                 </DockPanel>
             </StackPanel>
