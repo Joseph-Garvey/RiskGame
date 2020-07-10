@@ -11,6 +11,7 @@
         <StackPanel>
             <!-- Main UI Panel -->
             <StackPanel x:Name="panel_MainUI" Background="LightBlue" HorizontalAlignment="Stretch">
+                <!-- Game Grid -->
                 <Grid x:Name="GameGrid" Grid.Row="0" Grid.Column="1">
                     <Grid.Resources>
                         <Style TargetType="Button">
@@ -66,7 +67,9 @@
                     <Button x:Name="btnYakutsk" Content="Yakutsk"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="980,52,246,463" Width="54"  Click="Click" MouseRightButtonDown="RightClick" Height="25"/>
                 </Grid>
                 <ProgressBar x:Name="pb_Timer" Height="20" Minimum="0"></ProgressBar>
+                <!-- UI Panel -->
                 <StackPanel x:Name="panel_UI" Orientation="Horizontal" Background="Gray">
+                    <!-- Player Panel -->
                     <StackPanel x:Name="panel_Players" VerticalAlignment="Center" Margin="20,00,10,20">
                         <StackPanel.Resources>
                             <Style TargetType="Label">
@@ -134,12 +137,20 @@
                             <Label x:Name="lblPlayer6Strength" Width="40" Margin="0,0,2,0"></Label>
                         </StackPanel>
                     </StackPanel>
-                    <StackPanel Margin="20" Style="{StaticResource panel_Background}" VerticalAlignment="Center">
-                        <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Click="Confirm" Margin="20" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00">GameState</Button>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,20,20">
-                            <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}"  FontSize="20" Width="50" Height="40" Click="Decrease">-</Button>
-                            <Label x:Name="lblNumber" Style="{StaticResource lblHeader}" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="ExtraBold"  FontSize="20" Width="70" Height="40">0</Label>
-                            <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}" FontWeight="ExtraBold" FontSize="20" Width="50" Height="40" Click="Increase" >+</Button>
+                    <StackPanel>
+                        <StackPanel x:Name="panel_NumberSelection" Visibility="Collapsed" Margin="20" Style="{StaticResource panel_Background}" VerticalAlignment="Center">
+                            <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Click="Confirm" Margin="20" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00">GameState</Button>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,20,20">
+                                <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}"  FontSize="20" Width="50" Height="40" Click="Decrease">-</Button>
+                                <Label x:Name="lblNumber" Style="{StaticResource lblHeader}" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="ExtraBold"  FontSize="20" Width="70" Height="40">0</Label>
+                                <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}" FontWeight="ExtraBold" FontSize="20" Width="50" Height="40" Click="Increase" >+</Button>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel x:Name="panel_Die" Style="{StaticResource panel_Background}" VerticalAlignment="Center" Margin="20">
+                            <Label x:Name="lblPlayerDie" Style="{StaticResource lblHeader}" FontSize="14">Your name here</Label>
+                            <StackPanel Style="{StaticResource HorizontalCentred}">
+                                <Image Source="ack://siteoforigin:,,,/Images/Dice1.png"></Image>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
                     <StackPanel Margin="20" Style="{StaticResource panel_Background}">

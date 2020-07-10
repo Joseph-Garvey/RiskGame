@@ -91,6 +91,10 @@ namespace RiskGame
             get { return game.currentplayer; }
             set { game.currentplayer = value; }
         }
+        public String CurrentPlayerUsername
+        {
+            get { return CurrentPlayer.Username; }
+        }
         private GameState gamestate
         {
             get { return game.gameState; }
@@ -115,6 +119,45 @@ namespace RiskGame
             set { game.gamemode = value; }
         }
         private bool music_enabled;
+        public bool Music_enabled
+        {
+            get => music_enabled;
+            set
+            {
+
+                if (Players.Count != 0)
+                {
+                    try
+                    {
+                        ((Human)Players[0]).music_enabled = value;
+                        Human.Update(Players[0] as Human);
+                    }
+                    catch {  }
+                }
+                if (value == true) { mediaplayer.Play(); }
+                else if (value == false) { mediaplayer.Pause(); }
+                music_enabled = value;
+            }
+        }
+        private bool hints_enabled;
+        public bool Hints_enabled
+        {
+            get => hints_enabled;
+            set
+            {
+
+                if (Players.Count != 0)
+                {
+                    try
+                    {
+                        ((Human)Players[0]).hints_enabled = value;
+                        Human.Update(Players[0] as Human);
+                    }
+                    catch {  }
+                }
+                hints_enabled = value;
+            }
+        }
         private BackgroundWorker workerthread = null;
         private bool paused;
         //// Constructors ////
@@ -138,6 +181,7 @@ namespace RiskGame
         public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration)
         {
             InitializeComponent();
+            DataContext = this;
             time = timerduration*100;
             if (time > 0)
             {
@@ -147,6 +191,8 @@ namespace RiskGame
             GameManager.ClearEmptyFile();
             game = new GameManager();
             Players = _players;
+            Music_enabled = ((Human)Players[0]).music_enabled;
+            Hints_enabled = ((Human)Players[0]).hints_enabled;
             Turn = 0;
             music_enabled = ((Human)Players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];

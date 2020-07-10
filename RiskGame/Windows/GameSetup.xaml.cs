@@ -98,7 +98,8 @@ namespace RiskGame
             // Timer Setup //
             timer_enabled = true;
             // Music Setup //
-            music_enabled = ((Human)players[0]).music_enabled;
+            Music_enabled = ((Human)players[0]).music_enabled;
+            Hints_enabled = ((Human)players[0]).hints_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
             // Retrieves list of games //
