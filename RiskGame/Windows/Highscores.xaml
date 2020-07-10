@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         xmlns:local="clr-namespace:RiskGame.Windows"
         mc:Ignorable="d"
         Title="Highscores" Height="800" Width="600" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}">
+    
     <Border>
         <Border.Background>
             <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
@@ -23,7 +25,7 @@
                 <!-- Main UI panel -->
                 <StackPanel x:Name="panel_MainUI">
                     <Label Style="{StaticResource lblHeader}">Leaderboard</Label>
-                    <DataGrid Name="ScoreList" Width="295" HorizontalScrollBarVisibility="Disabled">
+                    <DataGrid Name="ScoreList" Width="295" HorizontalScrollBarVisibility="Disabled" CanUserResizeRows="False" CanUserSortColumns="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>
@@ -34,7 +36,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <Label x:Name="lblPlayerScore" Style="{StaticResource lblHeader}" FontSize="8" Width="100" HorizontalAlignment="Left" Visibility="Collapsed">Your Score :</Label>
-                    <DataGrid Name="PlayerScoreList" HeadersVisibility="None" Visibility="Collapsed" Width="295" HorizontalScrollBarVisibility="Disabled">
+                    <DataGrid Name="PlayerScoreList" HeadersVisibility="None" Visibility="Collapsed" Width="295" HorizontalScrollBarVisibility="Disabled" CanUserResizeRows="False">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>

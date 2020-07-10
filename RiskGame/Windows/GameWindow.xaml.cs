@@ -1271,32 +1271,5 @@ namespace RiskGame
         {
             Win();
         }
-
-
-
-
-
-
-
-
-
-        // Media //
-        private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            MediaForward(sender, e);
-        }
-        private void MediaForward(object sender, RoutedEventArgs e)
-        {
-            Music.MusicIndex += 1;
-            ChangeMedia();
-        }
-        private void ChangeMedia()
-        {
-            mediaplayer.Source = Music.sources[Music.MusicIndex];
-            mediaplayer.Play();
-        }
-        private void UpdateMediaText(object sender, RoutedEventArgs e)
-        {
-        }
     }
 }
