@@ -1248,7 +1248,9 @@ namespace RiskGame
 
         private void ExampleDieRollusingProperties()
         {
+            Rolled = 0;
             List<Dice> dices = new List<Dice> { player1, player2, player3, enemy1 };
+            ToRoll = dices.Count;
             foreach(Dice d in dices)
             {
                 d.workerthread.RunWorkerCompleted += dieRollComplete;
@@ -1258,7 +1260,7 @@ namespace RiskGame
 
         private void dieRollComplete(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            Rolled += 1;
         }
 
         private int rolled;
