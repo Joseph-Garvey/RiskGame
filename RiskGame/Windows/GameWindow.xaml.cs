@@ -160,6 +160,15 @@ namespace RiskGame
         }
         private BackgroundWorker workerthread = null;
         private bool paused;
+        #region Dice
+        Dice playerdie1;
+        Dice playerdie2;
+        Dice playerdie3;
+        Dice enemydie1;
+        Dice enemydie2;
+        List<Dice> dices = new List<Dice>();
+        #endregion
+
         //// Constructors ////
         // Load Game //
         public GameWindow(GameManager _game)
@@ -202,6 +211,14 @@ namespace RiskGame
             map = _map;
             MapSetup();
             gamemode = mode;
+            if (gamemode == GameMode.Classic)
+            {
+                playerdie1 = new Dice(Die.Player1, imgPlayerDie1);
+                playerdie2 = new Dice(Die.Player2, imgPlayerDie2);
+                playerdie3 = new Dice(Die.Player3, imgPlayerDie3);
+                enemydie1 = new Dice(Die.Enemy1, imgEnemyDie1);
+                enemydie2 = new Dice(Die.Enemy1, imgEnemyDie2);
+            }
             SetupGame(randomise_initial);
         }
         private void MapSetup()
@@ -720,9 +737,9 @@ namespace RiskGame
         } // Start of turn instructions and UI State change
         private void ClearSelectionsUI()
         {
-            foreach(Button b in GameGrid.Children)
+            foreach(Territory t in Territories)
             {
-                b.BorderBrush = Brushes.Gray;
+                t.button.BorderBrush = Brushes.Gray;
             }
             lblNumber.Content = 0;
             ClearSelections();
@@ -889,6 +906,8 @@ namespace RiskGame
                         {
                             SlctTerritory.currentarmies += NextTerritory.temparmies;
                             NextTerritory.temparmies = 0;
+                            SlctTerritory.button.Content = SlctTerritory.currentarmies;
+                            NextTerritory.button.Content = NextTerritory.currentarmies;
                         }
                         ClearSelectionsUI();
                     }
@@ -1163,12 +1182,24 @@ namespace RiskGame
                         {
                             panel_NumberSelection.Visibility = Visibility.Collapsed;
                             panel_Die.Visibility = Visibility.Visible;
+                            dices = new List<Dice>{ playerdie1, enemydie1 };
                             if(NextTerritory.currentarmies > 1)
                             {
                                 imgEnemyDie2.Visibility = Visibility.Visible;
+                                dices.Add(enemydie2);
                             }
-                            if(NextTerritory.temparmies > 1) { imgPlayerDie2.Visibility = Visibility.Visible; }
-                            if(NextTerritory.temparmies > 2) { imgPlayerDie3.Visibility = Visibility.Visible; }
+                            if(NextTerritory.temparmies > 1) { imgPlayerDie2.Visibility = Visibility.Visible; dices.Add(playerdie2); }
+                            if(NextTerritory.temparmies > 2) { imgPlayerDie3.Visibility = Visibility.Visible; dices.Add(playerdie3); }
+                            lblPlayerDie.Content = CurrentPlayer.Username;
+                            lblEnemyDie.Content = NextTerritory.owner.Username;
+                            ToRoll = dices.Count;
+                            Rolled = 0;
+                            paused = true;
+                            foreach (Dice d in dices)
+                            {
+                                d.workerthread.RunWorkerCompleted += dieRollComplete;
+                                d.StartRoll();
+                            }
                             // make invisible at end of roll
                         }
                     }
@@ -1314,22 +1345,10 @@ namespace RiskGame
             Win();
         }
 
-        private void ExampleDieRollusingProperties()
-        {
-            Rolled = 0;
-            List<Dice> dices = new List<Dice> { player1, player2, player3, enemy1 };
-            ToRoll = dices.Count;
-            foreach(Dice d in dices)
-            {
-                d.workerthread.RunWorkerCompleted += dieRollComplete;
-                d.StartRoll();
-            }
-        }
 
-        private void dieRollComplete(object sender, RunWorkerCompletedEventArgs e)
-        {
-            Rolled += 1;
-        }
+        // die rolling
+
+        private void dieRollComplete(object sender, RunWorkerCompletedEventArgs e) { Rolled += 1; }
 
         private int rolled;
         public int Rolled
@@ -1340,24 +1359,97 @@ namespace RiskGame
                 rolled = value;
                 if(rolled == toRoll)
                 {
-                    ExampleFinished();
+                    AllRollsCompleted();
                 }
             }
         }
-        Dice player1 = new Dice(Die.Player1, new Image());
-        Dice player2 = new Dice(Die.Player2, new Image());
-        Dice player3 = new Dice(Die.Player3, new Image());
-        Dice enemy1 = new Dice(Die.Enemy1, new Image());
+
         private int toRoll;
         public int ToRoll
         {
             get { return toRoll; }
             set { toRoll = value; }
         }
-        private void ExampleFinished()
+        private void AllRollsCompleted()
         {
-            int player = Math.Max(Math.Max(player1.current, player2.current),player3.current);
-            int enemy = enemy1.current;
+            int playerHighestRoll = playerdie1.current;
+            int enemyHighestRoll = enemydie1.current;
+            int playerNextHighest = -1;
+            int enemyNextHighest = -1;
+            if(playerdie2.current != -1)
+            {
+                DetermineHigherRoll(ref playerHighestRoll, ref playerNextHighest, playerdie2.current);
+                if (playerdie3.current != -1) { DetermineHigherRoll(ref playerHighestRoll, ref playerNextHighest, playerdie3.current); }
+                if (enemydie2.current != -1) { DetermineHigherRoll(ref enemyHighestRoll, ref enemyNextHighest, enemydie2.current); }
+            }
+            Output(String.Format("Players highest {0}, {1}. Enemy {2}, {3}", playerHighestRoll, playerNextHighest, enemyHighestRoll, enemyNextHighest));
+            foreach(Dice d in dices)
+            {
+                d.current = -1;
+            }
+            dices.Clear();
+            int playerloss = 0;
+            int enemyloss = 0;
+            if((playerNextHighest != -1) && (enemyNextHighest != -1))
+            {
+                if(ClassicBattle(playerNextHighest, enemyNextHighest)) { enemyloss += 1; }
+                else { playerloss += 1; }
+            }
+            if(ClassicBattle(playerHighestRoll, enemyHighestRoll)) { enemyloss += 1; }
+            else { enemyloss += 1; }
+            NextTerritory.temparmies -= playerloss;
+            NextTerritory.currentarmies -= enemyloss;
+            NextTerritory.button.Content = NextTerritory.currentarmies;
+            Output(String.Format("You lost {0} armies in battle. The enemy lost {1}", playerloss, enemyloss));
+            if(NextTerritory.currentarmies == 0)
+            {
+                Output("You have successfully captured this territory.");
+                btnDieStatus.Content = "Continue to Conquer";
+            }
+            btnDieStatus.Content = "Continue to Attack";
+            paused = false;
+        }
+        private void Attack_DieContinue(object sender, RoutedEventArgs e)
+        {
+            panel_Die.Visibility = Visibility.Collapsed;
+            panel_NumberSelection.Visibility = Visibility.Visible;
+            if (((String)((Button)sender).Content) == "Continue to Attack")
+            {
+                CancelUnconfirmedActions();
+            }
+            else
+            {
+                NextTerritory.owner.territoriesowned -= 1;
+                NextTerritory.owner.score -= 1;
+                NextTerritory.owner.army_strength -= NextTerritory.currentarmies;
+                NextTerritory.owner = CurrentPlayer;
+                CurrentPlayer.territoriesowned += 1;
+                CurrentPlayer.score += 1;
+                bool won = true;
+                foreach (Player p in Players)
+                {
+                    if (p.territoriesowned > 0) { won = false; }
+                }
+                if (won) { Win(); }
+                UpdateState(GameState.Conquer);
+            }
+        }
+        private void DetermineHigherRoll(ref int greatest, ref int secondgreatest, int newnum)
+        {
+            if(newnum > secondgreatest)
+            {
+                if(newnum > greatest)
+                {
+                    secondgreatest = greatest;
+                    greatest = newnum;
+                }
+                else { secondgreatest = newnum; }
+            }
+        }
+        private bool ClassicBattle(int player, int enemy)
+        {
+            if(enemy >= player) { return false; }
+            else { return true; }
         }
     }
 }

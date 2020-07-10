@@ -143,10 +143,10 @@
                         <Label Content="GameMode" FontSize="8" Style="{StaticResource lblHeader}"></Label>
                         <ComboBox x:Name="cmbGameMode" SelectedIndex="1">
                             <ComboBoxItem>
-                                <TextBlock Text="Classic Risk"></TextBlock>
+                                <TextBlock Text="New Risk"></TextBlock>
                             </ComboBoxItem>
                             <ComboBoxItem>
-                                <TextBlock Text="New Risk"></TextBlock>
+                                <TextBlock Text="Classic Risk"></TextBlock>
                             </ComboBoxItem>
                         </ComboBox>
                         <StackPanel Style="{StaticResource HorizontalCentred}">

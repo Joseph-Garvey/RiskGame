@@ -21,16 +21,15 @@ namespace RiskGame.Game
         };
         public static List<Uri> sources = new List<Uri>
         {
-            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_1.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_2.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_3.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_4.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_5.png"),
-            new Uri("pack://siteoforigin:,,,/Images/Dice/ImgDice_6.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice1.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice2.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice3.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice4.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice5.png"),
+            new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice6.png"),
         };
         private Die playerdie;
         public int current;
-        private Random rng = new Random();
         private Image dieimage;
 
         public Dice(Die _die, Image _dieimage)
@@ -39,7 +38,7 @@ namespace RiskGame.Game
             dieimage = _dieimage;
             workerthread.DoWork += Worker_DoWork;
             workerthread.ProgressChanged += Worker_ProgressChanged;
-            current = 6;
+            current = -1;
         }
         public void StartRoll()
         {
@@ -57,7 +56,7 @@ namespace RiskGame.Game
                 else
                 {
                     int progressPercentage = Convert.ToInt32(((double)i / 6) * 100);
-                    current = rng.Next(0, 5);
+                    current = ThreadSafeRandom.ThisThreadsRandom.Next(0, 5);
                     (sender as BackgroundWorker).ReportProgress(progressPercentage);
                     Thread.Sleep(250);
                 }
