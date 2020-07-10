@@ -138,7 +138,11 @@ namespace RiskGame
         public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration)
         {
             InitializeComponent();
-            TimerSetup();
+            time = timerduration;
+            if (time > 0)
+            {
+                TimerSetup();
+            }
             GameManager.ClearEmptyFile();
             game = new GameManager();
             Players = _players;
@@ -149,115 +153,74 @@ namespace RiskGame
             paused = false;
             // Creation of Territories and Map Setup //
             map = _map;
+            MapSetup();
             gamemode = mode;
-            if(timerduration == 0)
+            SetupGame(randomise_initial);
+        }
+        private void MapSetup()
+        {
+            if(map == GameMap.Default)
             {
-                // disable timer
-            }
-            else { time = timerduration; }
-            List<String> links = new List<string>{ "Kamchatka", "Alberta", "Northwest_Canada" };
-            Territory Alaska = new Territory("Alaska",links, btnAlaska);
-            links = new List<string>{ "Alaska", "Alberta", "Greenland", "Ontario"};
-            Territory Northwest_Canada = new Territory("Northwest_Canada", links, btnNorthwest_Canada);
-            links = new List<string> { "Northwest_Canada","Quebec","Ontario","Iceland"};
-            Territory Greenland = new Territory("Greenland", links, btnGreenland);
-            links = new List<string> {"Alaska","Northwest_Canada","Ontario","Western_US"};
-            Territory Alberta = new Territory("Alberta", links, btnAlberta);
-            links = new List<string> {"Ontario","Greenland","Eastern_US" };
-            Territory Quebec = new Territory("Quebec", links, btnQuebec);
-            links = new List<string> {"Greenland","Quebec","Eastern_US", "Western_US", "Northwest_Canada" };
-            Territory Ontario = new Territory("Ontario", links, btnOntario);
-            links = new List<string> {"Alberta","Ontario","Eastern_US","Central_America"};
-            Territory Western_US = new Territory("Western_US", links, btnWestern_US);
-            links = new List<string> {"Western_US","Ontario","Central America", "Quebec"};
-            Territory Eastern_US = new Territory("Eastern_US", links, btnEastern_US);
-            links = new List<string> {"Western_US","Eastern_US","Venezuela"};
-            Territory Central_America = new Territory("Central_America", links, btnCentral_America);
-            links = new List<string> {"Central_America","Peru","Brazil"};
-            Territory Venezuela = new Territory("Venezuela", links, btnVenezuela);
-            links = new List<string> {"Venezuela","Brazil","Argentina"};
-            Territory Peru = new Territory("Peru", links, btnPeru);
-            links = new List<string> {"Venezuela","Peru","Argentina","North_Africa"};
-            Territory Brazil = new Territory("Brazil", links, btnBrazil);
-            links = new List<string> {"Peru","Brazil" };
-            Territory Argentina = new Territory("Argentina", links, btnArgentina);
-            links = new List<string> {"Greenland","Scandinavia","UK_Ireland" };
-            Territory Iceland = new Territory("Iceland", links, btnIceland);
-            links = new List<string> {"Iceland","Western_Europe","Northern_Europe","Scandinavia" };
-            Territory UK_Ireland = new Territory("UK_Ireland", links, btnUK_Ireland);
-            links = new List<string> {"Iceland","UK_Ireland","Northern_Europe","Soviet_Bloc" };
-            Territory Scandinavia = new Territory("Scandinavia", links, btnScandinavia);
-            links = new List<string> { "Scandinavia","Northern_Europe","Southern_Europe","Ural","Afghanistan","Middle_East" };
-            Territory Soviet_Bloc  = new Territory( "Soviet_Bloc" , links, btnSoviet_Bloc);
-            links = new List<string> {"Western_Europe","Northern_Europe","Soviet_Bloc","Middle_East","Egypt"   };
-            Territory Southern_Europe = new Territory("Southern_Europe", links, btnSouthern_Europe);
-            links = new List<string> { "UK_Ireland","Scandinavia","Soviet_Bloc","Southern_Europe","Western_Europe" };
-            Territory Northern_Europe = new Territory("Northern_Europe", links, btnNorthern_Europe);
-            links = new List<string> {"UK_Ireland","Northern_Europe","Southern_Europe","North_Africa" };
-            Territory Western_Europe = new Territory("Western_Europe", links, btnWestern_Europe);
-            links = new List<string> {"Brazil","Egypt","East_Africa","Central_Africa","Western_Europe" };
-            Territory North_Africa = new Territory("North_Africa", links, btnNorth_Africa);
-            links = new List<string> {"North_Africa","Southern_Europe","Middle_East","East_Africa"};
-            Territory Egypt = new Territory("Egypt", links, btnEgypt);
-            links = new List<string> {"North_Africa","East_Africa","South_Africa" };
-            Territory Central_Africa = new Territory("Central_Africa", links, btnCentral_Africa);
-            links = new List<string> {"Egypt","Middle_East","Madagascar","South_Africa","Central_Africa","North_Africa" };
-            Territory East_Africa = new Territory("East_Africa", links, btnEast_Africa);
-            links = new List<string> { "Central_Africa","East_Africa","Madagascar" };
-            Territory South_Africa = new Territory("South_Africa", links, btnSouth_Africa);
-            links = new List<string> { "South_Africa","East_Africa"};
-            Territory Madagascar = new Territory("Madagascar", links, btnMadagascar);
-            links = new List<string> {"Southern_Europe","Soviet_Bloc","Afghanistan","India","East_Africa","Egypt" };
-            Territory Middle_East= new Territory("Middle_East", links, btnMiddle_East);
-            links = new List<string> {"Middle_East","Soviet_Bloc","Ural","China","India" };
-            Territory Afghanistan = new Territory("Afghanistan", links, btnAfghanistan);
-            links = new List<string> {"Middle_East","Afghanistan","China","Southeast_Asia" };
-            Territory India = new Territory("India", links, btnIndia);
-            links = new List<string> {"India","China","Indonesia" };
-            Territory Southeast_Asia = new Territory("Southeast_Asia", links, btnSoutheast_Asia);
-            links = new List<string> {"Afghanistan","Ural","Siberia","Mongolia","Southeast_Asia","India" };
-            Territory China = new Territory("China", links, btnChina);
-            links = new List<string> {"Soviet_Bloc","Siberia","China","Afghanistan" };
-            Territory Ural = new Territory("Ural", links, btnUral);
-            links = new List<string> {"Ural","Yakutsk","Irkutsk","Mongolia","China" };
-            Territory Siberia = new Territory("Siberia", links, btnSiberia);
-            links = new List<string> {"China","Siberia","Irkutsk","Kamchatka","Japan" };
-            Territory Mongolia = new Territory("Mongolia", links, btnMongolia);
-            links = new List<string> {"Mongolia","Kamchatka" };
-            Territory Japan = new Territory("Japan", links, btnJapan);
-            links = new List<string> {"Siberia","Yakutsk","Kamchatka","Mongolia" };
-            Territory Irkutsk = new Territory("Irkutsk", links, btnIrkutsk);
-            links = new List<string> {"Siberia","Kamchatka","Irkutsk" };
-            Territory Yakutsk = new Territory("Yakutsk", links, btnYakutsk);
-            links = new List<string> {"Yakutsk", "Alaska","Japan","Mongolia","Irkutsk"};
-            Territory Kamchatka = new Territory("Kamchatka", links, btnKamchatka);
-            links = new List<string> {"New_Guinea","Southeast_Asia" };
-            Territory Indonesia = new Territory("Indonesia", links, btnIndonesia);
-            links = new List<string> {"Indonesia","Eastern_Australia","Western_Australia"};
-            Territory New_Guinea = new Territory("New_Guinea", links, btnNew_Guinea);
-            links = new List<string> {"Eastern_Australia","New_Guinea" };
-            Territory Western_Australia = new Territory("Western_Australia", links, btnWestern_Australia);
-            links = new List<string> {"Western_Australia","New_Guinea" };
-            Territory Eastern_Australia = new Territory("Eastern_Australia", links, btnEastern_Australia);
-            Territories = new List<Territory>
-            {
+                Territory Alaska = new Territory("Alaska", new List<string> { "Kamchatka", "Alberta", "Northwest_Canada" }, btnAlaska);
+                Territory Northwest_Canada = new Territory("Northwest_Canada", new List<string> { "Alaska", "Alberta", "Greenland", "Ontario" }, btnNorthwest_Canada);
+                Territory Greenland = new Territory("Greenland", new List<string> { "Northwest_Canada", "Quebec", "Ontario", "Iceland" }, btnGreenland);
+                Territory Alberta = new Territory("Alberta", new List<string> { "Alaska", "Northwest_Canada", "Ontario", "Western_US" }, btnAlberta);
+                Territory Quebec = new Territory("Quebec", new List<string> { "Ontario", "Greenland", "Eastern_US" }, btnQuebec);
+                Territory Ontario = new Territory("Ontario", new List<string> { "Greenland", "Quebec", "Eastern_US", "Western_US", "Northwest_Canada" }, btnOntario);
+                Territory Western_US = new Territory("Western_US", new List<string> { "Alberta", "Ontario", "Eastern_US", "Central_America" }, btnWestern_US);
+                Territory Eastern_US = new Territory("Eastern_US", new List<string> { "Western_US", "Ontario", "Central America", "Quebec" }, btnEastern_US);
+                Territory Central_America = new Territory("Central_America", new List<string> { "Western_US", "Eastern_US", "Venezuela" }, btnCentral_America);
+                Territory Venezuela = new Territory("Venezuela", new List<string> { "Central_America", "Peru", "Brazil" }, btnVenezuela);
+                Territory Peru = new Territory("Peru", new List<string> { "Venezuela", "Brazil", "Argentina" }, btnPeru);
+                Territory Brazil = new Territory("Brazil", new List<string> { "Venezuela", "Peru", "Argentina", "North_Africa" }, btnBrazil);
+                Territory Argentina = new Territory("Argentina", new List<string> { "Peru", "Brazil" }, btnArgentina);
+                Territory Iceland = new Territory("Iceland", new List<string> { "Greenland", "Scandinavia", "UK_Ireland" }, btnIceland);
+                Territory UK_Ireland = new Territory("UK_Ireland", new List<string> { "Iceland", "Western_Europe", "Northern_Europe", "Scandinavia" }, btnUK_Ireland);
+                Territory Scandinavia = new Territory("Scandinavia", new List<string> { "Iceland", "UK_Ireland", "Northern_Europe", "Soviet_Bloc" }, btnScandinavia);
+                Territory Soviet_Bloc = new Territory("Soviet_Bloc", new List<string> { "Scandinavia", "Northern_Europe", "Southern_Europe", "Ural", "Afghanistan", "Middle_East" }, btnSoviet_Bloc);
+                Territory Southern_Europe = new Territory("Southern_Europe", new List<string> { "Western_Europe", "Northern_Europe", "Soviet_Bloc", "Middle_East", "Egypt" }, btnSouthern_Europe);
+                Territory Northern_Europe = new Territory("Northern_Europe", new List<string> { "UK_Ireland", "Scandinavia", "Soviet_Bloc", "Southern_Europe", "Western_Europe" }, btnNorthern_Europe);
+                Territory Western_Europe = new Territory("Western_Europe", new List<string> { "UK_Ireland", "Northern_Europe", "Southern_Europe", "North_Africa" }, btnWestern_Europe);
+                Territory North_Africa = new Territory("North_Africa", new List<string> { "Brazil", "Egypt", "East_Africa", "Central_Africa", "Western_Europe" }, btnNorth_Africa);
+                Territory Egypt = new Territory("Egypt", new List<string> { "North_Africa", "Southern_Europe", "Middle_East", "East_Africa" }, btnEgypt);
+                Territory Central_Africa = new Territory("Central_Africa", new List<string> { "North_Africa", "East_Africa", "South_Africa" }, btnCentral_Africa);
+                Territory East_Africa = new Territory("East_Africa", new List<string> { "Egypt", "Middle_East", "Madagascar", "South_Africa", "Central_Africa", "North_Africa" }, btnEast_Africa);
+                Territory South_Africa = new Territory("South_Africa", new List<string> { "Central_Africa", "East_Africa", "Madagascar" }, btnSouth_Africa);
+                Territory Madagascar = new Territory("Madagascar", new List<string> { "South_Africa", "East_Africa" }, btnMadagascar);
+                Territory Middle_East = new Territory("Middle_East", new List<string> { "Southern_Europe", "Soviet_Bloc", "Afghanistan", "India", "East_Africa", "Egypt" }, btnMiddle_East);
+                Territory Afghanistan = new Territory("Afghanistan", new List<string> { "Middle_East", "Soviet_Bloc", "Ural", "China", "India" }, btnAfghanistan);
+                Territory India = new Territory("India", new List<string> { "Middle_East", "Afghanistan", "China", "Southeast_Asia" }, btnIndia);
+                Territory Southeast_Asia = new Territory("Southeast_Asia", new List<string> { "India", "China", "Indonesia" }, btnSoutheast_Asia);
+                Territory China = new Territory("China", new List<string> { "Afghanistan", "Ural", "Siberia", "Mongolia", "Southeast_Asia", "India" }, btnChina);
+                Territory Ural = new Territory("Ural", new List<string> { "Soviet_Bloc", "Siberia", "China", "Afghanistan" }, btnUral);
+                Territory Siberia = new Territory("Siberia", new List<string> { "Ural", "Yakutsk", "Irkutsk", "Mongolia", "China" }, btnSiberia);
+                Territory Mongolia = new Territory("Mongolia", new List<string> { "China", "Siberia", "Irkutsk", "Kamchatka", "Japan" }, btnMongolia);
+                Territory Japan = new Territory("Japan", new List<string> { "Mongolia", "Kamchatka" }, btnJapan);
+                Territory Irkutsk = new Territory("Irkutsk", new List<string> { "Siberia", "Yakutsk", "Kamchatka", "Mongolia" }, btnIrkutsk);
+                Territory Yakutsk = new Territory("Yakutsk", new List<string> { "Siberia", "Kamchatka", "Irkutsk" }, btnYakutsk);
+                Territory Kamchatka = new Territory("Kamchatka", new List<string> { "Yakutsk", "Alaska", "Japan", "Mongolia", "Irkutsk" }, btnKamchatka);
+                Territory Indonesia = new Territory("Indonesia", new List<string> { "New_Guinea", "Southeast_Asia" }, btnIndonesia);
+                Territory New_Guinea = new Territory("New_Guinea", new List<string> { "Indonesia", "Eastern_Australia", "Western_Australia" }, btnNew_Guinea);
+                Territory Western_Australia = new Territory("Western_Australia", new List<string> { "Eastern_Australia", "New_Guinea" }, btnWestern_Australia);
+                Territory Eastern_Australia = new Territory("Eastern_Australia", new List<string> { "Western_Australia", "New_Guinea" }, btnEastern_Australia);
+                Territories = new List<Territory>
+                {
                 Alaska, Northwest_Canada,Greenland,Alberta,Quebec,Ontario,Western_US,Eastern_US,Central_America,
                 Venezuela,Peru,Brazil,Argentina,
                 Iceland,Scandinavia,UK_Ireland,Soviet_Bloc,Northern_Europe,Western_Europe,Southern_Europe,
                 North_Africa,Egypt,East_Africa,Central_Africa,South_Africa,Madagascar,
                 Indonesia,New_Guinea,Eastern_Australia,Western_Australia,
                 Middle_East,Afghanistan,India,Ural,Siberia,China,Southeast_Asia,Mongolia,Irkutsk,Yakutsk,Kamchatka,Japan
-            };
-            Continent North_America = new Continent("North America",(new List<Territory> { Alaska, Alberta, Central_America, Eastern_US, Greenland, Northwest_Canada, Ontario, Quebec, Western_US }), 5);
-            Continent South_America = new Continent("South America",(new List<Territory> { Argentina, Brazil, Peru, Venezuela }), 2);
-            Continent Europe = new Continent("Europe",(new List<Territory> { UK_Ireland, Iceland, Northern_Europe, Scandinavia, Southern_Europe, Soviet_Bloc, Western_Europe }), 5);
-            Continent Africa = new Continent("Africa",(new List<Territory> { Central_Africa, East_Africa, Egypt, Madagascar, North_Africa, South_Africa}), 3);
-            Continent Asia = new Continent("Asia",(new List<Territory>  { Afghanistan, China, India, Irkutsk, Japan, Kamchatka, Middle_East, Mongolia, Southeast_Asia, Siberia, Ural, Yakutsk }), 7);
-            Continent Australia = new Continent("Australia",(new List<Territory> { Eastern_Australia, Indonesia, New_Guinea, Western_Australia }), 2);
-            Continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Australia };
-            SetupGame(randomise_initial);
+                };
+                Continent North_America = new Continent("North America", (new List<Territory> { Alaska, Alberta, Central_America, Eastern_US, Greenland, Northwest_Canada, Ontario, Quebec, Western_US }), 5);
+                Continent South_America = new Continent("South America", (new List<Territory> { Argentina, Brazil, Peru, Venezuela }), 2);
+                Continent Europe = new Continent("Europe", (new List<Territory> { UK_Ireland, Iceland, Northern_Europe, Scandinavia, Southern_Europe, Soviet_Bloc, Western_Europe }), 5);
+                Continent Africa = new Continent("Africa", (new List<Territory> { Central_Africa, East_Africa, Egypt, Madagascar, North_Africa, South_Africa }), 3);
+                Continent Asia = new Continent("Asia", (new List<Territory> { Afghanistan, China, India, Irkutsk, Japan, Kamchatka, Middle_East, Mongolia, Southeast_Asia, Siberia, Ural, Yakutsk }), 7);
+                Continent Australia = new Continent("Australia", (new List<Territory> { Eastern_Australia, Indonesia, New_Guinea, Western_Australia }), 2);
+                Continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Australia };
+            }
         }
-
         private void TimerSetup()
         {
             workerthread = new BackgroundWorker();

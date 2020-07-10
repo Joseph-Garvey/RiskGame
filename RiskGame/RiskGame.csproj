@@ -73,9 +73,9 @@
     </ApplicationDefinition>
     <Compile Include="CustomExceptions\GameNotFoundException.cs" />
     <Compile Include="CustomExceptions\LoginException.cs" />
-    <Compile Include="GameManager\GameDetails.cs" />
-    <Compile Include="GameManager\GameManager.cs" />
-    <Compile Include="GameManager\GameState.cs" />
+    <Compile Include="Game\GameDetails.cs" />
+    <Compile Include="Game\GameManager.cs" />
+    <Compile Include="Game\GameState.cs" />
     <Compile Include="Locations\Continent.cs" />
     <Compile Include="Music\Music.cs" />
     <Compile Include="Players\Human.cs" />
