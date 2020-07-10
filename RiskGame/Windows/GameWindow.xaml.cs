@@ -448,7 +448,7 @@ namespace RiskGame
         }
         private void NextTurn()
         {
-            if(time == 0)
+            if(time > 0)
             {
                 if (gamestate == GameState.InitialArmyPlace) { NextTurnThreaded(); return; }
                 if (workerthread != null && workerthread.IsBusy == true)
@@ -1111,7 +1111,10 @@ namespace RiskGame
                     Place_Reinforce(NextTerritory, NextTerritory.temparmies);
                     NextTerritory.temparmies = 0;
                     ConquerTerritoryUI();
-                    if(workerthread.IsBusy == false) { NextTurnThreaded(); return; }
+                    if(time > 0)
+                    {
+                        if (workerthread.IsBusy == false) { NextTurnThreaded(); return; }
+                    }
                     NextAction();
                     break;
                 case GameState.Move:

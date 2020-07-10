@@ -135,13 +135,13 @@
                             </StackPanel>
                         </Border>
                         <Label Content="Map" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                        <ComboBox x:Name="cmbMap">
+                        <ComboBox x:Name="cmbMap" SelectedIndex="0">
                             <ComboBoxItem>
                                 <TextBlock Text="Default"></TextBlock>
                             </ComboBoxItem>
                         </ComboBox>
                         <Label Content="GameMode" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                        <ComboBox x:Name="cmbGameMode">
+                        <ComboBox x:Name="cmbGameMode" SelectedIndex="1">
                             <ComboBoxItem>
                                 <TextBlock Text="Classic Risk"></TextBlock>
                             </ComboBoxItem>
