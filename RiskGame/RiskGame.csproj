@@ -73,6 +73,7 @@
     </ApplicationDefinition>
     <Compile Include="CustomExceptions\GameNotFoundException.cs" />
     <Compile Include="CustomExceptions\LoginException.cs" />
+    <Compile Include="Game\Dice.cs" />
     <Compile Include="Game\GameDetails.cs" />
     <Compile Include="Game\GameManager.cs" />
     <Compile Include="Game\GameState.cs" />
