@@ -25,4 +25,12 @@ namespace RiskGame.Game
     {
         Default
     }
+    public enum Die
+    {
+        Player1,
+        Player2,
+        Player3,
+        Enemy1,
+        Enemy2
+    }
 }

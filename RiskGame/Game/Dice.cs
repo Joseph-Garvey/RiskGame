@@ -5,6 +5,9 @@ using System.Text;
 using System.Threading;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 
 namespace RiskGame.Game
@@ -25,17 +28,21 @@ namespace RiskGame.Game
             new Uri("pack://siteoforigin:,,,/Images/Dice/dice_5.png"),
             new Uri("pack://siteoforigin:,,,/Images/Dice/dice_6.png"),
         };
+        private Die playerdie;
         public int current;
-        Random rng = new Random();
+        private Random rng = new Random();
+        private Image dieimage;
 
-        public Dice()
+        public Dice(Die _die, Image _dieimage)
         {
+            playerdie = _die;
+            dieimage = _dieimage;
             workerthread.DoWork += Worker_DoWork;
             workerthread.ProgressChanged += Worker_ProgressChanged;
             workerthread.RunWorkerCompleted += Worker_RunWorkerCompleted;
             current = 6;
         }
-        private void StartRoll()
+        public void StartRoll()
         {
             workerthread.RunWorkerAsync();
         }
@@ -59,11 +66,11 @@ namespace RiskGame.Game
         }
         void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            dieimage.Source = new BitmapImage(sources[current]);
         }
         void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            // on completed
+            // call the complete method ((GameWindow)Application.Current.MainWindow)
         }
     }
 }

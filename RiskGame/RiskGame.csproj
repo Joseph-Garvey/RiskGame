@@ -73,6 +73,7 @@
     </ApplicationDefinition>
     <Compile Include="CustomExceptions\GameNotFoundException.cs" />
     <Compile Include="CustomExceptions\LoginException.cs" />
+    <Compile Include="Game\Dice.cs" />
     <Compile Include="Game\GameDetails.cs" />
     <Compile Include="Game\GameManager.cs" />
     <Compile Include="Game\GameState.cs" />
@@ -193,6 +194,24 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\Dice\dice_3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Dice\dice_4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Dice\dice_5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Dice\dice_6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Dice\dice_1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Dice\dice_2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\Help.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
