@@ -1008,7 +1008,8 @@ namespace RiskGame
                             if(btnTerritory.BorderBrush == Brushes.Aqua)
                             {
                                 SelectTerritory(t, btnTerritory, Brushes.Red, true);
-                                AdjustAttackMoves((SlctTerritory.currentarmies - 1));
+                                if(gamemode == GameMode.NewRisk) { AdjustAttackMoves((SlctTerritory.currentarmies - 1)); }
+                                else if(gamemode == GameMode.Classic) { AdjustAttackMoves(Math.Min(SlctTerritory.currentarmies - 1, 3)); }
                                 if(CurrentPlayer is Human)
                                 {
                                     if (((Human)CurrentPlayer).hints_enabled)
@@ -1160,7 +1161,7 @@ namespace RiskGame
                         }
                         else if(gamemode == GameMode.Classic)
                         {
-                            panel_NumberSelection.Visibility = Visibility.Hidden;
+                            panel_NumberSelection.Visibility = Visibility.Collapsed;
                             panel_Die.Visibility = Visibility.Visible;
                             if(NextTerritory.currentarmies > 1)
                             {

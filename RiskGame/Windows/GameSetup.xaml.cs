@@ -255,8 +255,6 @@ namespace RiskGame
                             DispErrorMsg("Please select a Gamemode.");
                             break;
                         case 0:
-                            DispErrorMsg("Classic Risk has not yet been implemented.");
-                            break;
                         case 1:
                             players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
                             players[1].Color = (SolidColorBrush)rectPlayer2Color.Fill;
