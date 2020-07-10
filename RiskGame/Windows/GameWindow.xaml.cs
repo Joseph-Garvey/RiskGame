@@ -1401,16 +1401,18 @@ namespace RiskGame
             NextTerritory.currentarmies -= enemyloss;
             NextTerritory.button.Content = NextTerritory.currentarmies;
             Output(String.Format("You lost {0} armies in battle. The enemy lost {1}", playerloss, enemyloss));
-            if(NextTerritory.currentarmies == 0)
+            if (NextTerritory.currentarmies == 0)
             {
                 Output("You have successfully captured this territory.");
                 btnDieStatus.Content = "Continue to Conquer";
             }
-            btnDieStatus.Content = "Continue to Attack";
+            else { btnDieStatus.Content = "Continue to Attack"; }
+            btnDieStatus.Visibility = Visibility.Visible;
             paused = false;
         }
         private void Attack_DieContinue(object sender, RoutedEventArgs e)
         {
+            btnDieStatus.Visibility = Visibility.Collapsed;
             panel_Die.Visibility = Visibility.Collapsed;
             panel_NumberSelection.Visibility = Visibility.Visible;
             if (((String)((Button)sender).Content) == "Continue to Attack")
