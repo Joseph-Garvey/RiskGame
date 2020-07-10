@@ -138,7 +138,7 @@
                         </StackPanel>
                     </StackPanel>
                     <StackPanel>
-                        <StackPanel x:Name="panel_NumberSelection" Visibility="Collapsed" Margin="20" Style="{StaticResource panel_Background}" VerticalAlignment="Center">
+                        <StackPanel x:Name="panel_NumberSelection" Margin="20" Style="{StaticResource panel_Background}" VerticalAlignment="Center">
                             <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Click="Confirm" Margin="20" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00">GameState</Button>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,20,20">
                                 <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}"  FontSize="20" Width="50" Height="40" Click="Decrease">-</Button>
@@ -146,7 +146,7 @@
                                 <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}" FontWeight="ExtraBold" FontSize="20" Width="50" Height="40" Click="Increase" >+</Button>
                             </StackPanel>
                         </StackPanel>
-                        <Grid x:Name="panel_Die" Style="{StaticResource grid_Background}" VerticalAlignment="Center" Margin="20">
+                        <Grid x:Name="panel_Die" Style="{StaticResource grid_Background}" VerticalAlignment="Center" Margin="20" Visibility="Collapsed">
                             <Grid.Resources>
                                 <Style TargetType="Image">
                                     <Setter Property="Source" Value="pack://siteoforigin:,,,/Images/Dice/imgDice6.png"></Setter>

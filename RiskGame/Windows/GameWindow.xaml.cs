@@ -993,10 +993,6 @@ namespace RiskGame
                 case GameState.Attacking:
                     if(t.owner == CurrentPlayer)
                     {
-                        if(t == SlctTerritory)
-                        {
-                            
-                        }
                         if(t.currentarmies > 1)
                         {
                             CancelUnconfirmedActions();
@@ -1022,7 +1018,7 @@ namespace RiskGame
                                 }
                             }
                             else if(btnTerritory.BorderBrush == Brushes.Red){
-                                if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); }
+                                if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; }
                                 else { PlayerActions(true); }
                             }
                             else { Output("You cannot attack this territory from here"); break; }
@@ -1081,7 +1077,11 @@ namespace RiskGame
                     {
                         // if nextterritory null break otherwise continue
                         if (t == NextTerritory) { PlayerActions(false); }
-                        else if(t == SlctTerritory) { PlayerActions(true); }
+                        else if(t == SlctTerritory)
+                        {
+                            if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; }
+                            else { PlayerActions(true); }
+                        }
                         break;
                     }
                     catch (NullReferenceException) { break; }
@@ -1123,37 +1123,52 @@ namespace RiskGame
                 case GameState.Attacking:
                     if((SlctTerritory != null) && (NextTerritory != null))
                     {
-                        double num = rng.NextDouble();
-                        double prob = 1 / (1 + Math.Exp(-0.7*((NextTerritory.temparmies - NextTerritory.currentarmies) - 0.5)));
-                        if(num <= prob)
+                        if(gamemode == GameMode.NewRisk)
                         {
-                            NextTerritory.owner.territoriesowned -= 1;
-                            NextTerritory.owner.score -= 1;
-                            NextTerritory.owner.army_strength -= NextTerritory.currentarmies;
-                            NextTerritory.currentarmies = 0;
-                            NextTerritory.owner = CurrentPlayer;
-                            CurrentPlayer.territoriesowned += 1;
-                            CurrentPlayer.score += 1;
-                            bool won = true;
-                            foreach(Player p in Players)
+                            double num = rng.NextDouble();
+                            double prob = 1 / (1 + Math.Exp(-0.7 * ((NextTerritory.temparmies - NextTerritory.currentarmies) - 0.5)));
+                            if (num <= prob)
                             {
-                                if(p.territoriesowned > 0) { won = false; }
+                                NextTerritory.owner.territoriesowned -= 1;
+                                NextTerritory.owner.score -= 1;
+                                NextTerritory.owner.army_strength -= NextTerritory.currentarmies;
+                                NextTerritory.currentarmies = 0;
+                                NextTerritory.owner = CurrentPlayer;
+                                CurrentPlayer.territoriesowned += 1;
+                                CurrentPlayer.score += 1;
+                                bool won = true;
+                                foreach (Player p in Players)
+                                {
+                                    if (p.territoriesowned > 0) { won = false; }
+                                }
+                                if (won) { Win(); }
+                                int lost = NextTerritory.temparmies - (int)Math.Ceiling(prob * NextTerritory.temparmies);
+                                NextTerritory.temparmies -= lost;
+                                Output(String.Format("You have captured this territory and lost {0} armies in battle.", lost));
+                                UpdateState(GameState.Conquer);
                             }
-                            if (won) { Win(); }
-                            int lost = NextTerritory.temparmies - (int)Math.Ceiling(prob * NextTerritory.temparmies);
-                            NextTerritory.temparmies -= lost;
-                            Output(String.Format("You have captured this territory and lost {0} armies in battle.", lost));
-                            UpdateState(GameState.Conquer);
+                            else
+                            {
+                                NextTerritory.temparmies = 0;
+                                int survived = (int)(Math.Ceiling(1 - prob) * NextTerritory.currentarmies);
+                                int loss = NextTerritory.currentarmies - survived;
+                                NextTerritory.currentarmies = survived; // can be simplified /\
+                                Output(String.Format("You have lost this battle, the enemy suffered {0} casualties.", loss));
+                                NextTerritory.button.Content = NextTerritory.currentarmies;
+                                ClearSelectionsUI();
+                            }
                         }
-                        else
+                        else if(gamemode == GameMode.Classic)
                         {
-                            NextTerritory.temparmies = 0;
-                            int survived = (int)(Math.Ceiling(1 - prob) * NextTerritory.currentarmies);
-                            int loss = NextTerritory.currentarmies - survived;
-                            NextTerritory.currentarmies = survived; // can be simplified /\
-                            Output(String.Format("You have lost this battle, the enemy suffered {0} casualties.", loss ));
-                            NextTerritory.button.Content = NextTerritory.currentarmies;
-                            ClearSelectionsUI();
+                            panel_NumberSelection.Visibility = Visibility.Hidden;
+                            panel_Die.Visibility = Visibility.Visible;
+                            if(NextTerritory.currentarmies > 1)
+                            {
+                                imgEnemyDie2.Visibility = Visibility.Visible;
+                            }
+                            if(NextTerritory.temparmies > 1) { imgPlayerDie2.Visibility = Visibility.Visible; }
+                            if(NextTerritory.temparmies > 2) { imgPlayerDie3.Visibility = Visibility.Visible; }
+                            // make invisible at end of roll
                         }
                     }
                     else { Output("You must select the territories you wish to attack to/from first."); }
@@ -1175,6 +1190,7 @@ namespace RiskGame
                     break;
             }
         }
+        private void AttackFinished() { } // for when dice roll complete
         private void Continue(object sender, RoutedEventArgs e) { CancelUnconfirmedActions(); if (gamestate != GameState.Conquer) { NextAction(); } }
         private void Cancel(object sender, RoutedEventArgs e) { CancelUnconfirmedActions(); }
         private void Increase(object sender, RoutedEventArgs e) { PlayerActions(true); }
