@@ -71,11 +71,13 @@ namespace RiskGame
             {
                 if(value == false)
                 {
+                    sldTime.Minimum = 0;
                     sldTime.Value = 0;
                     sldTime.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
+                    sldTime.Minimum = 20;
                     sldTime.Value = 30;
                     sldTime.Visibility = Visibility.Visible;
                 }
@@ -93,6 +95,8 @@ namespace RiskGame
             this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             // Binding setup //
             this.DataContext = this;
+            // Timer Setup //
+            timer_enabled = true;
             // Music Setup //
             music_enabled = ((Human)players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];

@@ -152,7 +152,7 @@
                         <StackPanel Style="{StaticResource HorizontalCentred}">
                             <Label Content="Turn timer enabled?" FontSize="8" Style="{StaticResource lblHeader}"></Label>
                             <CheckBox x:Name="chkTimerEnabled"  VerticalAlignment="Center" IsChecked="{Binding Timer_enabled, Mode=TwoWay}"></CheckBox>
-                            <Slider x:Name="sldTime" Minimum="0" Maximum="120" Value="60"></Slider>
+                            <Slider x:Name="sldTime" Minimum="20" Maximum="120" Value="60"></Slider>
                         </StackPanel>
                         <StackPanel Style="{StaticResource HorizontalCentred}">
                             <Label Content="Randomise Initial Placement?" FontSize="8" Style="{StaticResource lblHeader}"></Label>

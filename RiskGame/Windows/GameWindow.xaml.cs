@@ -96,7 +96,7 @@ namespace RiskGame
             get { return game.gameState; }
             set { game.gameState = value; }
         }
-        private int time = 2000;
+        private int time;
         private static Random rng = new Random();
         private int Turn
         {
@@ -138,11 +138,12 @@ namespace RiskGame
         public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration)
         {
             InitializeComponent();
-            time = timerduration;
+            time = timerduration*100;
             if (time > 0)
             {
                 TimerSetup();
             }
+            else { pb_Timer.Visibility = Visibility.Collapsed; }
             GameManager.ClearEmptyFile();
             game = new GameManager();
             Players = _players;
@@ -447,10 +448,17 @@ namespace RiskGame
         }
         private void NextTurn()
         {
-            if(gamestate == GameState.InitialArmyPlace) { NextTurnThreaded(); return; }
-            if (workerthread != null && workerthread.IsBusy == true)
+            if(time == 0)
             {
-                workerthread.CancelAsync();
+                if (gamestate == GameState.InitialArmyPlace) { NextTurnThreaded(); return; }
+                if (workerthread != null && workerthread.IsBusy == true)
+                {
+                    workerthread.CancelAsync();
+                }
+                else
+                {
+                    NextTurnThreaded();
+                }
             }
             else
             {
@@ -514,7 +522,7 @@ namespace RiskGame
                         Output(String.Format("{0} and {1}", ownedContinents[3], ownedContinents[4]));
                         break;
                 }
-                StartTimer();
+                if(time > 0) { StartTimer(); }
             }
         }
         private void Win()
