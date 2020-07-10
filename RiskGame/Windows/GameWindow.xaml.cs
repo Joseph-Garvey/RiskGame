@@ -1208,8 +1208,9 @@ namespace RiskGame
                 case GameState.Conquer:
                     Place_Reinforce(NextTerritory, NextTerritory.temparmies);
                     NextTerritory.temparmies = 0;
-                    ConquerTerritoryUI();
-                    if(time > 0)
+                    NextTerritory.button.Background = NextTerritory.owner.Color;
+                    NextTerritory.button.Content = NextTerritory.currentarmies;
+                    if (time > 0)
                     {
                         if (workerthread.IsBusy == false) { NextTurnThreaded(); return; }
                     }
