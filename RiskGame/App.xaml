@@ -7,7 +7,6 @@
         <!-- Window Styles -->
         <Style TargetType="{x:Type Window}" x:Key="windowResizeable">
             <EventSetter Event="KeyDown" Handler="Window_KeyDown"></EventSetter>
-            <EventSetter Event="StateChanged" Handler="Window_StateChanged"></EventSetter>
         </Style>
         <!-- Button Styles -->
         <Style x:Key="btnUI" TargetType="Button">
