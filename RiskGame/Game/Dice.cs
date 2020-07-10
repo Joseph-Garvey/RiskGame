@@ -64,6 +64,7 @@ namespace RiskGame.Game
         void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             // on completed
+            // example text
         }
     }
 }
