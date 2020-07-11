@@ -100,7 +100,11 @@ namespace RiskGame
             get { return game.gameState; }
             set { game.gameState = value; }
         }
-        private int time;
+        private int Time
+        {
+            get { return game.time; }
+            set { game.time = value; }
+        }
         private static Random rng = new Random();
         private int Turn
         {
@@ -176,7 +180,7 @@ namespace RiskGame
             InitializeComponent();
             game = _game;
             paused = false;
-            if (time > 0)
+            if (Time > 0)
             {
                 TimerSetup();
                 StartTimer();
@@ -203,7 +207,7 @@ namespace RiskGame
             DataContext = this;
             GameManager.ClearEmptyFile();
             game = new GameManager();
-            time = timerduration * 100;
+            Time = timerduration * 100;
             Players = _players;
             Music_enabled = ((Human)Players[0]).music_enabled;
             Hints_enabled = ((Human)Players[0]).hints_enabled;
@@ -224,7 +228,7 @@ namespace RiskGame
                 enemydie1 = new Dice(Die.Enemy1, imgEnemyDie1);
                 enemydie2 = new Dice(Die.Enemy1, imgEnemyDie2);
             }
-            if (time > 0)
+            if (Time > 0)
             {
                 TimerSetup();
             }
@@ -520,7 +524,7 @@ namespace RiskGame
         }
         private void NextTurn()
         {
-            if(time > 0)
+            if(Time > 0)
             {
                 if (gamestate == GameState.InitialArmyPlace) { NextTurnThreaded(); return; }
                 if (workerthread != null && workerthread.IsBusy == true)
@@ -594,7 +598,7 @@ namespace RiskGame
                         Output(String.Format("{0} and {1}", ownedContinents[3], ownedContinents[4]));
                         break;
                 }
-                if(time > 0) { StartTimer(); }
+                if(Time > 0) { StartTimer(); }
             }
         }
         private void Win()
@@ -956,7 +960,7 @@ namespace RiskGame
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            for(int i = 0; i < time; i++)
+            for(int i = 0; i < Time; i++)
             {
                 if (workerthread.CancellationPending == true)
                 {
@@ -966,7 +970,7 @@ namespace RiskGame
                 else
                 {
                     while(paused == true) { Thread.Sleep(100); }
-                    int progressPercentage = Convert.ToInt32(((double)i / time) * 100);
+                    int progressPercentage = Convert.ToInt32(((double)i / Time) * 100);
                     (sender as BackgroundWorker).ReportProgress(progressPercentage);
                     Thread.Sleep(10);
                 }
@@ -1237,7 +1241,7 @@ namespace RiskGame
                     NextTerritory.temparmies = 0;
                     NextTerritory.button.Background = NextTerritory.owner.Color;
                     NextTerritory.button.Content = NextTerritory.currentarmies;
-                    if (time > 0)
+                    if (Time > 0)
                     {
                         if (workerthread.IsBusy == false) { NextTurnThreaded(); return; }
                     }
