@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using RiskGame.enemyAI;
 using RiskGame.Game;
 using RiskGame.Windows;
+using RiskGame.CustomExceptions;
 
 namespace RiskGame
 {
@@ -262,7 +263,7 @@ namespace RiskGame
                             if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
                             if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
                             if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
-                            GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value, (GameMap)cmbMap.SelectedIndex, (GameMode)cmbGameMode.SelectedIndex, (int)sldTime.Value) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
+                            GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value, (GameMap)cmbMap.SelectedIndex, (GameMode)cmbGameMode.SelectedIndex, (int)sldTime.Value);
                             App.Current.MainWindow = Game;
                             this.Close();
                             Game.Show();
@@ -279,24 +280,29 @@ namespace RiskGame
         private void Load_Game(object sender, RoutedEventArgs e)
         {
             // Gets the game ID of the selected game and loads the game with that gameID frm file.
-            try
-            {
                 if(txtError.Visibility == Visibility.Visible) { ClearError(); }
-                GameManager game = GameManager.LoadGame(int.Parse(((GameDetails)GameList.SelectedItem).GameID));
+                GameManager game = new GameManager();
+                try
+                {
+                    game = GameManager.LoadGame(int.Parse(((GameDetails)GameList.SelectedItem).GameID));
+                }
+                catch (GameNotFoundException)
+                {
+                    DispErrorMsg("The selected game could not be loaded.");
+                }
+                catch (NullReferenceException)
+                {
+                    DispErrorMsg("Please select a game to load by clicking on the details of the game you wish to load and then 'Load Game'");
+                }
+                catch (Exception)
+                {
+                    DispErrorMsg("Something went wrong.");
+                }
                 // Creates a new GameWindow, sending the GameManager containing the game details to the GameWindow. Closes window on completion.
                 GameWindow Game = new GameWindow(game) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
                 App.Current.MainWindow = Game;
                 this.Close();
                 Game.Show();
-            }
-            catch (NullReferenceException)
-            {
-                DispErrorMsg("Please select a game to load by clicking on the details of the game you wish to load and then 'Load Game'");
-            }
-            catch(Exception)
-            {
-                DispErrorMsg("Something went wrong.");
-            }
         }
 
         ///////////////////////////////////////////////////////////

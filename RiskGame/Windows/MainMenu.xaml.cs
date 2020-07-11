@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using RiskGame.CustomExceptions;
-using RiskGame.CustomExceptions.Game;
 using RiskGame.Game;
 using RiskGame.Windows;
 

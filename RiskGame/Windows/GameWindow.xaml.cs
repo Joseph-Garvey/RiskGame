@@ -173,32 +173,37 @@ namespace RiskGame
         // Load Game //
         public GameWindow(GameManager _game)
         {
-            // not complete // check at end once all is done
-            // takes local variables and matches them to the gamemanager variables to load game. (Incomplete)
             InitializeComponent();
-            paused = false;
-            TimerSetup();
             game = _game;
+            paused = false;
+            if (time > 0)
+            {
+                TimerSetup();
+                StartTimer();
+            }
             LoadPlayerUI();
             music_enabled = ((Human)Players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
+            MapSetup();
             Output("The game has loaded.");
-            StartTimer();
+            if (gamemode == GameMode.Classic)
+            {
+                playerdie1 = new Dice(Die.Player1, imgPlayerDie1);
+                playerdie2 = new Dice(Die.Player2, imgPlayerDie2);
+                playerdie3 = new Dice(Die.Player3, imgPlayerDie3);
+                enemydie1 = new Dice(Die.Enemy1, imgEnemyDie1);
+                enemydie2 = new Dice(Die.Enemy1, imgEnemyDie2);
+            }
         }
         // New Game //
         public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration)
         {
             InitializeComponent();
             DataContext = this;
-            time = timerduration*100;
-            if (time > 0)
-            {
-                TimerSetup();
-            }
-            else { pb_Timer.Visibility = Visibility.Collapsed; }
             GameManager.ClearEmptyFile();
             game = new GameManager();
+            time = timerduration * 100;
             Players = _players;
             Music_enabled = ((Human)Players[0]).music_enabled;
             Hints_enabled = ((Human)Players[0]).hints_enabled;
@@ -219,6 +224,11 @@ namespace RiskGame
                 enemydie1 = new Dice(Die.Enemy1, imgEnemyDie1);
                 enemydie2 = new Dice(Die.Enemy1, imgEnemyDie2);
             }
+            if (time > 0)
+            {
+                TimerSetup();
+            }
+            else { pb_Timer.Visibility = Visibility.Collapsed; }
             SetupGame(randomise_initial);
         }
         private void MapSetup()
@@ -329,7 +339,6 @@ namespace RiskGame
             Output("The Game is beginning.");
             gamestate = GameState.PlacingArmy;
             NextTurnThreaded();
-            GameManager.SaveGame(game);
         }
         private void SetupRandom()
         {
@@ -1010,7 +1019,19 @@ namespace RiskGame
                         break;
                     }
                 case GameState.Attacking:
-                    if(t.owner == CurrentPlayer)
+                    if ((String)btnDieStatus.Content == "Continue to Attack")
+                    {
+                        btnDieStatus.Visibility = Visibility.Collapsed;
+                        panel_Die.Visibility = Visibility.Collapsed;
+                        panel_NumberSelection.Visibility = Visibility.Visible;
+                        CancelUnconfirmedActions();
+                    }
+                    else if((String)btnDieStatus.Content == "Continue to Conquer")
+                    {
+                        Output("You must continue to conquer.");
+                        return;
+                    }
+                    if (t.owner == CurrentPlayer)
                     {
                         if(t.currentarmies > 1)
                         {
@@ -1178,8 +1199,10 @@ namespace RiskGame
                                 ClearSelectionsUI();
                             }
                         }
+                        // Classic Mode
                         else if(gamemode == GameMode.Classic)
                         {
+                            if(panel_Die.Visibility == Visibility.Visible) { Output("This action is not possible at this time."); }
                             panel_NumberSelection.Visibility = Visibility.Collapsed;
                             panel_Die.Visibility = Visibility.Visible;
                             dices.Clear();
@@ -1189,6 +1212,7 @@ namespace RiskGame
                                 imgEnemyDie2.Visibility = Visibility.Visible;
                                 dices.Add(enemydie2);
                             }
+                            else { imgEnemyDie2.Visibility = Visibility.Collapsed; }
                             if(NextTerritory.temparmies > 1) { imgPlayerDie2.Visibility = Visibility.Visible; dices.Add(playerdie2); }
                             else { imgPlayerDie2.Visibility = Visibility.Collapsed; }
                             if(NextTerritory.temparmies > 2) { imgPlayerDie3.Visibility = Visibility.Visible; dices.Add(playerdie3); }
@@ -1227,7 +1251,22 @@ namespace RiskGame
             }
         }
         private void AttackFinished() { } // for when dice roll complete
-        private void Continue(object sender, RoutedEventArgs e) { CancelUnconfirmedActions(); if (gamestate != GameState.Conquer) { NextAction(); } }
+        private void Continue(object sender, RoutedEventArgs e)
+        {
+            if ((String)btnDieStatus.Content == "Continue to Attack")
+            {
+                btnDieStatus.Visibility = Visibility.Collapsed;
+                panel_Die.Visibility = Visibility.Collapsed;
+                panel_NumberSelection.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                Output("You must continue to conquer.");
+                return;
+            }
+            CancelUnconfirmedActions();
+            if (gamestate != GameState.Conquer) { NextAction(); }
+        }
         private void Cancel(object sender, RoutedEventArgs e) { CancelUnconfirmedActions(); }
         private void Increase(object sender, RoutedEventArgs e) { PlayerActions(true); }
         private void Decrease(object sender, RoutedEventArgs e) { PlayerActions(false); }
@@ -1331,6 +1370,7 @@ namespace RiskGame
         { // Creates a gamemanager instance, serializes it and saves it to a file. Reporting back to the player if the save was successful.
             if(gamestate == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
             else if(gamestate == GameState.Conquer) { Output("You must finish conquering before saving."); }
+            else if ((gamestate == GameState.Attacking) && (gamemode == GameMode.Classic)) { Output("You must finish your attack before saving."); }
             //else if(action == true) { Output("You must finish your current action before saving"); }
             else
             {
@@ -1439,6 +1479,7 @@ namespace RiskGame
                 if (won) { Win(); }
                 UpdateState(GameState.Conquer);
             }
+            btnDieStatus.Content = "Outcome";
         }
         private void DetermineHigherRoll(ref int greatest, ref int secondgreatest, int newnum)
         {

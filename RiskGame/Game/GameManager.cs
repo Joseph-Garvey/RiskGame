@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using RiskGame.CustomExceptions.Game;
+using RiskGame.CustomExceptions;
 using System.Collections.ObjectModel;
 using RiskGame.Game.Locations;
 
