@@ -1182,6 +1182,7 @@ namespace RiskGame
                         {
                             panel_NumberSelection.Visibility = Visibility.Collapsed;
                             panel_Die.Visibility = Visibility.Visible;
+                            dices.Clear();
                             dices = new List<Dice>{ playerdie1, enemydie1 };
                             if(NextTerritory.currentarmies > 1)
                             {
@@ -1189,7 +1190,9 @@ namespace RiskGame
                                 dices.Add(enemydie2);
                             }
                             if(NextTerritory.temparmies > 1) { imgPlayerDie2.Visibility = Visibility.Visible; dices.Add(playerdie2); }
+                            else { imgPlayerDie2.Visibility = Visibility.Collapsed; }
                             if(NextTerritory.temparmies > 2) { imgPlayerDie3.Visibility = Visibility.Visible; dices.Add(playerdie3); }
+                            else { imgPlayerDie3.Visibility = Visibility.Collapsed; }
                             lblPlayerDie.Content = CurrentPlayer.Username;
                             lblEnemyDie.Content = NextTerritory.owner.Username;
                             ToRoll = dices.Count;
@@ -1397,7 +1400,7 @@ namespace RiskGame
                 else { playerloss += 1; }
             }
             if(ClassicBattle(playerHighestRoll, enemyHighestRoll)) { enemyloss += 1; }
-            else { enemyloss += 1; }
+            else { playerloss += 1; }
             NextTerritory.temparmies -= playerloss;
             NextTerritory.currentarmies -= enemyloss;
             NextTerritory.button.Content = NextTerritory.currentarmies;
