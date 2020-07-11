@@ -242,8 +242,8 @@
                     </Border>
                 </StackPanel>
                 <!-- Settings Panel -->
-                <Viewbox Stretch="Uniform" Height="720">
-                    <DockPanel x:Name="panel_Settings" Width="350" Visibility="Collapsed">
+                <Viewbox x:Name="panel_Settings" Stretch="Uniform" Height="720" Visibility="Collapsed">
+                    <DockPanel  Width="350">
                         <DockPanel.Resources>
                             <Style TargetType="Border">
                                 <Setter Property="BorderBrush" Value="Black"></Setter>
