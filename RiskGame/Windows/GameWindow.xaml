@@ -24,11 +24,13 @@
                 <!-- Main UI Panel -->
                 <StackPanel x:Name="panel_MainUI">
                     <!-- Game Grid -->
-                    <Grid x:Name="GameGrid" Grid.Row="0" Grid.Column="1" Width="1080">
+                    <Grid x:Name="GameGrid" Grid.Row="0" Grid.Column="1" Width="1080" Height="525">
                         <Grid.Resources>
-                            <Style TargetType="Button">
+                            <Style TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
                                 <Setter Property="BorderThickness" Value="3"></Setter>
                                 <Setter Property="FontWeight" Value="Bold"></Setter>
+                                <Setter Property="Background" Value="#CDECECEC"></Setter>
+                                <Setter Property="Height" Value="24"></Setter>
                                 <EventSetter Event="Click" Handler="Click"></EventSetter>
                                 <EventSetter Event="MouseRightButtonDown" Handler="RightClick"></EventSetter>
                             </Style>
@@ -36,7 +38,48 @@
                         <Grid.Background>
                             <ImageBrush ImageSource="pack://siteoforigin:,,,/Images/Maps/1.png"/>
                         </Grid.Background>
-                        <Button x:Name="btnAlaska">Alaska</Button>
+                        <Button x:Name="btnAlaska" Background="#CDECECEC" Content="Alaska"  Width="42"/>
+                        <Button x:Name="btnAlberta" Content="Alberta"  Width="50"/>
+                        <Button x:Name="btnCentral_America" Content="Central America" Width="100"/>
+                        <Button x:Name="btnEastern_US" Content="Eastern US" Width="66"/>
+                        <Button x:Name="btnGreenland" Content="Greenland" Width="65"/>
+                        <Button x:Name="btnNorthwest_Canada" Content="Northwest Canada"  Width="110"/>
+                        <Button x:Name="btnOntario" Content="Ontario" Width="53"/>
+                        <Button x:Name="btnQuebec" Content="Quebec" Width="54"/>
+                        <Button x:Name="btnWestern_US" Content="Western US" Width="75"/>
+                        <Button x:Name="btnArgentina" Content="Argentina" Width="61"/>
+                        <Button x:Name="btnBrazil" Content="Brazil" Width="76"/>
+                        <Button x:Name="btnPeru" Content="Peru" Width="41"/>
+                        <Button x:Name="btnVenezuela" Content="Venezuela" Width="66"/>
+                        <Button x:Name="btnUK_Ireland" Content="UK and Ireland" Width="100"></Button>
+                        <Button x:Name="btnIceland" Content="Iceland" Width="47"/>
+                        <Button x:Name="btnNorthern_Europe" Content="Northern Europe" Width="96"/>
+                        <Button x:Name="btnScandinavia" Content="Scandinavia" Width="72"/>
+                        <Button x:Name="btnSouthern_Europe" Content="Southern Europe" Width="96"/>
+                        <Button x:Name="btnSoviet_Bloc" Content ="Soviet Bloc" Width="80"/>
+                        <Button x:Name="btnWestern_Europe" Content="Western Europe" Width="90"/>
+                        <Button x:Name="btnCentral_Africa" Content="Central Africa" Width="85"/>
+                        <Button x:Name="btnEast_Africa" Content="East Africa" Width="70"/>
+                        <Button x:Name="btnMadagascar" Content="Madagascar" Width="80"/>
+                        <Button x:Name="btnEgypt" Content="Egypt" Width="51"/>
+                        <Button x:Name="btnNorth_Africa" Content="North Africa" Width="90"/>
+                        <Button x:Name="btnSouth_Africa" Content="South Africa" Width="80"/>
+                        <Button x:Name="btnAfghanistan" Content="Afghanistan" Width="79"/>
+                        <Button x:Name="btnChina" Content="China" Width="58"/>
+                        <Button x:Name="btnIndia" Content="India" Width="50"/>
+                        <Button x:Name="btnJapan" Content="Japan" Width="46"/>
+                        <Button x:Name="btnMiddle_East" Content="Middle East" Width="83"/>
+                        <Button x:Name="btnMongolia" Content="Mongolia" Width="66"/>
+                        <Button x:Name="btnSoutheast_Asia" Content="Southeast Asia" Width="94"/>
+                        <Button x:Name="btnSiberia" Content="Siberia" Width="55"/>
+                        <Button x:Name="btnUral" Content="Ural" Width="45"/>
+                        <Button x:Name="btnEastern_Australia" Content="Eastern Australia" Width="120"/>
+                        <Button x:Name="btnWestern_Australia" Content="Western Australia" Width="106"/>
+                        <Button x:Name="btnNew_Guinea" Content="New Guinea" Width="85"/>
+                        <Button x:Name="btnIndonesia" Content="Indonesia"   Width="71"/>
+                        <Button x:Name="btnIrkutsk" Content="Irkutsk" Width="62"/>
+                        <Button x:Name="btnKamchatka" Content="Kamchatka" Width="79"/>
+                        <Button x:Name="btnYakutsk" Content="Yakutsk" Width="54"/>
                     </Grid>
                     <ProgressBar x:Name="pb_Timer" Height="20" Minimum="0"></ProgressBar>
                     <!-- UI Panel -->
