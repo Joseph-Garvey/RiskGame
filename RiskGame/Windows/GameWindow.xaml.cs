@@ -390,7 +390,6 @@ namespace RiskGame
         private void UISetup()
         {
             // This code sets up the "player panel" with the players details, resizing certain elements to avoid white borders.
-            // Needs values tweaked.
             lblPlayerName1.Content = Players[0].Username;
             lblPlayerName2.Content = Players[1].Username;
             rectPlayerColor1.Fill = (SolidColorBrush)Players[0].Color;
@@ -398,36 +397,37 @@ namespace RiskGame
             Thickness th = new Thickness(0, 20, 0, 0);
             int fs = 11;
             int rect_height = 20;
+            // make this more efficient
             if (Players.Count >= 3)
             {
-                panel_Players.Margin = new Thickness(20, 0, 10, 0);
+                brd_Players.Margin = new Thickness(20, 0, 10, 0);
                 th = new Thickness(0, 15, 0, 0);
                 lblPlayerName3.Content = Players[2].Username;
                 rectPlayerColor3.Fill = (SolidColorBrush)Players[2].Color;
-                panel_Player3.Visibility = Visibility.Visible;
-            }
-            if (Players.Count >= 4)
-            {
-                th = new Thickness(0, 10, 0, 0);
-                lblPlayerName4.Content = Players[3].Username;
-                rectPlayerColor4.Fill = (SolidColorBrush)Players[3].Color;
-                panel_Player4.Visibility = Visibility.Visible;
-            }
-            if (Players.Count >= 5)
-            {
-                rect_height = 15;
-                th = new Thickness(0, 5, 0, 0);
-                lblPlayerName5.Content = Players[4].Username;
-                rectPlayerColor5.Fill = (SolidColorBrush)Players[4].Color;
-                panel_Player5.Visibility = Visibility.Visible;
-            }
-            if (Players.Count >= 6)
-            {
-                fs = 9;
-                rect_height = 12;
-                rectPlayerColor6.Fill = (SolidColorBrush)Players[5].Color;
-                lblPlayerName6.Content = Players[5].Username;
-                panel_Player6.Visibility = Visibility.Visible;
+                brd_Player3.Visibility = Visibility.Visible;
+                if (Players.Count >= 4)
+                {
+                    th = new Thickness(0, 10, 0, 0);
+                    lblPlayerName4.Content = Players[3].Username;
+                    rectPlayerColor4.Fill = (SolidColorBrush)Players[3].Color;
+                    brd_Player4.Visibility = Visibility.Visible;
+                    if (Players.Count >= 5)
+                    {
+                        rect_height = 15;
+                        th = new Thickness(0, 5, 0, 0);
+                        lblPlayerName5.Content = Players[4].Username;
+                        rectPlayerColor5.Fill = (SolidColorBrush)Players[4].Color;
+                        brd_Player5.Visibility = Visibility.Visible;
+                    }
+                    if (Players.Count >= 6)
+                    {
+                        fs = 9;
+                        rect_height = 12;
+                        rectPlayerColor6.Fill = (SolidColorBrush)Players[5].Color;
+                        lblPlayerName6.Content = Players[5].Username;
+                        brd_Player6.Visibility = Visibility.Visible;
+                    }
+                }
             }
             SetMargin(th);
             SetFontSize(fs);
@@ -435,12 +435,12 @@ namespace RiskGame
         }
         private void SetMargin(Thickness th)
         {
-            panel_Player1.Margin = th;
-            panel_Player2.Margin = th;
-            panel_Player3.Margin = th;
-            panel_Player4.Margin = th;
-            panel_Player5.Margin = th;
-            panel_Player6.Margin = th;
+            brd_Player1.Margin = th;
+            brd_Player2.Margin = th;
+            brd_Player3.Margin = th;
+            brd_Player4.Margin = th;
+            brd_Player5.Margin = th;
+            brd_Player6.Margin = th;
         }
         private void SetFontSize(int i)
         {
@@ -626,11 +626,14 @@ namespace RiskGame
             }
             foreach(Territory t in Territories)
             {
-                foreach(Button b in GameGrid.Children)
+                foreach(UIElement e in GameGrid.Children)
                 {
-                    if(t.name == b.Name.Substring(3))
+                    if(e is Button)
                     {
-                        t.button = b;
+                        if (t.name == ((Button)e).Name.Substring(3))
+                        {
+                            t.button = ((Button)e);
+                        }
                     }
                 }
                 t.button.Background = t.owner.Color;
@@ -668,7 +671,7 @@ namespace RiskGame
         private void UpdatePlayerPanelUI()
         {
             int i = Players.IndexOf(CurrentPlayer);
-            foreach (StackPanel s in panel_Players.Children) { s.Background = Brushes.LightGray; }
+            foreach (Border s in panel_Players.Children) { s.Background = Brushes.LightGray; }
             panel_UI.Background = CurrentPlayer.Color;
             switch (i)
             {
