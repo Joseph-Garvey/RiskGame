@@ -1259,7 +1259,7 @@ namespace RiskGame
                 panel_Die.Visibility = Visibility.Collapsed;
                 panel_NumberSelection.Visibility = Visibility.Visible;
             }
-            else
+            else if ((String)btnDieStatus.Content == "Continue to Conquer")
             {
                 Output("You must continue to conquer.");
                 return;
