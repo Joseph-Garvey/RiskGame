@@ -611,7 +611,7 @@ namespace RiskGame
         }
         private void Win()
         {
-            CurrentPlayer.score += CurrentPlayer.army_strength / 3;
+            CurrentPlayer.score += CurrentPlayer.Army_strength / 3;
             int finalscore = CurrentPlayer.score / Turn;
             GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), map.ToString(), gamemode.ToString());
             GameDetails.Save(gamedetails);
@@ -1032,7 +1032,7 @@ namespace RiskGame
                     if (SlctTerritory.owner == null || SlctTerritory.owner == CurrentPlayer)
                     {
                         Place_Reinforce(SlctTerritory, 1);
-                        CurrentPlayer.army_strength += 1;
+                        CurrentPlayer.Army_strength += 1;
                         CyclePlayers();
                         NextTurn();
                     }
@@ -1186,7 +1186,7 @@ namespace RiskGame
                         if(t.owner == CurrentPlayer)
                         {
                             Place_Reinforce(t, t.temparmies);
-                            CurrentPlayer.army_strength += t.temparmies;
+                            CurrentPlayer.Army_strength += t.temparmies;
                             t.temparmies = 0;
                         }
                     }
@@ -1205,7 +1205,7 @@ namespace RiskGame
                             {
                                 NextTerritory.owner.territoriesowned -= 1;
                                 NextTerritory.owner.score -= 1;
-                                NextTerritory.owner.army_strength -= NextTerritory.currentarmies;
+                                NextTerritory.owner.Army_strength -= NextTerritory.currentarmies;
                                 NextTerritory.currentarmies = 0;
                                 NextTerritory.owner = CurrentPlayer;
                                 CurrentPlayer.territoriesowned += 1;
@@ -1512,7 +1512,7 @@ namespace RiskGame
             {
                 NextTerritory.owner.territoriesowned -= 1;
                 NextTerritory.owner.score -= 1;
-                NextTerritory.owner.army_strength -= NextTerritory.currentarmies;
+                NextTerritory.owner.Army_strength -= NextTerritory.currentarmies;
                 NextTerritory.owner = CurrentPlayer;
                 CurrentPlayer.territoriesowned += 1;
                 CurrentPlayer.score += 1;
