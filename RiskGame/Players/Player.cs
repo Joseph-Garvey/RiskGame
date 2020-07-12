@@ -56,7 +56,26 @@ namespace RiskGame
                 }
             }
         }
+        public int score = 0;
+        private byte r;
+        private byte g;
+        private byte b;
+        [NonSerialized]
+        private SolidColorBrush color;
+        public SolidColorBrush Color
+        {
+            get => color;
+            set
+            {
+                color = value;
+                r = color.Color.R;
+                g = color.Color.G;
+                b = color.Color.B;
+            }
+        }
+        [NonSerialized]
         private Label disp_ArmyStrength;
+        [NonSerialized]
         private Label disp_Owned;
         public Label Disp_ArmyStrength
         {
@@ -76,23 +95,6 @@ namespace RiskGame
                 BindLabel(ref disp_Owned, "Territoriesowned");
             }
         }
-        public int score = 0;
-        private byte r;
-        private byte g;
-        private byte b;
-        [NonSerialized]
-        private SolidColorBrush color;
-        public SolidColorBrush Color
-        {
-            get => color;
-            set
-            {
-                color = value;
-                r = color.Color.R;
-                g = color.Color.G;
-                b = color.Color.B;
-            }
-        }
 
         // Methods //
         public void RetrieveColor()
@@ -101,11 +103,14 @@ namespace RiskGame
         }
 
         // Binding //
+        [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
+            {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
         }
         private void BindLabel(ref Label label, string bindingsource)
         {
