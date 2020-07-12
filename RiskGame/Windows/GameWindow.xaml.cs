@@ -663,16 +663,16 @@ namespace RiskGame
             switch (gamestate)
             {
                 case GameState.PlacingArmy:
-                    lblNumber.Content = SlctTerritory.temparmies;
+                    btnNumber.Content = SlctTerritory.temparmies;
                     break;
                 case GameState.Attacking:
-                    lblNumber.Content = NextTerritory.temparmies;
+                    btnNumber.Content = NextTerritory.temparmies;
                     break;
                 case GameState.Conquer:
-                    lblNumber.Content = NextTerritory.temparmies;
+                    btnNumber.Content = NextTerritory.temparmies;
                     break;
                 case GameState.Move:
-                    lblNumber.Content = NextTerritory.temparmies;
+                    btnNumber.Content = NextTerritory.temparmies;
                     break;
             }
         } // Updates UI Label Number
@@ -773,7 +773,7 @@ namespace RiskGame
             {
                 t.button.BorderBrush = Brushes.Gray;
             }
-            lblNumber.Content = 0;
+            btnNumber.Content = 0;
             ClearSelections();
         } // Clears Selections and UI
 
