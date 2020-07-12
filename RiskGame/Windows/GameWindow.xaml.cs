@@ -1250,8 +1250,10 @@ namespace RiskGame
                             else { imgPlayerDie2.Visibility = Visibility.Collapsed; }
                             if(NextTerritory.temparmies > 2) { imgPlayerDie3.Visibility = Visibility.Visible; dices.Add(playerdie3); }
                             else { imgPlayerDie3.Visibility = Visibility.Collapsed; }
-                            lblPlayerDie.Content = CurrentPlayer.Username;
-                            lblEnemyDie.Content = NextTerritory.owner.Username;
+                            btnPlayerDie.Content = CurrentPlayer.Username;
+                            btnEnemyDie.Content = NextTerritory.owner.Username;
+                            panel_Die_Player.Background = CurrentPlayer.Color;
+                            panel_Die_Enemy.Background = NextTerritory.owner.Color;
                             ToRoll = dices.Count;
                             Rolled = 0;
                             paused = true;
@@ -1489,6 +1491,10 @@ namespace RiskGame
         }
         private void Attack_DieContinue(object sender, RoutedEventArgs e)
         {
+            if (((String)((Button)sender).Content) == "Dice Rolling...")
+            {
+                return;
+            }
             btnDieStatus.Visibility = Visibility.Collapsed;
             panel_Die.Visibility = Visibility.Collapsed;
             panel_NumberSelection.Visibility = Visibility.Visible;

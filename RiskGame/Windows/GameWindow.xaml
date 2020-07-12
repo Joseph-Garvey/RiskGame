@@ -206,11 +206,11 @@
                                 </StackPanel>
                             </Border>
                             <!-- Action Panels -->
-                            <Border Margin="20,5,20,5" Style="{StaticResource brd_CornerCurve}" Width="250">
+                            <Border Margin="20,5,20,5" Style="{StaticResource brd_CornerCurve}" Width="260" Height="154">
                                 <StackPanel VerticalAlignment="Center">
                                     <!-- Number Selection -->
-                                    <StackPanel  x:Name="panel_NumberSelection">
-                                        <Button x:Name="btnStateDisp" Style="{StaticResource btnCornerUI}" Margin="10,10,10,5" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF00B9FF" BorderThickness="2">GameState</Button>
+                                    <StackPanel x:Name="panel_NumberSelection" Visibility="Collapsed">
+                                        <Button x:Name="btnStateDisp" Style="{StaticResource btnPresenter}" Margin="10,10,10,5" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF00B9FF" BorderThickness="2">GameState</Button>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                             <StackPanel.Resources>
                                                 <Style TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
@@ -236,37 +236,54 @@
                                         <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Margin="23,0,23,10" Width="200" Click="Confirm" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00" BorderThickness="2">Confirm Action</Button>
                                     </StackPanel>
                                     <!-- Dice Roll -->
-                                    <Grid Visibility="Collapsed" x:Name="panel_Die" VerticalAlignment="Center" Margin="20">
+                                    <Grid x:Name="panel_Die" VerticalAlignment="Center" HorizontalAlignment="Center">
                                         <Grid.Resources>
                                             <Style TargetType="Image">
                                                 <Setter Property="Source" Value="pack://siteoforigin:,,,/Images/Dice/imgDice6.png"></Setter>
-                                                <Setter Property="Height" Value="45"></Setter>
+                                                <Setter Property="Height" Value="40"></Setter>
+                                            </Style>
+                                            <Style TargetType="Button" x:Key="btnPlayerDie" BasedOn="{StaticResource btnPresenter}">
+                                                <Setter Property="Background" Value="Green"></Setter>
+                                                <Setter Property="Margin" Value="0"></Setter>
+                                            </Style>
+                                            <Style TargetType="Button" x:Key="btnEnemyDie" BasedOn="{StaticResource btnPlayerDie}">
+                                                <Setter Property="Background" Value="IndianRed"></Setter>
                                             </Style>
                                         </Grid.Resources>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition></ColumnDefinition>
-                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition></RowDefinition>
-                                            <RowDefinition></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
                                         </Grid.RowDefinitions>
-                                        <StackPanel Margin="5">
-                                            <Label x:Name="lblPlayerDie" Style="{StaticResource lblHeader}" FontSize="14">Your name here</Label>
-                                            <StackPanel x:Name="panel_Die_Player" Style="{StaticResource HorizontalCentred}" Background="Green">
-                                                <Image x:Name="imgPlayerDie1"></Image>
-                                                <Image x:Name="imgPlayerDie2"></Image>
-                                                <Image x:Name="imgPlayerDie3"></Image>
+                                        <StackPanel>
+                                            <Button x:Name="btnPlayerDie" Style="{StaticResource btnCornerUI}" Width="130" FontSize="14">Player Name</Button>
+                                            <StackPanel x:Name="panel_Die_Player" Style="{StaticResource HorizontalCentred}" Margin="5,0,5,10">
+                                                <Button Style="{StaticResource btnPlayerDie}">
+                                                    <Image x:Name="imgPlayerDie1"></Image>
+                                                </Button>
+                                                <Button Style="{StaticResource btnPlayerDie}">
+                                                    <Image x:Name="imgPlayerDie2"></Image>
+                                                </Button>
+                                                <Button Style="{StaticResource btnPlayerDie}">
+                                                    <Image x:Name="imgPlayerDie3"></Image>
+                                                </Button>
                                             </StackPanel>
                                         </StackPanel>
-                                        <StackPanel Grid.Column="1" Margin="5">
-                                            <Label x:Name="lblEnemyDie" Style="{StaticResource lblHeader}" FontSize="14">Enemy name here</Label>
-                                            <StackPanel x:Name="panel_Die_Enemy" Style="{StaticResource HorizontalCentred}" Background="IndianRed">
-                                                <Image x:Name="imgEnemyDie1"></Image>
-                                                <Image x:Name="imgEnemyDie2"></Image>
+                                        <StackPanel Grid.Column="1">
+                                            <Button x:Name="btnEnemyDie" Style="{StaticResource btnCornerUI}" Width="100" FontSize="14">Enemy name</Button>
+                                            <StackPanel x:Name="panel_Die_Enemy" Style="{StaticResource HorizontalCentred}" Margin="5,0,5,10">
+                                                <Button Style="{StaticResource btnEnemyDie}">
+                                                    <Image x:Name="imgEnemyDie1"></Image>
+                                                </Button>
+                                                <Button Style="{StaticResource btnEnemyDie}">
+                                                    <Image x:Name="imgEnemyDie2"></Image>
+                                                </Button>
                                             </StackPanel>
                                         </StackPanel>
-                                        <Button x:Name="btnDieStatus" Style="{StaticResource btnCornerUI}" Grid.Row="1" Grid.ColumnSpan="2" Visibility="Collapsed" Click="Attack_DieContinue">Outcome</Button>
+                                        <Button x:Name="btnDieStatus" Style="{StaticResource btnCornerUI}" Grid.Row="1"  Grid.ColumnSpan="2"  Click="Attack_DieContinue">Dice Rolling...</Button>
                                     </Grid>
                                 </StackPanel>
                             </Border>
@@ -275,12 +292,12 @@
                                 <StackPanel VerticalAlignment="Center">
                                     <StackPanel.Resources>
                                         <Style TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
-                                            <Setter Property="Margin" Value="20,5,20,0"></Setter>
+                                            <Setter Property="Margin" Value="15,5,15,0"></Setter>
                                             <Setter Property="FontSize" Value="18"></Setter>
                                             <Setter Property="Width" Value="150"></Setter>
                                         </Style>
                                     </StackPanel.Resources>
-                                    <Button Margin="20,0,20,0" Click="Continue">Continue</Button>
+                                    <Button Margin="15,0,15,0" Click="Continue">Continue</Button>
                                     <Button Click="Cancel">Cancel</Button>
                                     <Button Click="SaveGame">Save Game</Button>
                                     <Button Click="Settings">Settings - Help</Button>
