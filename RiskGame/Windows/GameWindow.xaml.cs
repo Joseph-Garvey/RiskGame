@@ -391,7 +391,11 @@ namespace RiskGame
         {
             // This code sets up the "player panel" with the players details, resizing certain elements to avoid white borders.
             lblPlayerName1.Content = Players[0].Username;
+            Players[0].Disp_ArmyStrength = lblPlayer1Strength;
+            Players[0].Disp_Owned = lblPlayer1Territories;
             lblPlayerName2.Content = Players[1].Username;
+            Players[1].Disp_ArmyStrength = lblPlayer2Strength;
+            Players[1].Disp_Owned = lblPlayer2Territories;
             rectPlayerColor1.Fill = (SolidColorBrush)Players[0].Color;
             rectPlayerColor2.Fill = (SolidColorBrush)Players[1].Color;
             // make this more efficient
@@ -400,11 +404,15 @@ namespace RiskGame
                 lblPlayerName3.Content = Players[2].Username;
                 rectPlayerColor3.Fill = (SolidColorBrush)Players[2].Color;
                 brd_Player3.Visibility = Visibility.Visible;
+                Players[2].Disp_ArmyStrength = lblPlayer3Strength;
+                Players[2].Disp_Owned = lblPlayer3Territories;
                 if (Players.Count >= 4)
                 {
                     lblPlayerName4.Content = Players[3].Username;
                     rectPlayerColor4.Fill = (SolidColorBrush)Players[3].Color;
                     brd_Player4.Visibility = Visibility.Visible;
+                    Players[3].Disp_ArmyStrength = lblPlayer4Strength;
+                    Players[3].Disp_Owned = lblPlayer4Territories;
                     if (Players.Count >= 5)
                     {
                         int fs;
@@ -414,6 +422,8 @@ namespace RiskGame
                         lblPlayerName5.Content = Players[4].Username;
                         rectPlayerColor5.Fill = (SolidColorBrush)Players[4].Color;
                         brd_Player5.Visibility = Visibility.Visible;
+                        Players[4].Disp_ArmyStrength = lblPlayer5Strength;
+                        Players[4].Disp_Owned = lblPlayer5Territories;
                         if (Players.Count >= 6)
                         {
                             fs = 11;
@@ -421,6 +431,8 @@ namespace RiskGame
                             rectPlayerColor6.Fill = (SolidColorBrush)Players[5].Color;
                             lblPlayerName6.Content = Players[5].Username;
                             brd_Player6.Visibility = Visibility.Visible;
+                            Players[5].Disp_ArmyStrength = lblPlayer6Strength;
+                            Players[5].Disp_Owned = lblPlayer6Territories;
                             SetFontSize(fs);
                         }
                         SetGap(gap);
@@ -583,7 +595,7 @@ namespace RiskGame
                         bonus += c.bonus;
                     }
                 }
-                CurrentPlayer.army_undeployed += ((CurrentPlayer.territoriesowned / 3) + bonus);
+                CurrentPlayer.army_undeployed += ((CurrentPlayer.Territoriesowned / 3) + bonus);
                 UpdatePlayerPanelUI();
                 UpdateState(GameState.PlacingArmy);
                 switch (ownedContinents.Count)
@@ -1032,7 +1044,6 @@ namespace RiskGame
                     if (SlctTerritory.owner == null || SlctTerritory.owner == CurrentPlayer)
                     {
                         Place_Reinforce(SlctTerritory, 1);
-                        CurrentPlayer.Army_strength += 1;
                         CyclePlayers();
                         NextTurn();
                     }
@@ -1186,7 +1197,6 @@ namespace RiskGame
                         if(t.owner == CurrentPlayer)
                         {
                             Place_Reinforce(t, t.temparmies);
-                            CurrentPlayer.Army_strength += t.temparmies;
                             t.temparmies = 0;
                         }
                     }
@@ -1203,17 +1213,17 @@ namespace RiskGame
                             double prob = 1 / (1 + Math.Exp(-0.7 * ((NextTerritory.temparmies - NextTerritory.currentarmies) - 0.5)));
                             if (num <= prob)
                             {
-                                NextTerritory.owner.territoriesowned -= 1;
+                                NextTerritory.owner.Territoriesowned -= 1;
                                 NextTerritory.owner.score -= 1;
                                 NextTerritory.owner.Army_strength -= NextTerritory.currentarmies;
                                 NextTerritory.currentarmies = 0;
                                 NextTerritory.owner = CurrentPlayer;
-                                CurrentPlayer.territoriesowned += 1;
+                                CurrentPlayer.Territoriesowned += 1;
                                 CurrentPlayer.score += 1;
                                 bool won = true;
                                 foreach (Player p in Players)
                                 {
-                                    if (p.territoriesowned > 0) { won = false; }
+                                    if (p.Territoriesowned > 0) { won = false; }
                                 }
                                 if (won) { Win(); }
                                 int lost = NextTerritory.temparmies - (int)Math.Ceiling(prob * NextTerritory.temparmies);
@@ -1291,7 +1301,6 @@ namespace RiskGame
                     break;
             }
         }
-        private void AttackFinished() { } // for when dice roll complete
         private void Continue(object sender, RoutedEventArgs e)
         {
             if ((String)btnDieStatus.Content == "Continue to Attack")
@@ -1330,13 +1339,14 @@ namespace RiskGame
             if (T.owner != CurrentPlayer)
             {
                 // Update UI to reflect ownership
-                if (T.owner != null) { T.owner.territoriesowned -= 1; }
+                if (T.owner != null) { T.owner.Territoriesowned -= 1; }
                 T.owner = CurrentPlayer;
                 T.button.Background = T.owner.Color;
-                CurrentPlayer.territoriesowned += num;
+                CurrentPlayer.Territoriesowned += num;
                 CurrentPlayer.score += 1;
             }
             // Sets up game-board, sets owner and places army into territory
+            if ((gamestate == GameState.InitialArmyPlace) || (gamestate == GameState.PlacingArmy)) { CurrentPlayer.Army_strength += num; }
             T.currentarmies += num;
             if(gamestate == GameState.InitialArmyPlace) { CurrentPlayer.army_undeployed -= num; }
             T.button.Content = T.currentarmies;
@@ -1482,7 +1492,9 @@ namespace RiskGame
             }
             if(ClassicBattle(playerHighestRoll, enemyHighestRoll)) { enemyloss += 1; }
             else { playerloss += 1; }
+            CurrentPlayer.Army_strength -= playerloss;
             NextTerritory.temparmies -= playerloss;
+            NextTerritory.owner.Army_strength -= enemyloss;
             NextTerritory.currentarmies -= enemyloss;
             NextTerritory.button.Content = NextTerritory.currentarmies;
             Output(String.Format("You lost {0} armies in battle. The enemy lost {1}", playerloss, enemyloss));
@@ -1510,16 +1522,16 @@ namespace RiskGame
             }
             else
             {
-                NextTerritory.owner.territoriesowned -= 1;
+                NextTerritory.owner.Territoriesowned -= 1;
                 NextTerritory.owner.score -= 1;
                 NextTerritory.owner.Army_strength -= NextTerritory.currentarmies;
                 NextTerritory.owner = CurrentPlayer;
-                CurrentPlayer.territoriesowned += 1;
+                CurrentPlayer.Territoriesowned += 1;
                 CurrentPlayer.score += 1;
                 bool won = true;
                 foreach (Player p in Players)
                 {
-                    if (p.territoriesowned > 0) { won = false; }
+                    if (p.Territoriesowned > 0) { won = false; }
                 }
                 if (won) { Win(); }
                 UpdateState(GameState.Conquer);

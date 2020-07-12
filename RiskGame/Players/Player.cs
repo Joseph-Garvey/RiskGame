@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace RiskGame
 {
     [Serializable]
-    public class Player
+    public class Player : INotifyPropertyChanged
     {
         /// <summary>
         /// The basic player class which contains the basic variables for human and ai players.
@@ -22,11 +24,25 @@ namespace RiskGame
         public Player(string username)
         {
             Username = username ?? throw new ArgumentNullException(nameof(username));
+            army_strength = 0;
+            Territoriesowned = 0;
         }
         // Variables //
         public String Username { get; set; }
         public int army_undeployed;
-        public int territoriesowned = 0;
+        private int territoriesowned = 0;
+        public int Territoriesowned
+        {
+            get { return this.territoriesowned; }
+            set
+            {
+                if (this.territoriesowned != value)
+                {
+                    this.territoriesowned= value;
+                    this.NotifyPropertyChanged("Territoriesowned");
+                }
+            }
+        }
         private int army_strength;
         public int Army_strength
         {
@@ -41,6 +57,7 @@ namespace RiskGame
             }
         }
         private Label disp_ArmyStrength;
+        private Label disp_Owned;
         public Label Disp_ArmyStrength
         {
             get => disp_ArmyStrength;
@@ -48,6 +65,15 @@ namespace RiskGame
             {
                 disp_ArmyStrength = value;
                 BindLabel(ref disp_ArmyStrength, "Army_strength");
+            }
+        }
+        public Label Disp_Owned
+        {
+            get => disp_Owned;
+            set
+            {
+                disp_Owned = value;
+                BindLabel(ref disp_Owned, "Territoriesowned");
             }
         }
         public int score = 0;
@@ -74,14 +100,13 @@ namespace RiskGame
             Color = new SolidColorBrush(System.Windows.Media.Color.FromRgb(r, g, b));
         }
 
+        // Binding //
         public event PropertyChangedEventHandler PropertyChanged;
-
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
         }
-
         private void BindLabel(ref Label label, string bindingsource)
         {
             Binding b = new Binding(bindingsource);
