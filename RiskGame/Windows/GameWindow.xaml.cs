@@ -720,6 +720,7 @@ namespace RiskGame
             switch (gamestate)
             {
                 case GameState.Attacking:
+                    btnStateDisp.Content = "Attacking";
                     btnState.Content = "Confirm Attack";
                     if(CurrentPlayer is Human)
                     {
@@ -731,6 +732,7 @@ namespace RiskGame
                     }
                     break;
                 case GameState.InitialArmyPlace:
+                    btnStateDisp.Content = "Setup Game Board";
                     btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {
@@ -741,6 +743,7 @@ namespace RiskGame
                     }
                     break;
                 case GameState.PlacingArmy:
+                    btnStateDisp.Content = "Placing armies";
                     btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {
@@ -753,9 +756,11 @@ namespace RiskGame
                     Output(String.Format("You have {0} armies to place.", CurrentPlayer.army_undeployed));
                     break;
                 case GameState.Move:
+                    btnStateDisp.Content = "Move";
                     btnState.Content = "Confirm Fortify";
                     break;
                 case GameState.Conquer:
+                    btnStateDisp.Content = "Conquer";
                     btnState.Content = "Confirm Conquer";
                     if (CurrentPlayer is Human)
                     {
