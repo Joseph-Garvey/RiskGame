@@ -36,8 +36,10 @@
                             </Style>
                         </Grid.Resources>
                         <Grid.Background>
-                            <ImageBrush ImageSource="pack://siteoforigin:,,,/Images/Maps/1.png"/>
+                            <ImageBrush x:Name="img_Map" Stretch="Uniform" ImageSource="pack://siteoforigin:,,,/Images/Maps/NewYork.jpg"></ImageBrush>
                         </Grid.Background>
+                        <Button x:Name="btnRockaway">Rockaway</Button>
+                        <!--
                         <Button x:Name="btnAlaska" Content="Alaska" Margin="49,72,974,424"/>
                         <Button x:Name="btnAlberta" Content="Alberta" Margin="145,110,871,386"/>
                         <Button x:Name="btnCentral_America" Content="Central America" Margin="117,229,840,267"/>
@@ -80,6 +82,7 @@
                         <Button x:Name="btnIrkutsk" Content="Irkutsk" Width="62" Margin="833,113,185,383"/>
                         <Button x:Name="btnKamchatka" Content="Kamchatka" Width="79" Margin="912,65,90,431"/>
                         <Button x:Name="btnYakutsk" Content="Yakutsk" Width="70" Margin="835,55,175,441"/>
+                        -->
                     </Grid>
                     <Border Height="20" BorderThickness="2" BorderBrush="Black">
                         <ProgressBar x:Name="pb_Timer" Minimum="0"></ProgressBar>

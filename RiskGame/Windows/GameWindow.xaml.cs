@@ -238,7 +238,7 @@ namespace RiskGame
         }
         private void MapSetup()
         {
-            if(map == GameMap.Default)
+            if (map == GameMap.Default)
             {
                 Territory Alaska = new Territory("Alaska", new List<string> { "Kamchatka", "Alberta", "Northwest_Canada" }, btnAlaska);
                 Territory Northwest_Canada = new Territory("Northwest_Canada", new List<string> { "Alaska", "Alberta", "Greenland", "Ontario" }, btnNorthwest_Canada);
@@ -298,6 +298,15 @@ namespace RiskGame
                 Continent Asia = new Continent("Asia", (new List<Territory> { Afghanistan, China, India, Irkutsk, Japan, Kamchatka, Middle_East, Mongolia, Southeast_Asia, Siberia, Ural, Yakutsk }), 7);
                 Continent Australia = new Continent("Australia", (new List<Territory> { Eastern_Australia, Indonesia, New_Guinea, Western_Australia }), 2);
                 Continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Australia };
+            }
+            else
+            {
+                GameGrid.Children.Clear();
+                if (map == GameMap.NewYork)
+                {
+                    img_Map.ImageSource = new BitmapImage(new Uri("pack://siteoforigin:,,,/Images/Maps/NewYork.jpg"));
+                    Button btnAlaska = new Button() { Name = "btnAlaska", Margin = new Thickness(49, 72, 974, 424) };
+                }
             }
         }
         private void TimerSetup()

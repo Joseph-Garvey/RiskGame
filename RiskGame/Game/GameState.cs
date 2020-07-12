@@ -23,7 +23,8 @@ namespace RiskGame.Game
     }
     public enum GameMap
     {
-        Default
+        Default,
+        NewYork
     }
     public enum Die
     {
