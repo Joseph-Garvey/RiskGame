@@ -743,7 +743,7 @@ namespace RiskGame
                     }
                     break;
                 case GameState.PlacingArmy:
-                    btnStateDisp.Content = "Placing armies";
+                    btnStateDisp.Content = "Placing Armies";
                     btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {

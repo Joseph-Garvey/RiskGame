@@ -81,7 +81,9 @@
                         <Button x:Name="btnKamchatka" Content="Kamchatka" Width="79"/>
                         <Button x:Name="btnYakutsk" Content="Yakutsk" Width="70"/>
                     </Grid>
-                    <ProgressBar x:Name="pb_Timer" Height="20" Minimum="0" BorderThickness="2" BorderBrush="Black"></ProgressBar>
+                    <Border Height="20" BorderThickness="2" BorderBrush="Black">
+                        <ProgressBar x:Name="pb_Timer" Minimum="0"></ProgressBar>
+                    </Border>
                     <!-- UI Panel -->
                     <Border BorderBrush="Black" BorderThickness="2" Width="1280" Height="180">
                         <StackPanel x:Name="panel_UI" Orientation="Horizontal" Background="Orange">
@@ -231,7 +233,7 @@
                                                 <Image Source="pack://siteoforigin:,,,/Images/plus.png" Margin="2"></Image>
                                             </Button>
                                         </StackPanel>
-                                        <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Margin="23,0,23,10" Width="200" Click="Confirm" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00" BorderThickness="2">Confirm Action</Button>
+                                        <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Margin="23,0,23,10" Width="200" Click="Confirm" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00" BorderThickness="2">Confirm Action</Button>
                                     </StackPanel>
                                     <!-- Dice Roll -->
                                     <Grid Visibility="Collapsed" x:Name="panel_Die" VerticalAlignment="Center" Margin="20">
