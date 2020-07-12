@@ -246,7 +246,7 @@ namespace RiskGame
                 Territory Alberta = new Territory("Alberta", new List<string> { "Alaska", "Northwest_Canada", "Ontario", "Western_US" }, btnAlberta);
                 Territory Quebec = new Territory("Quebec", new List<string> { "Ontario", "Greenland", "Eastern_US" }, btnQuebec);
                 Territory Ontario = new Territory("Ontario", new List<string> { "Greenland", "Quebec", "Eastern_US", "Western_US", "Northwest_Canada" }, btnOntario);
-                Territory Western_US = new Territory("Western_US", new List<string> { "Alberta", "Ontario", "Eastern_US", "Central_America" }, btnWestern_US);
+                Territory Western_US = new Territory("Western_US", new List<string> { "Quebec", "Ontario", "Eastern_US", "Central_America" }, btnWestern_US);
                 Territory Eastern_US = new Territory("Eastern_US", new List<string> { "Western_US", "Ontario", "Central America", "Quebec" }, btnEastern_US);
                 Territory Central_America = new Territory("Central_America", new List<string> { "Western_US", "Eastern_US", "Venezuela" }, btnCentral_America);
                 Territory Venezuela = new Territory("Venezuela", new List<string> { "Central_America", "Peru", "Brazil" }, btnVenezuela);
@@ -278,9 +278,9 @@ namespace RiskGame
                 Territory Irkutsk = new Territory("Irkutsk", new List<string> { "Siberia", "Yakutsk", "Kamchatka", "Mongolia" }, btnIrkutsk);
                 Territory Yakutsk = new Territory("Yakutsk", new List<string> { "Siberia", "Kamchatka", "Irkutsk" }, btnYakutsk);
                 Territory Kamchatka = new Territory("Kamchatka", new List<string> { "Yakutsk", "Alaska", "Japan", "Mongolia", "Irkutsk" }, btnKamchatka);
-                Territory Indonesia = new Territory("Indonesia", new List<string> { "New_Guinea", "Southeast_Asia" }, btnIndonesia);
+                Territory Indonesia = new Territory("Indonesia", new List<string> { "New_Guinea", "Southeast_Asia", "Western_Australia" }, btnIndonesia);
                 Territory New_Guinea = new Territory("New_Guinea", new List<string> { "Indonesia", "Eastern_Australia", "Western_Australia" }, btnNew_Guinea);
-                Territory Western_Australia = new Territory("Western_Australia", new List<string> { "Eastern_Australia", "New_Guinea" }, btnWestern_Australia);
+                Territory Western_Australia = new Territory("Western_Australia", new List<string> { "Eastern_Australia", "New_Guinea", "Indonesia" }, btnWestern_Australia);
                 Territory Eastern_Australia = new Territory("Eastern_Australia", new List<string> { "Western_Australia", "New_Guinea" }, btnEastern_Australia);
                 Territories = new List<Territory>
                 {
