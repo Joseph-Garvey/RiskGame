@@ -180,6 +180,7 @@ namespace RiskGame
             InitializeComponent();
             game = _game;
             paused = false;
+            game.territories.Sort();
             if (Time > 0)
             {
                 TimerSetup();
