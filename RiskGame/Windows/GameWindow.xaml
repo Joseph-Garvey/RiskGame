@@ -209,7 +209,7 @@
                             <Border Margin="20,5,20,5" Style="{StaticResource brd_CornerCurve}" Width="260" Height="154">
                                 <StackPanel VerticalAlignment="Center">
                                     <!-- Number Selection -->
-                                    <StackPanel x:Name="panel_NumberSelection" Visibility="Collapsed">
+                                    <StackPanel x:Name="panel_NumberSelection">
                                         <Button x:Name="btnStateDisp" Style="{StaticResource btnPresenter}" Margin="10,10,10,5" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF00B9FF" BorderThickness="2">GameState</Button>
                                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                             <StackPanel.Resources>
@@ -236,7 +236,7 @@
                                         <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Margin="23,0,23,10" Width="200" Click="Confirm" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00" BorderThickness="2">Confirm Action</Button>
                                     </StackPanel>
                                     <!-- Dice Roll -->
-                                    <Grid x:Name="panel_Die" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <Grid x:Name="panel_Die" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
                                         <Grid.Resources>
                                             <Style TargetType="Image">
                                                 <Setter Property="Source" Value="pack://siteoforigin:,,,/Images/Dice/imgDice6.png"></Setter>
