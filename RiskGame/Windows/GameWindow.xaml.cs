@@ -720,7 +720,8 @@ namespace RiskGame
             switch (gamestate)
             {
                 case GameState.Attacking:
-                    btnStateDisp.Content = "Attacking";
+                    btnStateDisp.Content = "Attack";
+                    btnStateDisp.Background = new SolidColorBrush(Color.FromRgb(235, 64, 45));
                     btnState.Content = "Confirm Attack";
                     if(CurrentPlayer is Human)
                     {
@@ -733,6 +734,7 @@ namespace RiskGame
                     break;
                 case GameState.InitialArmyPlace:
                     btnStateDisp.Content = "Setup Game Board";
+                    btnStateDisp.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00B9FF"));
                     btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {
@@ -743,7 +745,8 @@ namespace RiskGame
                     }
                     break;
                 case GameState.PlacingArmy:
-                    btnStateDisp.Content = "Placing Armies";
+                    btnStateDisp.Content = "Place Armies";
+                    btnStateDisp.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF00B9FF"));
                     btnState.Content = "Confirm Army Placement";
                     if (CurrentPlayer is Human)
                     {
@@ -757,10 +760,12 @@ namespace RiskGame
                     break;
                 case GameState.Move:
                     btnStateDisp.Content = "Move";
+                    btnStateDisp.Background = new SolidColorBrush(Color.FromRgb(245, 245, 78));
                     btnState.Content = "Confirm Fortify";
                     break;
                 case GameState.Conquer:
                     btnStateDisp.Content = "Conquer";
+                    btnStateDisp.Background = new SolidColorBrush(Color.FromRgb(50, 250, 93));
                     btnState.Content = "Confirm Conquer";
                     if (CurrentPlayer is Human)
                     {
