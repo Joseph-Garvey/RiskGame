@@ -242,12 +242,12 @@
                                                 <Setter Property="Source" Value="pack://siteoforigin:,,,/Images/Dice/imgDice6.png"></Setter>
                                                 <Setter Property="Height" Value="40"></Setter>
                                             </Style>
-                                            <Style TargetType="Button" x:Key="btnPlayerDie" BasedOn="{StaticResource btnPresenter}">
-                                                <Setter Property="Background" Value="Green"></Setter>
+                                            <Style TargetType="Button" x:Key="btnDie" BasedOn="{StaticResource btnPresenter}">
                                                 <Setter Property="Margin" Value="0"></Setter>
                                             </Style>
-                                            <Style TargetType="Button" x:Key="btnEnemyDie" BasedOn="{StaticResource btnPlayerDie}">
-                                                <Setter Property="Background" Value="IndianRed"></Setter>
+                                            <Style TargetType="Button" x:Key="btnPlayerDie">
+                                            </Style>
+                                            <Style TargetType="Button" x:Key="btnEnemyDie">
                                             </Style>
                                         </Grid.Resources>
                                         <Grid.ColumnDefinitions>
@@ -261,29 +261,29 @@
                                         <StackPanel>
                                             <Button x:Name="btnPlayerDie" Style="{StaticResource btnCornerUI}" Width="130" FontSize="14">Player Name</Button>
                                             <StackPanel x:Name="panel_Die_Player" Style="{StaticResource HorizontalCentred}" Margin="5,0,5,10">
-                                                <Button Style="{StaticResource btnPlayerDie}">
+                                                <Button Style="{DynamicResource btnPlayerDie}">
                                                     <Image x:Name="imgPlayerDie1"></Image>
                                                 </Button>
-                                                <Button Style="{StaticResource btnPlayerDie}">
+                                                <Button Style="{DynamicResource btnPlayerDie}">
                                                     <Image x:Name="imgPlayerDie2"></Image>
                                                 </Button>
-                                                <Button Style="{StaticResource btnPlayerDie}">
+                                                <Button Style="{DynamicResource btnPlayerDie}">
                                                     <Image x:Name="imgPlayerDie3"></Image>
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
                                         <StackPanel Grid.Column="1">
-                                            <Button x:Name="btnEnemyDie" Style="{StaticResource btnCornerUI}" Width="100" FontSize="14">Enemy name</Button>
-                                            <StackPanel x:Name="panel_Die_Enemy" Style="{StaticResource HorizontalCentred}" Margin="5,0,5,10">
-                                                <Button Style="{StaticResource btnEnemyDie}">
+                                            <Button x:Name="btnEnemyDie" Style="{DynamicResource btnCornerUI}" Width="100" FontSize="14">Enemy name</Button>
+                                            <StackPanel x:Name="panel_Die_Enemy" Style="{DynamicResource HorizontalCentred}" Margin="5,0,5,10">
+                                                <Button Style="{DynamicResource btnEnemyDie}">
                                                     <Image x:Name="imgEnemyDie1"></Image>
                                                 </Button>
-                                                <Button Style="{StaticResource btnEnemyDie}">
+                                                <Button Style="{DynamicResource btnEnemyDie}">
                                                     <Image x:Name="imgEnemyDie2"></Image>
                                                 </Button>
                                             </StackPanel>
                                         </StackPanel>
-                                        <Button x:Name="btnDieStatus" Style="{StaticResource btnCornerUI}" Grid.Row="1"  Grid.ColumnSpan="2"  Click="Attack_DieContinue">Dice Rolling...</Button>
+                                        <Button x:Name="btnDieStatus" Style="{DynamicResource btnCornerUI}" Grid.Row="1"  Grid.ColumnSpan="2"  Click="Attack_DieContinue">Dice Rolling...</Button>
                                     </Grid>
                                 </StackPanel>
                             </Border>

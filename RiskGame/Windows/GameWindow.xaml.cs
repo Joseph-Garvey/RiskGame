@@ -824,15 +824,15 @@ namespace RiskGame
             else
             {
                 String[] tmp = txtOutput.Text.Split('\n');
-                if (tmp.Length >= 8)
+                if (tmp.Length >= 9)
                 {
                     tmp[0] = tmp[1];
                     for (int i = 1; i < (tmp.Length - 1); i++)
                     {
                         tmp[i] = "\n" + tmp[i + 1];
                     }
-                    tmp[7] = ("\n" + s);
-                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5] + tmp[6] + tmp[7];
+                    tmp[8] = ("\n" + s);
+                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5] + tmp[6] + tmp[7] + tmp[8];
                 }
                 else { txtOutput.Text += String.Format("\n{0}", s); }
             }
@@ -1252,8 +1252,14 @@ namespace RiskGame
                             else { imgPlayerDie3.Visibility = Visibility.Collapsed; }
                             btnPlayerDie.Content = CurrentPlayer.Username;
                             btnEnemyDie.Content = NextTerritory.owner.Username;
-                            panel_Die_Player.Background = CurrentPlayer.Color;
-                            panel_Die_Enemy.Background = NextTerritory.owner.Color;
+                            // style setup //
+                            Style diestyle = panel_Die.Resources["btnDie"] as Style;
+                            Style playerdiestyle = new Style(typeof(Button) ,diestyle);
+                            playerdiestyle.Setters.Add(new Setter(Border.BackgroundProperty, CurrentPlayer.Color));
+                            panel_Die.Resources["btnPlayerDie"] = playerdiestyle;
+                            Style enemydiestyle = new Style(typeof(Button), diestyle);
+                            enemydiestyle.Setters.Add(new Setter(Border.BackgroundProperty, NextTerritory.owner.Color));
+                            panel_Die.Resources["btnEnemyDie"] = enemydiestyle;
                             ToRoll = dices.Count;
                             Rolled = 0;
                             paused = true;
