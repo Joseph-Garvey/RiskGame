@@ -781,7 +781,7 @@ namespace RiskGame
         {
             foreach(Territory t in Territories)
             {
-                t.button.BorderBrush = Brushes.Gray;
+                t.button.BorderBrush = Brushes.Black;
             }
             btnNumber.Content = 0;
             ClearSelections();

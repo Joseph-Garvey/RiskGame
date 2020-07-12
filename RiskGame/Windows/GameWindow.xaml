@@ -38,48 +38,48 @@
                         <Grid.Background>
                             <ImageBrush ImageSource="pack://siteoforigin:,,,/Images/Maps/1.png"/>
                         </Grid.Background>
-                        <Button x:Name="btnAlaska" Content="Alaska" Width="42"/>
-                        <Button x:Name="btnAlberta" Content="Alberta"  Width="50"/>
-                        <Button x:Name="btnCentral_America" Content="Central America" Width="100"/>
-                        <Button x:Name="btnEastern_US" Content="Eastern US" Width="66"/>
-                        <Button x:Name="btnGreenland" Content="Greenland" Width="65"/>
-                        <Button x:Name="btnNorthwest_Canada" Content="Northwest Canada"  Width="110"/>
-                        <Button x:Name="btnOntario" Content="Ontario" Width="53"/>
-                        <Button x:Name="btnQuebec" Content="Quebec" Width="54"/>
-                        <Button x:Name="btnWestern_US" Content="Western US" Width="75"/>
-                        <Button x:Name="btnArgentina" Content="Argentina" Width="61"/>
-                        <Button x:Name="btnBrazil" Content="Brazil" Width="76"/>
-                        <Button x:Name="btnPeru" Content="Peru" Width="41"/>
-                        <Button x:Name="btnVenezuela" Content="Venezuela" Width="66"/>
-                        <Button x:Name="btnUK_Ireland" Content="UK and Ireland" Width="100"></Button>
-                        <Button x:Name="btnIceland" Content="Iceland" Width="47"/>
-                        <Button x:Name="btnNorthern_Europe" Content="Northern Europe" Width="96"/>
-                        <Button x:Name="btnScandinavia" Content="Scandinavia" Width="72"/>
-                        <Button x:Name="btnSouthern_Europe" Content="Southern Europe" Width="96"/>
-                        <Button x:Name="btnSoviet_Bloc" Content ="Soviet Bloc" Width="80"/>
-                        <Button x:Name="btnWestern_Europe" Content="Western Europe" Width="90"/>
-                        <Button x:Name="btnCentral_Africa" Content="Central Africa" Width="85"/>
-                        <Button x:Name="btnEast_Africa" Content="East Africa" Width="70"/>
-                        <Button x:Name="btnMadagascar" Content="Madagascar" Width="80"/>
-                        <Button x:Name="btnEgypt" Content="Egypt" Width="51"/>
-                        <Button x:Name="btnNorth_Africa" Content="North Africa" Width="90"/>
-                        <Button x:Name="btnSouth_Africa" Content="South Africa" Width="80"/>
-                        <Button x:Name="btnAfghanistan" Content="Afghanistan" Width="79"/>
-                        <Button x:Name="btnChina" Content="China" Width="58"/>
-                        <Button x:Name="btnIndia" Content="India" Width="50"/>
-                        <Button x:Name="btnJapan" Content="Japan" Width="46"/>
-                        <Button x:Name="btnMiddle_East" Content="Middle East" Width="83"/>
-                        <Button x:Name="btnMongolia" Content="Mongolia" Width="66"/>
-                        <Button x:Name="btnSoutheast_Asia" Content="Southeast Asia" Width="94"/>
-                        <Button x:Name="btnSiberia" Content="Siberia" Width="55"/>
-                        <Button x:Name="btnUral" Content="Ural" Width="45"/>
-                        <Button x:Name="btnEastern_Australia" Content="Eastern Australia" Width="120"/>
-                        <Button x:Name="btnWestern_Australia" Content="Western Australia" Width="106"/>
-                        <Button x:Name="btnNew_Guinea" Content="New Guinea" Width="85"/>
-                        <Button x:Name="btnIndonesia" Content="Indonesia"   Width="71"/>
-                        <Button x:Name="btnIrkutsk" Content="Irkutsk" Width="62"/>
-                        <Button x:Name="btnKamchatka" Content="Kamchatka" Width="79"/>
-                        <Button x:Name="btnYakutsk" Content="Yakutsk" Width="70"/>
+                        <Button x:Name="btnAlaska" Content="Alaska" Margin="49,72,974,424"/>
+                        <Button x:Name="btnAlberta" Content="Alberta" Margin="145,110,871,386"/>
+                        <Button x:Name="btnCentral_America" Content="Central America" Margin="117,229,840,267"/>
+                        <Button x:Name="btnEastern_US" Content="Eastern US" Margin="130,156,864,340"/>
+                        <Button x:Name="btnGreenland" Content="Greenland" Margin="339,42,659,454"/>
+                        <Button x:Name="btnNorthwest_Canada" Content="Northwest Canada" Margin="121,71,827,425"/>
+                        <Button x:Name="btnOntario" Content="Ontario" Margin="213,123,803,373"/>
+                        <Button x:Name="btnQuebec" Content="Quebec" Margin="288,121,730,375"/>
+                        <Button x:Name="btnWestern_US" Content="Western US" Height="Auto" Margin="235,178,749,315"/>
+                        <Button x:Name="btnArgentina" Content="Argentina" Margin="238,398,758,93" Height="Auto"/>
+                        <Button x:Name="btnBrazil" Content="Brazil" Width="76" Margin="300,319,704,177"/>
+                        <Button x:Name="btnPeru" Content="Peru" Width="41" Margin="228,339,812,157"/>
+                        <Button x:Name="btnVenezuela" Content="Venezuela" Margin="216,266,783,227" Height="Auto"/>
+                        <Button x:Name="btnUK_Ireland" Content="UK and Ireland" Margin="356,151,615,345"/>
+                        <Button x:Name="btnIceland" Content="Iceland" Margin="436,64,582,431" Height="Auto"/>
+                        <Button x:Name="btnNorthern_Europe" Content="Northern Europe" Margin="474,157,476,335" Height="Auto"/>
+                        <Button x:Name="btnScandinavia" Content="Scandinavia" Margin="498,86,482,408" Height="Auto"/>
+                        <Button x:Name="btnSouthern_Europe" Content="Southern Europe" Margin="496,206,462,287" Height="Auto"/>
+                        <Button x:Name="btnSoviet_Bloc" Content ="Soviet Bloc" Margin="594,123,402,370" Height="Auto"/>
+                        <Button x:Name="btnWestern_Europe" Content="Western Europe" Margin="353,225,599,270" Height="Auto"/>
+                        <Button x:Name="btnCentral_Africa" Content="Central Africa" Margin="507,364,469,132"/>
+                        <Button x:Name="btnEast_Africa" Content="East Africa" Margin="617,334,374,158" Height="Auto"/>
+                        <Button x:Name="btnMadagascar" Content="Madagascar" Margin="677,427,307,65" Height="Auto"/>
+                        <Button x:Name="btnEgypt" Content="Egypt" Width="51" Height="Auto" Margin="556,272,472,220"/>
+                        <Button x:Name="btnNorth_Africa" Content="North Africa" Width="90" Margin="460,303,530,193"/>
+                        <Button x:Name="btnSouth_Africa" Content="South Africa" Margin="540,422,443,74"/>
+                        <Button x:Name="btnAfghanistan" Content="Afghanistan" Margin="674,175,312,318" Height="Auto"/>
+                        <Button x:Name="btnChina" Content="China" Width="58" Margin="821,215,201,281"/>
+                        <Button x:Name="btnIndia" Content="India" Width="50" Margin="759,251,271,245"/>
+                        <Button x:Name="btnJapan" Content="Japan" Width="46" Margin="969,168,65,328"/>
+                        <Button x:Name="btnMiddle_East" Content="Middle East" Margin="621,245,367,251"/>
+                        <Button x:Name="btnMongolia" Content="Mongolia" Margin="834,164,159,330" Height="Auto"/>
+                        <Button x:Name="btnSoutheast_Asia" Content="Southeast Asia" Margin="825,281,143,215"/>
+                        <Button x:Name="btnSiberia" Content="Siberia" Width="55" Margin="770,76,256,420"/>
+                        <Button x:Name="btnUral" Content="Ural" Width="45" Margin="722,115,314,381"/>
+                        <Button x:Name="btnEastern_Australia" Content="Eastern Australia" Width="120" Margin="868,435,92,61"/>
+                        <Button x:Name="btnWestern_Australia" Content="Western Australia" Margin="947,401,-1,95"/>
+                        <Button x:Name="btnNew_Guinea" Content="New Guinea" Margin="942,339,46,157"/>
+                        <Button x:Name="btnIndonesia" Content="Indonesia" Margin="834,355,170,141"/>
+                        <Button x:Name="btnIrkutsk" Content="Irkutsk" Width="62" Margin="833,113,185,383"/>
+                        <Button x:Name="btnKamchatka" Content="Kamchatka" Width="79" Margin="912,65,90,431"/>
+                        <Button x:Name="btnYakutsk" Content="Yakutsk" Width="70" Margin="835,55,175,441"/>
                     </Grid>
                     <Border Height="20" BorderThickness="2" BorderBrush="Black">
                         <ProgressBar x:Name="pb_Timer" Minimum="0"></ProgressBar>
