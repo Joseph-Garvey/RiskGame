@@ -394,53 +394,40 @@ namespace RiskGame
             lblPlayerName2.Content = Players[1].Username;
             rectPlayerColor1.Fill = (SolidColorBrush)Players[0].Color;
             rectPlayerColor2.Fill = (SolidColorBrush)Players[1].Color;
-            Thickness th = new Thickness(0, 20, 0, 0);
-            int fs = 11;
-            int rect_height = 20;
             // make this more efficient
             if (Players.Count >= 3)
             {
-                brd_Players.Margin = new Thickness(20, 0, 10, 0);
-                th = new Thickness(0, 15, 0, 0);
                 lblPlayerName3.Content = Players[2].Username;
                 rectPlayerColor3.Fill = (SolidColorBrush)Players[2].Color;
                 brd_Player3.Visibility = Visibility.Visible;
                 if (Players.Count >= 4)
                 {
-                    th = new Thickness(0, 10, 0, 0);
                     lblPlayerName4.Content = Players[3].Username;
                     rectPlayerColor4.Fill = (SolidColorBrush)Players[3].Color;
                     brd_Player4.Visibility = Visibility.Visible;
                     if (Players.Count >= 5)
                     {
-                        rect_height = 15;
-                        th = new Thickness(0, 5, 0, 0);
+                        int fs;
+                        int rect_height = 17;
+                        Thickness th = new Thickness(10,3,0,3);
+                        int gap = 2;
                         lblPlayerName5.Content = Players[4].Username;
                         rectPlayerColor5.Fill = (SolidColorBrush)Players[4].Color;
                         brd_Player5.Visibility = Visibility.Visible;
-                    }
-                    if (Players.Count >= 6)
-                    {
-                        fs = 9;
-                        rect_height = 12;
-                        rectPlayerColor6.Fill = (SolidColorBrush)Players[5].Color;
-                        lblPlayerName6.Content = Players[5].Username;
-                        brd_Player6.Visibility = Visibility.Visible;
+                        if (Players.Count >= 6)
+                        {
+                            fs = 11;
+                            gap = 0;
+                            rectPlayerColor6.Fill = (SolidColorBrush)Players[5].Color;
+                            lblPlayerName6.Content = Players[5].Username;
+                            brd_Player6.Visibility = Visibility.Visible;
+                            SetFontSize(fs);
+                        }
+                        SetGap(gap);
+                        SetRect(rect_height, th);
                     }
                 }
             }
-            SetMargin(th);
-            SetFontSize(fs);
-            SetHeight(rect_height);
-        }
-        private void SetMargin(Thickness th)
-        {
-            brd_Player1.Margin = th;
-            brd_Player2.Margin = th;
-            brd_Player3.Margin = th;
-            brd_Player4.Margin = th;
-            brd_Player5.Margin = th;
-            brd_Player6.Margin = th;
         }
         private void SetFontSize(int i)
         {
@@ -493,7 +480,7 @@ namespace RiskGame
 
             }
         }
-        private void SetHeight(int i)
+        private void SetRect(int i, Thickness margin)
         {
             rectPlayerColor1.Height = i;
             rectPlayerColor2.Height = i;
@@ -501,6 +488,27 @@ namespace RiskGame
             rectPlayerColor4.Height = i;
             rectPlayerColor5.Height = i;
             rectPlayerColor6.Height = i;
+        }
+        private void SetGap(int i)
+        {
+            Thickness gap;
+            if (i == 0)
+            {
+                gap = new Thickness(0, 0, 0, 0);
+                brd_Player1.Margin = gap;
+                brd_Players.BorderThickness = new Thickness(0);
+            }
+            else
+            {
+                gap = new Thickness(5, 0, 5, i);
+                brd_Player1.Margin = new Thickness(5, i, 5, i);
+            }
+
+            brd_Player2.Margin = gap;
+            brd_Player3.Margin = gap;
+            brd_Player4.Margin = gap;
+            brd_Player5.Margin = gap;
+            brd_Player6.Margin = gap;
         }
 
         //// Game Methods ////
@@ -671,7 +679,15 @@ namespace RiskGame
         private void UpdatePlayerPanelUI()
         {
             int i = Players.IndexOf(CurrentPlayer);
-            foreach (Border s in panel_Players.Children) { s.Background = Brushes.LightGray; }
+            foreach (Border s in panel_Players.Children)
+            {
+                panel_Player1.Background = panel_Players.Background;
+                panel_Player2.Background = panel_Players.Background;
+                panel_Player3.Background = panel_Players.Background;
+                panel_Player4.Background = panel_Players.Background;
+                panel_Player5.Background = panel_Players.Background;
+                panel_Player6.Background = panel_Players.Background;
+            }
             panel_UI.Background = CurrentPlayer.Color;
             switch (i)
             {

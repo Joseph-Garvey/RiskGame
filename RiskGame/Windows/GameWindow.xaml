@@ -96,18 +96,30 @@
                             <Border x:Name="brd_Players" Margin="15,0,0,0" VerticalAlignment="Center">
                                 <StackPanel x:Name="panel_Players"  Style="{StaticResource panel_Background}">
                                     <StackPanel.Resources>
+                                        <!-- Label Styles -->
                                         <Style TargetType="Label" x:Key="lblBase">
                                             <Setter Property="FontSize" Value="12"></Setter>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                                         </Style>
-                                        <Style TargetType="Label" x:Key="lblPlayerName" BasedOn="{StaticResource lblBase}">
-                                            <Setter Property="Width" Value="70"></Setter>
+                                        <Style TargetType="Label" x:Key="lblPlayerName" BasedOn="{StaticResource lblBase}" >
+                                            <Setter Property="Width" Value="75"></Setter>
                                             <Setter Property="Margin" Value="5,0,0,0"></Setter>
-                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                                         </Style>
+                                        <Style TargetType="Label" x:Key="lblOwned" BasedOn="{StaticResource lblBase}">
+                                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                                            <Setter Property="Width" Value="24"></Setter>
+                                            <Setter Property="Content" Value="00"></Setter>
+                                        </Style>
+                                        <Style TargetType="Label" x:Key="lblStrength" BasedOn="{StaticResource lblOwned}">
+                                            <Setter Property="Margin" Value="0,0,5,0"></Setter>
+                                        </Style>
+                                        <!-- Rectangle Style -->
                                         <Style TargetType="Rectangle">
-                                            <Setter Property="Margin" Value="10,5,0,5"></Setter>
-                                            <Setter Property="Height" Value="20"></Setter>
+                                            <Setter Property="Margin" Value="10,3,0,3"></Setter> <!-- usually 10,5,0,5-->
+                                            <Setter Property="Height" Value="17"></Setter> <!-- usually 20 -->
                                             <Setter Property="Width" Value="30"></Setter>
+                                            <Setter Property="Stroke" Value="Black"></Setter>
+                                            <Setter Property="StrokeThickness" Value="2"></Setter>
                                         </Style>
                                         <Style TargetType="StackPanel" x:Key="PlayerPanel" BasedOn="{StaticResource panel_Background}">
                                             <Setter Property="Orientation" Value="Horizontal"></Setter>
@@ -117,67 +129,67 @@
                                             <Setter Property="BorderThickness" Value="2"></Setter>
                                             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
                                             <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                                            <Setter Property="Margin" Value="5"></Setter>
+                                            <Setter Property="Margin" Value="5,0,5,5"></Setter> <!-- usually 5,0,5,5 -->
                                         </Style>
                                     </StackPanel.Resources>
-                                    <Border x:Name="brd_Player1">
+                                    <Border x:Name="brd_Player1" Margin="5"> <!-- Usually 5 -->
                                         <StackPanel x:Name="panel_Player1" Style="{StaticResource PlayerPanel}">
                                             <Rectangle x:Name="rectPlayerColor1" Fill="LimeGreen"></Rectangle>
-                                            <Label x:Name="lblPlayerName1" Content="Player 1" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                                            <Label Content="Territories Owned:"></Label>
-                                            <Label x:Name="lblPlayer1Territories" Width="40"></Label>
-                                            <Label Content="Army Strength:"></Label>
-                                            <Label x:Name="lblPlayer1Strength" Width="40" Margin="0,0,2,0"></Label>
+                                            <Label x:Name="lblPlayerName1" Content="Player 1" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer1Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer1Strength" Style="{StaticResource lblStrength}"></Label>
                                         </StackPanel>
                                     </Border>
                                     <Border x:Name="brd_Player2">
                                         <StackPanel x:Name="panel_Player2" Style="{StaticResource PlayerPanel}">
                                             <Rectangle x:Name="rectPlayerColor2" Fill="OrangeRed"></Rectangle>
-                                            <Label x:Name="lblPlayerName2" Content="Player 2" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                                            <Label Content="Territories Owned:"></Label>
-                                            <Label x:Name="lblPlayer2Territories" Width="40"></Label>
-                                            <Label Content="Army Strength:"></Label>
-                                            <Label x:Name="lblPlayer2Strength" Width="40" Margin="0,0,2,0"></Label>
+                                            <Label x:Name="lblPlayerName2" Content="Player 2" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer2Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer2Strength" Style="{StaticResource lblStrength}"></Label>
                                         </StackPanel>
                                     </Border>
                                     <Border x:Name="brd_Player3" Visibility="Collapsed">
                                         <StackPanel x:Name="panel_Player3" Style="{StaticResource PlayerPanel}">
                                             <Rectangle x:Name="rectPlayerColor3" Fill="DeepSkyBlue" ></Rectangle>
-                                            <Label x:Name="lblPlayerName3" Content="Player 3" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                                            <Label Content="Territories Owned:"></Label>
-                                            <Label x:Name="lblPlayer3Territories" Width="40"></Label>
-                                            <Label Content="Army Strength:"></Label>
-                                            <Label x:Name="lblPlayer3Strength" Width="40" Margin="0,0,2,0"></Label>
+                                            <Label x:Name="lblPlayerName3" Content="Player 3" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer3Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer3Strength" Style="{StaticResource lblStrength}"></Label>
                                         </StackPanel>
                                     </Border>
                                     <Border x:Name="brd_Player4" Visibility="Collapsed">
                                         <StackPanel x:Name="panel_Player4" Style="{StaticResource PlayerPanel}">
                                             <Rectangle x:Name="rectPlayerColor4" Fill="Gold" ></Rectangle>
-                                            <Label x:Name="lblPlayerName4" Content="Player 4" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                                            <Label Content="Territories Owned:"></Label>
-                                            <Label x:Name="lblPlayer4Territories" Width="40"></Label>
-                                            <Label Content="Army Strength:"></Label>
-                                            <Label x:Name="lblPlayer4Strength" Width="40" Margin="0,0,2,0"></Label>
+                                            <Label x:Name="lblPlayerName4" Content="Player 4" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer4Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer4Strength" Style="{StaticResource lblStrength}"></Label>
                                         </StackPanel>
                                     </Border>
                                     <Border x:Name="brd_Player5" Visibility="Collapsed">
                                         <StackPanel x:Name="panel_Player5" Style="{StaticResource PlayerPanel}">
                                             <Rectangle x:Name="rectPlayerColor5" Fill="Gold"></Rectangle>
-                                            <Label x:Name="lblPlayerName5" Content="Player 5" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                                            <Label Content="Territories Owned:"></Label>
-                                            <Label x:Name="lblPlayer5Territories" Width="40"></Label>
-                                            <Label Content="Army Strength:"></Label>
-                                            <Label x:Name="lblPlayer5Strength" Width="40" Margin="0,0,2,0"></Label>
+                                            <Label x:Name="lblPlayerName5" Content="Player 5" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer5Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer5Strength" Style="{StaticResource lblStrength}"></Label>
                                         </StackPanel>
                                     </Border>
-                                    <Border x:Name="brd_Player6" Visibility="Collapsed" >
+                                    <Border x:Name="brd_Player6" Visibility="Collapsed">
                                         <StackPanel x:Name="panel_Player6" Style="{StaticResource PlayerPanel}">
                                             <Rectangle x:Name="rectPlayerColor6" Fill="Gold"></Rectangle>
-                                            <Label x:Name="lblPlayerName6" Content="Player 6" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                                            <Label Content="Territories Owned:"></Label>
-                                            <Label x:Name="lblPlayer6Territories" Width="40"></Label>
-                                            <Label Content="Army Strength:"></Label>
-                                            <Label x:Name="lblPlayer6Strength" Width="40" Margin="0,0,2,0"></Label>
+                                            <Label x:Name="lblPlayerName6" Content="Player 6" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer6Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer6Strength" Style="{StaticResource lblStrength}"></Label>
                                         </StackPanel>
                                     </Border>
                                 </StackPanel>
@@ -230,12 +242,14 @@
                                 </StackPanel>
                             </Border>
                             <!-- Action Buttons -->
-                            <StackPanel Margin="20" Style="{StaticResource panel_Background}" VerticalAlignment="Center">
-                                <Button Margin="20,5,20,0" VerticalAlignment="Center" FontSize="16" Width="150" Click="Continue" Style="{StaticResource btnCornerUI}">Continue</Button>
-                                <Button Margin="20,5,20,0" VerticalAlignment="Center"  FontSize="16" Width="150" Click="Cancel" Style="{StaticResource btnCornerUI}">Cancel</Button>
-                                <Button Margin="20,5,20,0" VerticalAlignment="Center" FontSize="16" Width="150" Click="SaveGame" Style="{StaticResource btnCornerUI}">Save Game</Button>
-                                <Button Margin="20,5,20,10" Style="{StaticResource btnUI}" Click="Settings">Settings</Button>
-                            </StackPanel>
+                            <Border Margin="20" VerticalAlignment="Center">
+                                <StackPanel Style="{StaticResource panel_Background}">
+                                    <Button Margin="20,5,20,0" VerticalAlignment="Center" FontSize="16" Width="150" Click="Continue" Style="{StaticResource btnCornerUI}">Continue</Button>
+                                    <Button Margin="20,5,20,0" VerticalAlignment="Center"  FontSize="16" Width="150" Click="Cancel" Style="{StaticResource btnCornerUI}">Cancel</Button>
+                                    <Button Margin="20,5,20,0" VerticalAlignment="Center" FontSize="16" Width="150" Click="SaveGame" Style="{StaticResource btnCornerUI}">Save Game</Button>
+                                    <Button Margin="20,5,20,10" Style="{StaticResource btnCornerUI}" FontSize="16" Click="Settings">Settings</Button>
+                                </StackPanel>
+                            </Border>
                             <!-- Output Console -->
                             <TextBlock x:Name="txtOutput" Margin="20" Width="350" Foreground="White" Background="Black"></TextBlock>
                         </StackPanel>
