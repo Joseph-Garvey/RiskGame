@@ -263,8 +263,8 @@ namespace RiskGame
                     if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
                     GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value, (GameMap)cmbMap.SelectedIndex, (GameMode)cmbGameMode.SelectedIndex, (int)sldTime.Value);
                     App.Current.MainWindow = Game;
-                    this.Close();
                     Game.Show();
+                    this.Close();
                 }
                 else { DispErrorMsg("Please select a map."); }
             }
