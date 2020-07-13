@@ -40,49 +40,49 @@
                             <ImageBrush x:Name="img_Map" Stretch="Uniform" ImageSource="pack://siteoforigin:,,,/Images/Maps/NewYork.jpg"></ImageBrush>
                         </Grid.Background>
 
-                        <Button x:Name="btnRockaway" Height="Auto" Margin="350,392,642,103">Rockaway</Button>
-                        <Button x:Name="btnStAlbans" Height="Auto" Margin="521,459,488,36" Content="Saint Albans"/>
-                        <Button x:Name="btnSouth_Queens" Height="Auto" Margin="492,400,507,95" Content="South Queens"/>
-                        <Button x:Name="btnBayside" Height="Auto" Margin="624,451,408,44" Content="Bayside"/>
-                        <Button x:Name="btnFlushing" Height="Auto" Margin="628,391,394,103" Content="Flushing"/>
-                        <Button x:Name="btnMiddle_Village" Height="Auto" Margin="553,335,446,160" Content="Middle Village"/>
-                        <Button x:Name="btnAstoria" Height="Auto" Margin="614,305,408,190" Content="Astoria"/>
-                        <Button x:Name="btnEast_New_York" Height="Auto" Margin="479,350,520,145" Content="East New York"/>
-                        <Button x:Name="btnCanarsie" Height="Auto" Margin="443,327,579,168" Content="Canarsie"/>
-                        <Button x:Name="btnFlatlands" Height="Auto" Margin="408,302,608,193" Content="Flatlands"/>
-                        <Button x:Name="btnSheepshead_Bay" Height="Auto" Margin="314,302,678,193" Content="Sheepshead Bay"/>
-                        <Button x:Name="btnConey_Island" Height="Auto" Margin="307,262,702,232" Content="Coney Island"/>
-                        <Button x:Name="btnBay_Ridge" Height="Auto" Margin="408,212,610,284" Content="Bay Ridge"/>
-                        <Button x:Name="btnFlatbush" Height="Auto" Margin="454,285,574,210" Content="Flatbush"/>
-                        <Button x:Name="btnPark_Slope" Height="Auto" Margin="465,241,555,254" Content="Park Slope"/>
-                        <Button x:Name="btnBorough_Park" Height="Auto" Margin="389,260,615,235" Content="Borough Park"/>
-                        <Button x:Name="btnBedford_Stuyvesant" Height="Auto" Margin="460,266,520,229" Content="Bedford Stuyvesant"/>
-                        <Button x:Name="btnRed_Hook" Height="Auto" Margin="501,219,520,276" Content="Red Hook"/>
-                        <Button x:Name="btnWilliamsburg" Height="Auto" Margin="540,285,460,210" Content="Williamsburg"/>
-                        <Button x:Name="btnWoodrow" Height="Auto" Margin="270,55,751,439" Content="Woodrow"/>
-                        <Button x:Name="btnDongan_Hills" Height="Auto" Margin="338,153,672,341" Content="Dongan Hills"/>
-                        <Button x:Name="btnPort_Richmond" Height="Auto" Margin="379,122,615,372" Content="Port Richmond"/>
-                        <Button x:Name="btnEmerson_Hill" Height="Auto" Margin="338,91,672,403" Content="Emerson Hill"/>
-                        <Button x:Name="btnBayonne" Height="Auto" Margin="460,112,556,382" Content="Bayonne"/>
-                        <Button x:Name="btnJersey_city" Height="Auto" Margin="532,146,482,348" Content="Jersey City"/>
-                        <Button x:Name="btnNorth_Bergen" Height="Auto" Margin="640,164,360,334" Content="North Bergen"/>
-                        <Button x:Name="btnHoboken" Height="Auto" Margin="574,182,451,315" Content="Hoboken"/>
-                        <Button x:Name="btnUnion_City" Height="Auto" Margin="640,197,377,301" Content="Union City"/>
-                        <Button x:Name="btnPalisades_Park" Height="Auto" Margin="715,210,286,284" Content="Palisades Park"/>
-                        <Button x:Name="btnEnglewood" Height="Auto" Margin="799,224,212,270" Content="Englewood"/>
-                        <Button x:Name="btnRiverdale" Height="Auto" Margin="824,293,202,201" Content="Riverdale"/>
-                        <Button x:Name="btnLaconia" Height="Auto" Margin="794,343,234,151" Content="Laconia"/>
-                        <Button x:Name="btnWashington_Heights" Height="Auto" Margin="752,262,220,232" Content="Washington Heights"/>
-                        <Button x:Name="btnUnionport" Height="Auto" Margin="715,374,305,120" Content="Unionport"/>
-                        <Button x:Name="btnConcourse" Height="Auto" Margin="729,293,286,201" Content="Concourse"/>
-                        <Button x:Name="btnHarlem" Height="Auto" Margin="694,259,340,235" Content="Harlem"/>
-                        <Button x:Name="btnFinancial_District" Height="Auto" Margin="569,212,482,282">0</Button>
-                        <Button x:Name="btnLower_East_Side" Height="Auto" Margin="565,233,486,261">0</Button>
-                        <Button x:Name="btnHellsKitchen" Height="Auto" Margin="614,212,437,282">0</Button>
-                        <Button x:Name="btnMidtown_East" Height="Auto" Margin="605,238,446,256">0</Button>
-                        <Button x:Name="btnUpper_West_Side" Height="Auto" Margin="648,219,402,275">0</Button>
-                        <Button x:Name="btnCentral_Park" Height="Auto" Margin="668,245,383,249">0</Button>
-                        <Button x:Name="btnUpper_East_Side" Height="Auto" Margin="639,259,412,235">0</Button>
+                        <Button x:Name="btnRockaway" Height="Auto" Margin="376,395,667,98" Content="0"/>
+                        <Button x:Name="btnSaint_Albans" Height="Auto" Margin="521,458,488,36" Content="0"/>
+                        <Button x:Name="btnSouth_Queens" Height="Auto" Margin="518,384,514,110" Content="0"/>
+                        <Button x:Name="btnBayside" Height="Auto" Margin="606,445,413,49" Content="0"/>
+                        <Button x:Name="btnFlushing" Height="Auto" Margin="618,386,377,108" Content="0"/>
+                        <Button x:Name="btnMiddle_Village" Height="Auto" Margin="565,340,478,154" Content="0"/>
+                        <Button x:Name="btnAstoria" Height="Auto" Margin="614,305,418,189" Content="0"/>
+                        <Button x:Name="btnEast_New_York" Height="Auto" Margin="506,339,541,155" Content="0"/>
+                        <Button x:Name="btnCanarsie" Height="Auto" Margin="457,325,596,171" Content="0"/>
+                        <Button x:Name="btnFlatlands" Height="Auto" Margin="430,299,622,194" Content="0"/>
+                        <Button x:Name="btnSheepshead_Bay" Height="Auto" Margin="390,276,658,217" Content="0"/>
+                        <Button x:Name="btnConey_Island" Height="Auto" Margin="358,252,694,242" Content="0"/>
+                        <Button x:Name="btnBay_Ridge" Height="Auto" Margin="411,208,632,286" Content="0"/>
+                        <Button x:Name="btnFlatbush" Height="Auto" Margin="469,283,585,211" Content="0"/>
+                        <Button x:Name="btnPark_Slope" Height="Auto" Margin="494,244,564,254" Content="0"/>
+                        <Button x:Name="btnBorough_Park" Height="Auto" Margin="441,243,613,251" Content="0"/>
+                        <Button x:Name="btnBedford_Stuyvesant" Height="Auto" Margin="522,282,528,212" Content="0"/>
+                        <Button x:Name="btnRed_Hook" Height="Auto" Margin="520,230,534,268" Content="0"/>
+                        <Button x:Name="btnWilliamsburg" Height="Auto" Margin="562,266,486,228" Content="0"/>
+                        <Button x:Name="btnWoodrow" Height="Auto" Margin="274,55,747,439" Content="0"/>
+                        <Button x:Name="btnDongan_Hills" Height="Auto" Margin="367,163,665,331" Content="0"/>
+                        <Button x:Name="btnPort_Richmond" Height="Auto" Margin="413,129,625,365" Content="0"/>
+                        <Button x:Name="btnEmerson_Hill" Height="Auto" Margin="350,99,683,395" Content="0"/>
+                        <Button x:Name="btnBayonne" Height="Auto" Margin="474,116,578,382" Content="0"/>
+                        <Button x:Name="btnJersey_City" Height="Auto" Margin="544,147,488,347" Content="0"/>
+                        <Button x:Name="btnNorth_Bergen" Height="Auto" Margin="637,165,392,329" Content="0"/>
+                        <Button x:Name="btnHoboken" Height="Auto" Margin="586,186,460,312" Content="0"/>
+                        <Button x:Name="btnUnion_City" Height="Auto" Margin="653,199,394,300" Content="0"/>
+                        <Button x:Name="btnPalisades_Park" Height="Auto" Margin="742,211,293,283" Content="0"/>
+                        <Button x:Name="btnEnglewood" Height="Auto" Margin="802,224,239,270" Content="0"/>
+                        <Button x:Name="btnRiverdale" Height="Auto" Margin="824,293,223,201" Content="0"/>
+                        <Button x:Name="btnLaconia" Height="Auto" Margin="787,337,241,157" Content="0"/>
+                        <Button x:Name="btnWashington_Heights" Height="Auto" Margin="764,266,275,232" Content="0"/>
+                        <Button x:Name="btnUnionport" Height="Auto" Margin="741,356,307,138" Content="0"/>
+                        <Button x:Name="btnConcourse" Height="Auto" Margin="723,293,292,201" Content="0"/>
+                        <Button x:Name="btnHarlem" Height="Auto" Margin="707,256,347,244" Content="0"/>
+                        <Button x:Name="btnFinancial_District" Height="Auto" Margin="569,210,486,288">0</Button>
+                        <Button x:Name="btnLower_East_Side" Height="Auto" Margin="566,240,488,259">0</Button>
+                        <Button x:Name="btnHells_Kitchen" Height="Auto" Margin="612,210,434,291">0</Button>
+                        <Button x:Name="btnMidtown_East" Height="Auto" Margin="610,234,442,266">0</Button>
+                        <Button x:Name="btnUpper_West_Side" Height="Auto" Margin="651,228,399,273">0</Button>
+                        <Button x:Name="btnCentral_Park" Height="Auto" Margin="668,247,382,253">0</Button>
+                        <Button x:Name="btnUpper_East_Side" Height="Auto" Margin="639,257,412,244">0</Button>
 
                         <!--
                         <Button x:Name="btnAlaska" Content="Alaska" Margin="49,72,974,424"/>

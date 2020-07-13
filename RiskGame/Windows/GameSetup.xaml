@@ -139,6 +139,9 @@
                             <ComboBoxItem>
                                 <TextBlock Text="Default"></TextBlock>
                             </ComboBoxItem>
+                            <ComboBoxItem>
+                                <TextBlock Text="New York"></TextBlock>
+                            </ComboBoxItem>
                         </ComboBox>
                         <Label Content="GameMode" FontSize="8" Style="{StaticResource lblHeader}"></Label>
                         <ComboBox x:Name="cmbGameMode" SelectedIndex="1">

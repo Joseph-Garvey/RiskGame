@@ -248,27 +248,23 @@ namespace RiskGame
             ClearError();
             if (players.Count >= 2)
             {
-                if(cmbMap.SelectedIndex == 0)
+                if(cmbMap.SelectedIndex != -1)
                 {
-                    switch (cmbGameMode.SelectedIndex)
+                    if(cmbGameMode.SelectedIndex == -1)
                     {
-                        case -1:
-                            DispErrorMsg("Please select a Gamemode.");
-                            break;
-                        case 0:
-                        case 1:
-                            players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
-                            players[1].Color = (SolidColorBrush)rectPlayer2Color.Fill;
-                            if (players.Count >= 3) { players[2].Color = (SolidColorBrush)rectPlayer3Color.Fill; }
-                            if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
-                            if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
-                            if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
-                            GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value, (GameMap)cmbMap.SelectedIndex, (GameMode)cmbGameMode.SelectedIndex, (int)sldTime.Value);
-                            App.Current.MainWindow = Game;
-                            this.Close();
-                            Game.Show();
-                            break;
+                        DispErrorMsg("Please select a Gamemode.");
+                        return;
                     }
+                    players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
+                    players[1].Color = (SolidColorBrush)rectPlayer2Color.Fill;
+                    if (players.Count >= 3) { players[2].Color = (SolidColorBrush)rectPlayer3Color.Fill; }
+                    if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
+                    if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
+                    if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
+                    GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value, (GameMap)cmbMap.SelectedIndex, (GameMode)cmbGameMode.SelectedIndex, (int)sldTime.Value);
+                    App.Current.MainWindow = Game;
+                    this.Close();
+                    Game.Show();
                 }
                 else { DispErrorMsg("Please select a map."); }
             }
