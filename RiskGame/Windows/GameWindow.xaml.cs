@@ -1471,7 +1471,7 @@ namespace RiskGame
                                 bool won = true;
                                 foreach (Player p in Players)
                                 {
-                                    if (p.Territoriesowned > 0) { won = false; }
+                                    if (p != CurrentPlayer && p.Territoriesowned > 0) { won = false; }
                                 }
                                 if (won) { Win(); }
                                 int lost = NextTerritory.temparmies - (int)Math.Ceiling(prob * NextTerritory.temparmies);
