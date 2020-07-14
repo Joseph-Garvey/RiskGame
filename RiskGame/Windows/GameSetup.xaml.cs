@@ -104,19 +104,14 @@ namespace RiskGame
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
             // Retrieves list of games //
-            ObservableCollection<GameDetails> loadedgames = GameManager.RetrieveGames();
-            if (loadedgames == null || loadedgames.Count == 0) { panel_LoadGame.Visibility = Visibility.Collapsed; }
-            else
+            List<Human> humanusers = new List<Human>();
+            foreach(Player p in players)
             {
-                foreach(GameDetails g in loadedgames)
-                {
-                    if (g.Player != players[0].Username)
-                    {
-                        loadedgames.Remove(g);
-                    }
-                }
+                if(p is Human) { humanusers.Add(p as Human); }
             }
-            GameList.ItemsSource = GameManager.RetrieveGames();
+            ObservableCollection<GameDetails> loadedgames = GameManager.RetrieveGames(humanusers);
+            if (loadedgames == null || loadedgames.Count == 0) { panel_LoadGame.Visibility = Visibility.Collapsed; }
+            GameList.ItemsSource = loadedgames;
             // Updates UI with details of currently logged in players, showing new "Player Panels" as required.
             lblPlayer1.Content = players[0].Username;
             if(players.Count >= 2)

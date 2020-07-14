@@ -153,7 +153,7 @@ namespace RiskGame.Game
             }
             else { throw new GameNotFoundException(); } // If the file does not exist you cannot load a game.
         }
-        public static ObservableCollection<GameDetails> RetrieveGames() // Return actual game perhaps? // Can be made more efficient and combined with LoadGame once I learn more about DataBinding to objects.
+        public static ObservableCollection<GameDetails> RetrieveGames(List<Human> loggedinplayers) // Return actual game perhaps? // Can be made more efficient and combined with LoadGame once I learn more about DataBinding to objects.
         {
             /// Retrieve the list of games for the data grid on GameSetup.
             ObservableCollection<GameDetails> games = new ObservableCollection<GameDetails>();
@@ -165,8 +165,16 @@ namespace RiskGame.Game
                     while (sr.Position < sr.Length)
                     {
                         GameManager tmp = ((GameManager)bf.Deserialize(sr));
-                        GameDetails game = new GameDetails(tmp.GameID.ToString(), tmp.lastsave.ToString("g"), tmp.players[0].Username, tmp.players.Count().ToString());
-                        games.Add(game);
+                        bool containsplayer = false;
+                        foreach (Human h in loggedinplayers)
+                        {
+                            if (h.Username == tmp.players[0].Username) { containsplayer = true; break; }
+                        }
+                        if (containsplayer)
+                        {
+                            GameDetails game = new GameDetails(tmp.GameID.ToString(), tmp.lastsave.ToString("g"), tmp.players[0].Username, tmp.players.Count().ToString());
+                            games.Add(game);
+                        }
                     }
                 }
             }
