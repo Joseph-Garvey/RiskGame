@@ -87,7 +87,7 @@ namespace RiskGame.Windows
                 lblSuccess.Visibility = Visibility.Collapsed;
                 if (txtNewPass.Password == txtNewPassConf.Password)
                 {
-                    Human.Validation(txtPass.Password);
+                    Human.Validation(txtNewPass.Password);
                     Human player = Human.SignIn(txtName.Text, txtPass.Password);
                     Human.Update(player, txtNewPass.Password);
                     DispSuccessMsg("Your password has been changed.");
@@ -97,6 +97,7 @@ namespace RiskGame.Windows
             catch (IOException) { DispErrorMsg("An error reading or writing from the file has occurred. Please try again or delete the Usersaves.txt file in the game directory."); }
             catch (AccountCreationException k) { DispErrorMsg(k.error); }
             catch (AccountNotFoundException) { DispErrorMsg("Your account was not found. Please check your password."); }
+            catch(LoginException k) { DispErrorMsg(k.Message); }
             catch (Exception) { DispErrorMsg("An unknown error has occurred."); }
         }
         private void DispErrorMsg(String message)
