@@ -157,39 +157,7 @@ namespace RiskGame
         // UI Buttons //
         private void CyclePlayerColours(object sender, RoutedEventArgs e)
         {
-            /// Cycles the player's colour forward and back, allowing the payer to choose any colour from the list - except for those already in use by another player. //
-            Button btnClicked = (Button)sender;
-            Rectangle R;
-            bool colortaken = false;
-            do
-            {
-                colortaken = false;
-                // Determines which UI Element to change //
-                if (btnClicked.Name.Contains("1")) { R = rectPlayer1Color; }
-                else if (btnClicked.Name.Contains("2")) { R = rectPlayer2Color; }
-                else if (btnClicked.Name.Contains("3")) { R = rectPlayer3Color; }
-                else if (btnClicked.Name.Contains("4")) { R = rectPlayer4Color; }
-                else if (btnClicked.Name.Contains("5")) { R = rectPlayer5Color; }
-                else R = rectPlayer6Color;
-                // Is player cycling forward or back? based on name of the button clicked.
-                if (btnClicked.Name.Contains("Forward"))
-                {
-                    // cycles forward and loops if at end of list.
-                    try
-                    { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) + 1)]; }
-                    catch (ArgumentOutOfRangeException) { R.Fill = playercolours[0]; }
-                }
-                else {
-                    // cycles backwards and brings to end if at end of list.
-                    try { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) - 1)]; }
-                    catch (ArgumentOutOfRangeException) { R.Fill = playercolours[(playercolours.Count - 1)]; }
-                }
-                if( ((R != rectPlayer1Color && R.Fill == rectPlayer1Color.Fill) || (R != rectPlayer2Color && R.Fill == rectPlayer2Color.Fill) || (R != rectPlayer3Color && R.Fill == rectPlayer3Color.Fill) || (R != rectPlayer4Color && R.Fill == rectPlayer4Color.Fill) || (R != rectPlayer5Color && R.Fill == rectPlayer5Color.Fill) || (R != rectPlayer6Color && R.Fill == rectPlayer6Color.Fill)))
-                {
-                    // If the colour is already in use by another player or by self, loop script to cycle to next colour in list.
-                    colortaken = true;
-                }
-            } while (colortaken == true);
+            CyclePlayerColours(sender);
         }
 
         // overloaded script allows the same method to be executed from the code behind when new players are added.
