@@ -161,13 +161,13 @@ namespace RiskGame
             PasswordBox passwordBox = new PasswordBox();
             switch (textBox.Name)
             {
-                case "txtPass":
+                case "txtPassShow":
                     passwordBox = (PasswordBox)(window.FindName("txtPass"));
                     break;
-                case "txtNewPass":
+                case "txtNewPassShow":
                     passwordBox = (PasswordBox)(window.FindName("txtNewPass"));
                     break;
-                case "txtNewPassConf":
+                case "txtNewPassConfShow":
                     passwordBox = (PasswordBox)(window.FindName("txtNewPassConf"));
                     break;
                 case "txtRegPassShow":
