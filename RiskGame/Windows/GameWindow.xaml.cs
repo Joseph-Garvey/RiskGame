@@ -442,7 +442,8 @@ namespace RiskGame
             {
                 Name = name,
                 Margin = margin,
-                Content = "0"
+                Content = "0",
+                ToolTip = new ToolTip() { Content = name.Replace("_", " ").TrimStart(new char[] { 'b', 't', 'n' }) }
             };
             return b;
         }
@@ -1051,15 +1052,20 @@ namespace RiskGame
         }
         private void AdjustAttackMoves(int i)
         {
-            if(i >= 1)
+            if(i >= 1) // moving out of slct
             {
                 if (SlctTerritory.currentarmies < 2)
                 {
                     Output("At least one army must remain in a friendly territory.");
                     return;
                 }
+                else if(gamemode == GameMode.Classic && gamestate == GameState.Attacking && NextTerritory.temparmies >= 3)
+                {
+                    Output("You can attack with a maximum of 3 armies at once.");
+                    return;
+                }
             }
-            if(i <= -1)
+            if(i <= -1) // moving back to slct
             {
                 if(NextTerritory.temparmies <= 1)
                 {
@@ -1250,8 +1256,7 @@ namespace RiskGame
                                 }
                             }
                             else if(btnTerritory.BorderBrush == Brushes.Red){
-                                if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; }
-                                else { PlayerActions(true); }
+                                PlayerActions(true);
                             }
                             else { Output("You cannot attack this territory from here"); break; }
                         }
