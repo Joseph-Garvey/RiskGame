@@ -165,11 +165,11 @@ namespace RiskGame
         private BackgroundWorker workerthread = null;
         private bool paused;
         #region Dice
-        Dice playerdie1;
-        Dice playerdie2;
-        Dice playerdie3;
-        Dice enemydie1;
-        Dice enemydie2;
+        PlayerDice playerdie1;
+        PlayerDice playerdie2;
+        PlayerDice playerdie3;
+        EnemyDice enemydie1;
+        EnemyDice enemydie2;
         List<Dice> dices = new List<Dice>();
         #endregion
 
@@ -194,11 +194,11 @@ namespace RiskGame
             Output("The game has loaded.");
             if (gamemode == GameMode.Classic)
             {
-                playerdie1 = new Dice(Die.Player1, imgPlayerDie1);
-                playerdie2 = new Dice(Die.Player2, imgPlayerDie2);
-                playerdie3 = new Dice(Die.Player3, imgPlayerDie3);
-                enemydie1 = new Dice(Die.Enemy1, imgEnemyDie1);
-                enemydie2 = new Dice(Die.Enemy1, imgEnemyDie2);
+                playerdie1 = new PlayerDice(imgPlayerDie1);
+                playerdie2 = new PlayerDice(imgPlayerDie2);
+                playerdie3 = new PlayerDice(imgPlayerDie3);
+                enemydie1 = new EnemyDice(imgEnemyDie1);
+                enemydie2 = new EnemyDice(imgEnemyDie2);
             }
         }
         // New Game //
@@ -234,11 +234,11 @@ namespace RiskGame
             gamemode = mode;
             if (gamemode == GameMode.Classic)
             {
-                playerdie1 = new Dice(Die.Player1, imgPlayerDie1);
-                playerdie2 = new Dice(Die.Player2, imgPlayerDie2);
-                playerdie3 = new Dice(Die.Player3, imgPlayerDie3);
-                enemydie1 = new Dice(Die.Enemy1, imgEnemyDie1);
-                enemydie2 = new Dice(Die.Enemy1, imgEnemyDie2);
+                playerdie1 = new PlayerDice(imgPlayerDie1);
+                playerdie2 = new PlayerDice(imgPlayerDie2);
+                playerdie3 = new PlayerDice(imgPlayerDie3);
+                enemydie1 = new EnemyDice(imgEnemyDie1);
+                enemydie2 = new EnemyDice(imgEnemyDie2);
             }
             if (Time > 0)
             {
@@ -1084,6 +1084,16 @@ namespace RiskGame
                     }
                     return;
                 }
+                else if(gamemode == GameMode.Classic && gamestate == GameState.Conquer)
+                {
+                    int count = 0;
+                    foreach(Dice d in dices) { if (d is PlayerDice) { count += 1; } }
+                    if(NextTerritory.temparmies <= count)
+                    {
+                        Output("You must move at least as many armies used to attack into the new territory.");
+                        return;
+                    }
+                }
             }
             SlctTerritory.currentarmies -= i;
             NextTerritory.temparmies += i;
@@ -1634,7 +1644,7 @@ namespace RiskGame
             {
                 d.current = -1;
             }
-            dices.Clear();
+            //dices.Clear();
             int playerloss = 0;
             int enemyloss = 0;
             if((playerNextHighest != -1) && (enemyNextHighest != -1))

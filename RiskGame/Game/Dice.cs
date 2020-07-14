@@ -12,7 +12,7 @@ using System.Windows.Media.Imaging;
 
 namespace RiskGame.Game
 {
-    public class Dice
+    public abstract class Dice
     {
         public BackgroundWorker workerthread = new BackgroundWorker()
         {
@@ -28,13 +28,11 @@ namespace RiskGame.Game
             new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice5.png"),
             new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice6.png"),
         };
-        private Die playerdie;
         public int current;
         private Image dieimage;
 
-        public Dice(Die _die, Image _dieimage)
+        public Dice(Image _dieimage)
         {
-            playerdie = _die;
             dieimage = _dieimage;
             workerthread.DoWork += Worker_DoWork;
             workerthread.ProgressChanged += Worker_ProgressChanged;
@@ -65,6 +63,19 @@ namespace RiskGame.Game
         void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             dieimage.Source = new BitmapImage(sources[current]);
+        }
+    }
+
+    public class PlayerDice : Dice
+    {
+        public PlayerDice(Image _dieimage) : base(_dieimage)
+        {
+        }
+    }
+    public class EnemyDice : Dice
+    {
+        public EnemyDice(Image _dieimage) : base(_dieimage)
+        {
         }
     }
 }
