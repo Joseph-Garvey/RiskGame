@@ -25,15 +25,23 @@ namespace RiskGame.Windows
             InitializeComponent();
             lastwindow = _sender;
         }
-
+        // not needed anymore
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            App.Current.MainWindow = lastwindow;
+            RestoreFocus();
         }
 
         private void Window_LostFocus(object sender, RoutedEventArgs e)
         {
-            App.Current.MainWindow = lastwindow;
+            RestoreFocus();
+        }
+        private void RestoreFocus()
+        {
+            try
+            {
+                App.Current.MainWindow = lastwindow;
+            }
+            catch (Exception) { }
         }
     }
 }

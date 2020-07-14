@@ -187,7 +187,6 @@ namespace RiskGame
         {
             // Open Tutorial Window when help button is clicked //
             Tutorial tutorial = new Tutorial(Application.Current.MainWindow);
-            App.Current.MainWindow = tutorial;
             tutorial.Show();
         }
 
@@ -264,19 +263,42 @@ namespace RiskGame
         private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e) { MediaForward(sender, e); }
         private void UpdateMediaText(object sender, RoutedEventArgs e)
         {
-            Window window = RetrieveActiveWindow();
-            if(window is Tutorial)
+            try
             {
-                foreach (Window w in Application.Current.Windows)
+                Window window = RetrieveActiveWindow();
+                if (window is Tutorial)
                 {
-                    if ((w is GameSetup) || (w is RiskGame.MainWindow) || (w is RiskGame.GameWindow) || (w is RiskGame.Windows.Highscores))
+                    foreach (Window w in Application.Current.Windows)
                     {
-                        window = w;
-                        break;
+                        if ((w is GameSetup) || (w is RiskGame.MainWindow) || (w is RiskGame.GameWindow) || (w is RiskGame.Windows.Highscores))
+                        {
+                            window = w;
+                            break;
+                        }
                     }
                 }
+                ((Label)window.FindName("lblMediaDetails")).Content = ((MediaElement)sender).Source.ToString().Substring(30);
             }
+            catch (NullReferenceException) { UpdateMediaText(Application.Current.MainWindow, sender); }
+        }
+        private void UpdateMediaText(Window window, object sender)
+        {
+            try
+            {
+                if (window is Tutorial)
+                {
+                    foreach (Window w in Application.Current.Windows)
+                    {
+                        if ((w is GameSetup) || (w is RiskGame.MainWindow) || (w is RiskGame.GameWindow) || (w is RiskGame.Windows.Highscores))
+                        {
+                            window = w;
+                            break;
+                        }
+                    }
+                }
             ((Label)window.FindName("lblMediaDetails")).Content = ((MediaElement)sender).Source.ToString().Substring(30);
+            }
+            catch (Exception) { }
         }
         // Methods //
         private MediaElement RetrieveMediaPlayer()
@@ -286,7 +308,7 @@ namespace RiskGame
             {
                 MediaElement m = (MediaElement)window.FindName("mediaplayer");
                 if(m != null) { return m;  }
-                else { throw new NullReferenceException(); }
+                else { return RetrieveMediaPlayer(Application.Current.MainWindow); }
             }
             catch { return new MediaElement(); }
         }
