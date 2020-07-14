@@ -1306,6 +1306,14 @@ namespace RiskGame
                     }
                     else { Output("You cannot move armies to here from your selected territory."); }
                     break;
+                case GameState.Conquer:
+                    try
+                    {
+                        if (t == NextTerritory) { PlayerActions(true); }
+                        else if (t == SlctTerritory) { PlayerActions(false); }
+                        break;
+                    }
+                    catch (NullReferenceException) { break; }
             }
         }
         private void RightClick(object sender, MouseEventArgs e)
@@ -1398,8 +1406,8 @@ namespace RiskGame
                                 NextTerritory.temparmies = 0;
                                 int survived = (int)(Math.Ceiling(1 - prob) * NextTerritory.currentarmies);
                                 int loss = NextTerritory.currentarmies - survived;
-                                NextTerritory.currentarmies = survived; // can be simplified /\
                                 Output(String.Format("You have lost this battle, the enemy suffered {0} casualties.", loss));
+                                NextTerritory.currentarmies = survived; // can be simplified /\
                                 NextTerritory.button.Content = NextTerritory.currentarmies;
                                 ClearSelectionsUI();
                             }
