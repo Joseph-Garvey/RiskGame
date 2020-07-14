@@ -549,43 +549,48 @@ namespace RiskGame
         }
         private void NeutralAISetup()
         {
+            bool alltaken = true;
             foreach (Territory t in Territories)
             {
                 // ensures each territory is owned by a player.
                 bool assigned = false;
                 do
                 {
-                    if(t.owner != null) { assigned = true; break; }
+                    if (t.owner != null) { assigned = true; break; }
                     CycleNeutralAI();
                     if (CurrentPlayer.army_undeployed > 0)
                     {
+                        alltaken = false;
                         Place_Reinforce(t, 1);
                         assigned = true;
                     }
                 } while (assigned == false);
             }
-            // Places remaining armies around map in friendly territory until there are none left //
-            foreach (Player p in Players)
+            if (alltaken == false)
             {
-                if(p is NeutralAI)
+                foreach (Player p in Players)
                 {
-                    CurrentPlayer = p;
-                    while (p.army_undeployed > 0)
+                    if (p is NeutralAI)
                     {
-                        foreach (Territory t in Territories)
+                        CurrentPlayer = p;
+                        while (p.army_undeployed > 0)
                         {
-                            if (p.army_undeployed > 0)
+                            foreach (Territory t in Territories)
                             {
-                                if (t.owner == p)
+                                if (p.army_undeployed > 0)
                                 {
-                                    Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed, 4)));
+                                    if (t.owner == p)
+                                    {
+                                        Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed, 4)));
+                                    }
                                 }
+                                else { break; }
                             }
-                            else { break; }
                         }
                     }
                 }
             }
+            // Places remaining armies around map in friendly territory until there are none left //
         }
         private void CycleNeutralAI()
         {
