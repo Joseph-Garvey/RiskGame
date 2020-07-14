@@ -157,6 +157,12 @@ namespace RiskGame
         // UI Buttons //
         private void CyclePlayerColours(object sender, RoutedEventArgs e)
         {
+            CyclePlayerColours(sender);
+        }
+
+        // overloaded script allows the same method to be executed from the code behind when new players are added.
+        private void CyclePlayerColours(object sender)
+        {
             /// Cycles the player's colour forward and back, allowing the payer to choose any colour from the list - except for those already in use by another player. //
             Button btnClicked = (Button)sender;
             Rectangle R;
@@ -179,47 +185,15 @@ namespace RiskGame
                     { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) + 1)]; }
                     catch (ArgumentOutOfRangeException) { R.Fill = playercolours[0]; }
                 }
-                else {
-                    // cycles backwards and brings to end if at end of list.
-                    try { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) - 1)]; }
-                    catch (ArgumentOutOfRangeException) { R.Fill = playercolours[(playercolours.Count - 1)]; }
-                }
-                if( ((R != rectPlayer1Color && R.Fill == rectPlayer1Color.Fill) || (R != rectPlayer2Color && R.Fill == rectPlayer2Color.Fill) || (R != rectPlayer3Color && R.Fill == rectPlayer3Color.Fill) || (R != rectPlayer4Color && R.Fill == rectPlayer4Color.Fill) || (R != rectPlayer5Color && R.Fill == rectPlayer5Color.Fill) || (R != rectPlayer6Color && R.Fill == rectPlayer6Color.Fill)))
-                {
-                    // If the colour is already in use by another player or by self, loop script to cycle to next colour in list.
-                    colortaken = true;
-                }
-            } while (colortaken == true);
-        }
-
-        // overloaded script allows the same method to be executed from the code behind when new players are added.
-        private void CyclePlayerColours(object sender)
-        {
-            Button btnClicked = (Button)sender;
-            Rectangle R;
-            bool colortaken = false;
-            do
-            {
-                colortaken = false;
-                if (btnClicked.Name.Contains("1")) { R = rectPlayer1Color; }
-                else if (btnClicked.Name.Contains("2")) { R = rectPlayer2Color; }
-                else if (btnClicked.Name.Contains("3")) { R = rectPlayer3Color; }
-                else if (btnClicked.Name.Contains("4")) { R = rectPlayer4Color; }
-                else if (btnClicked.Name.Contains("5")) { R = rectPlayer5Color; }
-                else R = rectPlayer6Color;
-                if (btnClicked.Name.Contains("Forward"))
-                {
-                    try
-                    { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) + 1)]; }
-                    catch (ArgumentOutOfRangeException) { R.Fill = playercolours[0]; }
-                }
                 else
                 {
+                    // cycles backwards and brings to end if at end of list.
                     try { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) - 1)]; }
                     catch (ArgumentOutOfRangeException) { R.Fill = playercolours[(playercolours.Count - 1)]; }
                 }
                 if (((R != rectPlayer1Color && R.Fill == rectPlayer1Color.Fill) || (R != rectPlayer2Color && R.Fill == rectPlayer2Color.Fill) || (R != rectPlayer3Color && R.Fill == rectPlayer3Color.Fill) || (R != rectPlayer4Color && R.Fill == rectPlayer4Color.Fill) || (R != rectPlayer5Color && R.Fill == rectPlayer5Color.Fill) || (R != rectPlayer6Color && R.Fill == rectPlayer6Color.Fill)))
                 {
+                    // If the colour is already in use by another player or by self, loop script to cycle to next colour in list.
                     colortaken = true;
                 }
             } while (colortaken == true);
@@ -245,7 +219,6 @@ namespace RiskGame
         }
         private void New_Game(object sender, RoutedEventArgs e)
         {
-            ClearError();
             if (players.Count >= 2)
             {
                 if (players.Count == 2)
@@ -271,7 +244,7 @@ namespace RiskGame
                     Game.Show();
                     this.Close();
                 }
-                else { DispErrorMsg("Please select a map."); }
+                else { DispErrorMsg("Please select a map."); return; }
             }
             else { DispErrorMsg("There must be at least two players to start a game."); }
         }
@@ -318,5 +291,109 @@ namespace RiskGame
             lblError.Visibility = Visibility.Collapsed;
             txtError.Text = "";
         }
+
+        // Media Controls //
+        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) { mediaplayer.Volume = (double)slider_Volume.Value; }
+        private void MediaBack(object sender, RoutedEventArgs e)
+        {
+            Music.MusicIndex -= 1;
+            ChangeMedia();
+        }
+        private void MediaForward(object sender, RoutedEventArgs e)
+        {
+            Music.MusicIndex += 1;
+            ChangeMedia();
+        }
+        private void ChangeMedia()
+        {
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            mediaplayer.Play();
+        }
+        private void MediaPause(object sender, RoutedEventArgs e) { mediaplayer.Pause(); }
+        private void MediaPlay(object sender, RoutedEventArgs e) { mediaplayer.Play(); }
+        private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            MediaForward(sender, e);
+        }
+        private void UpdateMediaText(object sender, RoutedEventArgs e)
+        {
+            lblMediaDetails.Content = mediaplayer.Source.ToString().Substring(30);
+        }
+
+        // Navigate to and from settings menu //
+        private void Settings(object sender, RoutedEventArgs e) { Settings(); }
+        private void Return(object sender, RoutedEventArgs e) { Return(); }
+        private void Settings()
+        {
+            panel_MainUI.Visibility = Visibility.Collapsed;
+            panel_Settings.Visibility = Visibility.Visible;
+        }
+        private void Return()
+        {
+            panel_MainUI.Visibility = Visibility.Visible;
+            panel_Settings.Visibility = Visibility.Collapsed;
+        }
+
+        // Window Management //
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F11) { ChangeWindowState(); }
+            if (e.Key == Key.Escape)
+            {
+                if (this.WindowState == WindowState.Maximized)
+                {
+                    ChangeWindowState();
+                }
+                else
+                {
+                    if (panel_MainUI.Visibility == Visibility.Visible)
+                    {
+                        Settings();
+                    }
+                    else
+                    {
+                        Return();
+                    }
+                }
+            }
+        }
+        private void ChangeWindowState()
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                this.ResizeMode = ResizeMode.CanResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.SingleBorderWindow;
+            }
+            else
+            {
+                this.ResizeMode = ResizeMode.NoResize;
+                this.WindowState = WindowState.Normal;
+                this.WindowStyle = WindowStyle.None;
+                this.WindowState = WindowState.Maximized;
+            }
+        }
+        private void Window_StateChanged(object sender, EventArgs e)
+        {
+            if (this.WindowState == WindowState.Maximized)
+            {
+                chkFullscreen.IsChecked = true;
+            }
+            else
+            {
+                chkFullscreen.IsChecked = false;
+            }
+        }
+        private void Fullscreen_Click(object sender, RoutedEventArgs e)
+        {
+            ChangeWindowState();
+        }
+        private void Tutorial_Window(object sender, RoutedEventArgs e)
+        {
+            Tutorial tutorial = new Tutorial();
+            App.Current.MainWindow = tutorial;
+            tutorial.Show();
+        }
+
     }
 }
