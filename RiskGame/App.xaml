@@ -179,8 +179,37 @@
             <Setter Property="Margin" Value="0,0,5,0"></Setter>
             <Setter Property="IsChecked" Value="{Binding Hints_enabled, Mode=TwoWay}"></Setter>
         </Style>
-
+        <Style TargetType="CheckBox" x:Key="chkShowHide">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="checkboxImage" Source="pack://siteoforigin:,,,/Images/show.png"/>
+                            <ContentPresenter/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://siteoforigin:,,,/Images/hide.png"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Height" Value="14"></Setter>
+        </Style>
         <!-- Other Styles -->
+        <Style TargetType="PasswordBox" x:Key="pwdbox">
+            <Setter Property="Margin" Value="5"></Setter>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="Width" Value="110"></Setter>
+        </Style>
+        <Style TargetType="TextBox" x:Key="showBox">
+            <Setter Property="Margin" Value="5"></Setter>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="Width" Value="110"></Setter>
+            <Setter Property="Visibility" Value="Collapsed"></Setter>
+            <EventSetter Event="TextChanged" Handler="ShowPassword_TextChanged"></EventSetter>
+        </Style>
         <Style TargetType="Grid" x:Key="grid_Background">
             <Setter Property="Background" Value="#7F00D1FF"></Setter>
         </Style>

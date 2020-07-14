@@ -80,6 +80,9 @@
     <Compile Include="Locations\Continent.cs" />
     <Compile Include="Music\Music.cs" />
     <Compile Include="Players\Human.cs" />
+    <Compile Include="Windows\ChangePassword.xaml.cs">
+      <DependentUpon>ChangePassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Windows\GameSetup.xaml.cs">
       <DependentUpon>GameSetup.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,10 @@
     <Compile Include="Windows\WelcomeScreen.xaml.cs">
       <DependentUpon>WelcomeScreen.xaml</DependentUpon>
     </Compile>
+    <Page Include="Windows\ChangePassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Windows\GameSetup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

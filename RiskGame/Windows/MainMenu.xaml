@@ -38,37 +38,8 @@
                                 <Setter Property="Margin" Value="5"></Setter>
                                 <Setter Property="BorderBrush" Value="Black"></Setter>
                             </Style>
-                            <Style TargetType="TextBox" x:Key="showBox">
-                                <Setter Property="Margin" Value="5"></Setter>
-                                <Setter Property="BorderBrush" Value="Black"></Setter>
-                                <Setter Property="Width" Value="110"></Setter>
-                                <Setter Property="Visibility" Value="Collapsed"></Setter>
-                                <EventSetter Event="TextChanged" Handler="ShowPassword_TextChanged"></EventSetter>
-                            </Style>
-                            <Style TargetType="PasswordBox" x:Key="pwdbox">
-                                <Setter Property="Margin" Value="5"></Setter>
-                                <Setter Property="BorderBrush" Value="Black"></Setter>
-                                <Setter Property="Width" Value="110"></Setter>
-                            </Style>
-                            <Style TargetType="CheckBox">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type CheckBox}">
-                                            <StackPanel Orientation="Horizontal">
-                                                <Image x:Name="checkboxImage" Source="pack://siteoforigin:,,,/Images/show.png"/>
-                                                <ContentPresenter/>
-                                            </StackPanel>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="IsChecked" Value="True">
-                                                    <Setter TargetName="checkboxImage" Property="Source" Value="pack://siteoforigin:,,,/Images/hide.png"/>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
                         </StackPanel.Resources>
-                        <Border>
+                        <Border VerticalAlignment="Top">
                             <StackPanel Style="{StaticResource panel_Background}">
                                 <StackPanel.Resources>
                                     <Style TargetType="PasswordBox" BasedOn="{StaticResource pwdbox}">
@@ -89,7 +60,7 @@
                                     <PasswordBox x:Name="txtRegPass" Style="{StaticResource pwdbox}" GotKeyboardFocus="ClearPwdText" TabIndex="1" KeyDown="RegisterKeyDown"></PasswordBox>
                                     <TextBox x:Name="txtRegPassShow" Style="{StaticResource showBox}"></TextBox>
                                     <Button x:Name="btnRegPassToggle" Style="{StaticResource btnCornerUI}" Width="25" Margin="0,5,5,5">
-                                        <CheckBox x:Name="chkRegPass" Height="14" Click="ShowHidePassword"></CheckBox>
+                                        <CheckBox x:Name="chkRegPass" Click="ShowHidePassword" Style="{StaticResource chkShowHide}"></CheckBox>
                                     </Button>
                                 </StackPanel>
                                 <Label Style="{StaticResource lblSubHeading}">Confirm Password:</Label>
@@ -97,10 +68,10 @@
                                     <PasswordBox x:Name="txtRegPassConf"  Style="{StaticResource pwdbox}" GotKeyboardFocus="ClearPwdText" TabIndex="2" KeyDown="RegisterKeyDown"></PasswordBox>
                                     <TextBox x:Name="txtRegPassConfShow" Style="{StaticResource showBox}"></TextBox>
                                     <Button Style="{StaticResource btnCornerUI}" Width="25" Margin="0,5,5,5">
-                                        <CheckBox x:Name="chkRegPassConf" Height="14" Click="ShowHidePassword"></CheckBox>
+                                        <CheckBox x:Name="chkRegPassConf" Click="ShowHidePassword" Style="{StaticResource chkShowHide}"></CheckBox>
                                     </Button>
                                 </StackPanel>
-                                <Button Style="{StaticResource btnUI}" Click="Register" TabIndex="3">Register</Button>
+                                <Button Style="{StaticResource btnUI}" Click="Register" TabIndex="3" Margin="5,5,5,10">Register</Button>
                             </StackPanel>
                         </Border>
                         <StackPanel>
@@ -119,7 +90,7 @@
                                         <PasswordBox x:Name="txtLogPass" Style="{StaticResource pwdbox}" Width="100" GotKeyboardFocus="ClearPwdText" TabIndex="5" KeyDown="LoginKeyDown"></PasswordBox>
                                         <TextBox x:Name="txtLogPassShow" Style="{StaticResource showBox}"></TextBox>
                                         <Button Style="{StaticResource btnCornerUI}" Width="25" Margin="0,5,5,5">
-                                            <CheckBox x:Name="chkLogPass" Height="14" Click="ShowHidePassword"></CheckBox>
+                                            <CheckBox x:Name="chkLogPass" Click="ShowHidePassword" Style="{StaticResource chkShowHide}"></CheckBox>
                                         </Button>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
@@ -133,8 +104,13 @@
                                     <ColumnDefinition></ColumnDefinition>
                                     <ColumnDefinition></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Button Style="{StaticResource btnCornerUI}" HorizontalAlignment="Center" Width="100" FontSize="12" TabIndex="7" Click="Leaderboard">Leaderboard</Button>
-                                <Button Style="{StaticResource btnSettings}" HorizontalAlignment="Center" Grid.Column="1" TabIndex="8"></Button>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Button Style="{StaticResource btnCornerUI}" Margin="10,0,10,0" FontSize="10" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Click="ChangePassword">Change Password</Button>
+                                <Button Style="{StaticResource btnCornerUI}" Grid.Row="1" HorizontalAlignment="Center" Width="93" FontSize="12" TabIndex="7" Click="Leaderboard" Margin="10,5,0,5">Leaderboard</Button>
+                                <Button Style="{StaticResource btnSettingsThin}" Grid.Row="1" HorizontalAlignment="Center" Grid.Column="1" TabIndex="8"></Button>
                             </Grid>
                         </StackPanel>
                     </StackPanel>

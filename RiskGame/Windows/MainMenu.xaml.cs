@@ -238,36 +238,28 @@ namespace RiskGame
 
             }
         }
-        private void ShowPassword_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            TextBox textBox = (TextBox)sender;
-            switch (textBox.Name)
-            {
-                case "txtRegPassShow":
-                    txtRegPass.Password = textBox.Text;
-                    break;
-                case "txtRegPassConfShow":
-                    txtRegPassConf.Password = textBox.Text;
-                    break;
-                case "txtLogPassShow":
-                    txtLogPass.Password = textBox.Text;
-                    break;
-            }
-        }
-
-        // Clear password on keyboard focus to prevent user error and/or copying password.
-        private void ClearPwdText(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            PasswordBox P = (PasswordBox)sender;
-            P.Password = "";
-        }
-
         private void Leaderboard(object sender, RoutedEventArgs e)
         {
             Highscores highscores = new Highscores(players);
             App.Current.MainWindow = highscores;
             this.Close();
             highscores.Show();
+        }
+        private void ChangePassword(object sender, RoutedEventArgs e)
+        {
+            ChangePassword window;
+            if (txtLogName.Text != null)
+            {
+                window = new ChangePassword(txtLogName.Text);
+            }
+            else { window = new ChangePassword(); }
+            window.Show();
+        }
+        // Clear password on keyboard focus to prevent user error and/or copying password.
+        private void ClearPwdText(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            PasswordBox P = (PasswordBox)sender;
+            P.Password = "";
         }
     }
 }

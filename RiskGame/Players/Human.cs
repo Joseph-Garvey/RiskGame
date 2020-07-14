@@ -103,6 +103,34 @@ namespace RiskGame
                 }
             }
         }
+        public static void Update(Human player, String newpassword)
+        {
+            // Update an existing player's details on file.
+            List<String> lines = new List<string>();
+            using (StreamReader sr = new StreamReader(FileName))
+            {
+                string tmpplayername = player.Username.PadRight(10);
+                string tmpplayerpassword = player.password.PadRight(15);
+                string line; // Format the players name to match that on file.
+                while ((line = sr.ReadLine()) != null) // While it has not reached the end of the file.
+                {
+                    string tmpusername = line.Substring(0, 10); // Extract the username from the line.
+                    string tmppassword = line.Substring(10, 15); // Extract the password from the line.
+                    if ((tmpplayername == tmpusername) && (tmpplayerpassword == tmppassword)) // if this line matches the player
+                    {
+                        lines.Add(String.Format("{0}{1}{2}{3}", tmpplayername, newpassword.PadRight(15), player.music_enabled.ToString().PadRight(5), player.music_enabled.ToString().PadRight(5)));
+                    }
+                    else { lines.Add(line); }
+                }
+            }
+            using (StreamWriter sw = new StreamWriter(FileName, false))
+            { // write the line in the same place on the file.
+                foreach (String s in lines)
+                {
+                    sw.WriteLine(s);
+                }
+            }
+        }
 
         // Validation
         public static void Validation(String username, String password) // Must be used in try/catch

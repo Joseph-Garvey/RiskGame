@@ -153,7 +153,35 @@ namespace RiskGame
             Return(panel_MainUI);
             panel_Settings.Visibility = Visibility.Collapsed;
         }
-
+        // Login, Register and Change Password //
+        private void ShowPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            Window window = RetrieveActiveWindow();
+            PasswordBox passwordBox = new PasswordBox();
+            switch (textBox.Name)
+            {
+                case "txtPass":
+                    passwordBox = (PasswordBox)(window.FindName("txtPass"));
+                    break;
+                case "txtNewPass":
+                    passwordBox = (PasswordBox)(window.FindName("txtNewPass"));
+                    break;
+                case "txtNewPassConf":
+                    passwordBox = (PasswordBox)(window.FindName("txtNewPassConf"));
+                    break;
+                case "txtRegPassShow":
+                    passwordBox = (PasswordBox)(window.FindName("txtRegPass"));
+                    break;
+                case "txtRegPassConfShow":
+                    passwordBox = (PasswordBox)(window.FindName("txtRegPassConf"));
+                    break;
+                case "txtLogPassShow":
+                    passwordBox = (PasswordBox)(window.FindName("txtLogPass"));
+                    break;
+            }
+            passwordBox.Password = textBox.Text;
+        }
         /// Tutorial Window Pop-up ///
         public void Tutorial_Window(object sender, RoutedEventArgs e)
         {
