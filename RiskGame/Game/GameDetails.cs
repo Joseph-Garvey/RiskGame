@@ -12,7 +12,7 @@ using System.Collections.ObjectModel;
 namespace RiskGame.Game
 {
     [Serializable]
-    public class GameDetails
+    public class GameDetails :IComparable<GameDetails>
     {
         private static readonly String FileName = "Leaderboard.bin";
         private readonly String gameID;
@@ -59,7 +59,7 @@ namespace RiskGame.Game
         public static ObservableCollection<GameDetails> RetrieveGames() // Return actual game perhaps? // Can be made more efficient and combined with LoadGame once I learn more about DataBinding to objects.
         { // adapt
             /// Retrieve the list of games for the datagrid on GameSetup.
-            ObservableCollection<GameDetails> games = new ObservableCollection<GameDetails>();
+            List < GameDetails > games = new List<GameDetails>();
             if (File.Exists(FileName))
             {
                 using (Stream sr = new FileStream(FileName, FileMode.Open))
@@ -72,7 +72,14 @@ namespace RiskGame.Game
                     }
                 }
             }
-            return games;
+            games.Sort();
+            ObservableCollection<GameDetails> gamessorted = new ObservableCollection<GameDetails>(games);
+            return gamessorted;
+        }
+
+        public int CompareTo(GameDetails other)
+        {
+            return int.Parse(this.score).CompareTo(int.Parse(other.score));
         }
 
         public string NoPlayers => noPlayers;

@@ -781,7 +781,14 @@ namespace RiskGame
                     if (CurrentPlayer is NeutralAI) { CyclePlayers(); NextTurn(); }
                     if (AllPlaced())
                     {
-                        NeutralAISetup();
+                        foreach(Player p in Players)
+                        {
+                            if(p is NeutralAI)
+                            {
+                                NeutralAISetup();
+                                break;
+                            }
+                        }
                         Territories.Sort();
                         CurrentPlayer = Players[Players.Count - 1];
                         StartGame();
