@@ -79,7 +79,7 @@ namespace RiskGame.Game
 
         public int CompareTo(GameDetails other)
         {
-            return int.Parse(this.score).CompareTo(int.Parse(other.score));
+            return int.Parse(other.score).CompareTo(int.Parse(this.score)) ;
         }
 
         public string NoPlayers => noPlayers;
