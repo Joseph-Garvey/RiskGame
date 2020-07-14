@@ -1044,15 +1044,15 @@ namespace RiskGame
             else
             {
                 String[] tmp = txtOutput.Text.Split('\n');
-                if (tmp.Length >= 9)
+                if (tmp.Length >= 8)
                 {
                     tmp[0] = tmp[1];
                     for (int i = 1; i < (tmp.Length - 1); i++)
                     {
                         tmp[i] = "\n" + tmp[i + 1];
                     }
-                    tmp[8] = ("\n" + s);
-                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5] + tmp[6] + tmp[7] + tmp[8];
+                    tmp[7] = ("\n" + s);
+                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5] + tmp[6] + tmp[7];
                 }
                 else { txtOutput.Text += String.Format("\n{0}", s); }
             }

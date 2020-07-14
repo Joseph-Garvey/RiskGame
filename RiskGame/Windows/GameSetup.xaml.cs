@@ -233,7 +233,12 @@ namespace RiskGame
         /// if + button clicked forward the list of players to a new Login Menu and close this window.
         private void AddPlayer(object sender, RoutedEventArgs e)
         {
-            if(cmbPlayer6.SelectedIndex == 1) { DispErrorMsg("AI is not yet implemented. Please select a human player."); } // AI is not yet implemented and thus is not an option.
+            if(cmbPlayer6.SelectedIndex == 1) {
+                // create AI player
+                // add to list
+                // update UI
+                DispErrorMsg("AI is not yet implemented. Please select a human player.");
+            } // AI is not yet implemented and thus is not an option.
             else if(cmbPlayer6.SelectedIndex == 0)
             {
                 // Only if selecting human, direct to Login Screen so that human can log in.
@@ -250,7 +255,7 @@ namespace RiskGame
             {
                 if (players.Count == 2)
                 {
-                    players.Add(new NeutralAI("Neutral"));
+                    players.Add(new NeutralAI("Neutral Player"));
                     CyclePlayerColours(btnPlayer3Forward);
                 }
                 if (cmbMap.SelectedIndex != -1)
