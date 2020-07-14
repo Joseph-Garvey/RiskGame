@@ -164,7 +164,7 @@
                                             <Label x:Name="lblPlayer2Strength" Style="{StaticResource lblStrength}"></Label>
                                         </StackPanel>
                                     </Border>
-                                    <Border x:Name="brd_Player3" Visibility="Collapsed">
+                                    <Border x:Name="brd_Player3">
                                         <StackPanel x:Name="panel_Player3" Style="{StaticResource PlayerPanel}">
                                             <Rectangle x:Name="rectPlayerColor3" Fill="DeepSkyBlue" ></Rectangle>
                                             <Label x:Name="lblPlayerName3" Content="Player 3" Style="{StaticResource lblPlayerName}"></Label>

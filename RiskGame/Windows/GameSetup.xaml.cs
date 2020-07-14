@@ -248,7 +248,12 @@ namespace RiskGame
             ClearError();
             if (players.Count >= 2)
             {
-                if(cmbMap.SelectedIndex != -1)
+                if (players.Count == 2)
+                {
+                    players.Add(new NeutralAI("Neutral"));
+                    CyclePlayerColours(btnPlayer3Forward);
+                }
+                if (cmbMap.SelectedIndex != -1)
                 {
                     if(cmbGameMode.SelectedIndex == -1)
                     {
@@ -257,7 +262,7 @@ namespace RiskGame
                     }
                     players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
                     players[1].Color = (SolidColorBrush)rectPlayer2Color.Fill;
-                    if (players.Count >= 3) { players[2].Color = (SolidColorBrush)rectPlayer3Color.Fill; }
+                    players[2].Color = (SolidColorBrush)rectPlayer3Color.Fill;
                     if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
                     if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
                     if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }

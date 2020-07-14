@@ -460,7 +460,15 @@ namespace RiskGame
         private void SetupGame(bool randomise_initial)
         {
             // Determines how many armies players have.
-            int initialarmies = (50 - (5 * Players.Count));
+            int playercount = 0;
+            foreach(Player p in Players)
+            {
+                if(!(p is NeutralAI))
+                {
+                    playercount += 1;
+                }
+            }
+            int initialarmies = (50 - (5 * playercount));
             CurrentPlayer = Players[0];
             // Setup Board and initial armies //
             UISetup();
@@ -470,7 +478,6 @@ namespace RiskGame
             {
                 SetupRandom();
                 Territories.Sort();
-                // sort territories
                 StartGame();
             }
             else
@@ -534,6 +541,54 @@ namespace RiskGame
                 }
             }
         }
+        private void NeutralAISetup()
+        {
+            foreach (Territory t in Territories)
+            {
+                // ensures each territory is owned by a player.
+                bool assigned = false;
+                do
+                {
+                    if(t.owner != null) { assigned = true; break; }
+                    CycleNeutralAI();
+                    if (CurrentPlayer.army_undeployed > 0)
+                    {
+                        Place_Reinforce(t, 1);
+                        assigned = true;
+                    }
+                } while (assigned == false);
+            }
+            // Places remaining armies around map in friendly territory until there are none left //
+            foreach (Player p in Players)
+            {
+                if(p is NeutralAI)
+                {
+                    CurrentPlayer = p;
+                    while (p.army_undeployed > 0)
+                    {
+                        foreach (Territory t in Territories)
+                        {
+                            if (p.army_undeployed > 0)
+                            {
+                                if (t.owner == p)
+                                {
+                                    Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed, 4)));
+                                }
+                            }
+                            else { break; }
+                        }
+                    }
+                }
+            }
+        }
+        private void CycleNeutralAI()
+        {
+            CyclePlayers();
+            if (!(CurrentPlayer is NeutralAI))
+            {
+                CycleNeutralAI();
+            }
+        }
         // Game Start UI setup //
         private void UISetup()
         {
@@ -546,46 +601,42 @@ namespace RiskGame
             Players[1].Disp_Owned = lblPlayer2Territories;
             rectPlayerColor1.Fill = (SolidColorBrush)Players[0].Color;
             rectPlayerColor2.Fill = (SolidColorBrush)Players[1].Color;
+            lblPlayerName3.Content = Players[2].Username;
+            rectPlayerColor3.Fill = (SolidColorBrush)Players[2].Color;
+            Players[2].Disp_ArmyStrength = lblPlayer3Strength;
+            Players[2].Disp_Owned = lblPlayer3Territories;
             // make this more efficient
-            if (Players.Count >= 3)
+            if (Players.Count >= 4)
             {
-                lblPlayerName3.Content = Players[2].Username;
-                rectPlayerColor3.Fill = (SolidColorBrush)Players[2].Color;
-                brd_Player3.Visibility = Visibility.Visible;
-                Players[2].Disp_ArmyStrength = lblPlayer3Strength;
-                Players[2].Disp_Owned = lblPlayer3Territories;
-                if (Players.Count >= 4)
+                lblPlayerName4.Content = Players[3].Username;
+                rectPlayerColor4.Fill = (SolidColorBrush)Players[3].Color;
+                brd_Player4.Visibility = Visibility.Visible;
+                Players[3].Disp_ArmyStrength = lblPlayer4Strength;
+                Players[3].Disp_Owned = lblPlayer4Territories;
+                if (Players.Count >= 5)
                 {
-                    lblPlayerName4.Content = Players[3].Username;
-                    rectPlayerColor4.Fill = (SolidColorBrush)Players[3].Color;
-                    brd_Player4.Visibility = Visibility.Visible;
-                    Players[3].Disp_ArmyStrength = lblPlayer4Strength;
-                    Players[3].Disp_Owned = lblPlayer4Territories;
-                    if (Players.Count >= 5)
+                    int fs;
+                    int rect_height = 17;
+                    Thickness th = new Thickness(10, 3, 0, 3);
+                    int gap = 2;
+                    lblPlayerName5.Content = Players[4].Username;
+                    rectPlayerColor5.Fill = (SolidColorBrush)Players[4].Color;
+                    brd_Player5.Visibility = Visibility.Visible;
+                    Players[4].Disp_ArmyStrength = lblPlayer5Strength;
+                    Players[4].Disp_Owned = lblPlayer5Territories;
+                    if (Players.Count >= 6)
                     {
-                        int fs;
-                        int rect_height = 17;
-                        Thickness th = new Thickness(10,3,0,3);
-                        int gap = 2;
-                        lblPlayerName5.Content = Players[4].Username;
-                        rectPlayerColor5.Fill = (SolidColorBrush)Players[4].Color;
-                        brd_Player5.Visibility = Visibility.Visible;
-                        Players[4].Disp_ArmyStrength = lblPlayer5Strength;
-                        Players[4].Disp_Owned = lblPlayer5Territories;
-                        if (Players.Count >= 6)
-                        {
-                            fs = 11;
-                            gap = 0;
-                            rectPlayerColor6.Fill = (SolidColorBrush)Players[5].Color;
-                            lblPlayerName6.Content = Players[5].Username;
-                            brd_Player6.Visibility = Visibility.Visible;
-                            Players[5].Disp_ArmyStrength = lblPlayer6Strength;
-                            Players[5].Disp_Owned = lblPlayer6Territories;
-                            SetFontSize(fs);
-                        }
-                        SetGap(gap);
-                        SetRect(rect_height, th);
+                        fs = 11;
+                        gap = 0;
+                        rectPlayerColor6.Fill = (SolidColorBrush)Players[5].Color;
+                        lblPlayerName6.Content = Players[5].Username;
+                        brd_Player6.Visibility = Visibility.Visible;
+                        Players[5].Disp_ArmyStrength = lblPlayer6Strength;
+                        Players[5].Disp_Owned = lblPlayer6Territories;
+                        SetFontSize(fs);
                     }
+                    SetGap(gap);
+                    SetRect(rect_height, th);
                 }
             }
         }
@@ -724,7 +775,9 @@ namespace RiskGame
                     if (CurrentPlayer is NeutralAI) { CyclePlayers(); NextTurn(); }
                     if (AllPlaced())
                     {
-                        // Neutral AI conquer
+                        NeutralAISetup();
+                        Territories.Sort();
+                        CurrentPlayer = Players[0];
                         StartGame();
                     }
                 }
@@ -743,30 +796,37 @@ namespace RiskGame
                         bonus += c.bonus;
                     }
                 }
-                CurrentPlayer.army_undeployed += ((CurrentPlayer.Territoriesowned / 3) + bonus);
-                UpdatePlayerPanelUI();
-                UpdateState(GameState.PlacingArmy);
-                switch (ownedContinents.Count)
+                if(CurrentPlayer is NeutralAI)
                 {
-                    case 1:
-                        Output(String.Format("You have received {0} bonus armies from capturing all of {1}", bonus, ownedContinents[0]));
-                        break;
-                    case 2:
-                        Output(String.Format("You have received {0} bonus armies from capturing all of {1} and {2}", bonus, ownedContinents[0], ownedContinents[1]));
-                        break;
-                    case 3:
-                        Output(String.Format("You have received {0} bonus armies from {1}, {2}, and {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
-                        break;
-                    case 4:
-                        Output(String.Format("You have received {0} bonus armies from {1}, {2}, {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
-                        Output(String.Format("and {0}", ownedContinents[3]));
-                        break;
-                    case 5:
-                        Output(String.Format("You have received {0} bonus armies from {1}, {2}, {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
-                        Output(String.Format("{0} and {1}", ownedContinents[3], ownedContinents[4]));
-                        break;
+                    NextTurn();
                 }
-                if(Time > 0) { StartTimer(); }
+                else
+                {
+                    CurrentPlayer.army_undeployed += ((CurrentPlayer.Territoriesowned / 3) + bonus);
+                    UpdatePlayerPanelUI();
+                    UpdateState(GameState.PlacingArmy);
+                    switch (ownedContinents.Count)
+                    {
+                        case 1:
+                            Output(String.Format("You have received {0} bonus armies from capturing all of {1}", bonus, ownedContinents[0]));
+                            break;
+                        case 2:
+                            Output(String.Format("You have received {0} bonus armies from capturing all of {1} and {2}", bonus, ownedContinents[0], ownedContinents[1]));
+                            break;
+                        case 3:
+                            Output(String.Format("You have received {0} bonus armies from {1}, {2}, and {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
+                            break;
+                        case 4:
+                            Output(String.Format("You have received {0} bonus armies from {1}, {2}, {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
+                            Output(String.Format("and {0}", ownedContinents[3]));
+                            break;
+                        case 5:
+                            Output(String.Format("You have received {0} bonus armies from {1}, {2}, {3}", bonus, ownedContinents[0], ownedContinents[1], ownedContinents[2]));
+                            Output(String.Format("{0} and {1}", ownedContinents[3], ownedContinents[4]));
+                            break;
+                    }
+                    if (Time > 0) { StartTimer(); }
+                }
             }
         }
         private void Win()
