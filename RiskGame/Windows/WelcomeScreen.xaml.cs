@@ -58,7 +58,7 @@ namespace RiskGame.Windows
             this.Close();
             Login.Show();
         }
-        private void Quit_Game(object sender, RoutedEventArgs e)
+        private void Quit(object sender, RoutedEventArgs e)
         {
             // Closes the game when "Quit" is clicked.
             this.Close();
