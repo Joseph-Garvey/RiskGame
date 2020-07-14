@@ -777,7 +777,7 @@ namespace RiskGame
                     {
                         NeutralAISetup();
                         Territories.Sort();
-                        CurrentPlayer = Players[0];
+                        CurrentPlayer = Players[Players.Count - 1];
                         StartGame();
                     }
                 }
