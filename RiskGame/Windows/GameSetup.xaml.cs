@@ -15,6 +15,7 @@ using System.Collections.ObjectModel;
 using RiskGame.enemyAI;
 using RiskGame.Game;
 using RiskGame.Windows;
+using RiskGame.CustomExceptions;
 
 namespace RiskGame
 {
@@ -63,6 +64,27 @@ namespace RiskGame
                 hints_enabled = value;
             }
         }
+        private bool timer_enabled;
+        public bool Timer_enabled
+        {
+            get { return timer_enabled; }
+            set
+            {
+                if(value == false)
+                {
+                    sldTime.Minimum = 0;
+                    sldTime.Value = 0;
+                    panel_Time.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    sldTime.Minimum = 20;
+                    sldTime.Value = 30;
+                    panel_Time.Visibility = Visibility.Visible;
+                }
+                timer_enabled = value;
+            }
+        }
 
         // Constructor //
         public GameSetup(List<Player> _players)
@@ -70,14 +92,26 @@ namespace RiskGame
             // Takes in the list of players from Login/Register.
             InitializeComponent();
             players = _players;
+            // StateChanged Event Handler //
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             // Binding setup //
             this.DataContext = this;
+            // Timer Setup //
+            timer_enabled = true;
             // Music Setup //
-            music_enabled = ((Human)players[0]).music_enabled;
+            Music_enabled = ((Human)players[0]).music_enabled;
+            Hints_enabled = ((Human)players[0]).hints_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
             // Retrieves list of games //
-            GameList.ItemsSource = GameManager.RetrieveGames();
+            List<Human> humanusers = new List<Human>();
+            foreach(Player p in players)
+            {
+                if(p is Human) { humanusers.Add(p as Human); }
+            }
+            ObservableCollection<GameDetails> loadedgames = GameManager.RetrieveGames(humanusers);
+            if (loadedgames == null || loadedgames.Count == 0) { panel_LoadGame.Visibility = Visibility.Collapsed; }
+            GameList.ItemsSource = loadedgames;
             // Updates UI with details of currently logged in players, showing new "Player Panels" as required.
             lblPlayer1.Content = players[0].Username;
             if(players.Count >= 2)
@@ -123,12 +157,6 @@ namespace RiskGame
         // UI Buttons //
         private void CyclePlayerColours(object sender, RoutedEventArgs e)
         {
-            CyclePlayerColours(sender);
-        }
-
-        // overloaded script allows the same method to be executed from the code behind when new players are added.
-        private void CyclePlayerColours(object sender)
-        {
             /// Cycles the player's colour forward and back, allowing the payer to choose any colour from the list - except for those already in use by another player. //
             Button btnClicked = (Button)sender;
             Rectangle R;
@@ -151,15 +179,47 @@ namespace RiskGame
                     { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) + 1)]; }
                     catch (ArgumentOutOfRangeException) { R.Fill = playercolours[0]; }
                 }
+                else {
+                    // cycles backwards and brings to end if at end of list.
+                    try { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) - 1)]; }
+                    catch (ArgumentOutOfRangeException) { R.Fill = playercolours[(playercolours.Count - 1)]; }
+                }
+                if( ((R != rectPlayer1Color && R.Fill == rectPlayer1Color.Fill) || (R != rectPlayer2Color && R.Fill == rectPlayer2Color.Fill) || (R != rectPlayer3Color && R.Fill == rectPlayer3Color.Fill) || (R != rectPlayer4Color && R.Fill == rectPlayer4Color.Fill) || (R != rectPlayer5Color && R.Fill == rectPlayer5Color.Fill) || (R != rectPlayer6Color && R.Fill == rectPlayer6Color.Fill)))
+                {
+                    // If the colour is already in use by another player or by self, loop script to cycle to next colour in list.
+                    colortaken = true;
+                }
+            } while (colortaken == true);
+        }
+
+        // overloaded script allows the same method to be executed from the code behind when new players are added.
+        private void CyclePlayerColours(object sender)
+        {
+            Button btnClicked = (Button)sender;
+            Rectangle R;
+            bool colortaken = false;
+            do
+            {
+                colortaken = false;
+                if (btnClicked.Name.Contains("1")) { R = rectPlayer1Color; }
+                else if (btnClicked.Name.Contains("2")) { R = rectPlayer2Color; }
+                else if (btnClicked.Name.Contains("3")) { R = rectPlayer3Color; }
+                else if (btnClicked.Name.Contains("4")) { R = rectPlayer4Color; }
+                else if (btnClicked.Name.Contains("5")) { R = rectPlayer5Color; }
+                else R = rectPlayer6Color;
+                if (btnClicked.Name.Contains("Forward"))
+                {
+                    try
+                    { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) + 1)]; }
+                    catch (ArgumentOutOfRangeException) { R.Fill = playercolours[0]; }
+                }
                 else
                 {
-                    // cycles backwards and brings to end if at end of list.
                     try { R.Fill = playercolours[(playercolours.IndexOf((SolidColorBrush)R.Fill) - 1)]; }
                     catch (ArgumentOutOfRangeException) { R.Fill = playercolours[(playercolours.Count - 1)]; }
                 }
                 if (((R != rectPlayer1Color && R.Fill == rectPlayer1Color.Fill) || (R != rectPlayer2Color && R.Fill == rectPlayer2Color.Fill) || (R != rectPlayer3Color && R.Fill == rectPlayer3Color.Fill) || (R != rectPlayer4Color && R.Fill == rectPlayer4Color.Fill) || (R != rectPlayer5Color && R.Fill == rectPlayer5Color.Fill) || (R != rectPlayer6Color && R.Fill == rectPlayer6Color.Fill)))
                 {
-                    // If the colour is already in use by another player or by self, loop script to cycle to next colour in list.
                     colortaken = true;
                 }
             } while (colortaken == true);
@@ -168,7 +228,12 @@ namespace RiskGame
         /// if + button clicked forward the list of players to a new Login Menu and close this window.
         private void AddPlayer(object sender, RoutedEventArgs e)
         {
-            if(cmbPlayer6.SelectedIndex == 1) { DispErrorMsg("AI is not yet implemented. Please select a human player."); } // AI is not yet implemented and thus is not an option.
+            if(cmbPlayer6.SelectedIndex == 1) {
+                // create AI player
+                // add to list
+                // update UI
+                DispErrorMsg("AI is not yet implemented. Please select a human player.");
+            } // AI is not yet implemented and thus is not an option.
             else if(cmbPlayer6.SelectedIndex == 0)
             {
                 // Only if selecting human, direct to Login Screen so that human can log in.
@@ -180,33 +245,33 @@ namespace RiskGame
         }
         private void New_Game(object sender, RoutedEventArgs e)
         {
+            ClearError();
             if (players.Count >= 2)
             {
-                if(cmbMap.SelectedIndex == 0)
+                if (players.Count == 2)
                 {
-                    switch (cmbGameMode.SelectedIndex)
-                    {
-                        case -1:
-                            DispErrorMsg("Please select a Gamemode.");
-                            break;
-                        case 0:
-                            DispErrorMsg("Classic Risk has not yet been implemented.");
-                            break;
-                        case 1:
-                            players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
-                            players[1].Color = (SolidColorBrush)rectPlayer2Color.Fill;
-                            if (players.Count >= 3) { players[2].Color = (SolidColorBrush)rectPlayer3Color.Fill; }
-                            if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
-                            if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
-                            if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
-                            GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
-                            App.Current.MainWindow = Game;
-                            this.Close();
-                            Game.Show();
-                            break;
-                    }
+                    players.Add(new NeutralAI("Neutral Player"));
+                    CyclePlayerColours(btnPlayer3Forward);
                 }
-                else { DispErrorMsg("Please select a map."); return; }
+                if (cmbMap.SelectedIndex != -1)
+                {
+                    if(cmbGameMode.SelectedIndex == -1)
+                    {
+                        DispErrorMsg("Please select a Gamemode.");
+                        return;
+                    }
+                    players[0].Color = (SolidColorBrush)rectPlayer1Color.Fill;
+                    players[1].Color = (SolidColorBrush)rectPlayer2Color.Fill;
+                    players[2].Color = (SolidColorBrush)rectPlayer3Color.Fill;
+                    if (players.Count >= 4) { players[3].Color = (SolidColorBrush)rectPlayer4Color.Fill; }
+                    if (players.Count >= 5) { players[4].Color = (SolidColorBrush)rectPlayer5Color.Fill; }
+                    if (players.Count >= 6) { players[5].Color = (SolidColorBrush)rectPlayer6Color.Fill; }
+                    GameWindow Game = new GameWindow(players, chkRandomise.IsChecked.Value, (GameMap)cmbMap.SelectedIndex, (GameMode)cmbGameMode.SelectedIndex, (int)sldTime.Value, sldBias.Value);
+                    App.Current.MainWindow = Game;
+                    Game.Show();
+                    this.Close();
+                }
+                else { DispErrorMsg("Please select a map."); }
             }
             else { DispErrorMsg("There must be at least two players to start a game."); }
         }
@@ -216,23 +281,29 @@ namespace RiskGame
         private void Load_Game(object sender, RoutedEventArgs e)
         {
             // Gets the game ID of the selected game and loads the game with that gameID frm file.
-            try
-            {
-                GameManager game = GameManager.LoadGame(int.Parse(((GameDetails)GameList.SelectedItem).GameID));
+                if(txtError.Visibility == Visibility.Visible) { ClearError(); }
+                GameManager game = new GameManager();
+                try
+                {
+                    game = GameManager.LoadGame(int.Parse(((GameDetails)GameList.SelectedItem).GameID));
+                }
+                catch (GameNotFoundException)
+                {
+                    DispErrorMsg("The selected game could not be loaded.");
+                }
+                catch (NullReferenceException)
+                {
+                    DispErrorMsg("Please select a game to load by clicking on the details of the game you wish to load and then 'Load Game'");
+                }
+                catch (Exception)
+                {
+                    DispErrorMsg("Something went wrong.");
+                }
                 // Creates a new GameWindow, sending the GameManager containing the game details to the GameWindow. Closes window on completion.
                 GameWindow Game = new GameWindow(game) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
                 App.Current.MainWindow = Game;
                 this.Close();
                 Game.Show();
-            }
-            catch (NullReferenceException)
-            {
-                DispErrorMsg("Please select a game to load by clicking on the details of the game you wish to load and then 'Load Game'");
-            }
-            catch(Exception)
-            {
-                DispErrorMsg("Something went wrong.");
-            }
         }
 
         ///////////////////////////////////////////////////////////
@@ -242,109 +313,10 @@ namespace RiskGame
             lblError.Visibility = Visibility.Visible;
             txtError.Text = Message;
         }
-
-        // Media Controls //
-        private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> e) { mediaplayer.Volume = (double)slider_Volume.Value; }
-        private void MediaBack(object sender, RoutedEventArgs e)
+        private void ClearError()
         {
-            Music.MusicIndex -= 1;
-            ChangeMedia();
+            lblError.Visibility = Visibility.Collapsed;
+            txtError.Text = "";
         }
-        private void MediaForward(object sender, RoutedEventArgs e)
-        {
-            Music.MusicIndex += 1;
-            ChangeMedia();
-        }
-        private void ChangeMedia()
-        {
-            mediaplayer.Source = Music.sources[Music.MusicIndex];
-            mediaplayer.Play();
-        }
-        private void MediaPause(object sender, RoutedEventArgs e) { mediaplayer.Pause(); }
-        private void MediaPlay(object sender, RoutedEventArgs e) { mediaplayer.Play(); }
-        private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e)
-        {
-            MediaForward(sender, e);
-        }
-        private void UpdateMediaText(object sender, RoutedEventArgs e)
-        {
-            lblMediaDetails.Content = mediaplayer.Source.ToString().Substring(30);
-        }
-
-        // Navigate to and from settings menu //
-        private void Settings(object sender, RoutedEventArgs e) { Settings(); }
-        private void Return(object sender, RoutedEventArgs e) { Return(); }
-        private void Settings()
-        {
-            panel_MainUI.Visibility = Visibility.Collapsed;
-            panel_Settings.Visibility = Visibility.Visible;
-        }
-        private void Return()
-        {
-            panel_MainUI.Visibility = Visibility.Visible;
-            panel_Settings.Visibility = Visibility.Collapsed;
-        }
-
-        // Window Management //
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F11) { ChangeWindowState(); }
-            if (e.Key == Key.Escape)
-            {
-                if (this.WindowState == WindowState.Maximized)
-                {
-                    ChangeWindowState();
-                }
-                else
-                {
-                    if (panel_MainUI.Visibility == Visibility.Visible)
-                    {
-                        Settings();
-                    }
-                    else
-                    {
-                        Return();
-                    }
-                }
-            }
-        }
-        private void ChangeWindowState()
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                this.ResizeMode = ResizeMode.CanResize;
-                this.WindowState = WindowState.Normal;
-                this.WindowStyle = WindowStyle.SingleBorderWindow;
-            }
-            else
-            {
-                this.ResizeMode = ResizeMode.NoResize;
-                this.WindowState = WindowState.Normal;
-                this.WindowStyle = WindowStyle.None;
-                this.WindowState = WindowState.Maximized;
-            }
-        }
-        private void Window_StateChanged(object sender, EventArgs e)
-        {
-            if (this.WindowState == WindowState.Maximized)
-            {
-                chkFullscreen.IsChecked = true;
-            }
-            else
-            {
-                chkFullscreen.IsChecked = false;
-            }
-        }
-        private void Fullscreen_Click(object sender, RoutedEventArgs e)
-        {
-            ChangeWindowState();
-        }
-        private void Tutorial_Window(object sender, RoutedEventArgs e)
-        {
-            Tutorial tutorial = new Tutorial();
-            App.Current.MainWindow = tutorial;
-            tutorial.Show();
-        }
-
     }
 }

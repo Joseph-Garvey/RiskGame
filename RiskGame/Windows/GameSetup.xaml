@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RiskGame"
         mc:Ignorable="d"
-        Title="Game Setup" Height="600" Width="800" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" StateChanged="Window_StateChanged">
+        Title="Game Setup" Height="600" Width="800" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}">
     <Border>
         <Border.Background>
             <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
@@ -20,160 +20,194 @@
         </Border.Background>
         <Viewbox>
             <StackPanel>
+                <!-- Main UI -->
                 <StackPanel x:Name="panel_MainUI" Orientation="Horizontal">
-                    <StackPanel>
-                        <StackPanel.Resources>
-                            <Style TargetType="ComboBox">
-                                <Setter Property="FontSize" Value="8"></Setter>
-                                <Setter Property="Margin" Value="5,0,5,0"></Setter>
-                            </Style>
-                        </StackPanel.Resources>
-                        <Label Content="Players" Style="{StaticResource lblHeader}"></Label>
-                        <Border Margin="5,0,5,0" Background="#FFA8A8A8"  BorderThickness="1" BorderBrush="Black">
-                            <StackPanel x:Name="stckPlayers">
-                                <StackPanel.Resources>
-                                    <Style TargetType="Border">
-                                        <Setter Property="Margin" Value="4,2,4,0"></Setter>
-                                        <Setter Property="Background" Value="LightGray"></Setter>
-                                        <Setter Property="BorderBrush" Value="Black"></Setter>
-                                        <Setter Property="BorderThickness" Value="1"></Setter>
-                                    </Style>
-                                    <Style TargetType="Button">
-                                        <Setter Property="BorderBrush" Value="DarkGray"></Setter>
-                                        <EventSetter Event="Click" Handler="CyclePlayerColours"></EventSetter>
-                                    </Style>
-                                    <Style TargetType="Button" x:Key="AddPlayer">
-                                        <Setter Property="FontWeight" Value="Bold"></Setter>
-                                        <Setter Property="Content" Value="+"></Setter>
-                                        <Setter Property="Width" Value="18"></Setter>
-                                        <Setter Property="BorderBrush" Value="DarkGray"></Setter>
-                                        <Setter Property="Margin" Value="0"></Setter>
-                                    </Style>
-                                    <Style x:Key="rectplayercolor" TargetType="Rectangle">
-                                        <Setter Property="Width" Value="10"></Setter>
-                                        <Setter Property="Stroke" Value="Black"></Setter>
-                                    </Style>
-                                    <Style TargetType="Label">
-                                        <Setter Property="FontSize" Value="6"></Setter>
-                                        <Setter Property="Width" Value="45"></Setter>
-                                        <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-                                    </Style>
-                                    <Style TargetType="ComboBox">
-                                        <Setter Property="Margin" Value="5,0,0,0"></Setter>
-                                        <Setter Property="Height" Value="19"></Setter>
-                                        <Setter Property="Width" Value="75"></Setter>
-                                    </Style>
-                                    <Style TargetType="TextBlock">
-                                        <Setter Property="FontSize" Value="8"></Setter>
-                                        <Setter Property="FontWeight" Value="Bold"></Setter>
-                                    </Style>
-                                </StackPanel.Resources>
-                                <Border>
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="btnPlayer1Back"  Content="&lt;"></Button>
-                                        <Rectangle x:Name="rectPlayer1Color" Fill="OrangeRed" Style="{StaticResource rectplayercolor}"></Rectangle>
-                                        <Button x:Name="btnPlayer1Forward" Content="&gt;"></Button>
-                                        <Label x:Name="lblPlayer1" Content="Player 1"></Label>
-                                        <Label Content="Human"></Label>
-                                    </StackPanel>
-                                </Border>
-                                <Border  x:Name="panelPlayer2" Visibility="Collapsed">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="btnPlayer2Back" Content="&lt;"></Button>
-                                        <Rectangle x:Name="rectPlayer2Color" Style="{StaticResource rectplayercolor}"></Rectangle>
-                                        <Button x:Name="btnPlayer2Forward"  Content="&gt;"></Button>
-                                        <Label x:Name="lblPlayer2"></Label>
-                                        <Label Content="Human"></Label>
-                                    </StackPanel>
-                                </Border>
-                                <Border x:Name="panelPlayer3" Visibility="Collapsed">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="btnPlayer3Back"  Content="&lt;"></Button>
-                                        <Rectangle x:Name="rectPlayer3Color" Style="{StaticResource rectplayercolor}"></Rectangle>
-                                        <Button x:Name="btnPlayer3Forward"  Content="&gt;"></Button>
-                                        <Label x:Name="lblPlayer3"></Label>
-                                        <Label Content="Human"></Label>
-                                    </StackPanel>
-                                </Border>
-                                <Border x:Name="panelPlayer4" Visibility="Collapsed">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="btnPlayer4Back"  Content="&lt;"></Button>
-                                        <Rectangle x:Name="rectPlayer4Color" Style="{StaticResource rectplayercolor}"></Rectangle>
-                                        <Button x:Name="btnPlayer4Forward"  Content="&gt;"></Button>
-                                        <Label x:Name="lblPlayer4"></Label>
-                                        <Label Content="Human"></Label>
-                                    </StackPanel>
-                                </Border>
-                                <Border x:Name="panelPlayer5" Visibility="Collapsed">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="btnPlayer5Back"  Content="&lt;"></Button>
-                                        <Rectangle x:Name="rectPlayer5Color" Style="{StaticResource rectplayercolor}"></Rectangle>
-                                        <Button x:Name="btnPlayer5Forward"  Content="&gt;"></Button>
-                                        <Label x:Name="lblPlayer5" Content="Player 1"></Label>
-                                        <Label Content="Human"></Label>
-                                    </StackPanel>
-                                </Border>
-                                <Border x:Name="panelPlayer6" Margin="4,2,4,2">
-                                    <StackPanel Orientation="Horizontal">
-                                        <Button x:Name="btnPlayer6Back"  Content="&lt;"></Button>
-                                        <Rectangle x:Name="rectPlayer6Color" Style="{StaticResource rectplayercolor}"></Rectangle>
-                                        <Button x:Name="btnPlayer6Forward"  Content="&gt;"></Button>
-                                        <Label x:Name="lblPlayer6" Content="Player 2"></Label>
-                                        <Label x:Name="lblPlayer6Type" Content="Human" Margin="0,0,40,0" Visibility="Collapsed"></Label>
-                                        <ComboBox x:Name="cmbPlayer6">
-                                            <ComboBoxItem>
-                                                <TextBlock>Human</TextBlock>
-                                            </ComboBoxItem>
-                                            <ComboBoxItem>
-                                                <TextBlock>AI (not yet implemented)</TextBlock>
-                                            </ComboBoxItem>
-                                        </ComboBox>
-                                        <Button x:Name="btnAddPlayer"  Style="{StaticResource AddPlayer}" Click="AddPlayer"></Button>
-                                    </StackPanel>
-                                </Border>
+                    <Border Style="{StaticResource brd_Background}">
+                        <StackPanel Style="{StaticResource panel_Background}">
+                            <StackPanel.Resources>
+                                <Style TargetType="ComboBox">
+                                    <Setter Property="FontSize" Value="8"></Setter>
+                                    <Setter Property="Margin" Value="5,0,5,0"></Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <Label Content="Players" Style="{StaticResource lblHeader}"></Label>
+                            <Border Margin="5,0,5,0" Background="#FFA8A8A8"  BorderThickness="1" BorderBrush="Black">
+                                <StackPanel x:Name="stckPlayers">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Margin" Value="4,2,4,0"></Setter>
+                                            <Setter Property="Background" Value="LightGray"></Setter>
+                                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                                            <Setter Property="BorderThickness" Value="1"></Setter>
+                                        </Style>
+                                        <Style TargetType="Button">
+                                            <Setter Property="BorderBrush" Value="DarkGray"></Setter>
+                                            <EventSetter Event="Click" Handler="CyclePlayerColours"></EventSetter>
+                                        </Style>
+                                        <Style TargetType="Button" x:Key="AddPlayer">
+                                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                                            <Setter Property="Content" Value="+"></Setter>
+                                            <Setter Property="Width" Value="18"></Setter>
+                                            <Setter Property="BorderBrush" Value="DarkGray"></Setter>
+                                            <Setter Property="Margin" Value="0"></Setter>
+                                        </Style>
+                                        <Style x:Key="rectplayercolor" TargetType="Rectangle">
+                                            <Setter Property="Width" Value="10"></Setter>
+                                            <Setter Property="Stroke" Value="Black"></Setter>
+                                        </Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="FontSize" Value="6"></Setter>
+                                            <Setter Property="Width" Value="45"></Setter>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                        </Style>
+                                        <Style TargetType="ComboBox">
+                                            <Setter Property="Margin" Value="5,0,0,0"></Setter>
+                                            <Setter Property="Height" Value="19"></Setter>
+                                            <Setter Property="Width" Value="75"></Setter>
+                                        </Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="FontSize" Value="8"></Setter>
+                                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <Border>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="btnPlayer1Back"  Content="&lt;"></Button>
+                                            <Rectangle x:Name="rectPlayer1Color" Fill="OrangeRed" Style="{StaticResource rectplayercolor}"></Rectangle>
+                                            <Button x:Name="btnPlayer1Forward" Content="&gt;"></Button>
+                                            <Label x:Name="lblPlayer1" Content="Player 1"></Label>
+                                            <Label Content="Human"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border  x:Name="panelPlayer2" Visibility="Collapsed">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="btnPlayer2Back" Content="&lt;"></Button>
+                                            <Rectangle x:Name="rectPlayer2Color" Style="{StaticResource rectplayercolor}"></Rectangle>
+                                            <Button x:Name="btnPlayer2Forward"  Content="&gt;"></Button>
+                                            <Label x:Name="lblPlayer2"></Label>
+                                            <Label Content="Human"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="panelPlayer3" Visibility="Collapsed">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="btnPlayer3Back"  Content="&lt;"></Button>
+                                            <Rectangle x:Name="rectPlayer3Color" Style="{StaticResource rectplayercolor}"></Rectangle>
+                                            <Button x:Name="btnPlayer3Forward"  Content="&gt;"></Button>
+                                            <Label x:Name="lblPlayer3"></Label>
+                                            <Label Content="Human"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="panelPlayer4" Visibility="Collapsed">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="btnPlayer4Back"  Content="&lt;"></Button>
+                                            <Rectangle x:Name="rectPlayer4Color" Style="{StaticResource rectplayercolor}"></Rectangle>
+                                            <Button x:Name="btnPlayer4Forward"  Content="&gt;"></Button>
+                                            <Label x:Name="lblPlayer4"></Label>
+                                            <Label Content="Human"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="panelPlayer5" Visibility="Collapsed">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="btnPlayer5Back"  Content="&lt;"></Button>
+                                            <Rectangle x:Name="rectPlayer5Color" Style="{StaticResource rectplayercolor}"></Rectangle>
+                                            <Button x:Name="btnPlayer5Forward"  Content="&gt;"></Button>
+                                            <Label x:Name="lblPlayer5" Content="Player 1"></Label>
+                                            <Label Content="Human"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="panelPlayer6" Margin="4,2,4,2">
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="btnPlayer6Back"  Content="&lt;"></Button>
+                                            <Rectangle x:Name="rectPlayer6Color" Style="{StaticResource rectplayercolor}"></Rectangle>
+                                            <Button x:Name="btnPlayer6Forward"  Content="&gt;"></Button>
+                                            <Label x:Name="lblPlayer6" Content="Player 2"></Label>
+                                            <Label x:Name="lblPlayer6Type" Content="Human" Margin="0,0,40,0" Visibility="Collapsed"></Label>
+                                            <ComboBox x:Name="cmbPlayer6">
+                                                <ComboBoxItem>
+                                                    <TextBlock>Human</TextBlock>
+                                                </ComboBoxItem>
+                                                <ComboBoxItem>
+                                                    <TextBlock>AI (not yet implemented)</TextBlock>
+                                                </ComboBoxItem>
+                                            </ComboBox>
+                                            <Button x:Name="btnAddPlayer"  Style="{StaticResource AddPlayer}" Click="AddPlayer"></Button>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                            <Label Content="Map" FontSize="8" Style="{StaticResource lblHeader}"></Label>
+                            <ComboBox x:Name="cmbMap" SelectedIndex="0">
+                                <ComboBoxItem>
+                                    <TextBlock Text="Default"></TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Text="New York"></TextBlock>
+                                </ComboBoxItem>
+                            </ComboBox>
+                            <Label Content="GameMode" FontSize="8" Style="{StaticResource lblHeader}"></Label>
+                            <ComboBox x:Name="cmbGameMode" SelectedIndex="1">
+                                <ComboBoxItem>
+                                    <TextBlock Text="New Risk"></TextBlock>
+                                </ComboBoxItem>
+                                <ComboBoxItem>
+                                    <TextBlock Text="Classic Risk"></TextBlock>
+                                </ComboBoxItem>
+                            </ComboBox>
+                            <StackPanel Style="{StaticResource HorizontalStretch}">
+                                <Label Content="Turn timer enabled?" FontSize="8" Style="{StaticResource lblHeader}"></Label>
+                                <CheckBox x:Name="chkTimerEnabled"  Margin="10,0,0,0" VerticalAlignment="Center" IsChecked="{Binding Timer_enabled, Mode=TwoWay}"></CheckBox>
                             </StackPanel>
-                        </Border>
-                        <Label Content="Map" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                        <ComboBox x:Name="cmbMap">
-                            <ComboBoxItem>
-                                <TextBlock Text="Default"></TextBlock>
-                            </ComboBoxItem>
-                        </ComboBox>
-                        <Label Content="GameMode" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                        <ComboBox x:Name="cmbGameMode">
-                            <ComboBoxItem>
-                                <TextBlock Text="Classic Risk (Not yet implemented)"></TextBlock>
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                <TextBlock Text="New Risk"></TextBlock>
-                            </ComboBoxItem>
-                        </ComboBox>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Content="Randomise Initial Placement?" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                            <CheckBox x:Name="chkRandomise"  Margin="5,9,5,8"></CheckBox>
-                            <Button Style="{StaticResource btnUI}" Width="20" Margin="6" ToolTip="This option speeds up the start of a game by randomly placing all players' initial armies around the map.">?</Button>
+                            <Expander Margin="5,0,5,0" IsExpanded="False" HorizontalContentAlignment="Stretch">
+                                <Expander.Header>
+                                    <Label FontSize="8" HorizontalAlignment="Stretch" Style="{StaticResource lblSubHeading}">Advanced Options</Label>
+                                </Expander.Header>
+                                <Border Style="{StaticResource brd_Background}" Margin="2">
+                                    <StackPanel>
+                                        <StackPanel x:Name="panel_Time" Style="{StaticResource panel_Background}" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                            <Label Content="Turn Time" FontSize="8" Style="{StaticResource lblHeader}"></Label>
+                                            <Slider x:Name="sldTime" Minimum="20" Maximum="120" Value="60" Style="{StaticResource sld_Base}" Width="90"></Slider>
+                                            <TextBox Width="25" Margin="0,5,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding ElementName=sldTime, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        </StackPanel>
+                                        <StackPanel x:Name="panel_Bias" Style="{StaticResource panel_Background}" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                            <Label Content="Defense Bias" FontSize="8" Style="{StaticResource lblHeader}"></Label>
+                                            <Slider x:Name="sldBias" Minimum="0" Maximum="1" Value="0.5" TickFrequency="0.1" Style="{StaticResource sld_Base}" Width="80"></Slider>
+                                            <TextBox Width="25" Margin="0,5,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding ElementName=sldBias, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </Expander>
+                            <StackPanel Style="{StaticResource HorizontalStretch}">
+                                <Label Content="Randomise Initial Placement?" FontSize="8" Style="{StaticResource lblHeader}"></Label>
+                                <CheckBox x:Name="chkRandomise" Style="{StaticResource Default}" Margin="10,5,5,5"/>
+                                <Button Style="{StaticResource btnUI}" Width="20" Margin="10,6,5,6" ToolTip="This option speeds up the start of a game by randomly placing all players' initial armies around the map." Content="?"/>
+                            </StackPanel>
+                            <Button Content="New Game" Click="New_Game" Style="{StaticResource btnUI}"></Button>
                         </StackPanel>
-                        <Button Content="New Game" Click="New_Game" Style="{StaticResource btnUI}"></Button>
-                    </StackPanel>
-                    <StackPanel>
-                        <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
-                        <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="Last Save" Width="95" Binding="{Binding LastSave}"></DataGridTextColumn>
-                                <DataGridTextColumn Header="No. Players" Width="60" Binding="{Binding NoPlayers}"></DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
-                            <Button Content="Load Game" Click="Load_Game" Style="{StaticResource btnCornerUI}" HorizontalAlignment="Stretch" Width="200"></Button>
-                            <Button Style="{StaticResource btnSettings}" Click="Settings" HorizontalAlignment="Right"></Button>
+                    </Border>
+                    <!-- Load Game Panel -->
+                    <Border Style="{StaticResource brd_Background}" VerticalAlignment="Top">
+                        <StackPanel x:Name="panel_LoadGame" Style="{StaticResource panel_Background}">
+                            <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
+                            <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="170" CanUserResizeRows="False" CanUserSortColumns="True">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Last Save" Width="95" Binding="{Binding LastSave}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="No. Players" Width="60" Binding="{Binding NoPlayers}"></DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                                <Button Content="Load Game" Click="Load_Game" Style="{StaticResource btnCornerUI}" HorizontalAlignment="Stretch" Width="200"></Button>
+                                <Button Style="{StaticResource btnSettings}" HorizontalAlignment="Right"></Button>
+                            </StackPanel>
+                            <Label x:Name="lblError" Margin="5,5,5,0" Style="{StaticResource lblError}" MaxWidth="300" Visibility="Collapsed" >
+                                <TextBlock x:Name="txtError">Error message</TextBlock>
+                            </Label>
                         </StackPanel>
-                        <Label x:Name="lblError" Margin="5,5,5,0" Style="{StaticResource lblError}" MaxWidth="300" Visibility="Collapsed" >
-                            <TextBlock x:Name="txtError">Error message</TextBlock>
-                        </Label>
-                    </StackPanel>
+                    </Border>
+
                 </StackPanel>
+                <!-- Settings Panel -->
                 <DockPanel x:Name="panel_Settings" Visibility="Collapsed">
                     <DockPanel.Resources>
                         <Style TargetType="Border">
@@ -193,28 +227,20 @@
                             </StackPanel.Resources>
                             <Label Style="{StaticResource lblHeader}">Music:</Label>
                             <Label x:Name="lblMediaDetails" Style="{StaticResource lblSubHeading}"></Label>
-                            <MediaElement x:Name="mediaplayer" Visibility="Collapsed" Source="pack://siteoforigin:,,,/Music/Fallen_Soldier.mp3" LoadedBehavior="Manual" Height="20" MediaEnded="Mediaplayer_MediaEnded" MediaOpened="UpdateMediaText"></MediaElement>
+                            <MediaElement x:Name="mediaplayer" Style="{StaticResource media_Music}"></MediaElement>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaBack">
-                                    <Image Source="pack://siteoforigin:,,,/Images/previous.png" Height="14"></Image>
-                                </Button>
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaPause">
-                                    <Image Source="pack://siteoforigin:,,,/Images/pause.png" Height="14"></Image>
-                                </Button>
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaPlay">
-                                    <Image Source="pack://siteoforigin:,,,/Images/play.png" Height="14"></Image>
-                                </Button>
-                                <Button Style="{StaticResource btnCornerUI}" Click="MediaForward">
-                                    <Image Source="pack://siteoforigin:,,,/Images/Next.png" Height="14"></Image>
-                                </Button>
+                                <Button Style="{StaticResource btnMusicBack}"/>
+                                <Button Style="{StaticResource btnMusicPause}"/>
+                                <Button Style="{StaticResource btnMusicPlay}"/>
+                                <Button Style="{StaticResource btnMusicForward}"/>
                             </StackPanel>
                             <StackPanel Style="{StaticResource MusicControls}">
                                 <Label Style="{StaticResource lblSubHeading}" Height="24" Width="48">Volume:</Label>
-                                <Slider x:Name="slider_Volume" Minimum="0" Maximum="1" Value="1" Width="80" VerticalAlignment="Center" ValueChanged="ChangeMediaVolume"></Slider>
+                                <Slider x:Name="slider_Volume" Style="{StaticResource sld_Music}"></Slider>
                             </StackPanel>
                             <StackPanel Style="{StaticResource MusicControls}">
                                 <Label Style="{StaticResource lblSubHeading}">Enabled:</Label>
-                                <CheckBox x:Name="chkMusicEnabled" Margin="30,3,30,3" IsChecked="{Binding Music_enabled, Mode=TwoWay}"/>
+                                <CheckBox x:Name="chkMusicEnabled" Style="{StaticResource chkMusicEnabled}"/>
                             </StackPanel>
                         </StackPanel>
                     </Border>
@@ -224,7 +250,7 @@
                                 <Label Style="{StaticResource lblHeader}">General:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">Fullscreen:</Label>
-                                    <CheckBox x:Name="chkFullscreen" Margin="0,0,5,0" Click="Fullscreen_Click"></CheckBox>
+                                    <CheckBox x:Name="chkFullscreen" Style="{StaticResource chkFullscreen}"></CheckBox>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -233,12 +259,12 @@
                                 <Label Style="{StaticResource lblHeader}">Help:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
-                                    <CheckBox x:Name="chkHints" Margin="0,0,5,0" IsChecked="{Binding Hints_enabled, Mode=TwoWay}"></CheckBox>
+                                    <CheckBox x:Name="chkHints" Style="{StaticResource chkHints}"></CheckBox>
                                 </StackPanel>
-                                <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Tutorial_Window">Tutorial</Button>
+                                <Button Style="{StaticResource btnHelp}" FontSize="12">Tutorial</Button> <!--Event Set in style-->
                             </StackPanel>
                         </Border>
-                        <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Return">Return</Button>
+                        <Button Style="{StaticResource btnReturn}"></Button>
                     </StackPanel>
                 </DockPanel>
             </StackPanel>

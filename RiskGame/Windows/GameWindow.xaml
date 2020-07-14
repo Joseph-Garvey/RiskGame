@@ -6,149 +6,374 @@
         xmlns:local="clr-namespace:RiskGame"
         mc:Ignorable="d"
         Title="GameWindow" Width="1280" Height="720" WindowStyle="None"
-        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
-    <Viewbox>
-        <StackPanel Background="LightBlue" HorizontalAlignment="Stretch">
-            <Grid x:Name="GameGrid" Grid.Row="0" Grid.Column="1">
-                <Grid.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="BorderThickness" Value="3"></Setter>
-                        <Setter Property="FontWeight" Value="Bold"></Setter>
-                        <Setter Property="Background" Value="White"></Setter>
-                    </Style>
-                </Grid.Resources>
-                <Grid.Background>
-                    <ImageBrush ImageSource="pack://siteoforigin:,,,/Images/Risk_game_map_fixed.png"/>
-                </Grid.Background>
-                <Button x:Name="btnAlaska" Content="Alaska" Margin="79,48,1159,468" Click="Click" MouseRightButtonDown="RightClick" Width="42" Height="24"/>
-                <Button x:Name="btnAlberta" Content="Alberta" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="130,85,1100,425"  Click="Click" MouseRightButtonDown="RightClick" Width="50" Height="30"/>
-                <Button x:Name="btnCentral_America" Content="Central America"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="102,205,1090,311"  Click="Click" MouseRightButtonDown="RightClick" Height="24"/>
-                <Button x:Name="btnEastern_US" Content="Eastern US" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="185,150,1029,364"  Click="Click" MouseRightButtonDown="RightClick" Width="66" Height="26"/>
-                <Button x:Name="btnGreenland" Content="Greenland" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="319,30,640,481"  Click="Click" MouseRightButtonDown="RightClick"  Width="65" Height="29"/>
-                <Button x:Name="btnNorthwest_Canada" Content="Northwest Canada"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="143,53,1027,467"  Click="Click" MouseRightButtonDown="RightClick"  Height="20" Width="110"/>
-                <Button x:Name="btnOntario" Content="Ontario"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="222,96,1005,420"  Click="Click" MouseRightButtonDown="RightClick"  Width="53" Height="24"/>
-                <Button x:Name="btnQuebec" Content="Quebec"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="166,98,804,423"  Click="Click" MouseRightButtonDown="RightClick" Width="54"/>
-                <Button x:Name="btnWestern_US" Content="Western US" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="100,141,1105,375"  Click="Click" MouseRightButtonDown="RightClick"  Width="75" Height="24"/>
-                <Button x:Name="btnArgentina" Content="Argentina"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="280,425,939,80"  Click="Click" MouseRightButtonDown="RightClick"  Width="61" Height="35"/>
-                <Button x:Name="btnBrazil" Content="Brazil"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="322,337,882,173"  Click="Click" MouseRightButtonDown="RightClick" Width="76" Height="30"/>
-                <Button x:Name="btnPeru" Content="Peru"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="256,357,983,153"  Click="Click" MouseRightButtonDown="RightClick" Width="41" Height="30"/>
-                <Button x:Name="btnVenezuela" Content="Venezuela"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="248,279,966,232"  Click="Click" MouseRightButtonDown="RightClick"  Width="66" Height="29"/>
-                <Button x:Name="btnUK_Ireland" Content="UK and Ireland"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="367,98,565,418"  Click="Click" MouseRightButtonDown="RightClick"  Height="24" Width="92"></Button>
-                <Button x:Name="btnIceland" Content="Iceland"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="369,69,608,452"  Click="Click" MouseRightButtonDown="RightClick"  Width="47"/>
-                <Button x:Name="btnNorthern_Europe" Content="Northern Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="484,106,437,413"  Click="Click" MouseRightButtonDown="RightClick" Height="21" Width="103"/>
-                <Button x:Name="btnScandinavia" Content="Scandinavia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="471,59,481,458"  Click="Click" MouseRightButtonDown="RightClick"  Height="23" Width="72"/>
-                <Button x:Name="btnSouthern_Europe" Content="Southern Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="485,137,443,383"  Click="Click" MouseRightButtonDown="RightClick"  Height="20" Width="96"/>
-                <Button x:Name="btnSoviet_Bloc" Content="Soviet Bloc"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="681,85,519,436"  Click="Click" MouseRightButtonDown="RightClick" Height="19" Width="80"/>
-                <Button x:Name="btnWestern_Europe" Content="Western Europe"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="395,128,539,388"  Click="Click" MouseRightButtonDown="RightClick"  Height="24" Width="90"/>
-                <Button x:Name="btnCentral_Africa" Content="Central Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="489,299,450,213"  Click="Click" MouseRightButtonDown="RightClick" Height="28" Width="85"/>
-                <Button x:Name="btnEast_Africa" Content="East Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="566,270,388,241"  Click="Click" MouseRightButtonDown="RightClick"  Height="29" Width="70"/>
-                <Button x:Name="btnMadagascar" Content="Madagascar"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="731,375,469,140"  Click="Click" MouseRightButtonDown="RightClick" Height="25" Width="80"/>
-                <Button x:Name="btnEgypt" Content="Egypt"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="517,196,456,319"  Click="Click" MouseRightButtonDown="RightClick"  Height="25" Width="51"/>
-                <Button x:Name="btnNorth_Africa" Content="North Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="419,230,515,288"  Click="Click" MouseRightButtonDown="RightClick"  Height="22" Width="90"/>
-                <Button x:Name="btnSouth_Africa" Content="South Africa"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="512,382,432,129"  Click="Click" MouseRightButtonDown="RightClick" Height="29" Width="80"/>
-                <Button x:Name="btnAfghanistan" Content="Afghanistan"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="631,132,314,384"  Click="Click" MouseRightButtonDown="RightClick" Height="24" Width="79"/>
-                <Button x:Name="btnChina" Content="China"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="963,175,259,345"  Click="Click" MouseRightButtonDown="RightClick" Height="20" Width="58"/>
-                <Button x:Name="btnIndia" Content="India"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="899,205,331,311"  Click="Click" MouseRightButtonDown="RightClick" Height="24" Width="50"/>
-                <Button x:Name="btnJapan" Content="Japan"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1117,151,117,360"  Click="Click" MouseRightButtonDown="RightClick"  Height="29" Width="46"/>
-                <Button x:Name="btnMiddle_East" Content="Middle East"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="553,171,388,344" Width="83"  Click="Click" MouseRightButtonDown="RightClick"  Height="25"/>
-                <Button x:Name="btnMongolia" Content="Mongolia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="980,126,234,390" Width="66"  Click="Click" MouseRightButtonDown="RightClick" Height="24"/>
-                <Button x:Name="btnSoutheast_Asia" Content="Southeast Asia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="967,234,219,282" Width="94"  Click="Click" MouseRightButtonDown="RightClick"  Height="24"/>
-                <Button x:Name="btnSiberia" Content="Siberia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="871,55,354,465" Width="55"  Click="Click" MouseRightButtonDown="RightClick" Height="20"/>
-                <Button x:Name="btnUral" Content="Ural"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="811,70,424,445" Width="45"  Click="Click" MouseRightButtonDown="RightClick" Height="25"/>
-                <Button x:Name="btnEastern_Australia" Content="Eastern Australia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1120,396,40,119" Width="120"  Click="Click" MouseRightButtonDown="RightClick"  Height="25"/>
-                <Button x:Name="btnWestern_Australia" Content="Western Australia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1030,411,144,105" Width="106"  Click="Click" MouseRightButtonDown="RightClick"  Height="24"/>
-                <Button x:Name="btnNew_Guinea" Content="New Guinea"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1141,325,54,196" Width="85"  Click="Click" MouseRightButtonDown="RightClick"  Height="19"/>
-                <Button x:Name="btnIndonesia" Content="Indonesia"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1035,305,174,216" Width="71"  Click="Click" MouseRightButtonDown="RightClick"  Height="19"/>
-                <Button x:Name="btnIrkutsk" Content="Irkutsk"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="962,94,256,424" Width="62"  Click="Click" MouseRightButtonDown="RightClick"  Height="22"/>
-                <Button x:Name="btnKamchatka" Content="Kamchatka"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="1062,50,139,461" Width="79"  Click="Click" MouseRightButtonDown="RightClick"  Height="29"/>
-                <Button x:Name="btnYakutsk" Content="Yakutsk"   VerticalAlignment="Center" HorizontalAlignment="Center" Margin="980,52,246,463" Width="54"  Click="Click" MouseRightButtonDown="RightClick" Height="25"/>
-            </Grid>
-            <StackPanel x:Name="panel_UI" Orientation="Horizontal" Background="Gray">
-                <StackPanel x:Name="panel_Players" VerticalAlignment="Center" Margin="20,00,10,20">
-                    <StackPanel.Resources>
-                        <Style TargetType="Label">
-                            <Setter Property="FontSize" Value="11"></Setter>
-                        </Style>
-                        <Style TargetType="Rectangle">
-                            <Setter Property="Margin" Value="10,5,0,5"></Setter>
-                            <Setter Property="Height" Value="20"></Setter>
-                            <Setter Property="Width" Value="30"></Setter>
-                        </Style>
-                        <Style TargetType="StackPanel" x:Key="PlayerPanel">
-                            <Setter Property="Background" Value="LightGray"></Setter>
-                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
-                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                            <Setter Property="Margin" Value="0,15,0,0"></Setter>
-                            <Setter Property="Orientation" Value="Horizontal"></Setter>
-                        </Style>
-                    </StackPanel.Resources>
-                    <StackPanel x:Name="panel_Player1" Style="{StaticResource PlayerPanel}">
-                        <Rectangle x:Name="rectPlayerColor1" Fill="LimeGreen"></Rectangle>
-                        <Label x:Name="lblPlayerName1" Content="Player 1" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                        <Label Content="Territories Owned:"></Label>
-                        <Label x:Name="lblPlayer1Territories" Width="40"></Label>
-                        <Label Content="Army Strength:"></Label>
-                        <Label x:Name="lblPlayer1Strength" Width="40" Margin="0,0,2,0"></Label>
-                    </StackPanel>
-                    <StackPanel x:Name="panel_Player2" Style="{StaticResource PlayerPanel}">
-                        <Rectangle x:Name="rectPlayerColor2" Fill="OrangeRed"></Rectangle>
-                        <Label x:Name="lblPlayerName2" Content="Player 2" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                        <Label Content="Territories Owned:"></Label>
-                        <Label x:Name="lblPlayer2Territories" Width="40"></Label>
-                        <Label Content="Army Strength:"></Label>
-                        <Label x:Name="lblPlayer2Strength" Width="40" Margin="0,0,2,0"></Label>
-                    </StackPanel>
-                    <StackPanel x:Name="panel_Player3" Style="{StaticResource PlayerPanel}">
-                        <Rectangle x:Name="rectPlayerColor3" Fill="DeepSkyBlue" ></Rectangle>
-                        <Label x:Name="lblPlayerName3" Content="Player 3" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                        <Label Content="Territories Owned:"></Label>
-                        <Label x:Name="lblPlayer3Territories" Width="40"></Label>
-                        <Label Content="Army Strength:"></Label>
-                        <Label x:Name="lblPlayer3Strength" Width="40" Margin="0,0,2,0"></Label>
-                    </StackPanel>
-                    <StackPanel x:Name="panel_Player4"  Visibility="Collapsed" Style="{StaticResource PlayerPanel}">
-                        <Rectangle x:Name="rectPlayerColor4" Fill="Gold" ></Rectangle>
-                        <Label x:Name="lblPlayerName4" Content="Player 4" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                        <Label Content="Territories Owned:"></Label>
-                        <Label x:Name="lblPlayer4Territories" Width="40"></Label>
-                        <Label Content="Army Strength:"></Label>
-                        <Label x:Name="lblPlayer4Strength" Width="40" Margin="0,0,2,0"></Label>
-                    </StackPanel>
-                    <StackPanel Visibility="Collapsed" x:Name="panel_Player5"  Style="{StaticResource PlayerPanel}">
-                        <Rectangle x:Name="rectPlayerColor5" Fill="Gold"></Rectangle>
-                        <Label x:Name="lblPlayerName5" Content="Player 5" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                        <Label Content="Territories Owned:"></Label>
-                        <Label x:Name="lblPlayer5Territories" Width="40"></Label>
-                        <Label Content="Army Strength:"></Label>
-                        <Label x:Name="lblPlayer5Strength" Width="40" Margin="0,0,2,0"></Label>
-                    </StackPanel>
-                    <StackPanel Visibility="Collapsed" x:Name="panel_Player6"  Style="{StaticResource PlayerPanel}">
-                        <Rectangle x:Name="rectPlayerColor6" Fill="Gold"></Rectangle>
-                        <Label x:Name="lblPlayerName6" Content="Player 6" Width="70" HorizontalContentAlignment="Center" Margin="5,0,0,0"></Label>
-                        <Label Content="Territories Owned:"></Label>
-                        <Label x:Name="lblPlayer6Territories" Width="40"></Label>
-                        <Label Content="Army Strength:"></Label>
-                        <Label x:Name="lblPlayer6Strength" Width="40" Margin="0,0,2,0"></Label>
-                    </StackPanel>
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Style="{StaticResource windowResizeable}">
+    <Border>
+        <Border.Background>
+            <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
+                <VisualBrush.Visual>
+                    <Image Source="pack://siteoforigin:,,,/Resources/RiskBackground.jpg">
+                        <Image.Effect>
+                            <BlurEffect Radius="20" />
+                        </Image.Effect>
+                    </Image>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Border.Background>
+        <Viewbox>
+            <StackPanel Width="1280" Height="720">
+                <!-- Main UI Panel -->
+                <StackPanel x:Name="panel_MainUI" Background="LightBlue">
+                    <!-- Game Grid -->
+                    <Grid x:Name="GameGrid" Width="1080" Height="520">
+                        <Grid.Resources>
+                            <Style TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+                                <Setter Property="FontSize" Value="10"></Setter> <!-- Usually size 14 -->
+                                <Setter Property="BorderThickness" Value="3"></Setter>
+                                <Setter Property="FontWeight" Value="Bold"></Setter>
+                                <Setter Property="Background" Value="#CDECECEC"></Setter>
+                                <Setter Property="Height" Value="Auto"></Setter>
+                                <EventSetter Event="Click" Handler="Click"></EventSetter>
+                                <EventSetter Event="MouseRightButtonDown" Handler="RightClick"></EventSetter>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.Background>
+                            <ImageBrush x:Name="img_Map" ImageSource="pack://siteoforigin:,,,/Images/Maps/1.png"></ImageBrush>
+                        </Grid.Background>
+                        <Button x:Name="btnAlaska" Content="Alaska" Margin="49,72,974,424"/>
+                        <Button x:Name="btnAlberta" Content="Alberta" Margin="145,110,871,386"/>
+                        <Button x:Name="btnCentral_America" Content="Central America" Margin="117,229,840,267"/>
+                        <Button x:Name="btnEastern_US" Content="Eastern US" Margin="130,156,864,340"/>
+                        <Button x:Name="btnGreenland" Content="Greenland" Margin="339,42,659,454"/>
+                        <Button x:Name="btnNorthwest_Canada" Content="Northwest Canada" Margin="121,71,827,425"/>
+                        <Button x:Name="btnOntario" Content="Ontario" Margin="213,123,803,373"/>
+                        <Button x:Name="btnQuebec" Content="Quebec" Margin="288,121,730,375"/>
+                        <Button x:Name="btnWestern_US" Content="Western US" Height="Auto" Margin="235,178,749,315"/>
+                        <Button x:Name="btnArgentina" Content="Argentina" Margin="238,398,758,93" Height="Auto"/>
+                        <Button x:Name="btnBrazil" Content="Brazil" Width="76" Margin="300,319,704,177"/>
+                        <Button x:Name="btnPeru" Content="Peru" Width="41" Margin="228,339,812,157"/>
+                        <Button x:Name="btnVenezuela" Content="Venezuela" Margin="216,266,783,227" Height="Auto"/>
+                        <Button x:Name="btnUK_Ireland" Content="UK and Ireland" Margin="356,151,615,345"/>
+                        <Button x:Name="btnIceland" Content="Iceland" Margin="436,64,582,431" Height="Auto"/>
+                        <Button x:Name="btnNorthern_Europe" Content="Northern Europe" Margin="474,157,476,335" Height="Auto"/>
+                        <Button x:Name="btnScandinavia" Content="Scandinavia" Margin="498,86,482,408" Height="Auto"/>
+                        <Button x:Name="btnSouthern_Europe" Content="Southern Europe" Margin="496,206,462,287" Height="Auto"/>
+                        <Button x:Name="btnSoviet_Bloc" Content ="Soviet Bloc" Margin="594,123,402,370" Height="Auto"/>
+                        <Button x:Name="btnWestern_Europe" Content="Western Europe" Margin="353,225,599,270" Height="Auto"/>
+                        <Button x:Name="btnCentral_Africa" Content="Central Africa" Margin="507,364,469,132"/>
+                        <Button x:Name="btnEast_Africa" Content="East Africa" Margin="617,334,374,158" Height="Auto"/>
+                        <Button x:Name="btnMadagascar" Content="Madagascar" Margin="677,427,307,65" Height="Auto"/>
+                        <Button x:Name="btnEgypt" Content="Egypt" Width="51" Height="Auto" Margin="556,272,472,220"/>
+                        <Button x:Name="btnNorth_Africa" Content="North Africa" Width="90" Margin="460,303,530,193"/>
+                        <Button x:Name="btnSouth_Africa" Content="South Africa" Margin="540,422,443,74"/>
+                        <Button x:Name="btnAfghanistan" Content="Afghanistan" Margin="674,175,312,318" Height="Auto"/>
+                        <Button x:Name="btnChina" Content="China" Width="58" Margin="821,215,201,281"/>
+                        <Button x:Name="btnIndia" Content="India" Width="50" Margin="759,251,271,245"/>
+                        <Button x:Name="btnJapan" Content="Japan" Width="46" Margin="969,168,65,328"/>
+                        <Button x:Name="btnMiddle_East" Content="Middle East" Margin="621,245,367,251"/>
+                        <Button x:Name="btnMongolia" Content="Mongolia" Margin="834,164,159,330" Height="Auto"/>
+                        <Button x:Name="btnSoutheast_Asia" Content="Southeast Asia" Margin="825,281,143,215"/>
+                        <Button x:Name="btnSiberia" Content="Siberia" Width="55" Margin="770,76,256,420"/>
+                        <Button x:Name="btnUral" Content="Ural" Width="45" Margin="722,115,314,381"/>
+                        <Button x:Name="btnEastern_Australia" Content="Eastern Australia" Width="120" Margin="868,435,92,61"/>
+                        <Button x:Name="btnWestern_Australia" Content="Western Australia" Margin="947,401,-1,95"/>
+                        <Button x:Name="btnNew_Guinea" Content="New Guinea" Margin="942,339,46,157"/>
+                        <Button x:Name="btnIndonesia" Content="Indonesia" Margin="834,355,170,141"/>
+                        <Button x:Name="btnIrkutsk" Content="Irkutsk" Width="62" Margin="833,113,185,383"/>
+                        <Button x:Name="btnKamchatka" Content="Kamchatka" Width="79" Margin="912,65,90,431"/>
+                        <Button x:Name="btnYakutsk" Content="Yakutsk" Width="70" Margin="835,55,175,441"/>
+                    </Grid>
+                    <Border Height="20" BorderThickness="2" BorderBrush="Black">
+                        <ProgressBar x:Name="pb_Timer" Minimum="0"></ProgressBar>
+                    </Border>
+                    <!-- UI Panel -->
+                    <Border BorderBrush="Black" BorderThickness="2" Width="1280" Height="180">
+                        <StackPanel x:Name="panel_UI" Orientation="Horizontal" Background="Orange">
+                            <StackPanel.Resources>
+                                <Style TargetType="Border" x:Key="brdDefault">
+                                    <Setter Property="BorderBrush" Value="Black"></Setter>
+                                    <Setter Property="BorderThickness" Value="2"></Setter>
+                                    <Setter Property="Margin" Value="5"></Setter>
+                                    <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                </Style>
+                                <Style TargetType="Border" x:Key="brd_CornerCurve" BasedOn="{StaticResource brdDefault}">
+                                    <Setter Property="CornerRadius" Value="15"></Setter>
+                                    <Setter Property="Background" Value="#7F00D1FF"></Setter>
+                                </Style>
+                            </StackPanel.Resources>
+                            <!-- Player Panel -->
+                            <Border x:Name="brd_Players" Margin="15,0,0,0" Style="{StaticResource brdDefault}">
+                                <StackPanel x:Name="panel_Players"  Style="{StaticResource panel_Background}">
+                                    <StackPanel.Resources>
+                                        <!-- Label Styles -->
+                                        <Style TargetType="Label" x:Key="lblBase">
+                                            <Setter Property="FontSize" Value="12"></Setter>
+                                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                        </Style>
+                                        <Style TargetType="Label" x:Key="lblPlayerName" BasedOn="{StaticResource lblBase}" >
+                                            <Setter Property="Width" Value="75"></Setter>
+                                            <Setter Property="Margin" Value="5,0,0,0"></Setter>
+                                        </Style>
+                                        <Style TargetType="Label" x:Key="lblOwned" BasedOn="{StaticResource lblBase}">
+                                            <Setter Property="FontWeight" Value="Bold"></Setter>
+                                            <Setter Property="Width" Value="24"></Setter>
+                                            <Setter Property="Content" Value="00"></Setter>
+                                        </Style>
+                                        <Style TargetType="Label" x:Key="lblStrength" BasedOn="{StaticResource lblOwned}">
+                                            <Setter Property="Margin" Value="0,0,5,0"></Setter>
+                                        </Style>
+                                        <!-- Rectangle Style -->
+                                        <Style TargetType="Rectangle">
+                                            <Setter Property="Margin" Value="10,3,0,3"></Setter>
+                                            <!-- usually 10,5,0,5-->
+                                            <Setter Property="Height" Value="17"></Setter>
+                                            <!-- usually 20 -->
+                                            <Setter Property="Width" Value="30"></Setter>
+                                            <Setter Property="Stroke" Value="Black"></Setter>
+                                            <Setter Property="StrokeThickness" Value="2"></Setter>
+                                        </Style>
+                                        <Style TargetType="StackPanel" x:Key="PlayerPanel" BasedOn="{StaticResource panel_Background}">
+                                            <Setter Property="Orientation" Value="Horizontal"></Setter>
+                                        </Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="BorderBrush" Value="Black"></Setter>
+                                            <Setter Property="BorderThickness" Value="2"></Setter>
+                                            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+                                            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                            <Setter Property="Margin" Value="5,0,5,5"></Setter>
+                                            <!-- usually 5,0,5,5 -->
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <Border x:Name="brd_Player1" Margin="5">
+                                        <!-- Usually 5 -->
+                                        <StackPanel x:Name="panel_Player1" Style="{StaticResource PlayerPanel}">
+                                            <Rectangle x:Name="rectPlayerColor1" Fill="LimeGreen"></Rectangle>
+                                            <Label x:Name="lblPlayerName1" Content="Player 1" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer1Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer1Strength" Style="{StaticResource lblStrength}"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="brd_Player2">
+                                        <StackPanel x:Name="panel_Player2" Style="{StaticResource PlayerPanel}">
+                                            <Rectangle x:Name="rectPlayerColor2" Fill="OrangeRed"></Rectangle>
+                                            <Label x:Name="lblPlayerName2" Content="Player 2" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer2Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer2Strength" Style="{StaticResource lblStrength}"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="brd_Player3">
+                                        <StackPanel x:Name="panel_Player3" Style="{StaticResource PlayerPanel}">
+                                            <Rectangle x:Name="rectPlayerColor3" Fill="DeepSkyBlue" ></Rectangle>
+                                            <Label x:Name="lblPlayerName3" Content="Player 3" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer3Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer3Strength" Style="{StaticResource lblStrength}"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="brd_Player4" Visibility="Collapsed">
+                                        <StackPanel x:Name="panel_Player4" Style="{StaticResource PlayerPanel}">
+                                            <Rectangle x:Name="rectPlayerColor4" Fill="Gold" ></Rectangle>
+                                            <Label x:Name="lblPlayerName4" Content="Player 4" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer4Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer4Strength" Style="{StaticResource lblStrength}"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="brd_Player5" Visibility="Collapsed">
+                                        <StackPanel x:Name="panel_Player5" Style="{StaticResource PlayerPanel}">
+                                            <Rectangle x:Name="rectPlayerColor5" Fill="Gold"></Rectangle>
+                                            <Label x:Name="lblPlayerName5" Content="Player 5" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer5Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer5Strength" Style="{StaticResource lblStrength}"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                    <Border x:Name="brd_Player6" Visibility="Collapsed">
+                                        <StackPanel x:Name="panel_Player6" Style="{StaticResource PlayerPanel}">
+                                            <Rectangle x:Name="rectPlayerColor6" Fill="Gold"></Rectangle>
+                                            <Label x:Name="lblPlayerName6" Content="Player 6" Style="{StaticResource lblPlayerName}"></Label>
+                                            <Label Content="Territories Owned:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer6Territories" Style="{StaticResource lblOwned}"></Label>
+                                            <Label Content="Army Strength:" Style="{StaticResource lblBase}"></Label>
+                                            <Label x:Name="lblPlayer6Strength" Style="{StaticResource lblStrength}"></Label>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </Border>
+                            <!-- Action Panels -->
+                            <Border Margin="20,5,20,5" Style="{StaticResource brd_CornerCurve}" Width="260" Height="154">
+                                <StackPanel VerticalAlignment="Center">
+                                    <!-- Number Selection -->
+                                    <StackPanel x:Name="panel_NumberSelection">
+                                        <Button x:Name="btnStateDisp" Style="{StaticResource btnPresenter}" Margin="10,10,10,5" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF00B9FF" BorderThickness="2">GameState</Button>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <StackPanel.Resources>
+                                                <Style TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+                                                    <Setter Property="FontSize" Value="30"></Setter>
+                                                    <Setter Property="FontWeight" Value="ExtraBold"></Setter>
+                                                    <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                                                    <Setter Property="Width" Value="45"></Setter>
+                                                    <Setter Property="Height" Value="45"></Setter>
+                                                    <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                                                    <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+                                                    <Setter Property="Margin" Value="10"></Setter>
+                                                    <Setter Property="BorderThickness" Value="2"></Setter>
+                                                </Style>
+                                            </StackPanel.Resources>
+                                            <Button Click="Decrease">
+                                                <Image Source="pack://siteoforigin:,,,/Images/minus.png" Margin="2"></Image>
+                                            </Button>
+                                            <Button x:Name="btnNumber" Style="{StaticResource btnCornerUI}" BorderThickness="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Width="70" Height="45">0</Button>
+                                            <Button  Click="Increase">
+                                                <Image Source="pack://siteoforigin:,,,/Images/plus.png" Margin="2"></Image>
+                                            </Button>
+                                        </StackPanel>
+                                        <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Margin="23,0,23,10" Width="200" Click="Confirm" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00" BorderThickness="2">Confirm Action</Button>
+                                    </StackPanel>
+                                    <!-- Dice Roll -->
+                                    <Grid x:Name="panel_Die" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
+                                        <Grid.Resources>
+                                            <Style TargetType="Image">
+                                                <Setter Property="Source" Value="pack://siteoforigin:,,,/Images/Dice/imgDice6.png"></Setter>
+                                                <Setter Property="Height" Value="40"></Setter>
+                                            </Style>
+                                            <Style TargetType="Button" x:Key="btnDie" BasedOn="{StaticResource btnPresenter}">
+                                                <Setter Property="Margin" Value="0"></Setter>
+                                            </Style>
+                                            <Style TargetType="Button" x:Key="btnPlayerDie">
+                                            </Style>
+                                            <Style TargetType="Button" x:Key="btnEnemyDie">
+                                            </Style>
+                                        </Grid.Resources>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                            <RowDefinition Height="Auto"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <StackPanel>
+                                            <Button x:Name="btnPlayerDie" Style="{StaticResource btnCornerUI}" Width="130" FontSize="14">Player Name</Button>
+                                            <StackPanel x:Name="panel_Die_Player" Style="{StaticResource HorizontalCentred}" Margin="5,0,5,10">
+                                                <Button Style="{DynamicResource btnPlayerDie}">
+                                                    <Image x:Name="imgPlayerDie1"></Image>
+                                                </Button>
+                                                <Button Style="{DynamicResource btnPlayerDie}">
+                                                    <Image x:Name="imgPlayerDie2"></Image>
+                                                </Button>
+                                                <Button Style="{DynamicResource btnPlayerDie}">
+                                                    <Image x:Name="imgPlayerDie3"></Image>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="1">
+                                            <Button x:Name="btnEnemyDie" Style="{DynamicResource btnCornerUI}" Width="100" FontSize="14">Enemy name</Button>
+                                            <StackPanel x:Name="panel_Die_Enemy" Style="{DynamicResource HorizontalCentred}" Margin="5,0,5,10">
+                                                <Button Style="{DynamicResource btnEnemyDie}">
+                                                    <Image x:Name="imgEnemyDie1"></Image>
+                                                </Button>
+                                                <Button Style="{DynamicResource btnEnemyDie}">
+                                                    <Image x:Name="imgEnemyDie2"></Image>
+                                                </Button>
+                                            </StackPanel>
+                                        </StackPanel>
+                                        <Button x:Name="btnDieStatus" Style="{DynamicResource btnCornerUI}" Grid.Row="1"  Grid.ColumnSpan="2"  Click="Attack_DieContinue">Dice Rolling...</Button>
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                            <!-- Action Buttons -->
+                            <Border VerticalAlignment="Center" Margin="0,11"  Style="{StaticResource brd_CornerCurve}" Height="154">
+                                <StackPanel VerticalAlignment="Center">
+                                    <StackPanel.Resources>
+                                        <Style TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+                                            <Setter Property="Margin" Value="15,5,15,0"></Setter>
+                                            <Setter Property="FontSize" Value="18"></Setter>
+                                            <Setter Property="Width" Value="150"></Setter>
+                                            <Setter Property="BorderThickness" Value="2"></Setter>
+                                        </Style>
+                                    </StackPanel.Resources>
+                                    <Button Margin="15,0,15,0" Click="Continue">Continue</Button>
+                                    <Button Click="Cancel">Cancel</Button>
+                                    <Button Click="SaveGame">Save Game</Button>
+                                    <Button Click="Settings">Settings - Help</Button>
+                                </StackPanel>
+                            </Border>
+                            <TextBlock x:Name="txtOutput" Margin="20,11,10,10" HorizontalAlignment="Right" Width="350" Foreground="White" Background="Black" TextWrapping="Wrap"/>
+                            <!-- Output Console -->
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
-                <StackPanel Margin="20" Style="{StaticResource panel_Background}" VerticalAlignment="Center">
-                    <Label x:Name="lblState" Style="{StaticResource lblHeader}" Margin="20" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center">GameState</Label>
-                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="20,0,20,20">
-                        <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}"  FontSize="20" Width="50" Height="40" Click="Decrease">-</Button>
-                        <Label x:Name="lblNumber" Style="{StaticResource lblHeader}" VerticalAlignment="Center" HorizontalContentAlignment="Center" FontWeight="ExtraBold"  FontSize="20" Width="70" Height="40">0</Label>
-                        <Button VerticalAlignment="Center" Style="{StaticResource btnCornerUI}" FontWeight="ExtraBold" FontSize="20" Width="50" Height="40" Click="Increase" >+</Button>
-                    </StackPanel>
-                </StackPanel>
-                <StackPanel Margin="20" Style="{StaticResource panel_Background}">
-                    <Button Margin="20,10,20,0" VerticalAlignment="Center" FontSize="16" Width="150" Click="Confirm" Style="{StaticResource btnCornerUI}">Confirm</Button>
-                    <Button Margin="20,5,20,0" VerticalAlignment="Center" FontSize="16" Width="150" Click="Continue" Style="{StaticResource btnCornerUI}">Continue</Button>
-                    <Button Margin="20,5,20,0" VerticalAlignment="Center"  FontSize="16" Width="150" Click="Cancel" Style="{StaticResource btnCornerUI}">Cancel</Button>
-                    <Button Margin="20,5,20,10" VerticalAlignment="Center" FontSize="16" Width="150" Click="SaveGame" Style="{StaticResource btnCornerUI}">Save Game</Button>
-                    <Button Margin="20,5,20,10" VerticalAlignment="Center"  FontSize="16" Width="150" Click="Button_Click" Style="{StaticResource btnCornerUI}">Win (Testing)</Button>
-                </StackPanel>
-                <TextBlock x:Name="txtOutput" Margin="20" Width="350" Foreground="White" Background="Black"></TextBlock>
+                <!-- Settings Panel -->
+                <Viewbox x:Name="panel_Settings" Stretch="Uniform" Height="720" Visibility="Collapsed">
+                    <DockPanel  Width="350">
+                        <DockPanel.Resources>
+                            <Style TargetType="Border">
+                                <Setter Property="BorderBrush" Value="Black"></Setter>
+                                <Setter Property="BorderThickness" Value="1"></Setter>
+                                <Setter Property="Margin" Value="5"></Setter>
+                            </Style>
+                        </DockPanel.Resources>
+                        <Label Style="{StaticResource lblHeader}" FontSize="12" DockPanel.Dock="Top">Settings:</Label>
+                        <Border DockPanel.Dock="Right"  VerticalAlignment="Top">
+                            <StackPanel Style="{StaticResource panel_Background}">
+                                <StackPanel.Resources>
+                                    <Style TargetType="StackPanel" BasedOn="{StaticResource HorizontalCentred}" x:Key="MusicControls">
+                                        <Setter Property="Width" Value="145"></Setter>
+                                        <Setter Property="Margin" Value="3"></Setter>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <Label Style="{StaticResource lblHeader}">Music:</Label>
+                                <Label x:Name="lblMediaDetails" Style="{StaticResource lblSubHeading}"></Label>
+                                <MediaElement x:Name="mediaplayer" Style="{StaticResource media_Music}"></MediaElement>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <Button Style="{StaticResource btnMusicBack}"/>
+                                    <Button Style="{StaticResource btnMusicPause}"/>
+                                    <Button Style="{StaticResource btnMusicPlay}"/>
+                                    <Button Style="{StaticResource btnMusicForward}"/>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource MusicControls}">
+                                    <Label Style="{StaticResource lblSubHeading}" Height="24" Width="48">Volume:</Label>
+                                    <Slider x:Name="slider_Volume"  Style="{StaticResource sld_Music}"></Slider>
+                                </StackPanel>
+                                <StackPanel Style="{StaticResource MusicControls}">
+                                    <Label Style="{StaticResource lblSubHeading}">Enabled:</Label>
+                                    <CheckBox x:Name="chkMusicEnabled" Style="{StaticResource chkMusicEnabled}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                        <StackPanel DockPanel.Dock ="Left">
+                            <Border>
+                                <StackPanel Style="{StaticResource panel_Background}">
+                                    <Label Style="{StaticResource lblHeader}">General:</Label>
+                                    <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
+                                        <Label Style="{StaticResource lblSubHeading}" Width="75">Fullscreen:</Label>
+                                        <CheckBox x:Name="chkFullscreen" Style="{StaticResource chkFullscreen}"></CheckBox>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                            <Border>
+                                <StackPanel Style="{StaticResource panel_Background}">
+                                    <Label Style="{StaticResource lblHeader}">Help:</Label>
+                                    <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
+                                        <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
+                                        <CheckBox x:Name="chkHints" Style="{StaticResource chkHints}"></CheckBox>
+                                    </StackPanel>
+                                    <Button Style="{StaticResource btnHelp}" FontSize="12">Tutorial</Button>
+                                    <!--Event Set in style-->
+                                </StackPanel>
+                            </Border>
+                            <Button Style="{StaticResource btnCornerUI}" Click="Return">Return</Button>
+                        </StackPanel>
+                    </DockPanel>
+                </Viewbox>
             </StackPanel>
-            <MediaElement x:Name="mediaplayer" Visibility="Collapsed" Source="pack://siteoforigin:,,,/Music/Fallen_Soldier.mp3" LoadedBehavior="Manual" Height="20" MediaEnded="Mediaplayer_MediaEnded" MediaOpened="UpdateMediaText"></MediaElement>
-        </StackPanel>
-    </Viewbox>
+        </Viewbox>
+    </Border>
 </Window>

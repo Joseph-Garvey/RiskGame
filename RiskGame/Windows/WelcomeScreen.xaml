@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RiskGame.Windows"
         mc:Ignorable="d"
         Title="Risk"
-        WindowStartupLocation="CenterScreen" Height="644" Width="800" KeyDown="Window_KeyDown" StateChanged="Window_StateChanged">
+        WindowStartupLocation="CenterScreen" Height="644" Width="800" Style="{StaticResource windowResizeable}">
     <Border>
         <Viewbox>
             <StackPanel>
@@ -18,8 +18,8 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Style="{StaticResource btnCornerUI}" Width="90" FontSize="12" Margin="3,5,0,5" Click="Leaderboard">Leaderboard</Button>
-                        <Button Style="{StaticResource btnSettingsThin}" Margin="5,5,0,5" Click="Settings"></Button>
-                        <Button Style="{StaticResource btnHelpThin}" Click="Tutorial_Window"></Button>
+                        <Button Style="{StaticResource btnSettingsThin}" Margin="5,5,0,5"></Button>
+                        <Button Style="{StaticResource btnHelpThin}"></Button> <!--Event set in style-->
                     </StackPanel>
                 </StackPanel>
                 <DockPanel x:Name="panel_Settings" Visibility="Collapsed">
@@ -43,11 +43,11 @@
                                 <Label Style="{StaticResource lblHeader}">Music:</Label>
                                 <StackPanel Style="{StaticResource MusicControls}">
                                     <Label Style="{StaticResource lblSubHeading}">Enabled?</Label>
-                                    <CheckBox x:Name="chkMusicEnabled" Margin="30,3,30,3" IsChecked="{Binding Music_enabled, Mode=TwoWay}"/>
+                                    <CheckBox x:Name="chkMusicEnabled" Style="{StaticResource chkMusicEnabled}"  Margin="30,3,30,3"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Return">Return</Button>
+                        <Button Style="{StaticResource btnReturn}"></Button>
                     </StackPanel>
                     <StackPanel DockPanel.Dock ="Left">
                         <Border>
@@ -55,7 +55,7 @@
                                 <Label Style="{StaticResource lblHeader}">General:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">Fullscreen:</Label>
-                                    <CheckBox x:Name="chkFullscreen" Margin="0,0,5,0" Click="Fullscreen_Click"></CheckBox>
+                                    <CheckBox x:Name="chkFullscreen" Style="{StaticResource chkFullscreen}"></CheckBox>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -64,9 +64,9 @@
                                 <Label Style="{StaticResource lblHeader}">Help:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
-                                    <CheckBox x:Name="chkHints" Margin="0,0,5,0" IsChecked="{Binding Hints_enabled, Mode=TwoWay}"></CheckBox>
+                                    <CheckBox x:Name="chkHints" Style="{StaticResource chkHints}"></CheckBox>
                                 </StackPanel>
-                                <Button Style="{StaticResource btnCornerUI}" FontSize="12" Click="Tutorial_Window">Tutorial</Button>
+                                <Button Style="{StaticResource btnHelp}" FontSize="12">Tutorial</Button>
                             </StackPanel>
                         </Border>
                     </StackPanel>

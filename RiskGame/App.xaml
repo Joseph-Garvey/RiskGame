@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:RiskGame"
              >
     <Application.Resources>
+        <!-- Window Styles -->
+        <Style TargetType="{x:Type Window}" x:Key="windowResizeable">
+            <EventSetter Event="KeyDown" Handler="Window_KeyDown"></EventSetter>
+        </Style>
+        <!-- Button Styles -->
         <Style x:Key="btnUI" TargetType="Button">
             <Setter Property="Background" Value="#B200D1FF"></Setter>
             <Setter Property="FontSize" Value="14"></Setter>
@@ -18,12 +23,18 @@
                 </Style>
             </Style.Resources>
         </Style>
+        <Style x:Key="btnReturn" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="FontSize" Value="12"></Setter>
+            <Setter Property="Content" Value="Return"></Setter>
+            <EventSetter Event="Click" Handler="ChangeDisplay"></EventSetter>
+        </Style>
         <Style x:Key="btnSettings" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
             <Setter Property="Content">
                 <Setter.Value>
                     <Image Source="pack://siteoforigin:,,,/Images/Settingsicon.png" Height="20" Margin="5"></Image>
                 </Setter.Value>
             </Setter>
+            <EventSetter Event="Click" Handler="ChangeDisplay"></EventSetter>
         </Style>
         <Style x:Key="btnSettingsThin" TargetType="Button" BasedOn="{StaticResource btnSettings}">
             <Setter Property="Content">
@@ -32,21 +43,75 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="btnHelp" TargetType="Button" BasedOn="{StaticResource btnSettings}">
+        <Style x:Key="btnHelp" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
             <Setter Property="Content">
                 <Setter.Value>
-                    <Image Source="pack://siteoforigin:,,,/Images/Help.png"></Image>
+                    <Image Source="pack://siteoforigin:,,,/Images/Help.png" Height="20" Margin="5"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="Tutorial_Window"/>
+        </Style>
+        <Style x:Key="btnHelpThin" TargetType="Button" BasedOn="{StaticResource btnHelp}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/Help.png" Height="18" Margin="3"></Image>
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style x:Key="btnHelpThin" TargetType="Button" BasedOn="{StaticResource btnSettingsThin}">
-            <Setter Property="Content">
+        <Style TargetType="{x:Type Button}" x:Key="btnPresenter">
+            <Setter Property="Background" Value="Green"/>
+            <Setter Property="Template">
                 <Setter.Value>
-                    <Image Source="pack://siteoforigin:,,,/Images/Help.png"></Image>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="Black" BorderThickness="2" CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
                 </Setter.Value>
             </Setter>
+            <Setter Property="Background" Value="#B200D1FF"></Setter>
+            <Setter Property="FontSize" Value="14"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                </Trigger>
+            </Style.Triggers>
         </Style>
-
+        <!-- Music Controls -->
+        <Style x:Key="btnMusicBack" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/previous.png" Height="14"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="MediaBack"></EventSetter>
+        </Style>
+        <Style x:Key="btnMusicPause" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/pause.png" Height="14"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="MediaPause"></EventSetter>
+        </Style>
+        <Style x:Key="btnMusicPlay" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/play.png" Height="14"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="MediaPlay"></EventSetter>
+        </Style>
+        <Style x:Key="btnMusicForward" TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
+            <Setter Property="Content">
+                <Setter.Value>
+                    <Image Source="pack://siteoforigin:,,,/Images/Next.png" Height="14"></Image>
+                </Setter.Value>
+            </Setter>
+            <EventSetter Event="Click" Handler="MediaForward"></EventSetter>
+        </Style>
+        <!-- Label Styles -->
         <Style x:Key="lblHeader" TargetType="Label">
             <Setter Property="FontSize" Value="10"></Setter>
             <Setter Property="Background" Value="#B200D1FF"></Setter>
@@ -84,19 +149,14 @@
             </Setter>
         </Style>
 
-        <Style TargetType="DataGrid">
-            <Setter Property="Margin" Value="5,0,5,0"></Setter>
-            <Setter Property="Width" Value="250"></Setter>
-            <Setter Property="SelectionMode" Value="Single"></Setter>
-            <Setter Property="IsReadOnly" Value="True"></Setter>
-            <Setter Property="FontSize" Value="8"></Setter>
-            <Setter Property="FontWeight" Value="Bold"></Setter>
-            <Setter Property="AutoGenerateColumns" Value="False"></Setter>
-        </Style>
-
+        <!-- StackPanel Styles -->
         <Style TargetType="StackPanel" x:Key="HorizontalCentred">
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
             <Setter Property="Orientation" Value="Horizontal"></Setter>
+        </Style>
+        <Style TargetType="StackPanel" x:Key="HorizontalStretch">
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="Orientation" Value="Horizontal"/>
         </Style>
         <Style TargetType="StackPanel" BasedOn="{StaticResource HorizontalCentred}" x:Key="MusicControls">
             <Setter Property="Width" Value="145"></Setter>
@@ -106,9 +166,98 @@
             <Setter Property="Background" Value="#7F00D1FF"></Setter>
         </Style>
 
-        <Style TargetType="CheckBox">
+        <!-- CheckBox Styles -->
+        <Style TargetType="CheckBox" x:Key="Default">
             <Setter Property="BorderBrush" Value="Black"></Setter>
             <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        <Style TargetType="CheckBox" x:Key="chkMusicEnabled" BasedOn="{StaticResource Default}">
+            <Setter Property="Margin" Value="30,3,30,3"></Setter>
+            <Setter Property="IsChecked" Value="{Binding Music_enabled, Mode=TwoWay}"></Setter>
+        </Style>
+        <Style TargetType="CheckBox" x:Key="chkFullscreen" BasedOn="{StaticResource Default}">
+            <Setter Property="Margin" Value="0,0,5,0"></Setter>
+            <EventSetter Event="Click" Handler="Fullscreen_Click"></EventSetter>
+        </Style>
+        <Style TargetType="CheckBox" x:Key="chkHints" BasedOn="{StaticResource Default}">
+            <Setter Property="Margin" Value="0,0,5,0"></Setter>
+            <Setter Property="IsChecked" Value="{Binding Hints_enabled, Mode=TwoWay}"></Setter>
+        </Style>
+        <Style TargetType="CheckBox" x:Key="chkShowHide">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type CheckBox}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image x:Name="checkboxImage" Source="pack://siteoforigin:,,,/Images/show.png"/>
+                            <ContentPresenter/>
+                        </StackPanel>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="checkboxImage" Property="Source" Value="pack://siteoforigin:,,,/Images/hide.png"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Height" Value="14"></Setter>
+        </Style>
+
+        <!-- Slider Styles -->
+        <Style TargetType="Slider" x:Key="sld_Base">
+            <Setter Property="Width" Value="80"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="IsSnapToTickEnabled" Value="True" ></Setter>
+            <Setter Property="TickPlacement" Value="BottomRight"></Setter>
+            <Setter Property="TickFrequency" Value="5"></Setter>
+        </Style>
+        <Style TargetType="Thumb">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+        </Style>
+        <Style TargetType="Slider" x:Key="sld_Music" BasedOn="{StaticResource sld_Base}">
+            <!-- Music Volume Slider-->
+            <Setter Property="Minimum" Value="0"></Setter>
+            <Setter Property="Maximum" Value="1"></Setter>
+            <Setter Property="Value" Value="1"></Setter>
+            <Setter Property="TickFrequency" Value="0.1"></Setter>
+            <EventSetter Event="ValueChanged" Handler="ChangeMediaVolume"></EventSetter>
+        </Style>
+        <!-- Other Styles -->
+        <Style TargetType="Border" x:Key="brd_Background">
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+        <Style TargetType="PasswordBox" x:Key="pwdbox">
+            <Setter Property="Margin" Value="5"></Setter>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="Width" Value="110"></Setter>
+        </Style>
+        <Style TargetType="TextBox" x:Key="showBox">
+            <Setter Property="Margin" Value="5"></Setter>
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="Width" Value="110"></Setter>
+            <Setter Property="Visibility" Value="Collapsed"></Setter>
+            <EventSetter Event="TextChanged" Handler="ShowPassword_TextChanged"></EventSetter>
+        </Style>
+        <Style TargetType="Grid" x:Key="grid_Background">
+            <Setter Property="Background" Value="#7F00D1FF"></Setter>
+        </Style>
+        <Style TargetType="DataGrid">
+            <Setter Property="Margin" Value="5,0,5,0"></Setter>
+            <Setter Property="Width" Value="250"></Setter>
+            <Setter Property="SelectionMode" Value="Single"></Setter>
+            <Setter Property="IsReadOnly" Value="True"></Setter>
+            <Setter Property="FontSize" Value="8"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+            <Setter Property="AutoGenerateColumns" Value="False"></Setter>
+        </Style>
+        <Style TargetType="MediaElement" x:Key="media_Music">
+            <Setter Property="Visibility" Value="Collapsed"></Setter>
+            <Setter Property="LoadedBehavior" Value="Manual"></Setter>
+            <EventSetter Event="MediaEnded" Handler="Mediaplayer_MediaEnded"></EventSetter>
+            <EventSetter  Event="MediaOpened" Handler="UpdateMediaText"></EventSetter>
         </Style>
     </Application.Resources>
 </Application>

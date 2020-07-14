@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RiskGame.CustomExceptions.Game
+namespace RiskGame.CustomExceptions
 {
     [Serializable]
     class GameNotFoundException : Exception
