@@ -340,7 +340,7 @@
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource MusicControls}">
                                     <Label Style="{StaticResource lblSubHeading}" Height="24" Width="48">Volume:</Label>
-                                    <Slider x:Name="slider_Volume"></Slider>
+                                    <Slider x:Name="slider_Volume"  Style="{StaticResource sld_Music}"></Slider>
                                 </StackPanel>
                                 <StackPanel Style="{StaticResource MusicControls}">
                                     <Label Style="{StaticResource lblSubHeading}">Enabled:</Label>

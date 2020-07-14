@@ -154,6 +154,10 @@
             <Setter Property="HorizontalAlignment" Value="Center"></Setter>
             <Setter Property="Orientation" Value="Horizontal"></Setter>
         </Style>
+        <Style TargetType="StackPanel" x:Key="HorizontalStretch">
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
         <Style TargetType="StackPanel" BasedOn="{StaticResource HorizontalCentred}" x:Key="MusicControls">
             <Setter Property="Width" Value="145"></Setter>
             <Setter Property="Margin" Value="3"></Setter>
@@ -197,7 +201,34 @@
             </Setter>
             <Setter Property="Height" Value="14"></Setter>
         </Style>
+
+        <!-- Slider Styles -->
+        <Style TargetType="Slider" x:Key="sld_Base">
+            <Setter Property="Width" Value="80"></Setter>
+            <Setter Property="VerticalAlignment" Value="Center"></Setter>
+            <Setter Property="IsSnapToTickEnabled" Value="True" ></Setter>
+            <Setter Property="TickPlacement" Value="BottomRight"></Setter>
+            <Setter Property="TickFrequency" Value="5"></Setter>
+        </Style>
+        <Style TargetType="Thumb">
+            <Setter Property="SnapsToDevicePixels" Value="true" />
+            <Setter Property="OverridesDefaultStyle" Value="true" />
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+        </Style>
+        <Style TargetType="Slider" x:Key="sld_Music" BasedOn="{StaticResource sld_Base}">
+            <!-- Music Volume Slider-->
+            <Setter Property="Minimum" Value="0"></Setter>
+            <Setter Property="Maximum" Value="1"></Setter>
+            <Setter Property="Value" Value="1"></Setter>
+            <Setter Property="TickFrequency" Value="0.1"></Setter>
+            <EventSetter Event="ValueChanged" Handler="ChangeMediaVolume"></EventSetter>
+        </Style>
         <!-- Other Styles -->
+        <Style TargetType="Border" x:Key="brd_Background">
+            <Setter Property="BorderBrush" Value="Black"></Setter>
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
         <Style TargetType="PasswordBox" x:Key="pwdbox">
             <Setter Property="Margin" Value="5"></Setter>
             <Setter Property="BorderBrush" Value="Black"></Setter>
@@ -212,14 +243,6 @@
         </Style>
         <Style TargetType="Grid" x:Key="grid_Background">
             <Setter Property="Background" Value="#7F00D1FF"></Setter>
-        </Style>
-        <Style TargetType="Slider"> <!-- Music Volume Slider-->
-            <Setter Property="Minimum" Value="0"></Setter>
-            <Setter Property="Maximum" Value="1"></Setter>
-            <Setter Property="Value" Value="1"></Setter>
-            <Setter Property="Width" Value="80"></Setter>
-            <Setter Property="VerticalAlignment" Value="Center"></Setter>
-            <EventSetter Event="ValueChanged" Handler="ChangeMediaVolume"></EventSetter>
         </Style>
         <Style TargetType="DataGrid">
             <Setter Property="Margin" Value="5,0,5,0"></Setter>

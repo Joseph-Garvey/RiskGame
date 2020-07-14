@@ -24,6 +24,7 @@ namespace RiskGame.Game
         public Player currentplayer;
         public int turn;
         public int time;
+        public double defenderbias; // def 0.5 range 0 to 1
         public DateTime lastsave;
         public GameState gameState;
         public GameMode gamemode;

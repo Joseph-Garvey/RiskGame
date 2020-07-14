@@ -100,6 +100,11 @@ namespace RiskGame
             get { return game.gameState; }
             set { game.gameState = value; }
         }
+        private double DefenseBias
+        {
+            get { return game.defenderbias; }
+            set { game.defenderbias = value; }
+        }
         private int Time
         {
             get { return game.time; }
@@ -202,7 +207,7 @@ namespace RiskGame
             }
         }
         // New Game //
-        public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration)
+        public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration, double defensebias)
         {
             InitializeComponent();
             DataContext = this;
@@ -213,6 +218,7 @@ namespace RiskGame
             Music_enabled = ((Human)Players[0]).music_enabled;
             Hints_enabled = ((Human)Players[0]).hints_enabled;
             Turn = 0;
+            DefenseBias = defensebias;
             music_enabled = ((Human)Players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
@@ -1440,7 +1446,7 @@ namespace RiskGame
                         if(gamemode == GameMode.NewRisk)
                         {
                             double num = rng.NextDouble();
-                            double prob = 1 / (1 + Math.Exp(-0.7 * ((NextTerritory.temparmies - NextTerritory.currentarmies) - 0.5)));
+                            double prob = 1 / (1 + Math.Exp(-0.7 * ((NextTerritory.temparmies - NextTerritory.currentarmies) - DefenseBias)));
                             if (num <= prob)
                             {
                                 NextTerritory.owner.Territoriesowned -= 1;
