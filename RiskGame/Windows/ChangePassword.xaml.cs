@@ -87,7 +87,7 @@ namespace RiskGame.Windows
                 lblSuccess.Visibility = Visibility.Collapsed;
                 if (txtNewPass.Password == txtNewPassConf.Password)
                 {
-                    Human.Validation(txtName.Text, txtPass.Password);
+                    Human.Validation(txtPass.Password);
                     Human player = Human.SignIn(txtName.Text, txtPass.Password);
                     Human.Update(player, txtNewPass.Password);
                     DispSuccessMsg("Your password has been changed.");

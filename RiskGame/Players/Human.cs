@@ -141,6 +141,11 @@ namespace RiskGame
             if ((!ValidUserLength(userchar)) || (!ValidCharUser(userchar)) || (!ValidNameTaken(username)) || (!ValidPassLength(passchar)) || (!ValidPassChar(passchar)) || (!ValidPassSecurity(passchar))) { throw new AccountCreationException(ValidUserLength(userchar), ValidCharUser(userchar), ValidNameTaken(username), ValidPassLength(passchar), ValidPassChar(passchar), ValidPassSecurity(passchar)); }
             // can be made more efficient as in current state checks Username at least twice on the first parameter that throws exception rather than storing result
         }
+        public static void Validation(String password)
+        {
+            Char[] passchar = password.ToCharArray();
+            if ((!ValidPassLength(passchar)) || (!ValidPassChar(passchar)) || (!ValidPassSecurity(passchar))) { throw new AccountCreationException(true, true, true, ValidPassLength(passchar), ValidPassChar(passchar), ValidPassSecurity(passchar)); }
+        }
         private static bool ValidUserLength(Char[] chararray)
         {
             // Checks the username is the correct length.
