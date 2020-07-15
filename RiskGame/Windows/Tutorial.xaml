@@ -5,8 +5,108 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RiskGame.Windows"
         mc:Ignorable="d"
-        Title="Tutorial" Height="450" Width="800" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}" Closing="Window_Closing" LostFocus="Window_LostFocus">
-    <Grid>
-
-    </Grid>
+        Title="Tutorial" Height="800" Width="600" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}" Closing="Window_Closing" LostFocus="Window_LostFocus">
+    <Border>
+        <Border.Background>
+            <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
+                <VisualBrush.Visual>
+                    <Image Source="pack://siteoforigin:,,,/Resources/RiskBackground.jpg">
+                        <Image.Effect>
+                            <BlurEffect Radius="20" />
+                        </Image.Effect>
+                    </Image>
+                </VisualBrush.Visual>
+            </VisualBrush>
+        </Border.Background>
+        <Border.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,0,0,5"/>
+                <Setter Property="FontSize" Value="8"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+            </Style>
+            <Style TargetType="Expander">
+                <Setter Property="Margin" Value="5,0,5,5"/>
+                <Setter Property="Width" Value="200"/>
+            </Style>
+            <Style TargetType="WrapPanel">
+                <Setter Property="Height" Value="200"/>
+            </Style>
+        </Border.Resources>
+        <Viewbox>
+            <Border Style="{StaticResource brd_BlueBackground}">
+                <StackPanel>
+                    <Label Style="{StaticResource lblHeader}">Tutorial</Label>
+                    <ScrollViewer Margin="0" VerticalScrollBarVisibility="Auto">
+                           <StackPanel>
+                                    <StackPanel.Resources>
+                                        <Style TargetType="Border" x:Key="brd_ScrollViewer" BasedOn="{StaticResource brd_BlueBackground}">
+                                            <Setter Property="MaxHeight" Value="200"/>
+                                        </Style>
+                                        <Style TargetType="StackPanel">
+                                            <Setter Property="Margin" Value="5"/>
+                                        </Style>
+                            </StackPanel.Resources>
+                            <Expander>
+                                <Expander.Header>
+                                    <Label Style="{StaticResource lblSubHeading}">General</Label>
+                                </Expander.Header>
+                                <Border Style="{StaticResource brd_ScrollViewer}">
+                                    <ScrollViewer>
+                                        <StackPanel>
+                                            <TextBlock>Most windows can be maximised and minimised using the F11 key on your keyboard.</TextBlock>
+                                            <TextBlock>Many windows will have a settings menu that can be accessed by an on-screen button, or by using the escape key while your window is not maximised.</TextBlock>
+                                            <TextBlock>The settings menu allows you to change your user preferences such as whether music or in-game hints are enabled as well as enabling full-screen view of the current window.</TextBlock>
+                                            <TextBlock>If music is available on the current window you can play, pause, change the volume, view and skip the current track from the music controls.</TextBlock>
+                                            <TextBlock>This help menu can also be accessed any time from the settings menu by clicking tutorial.</TextBlock>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Border>
+                            </Expander>
+                            <Expander>
+                                <Expander.Header>
+                                    <Label Style="{StaticResource lblSubHeading}">Login, Register and Change Password</Label>
+                                </Expander.Header>
+                                <Border Style="{StaticResource brd_ScrollViewer}">
+                                    <ScrollViewer>
+                                        <StackPanel>
+                                            <TextBlock>The Login and Register menu allows you to create a user account and login to the game.</TextBlock>
+                                            <TextBlock>The tab key can be used to cycle between on-screen inputs and buttons,</TextBlock>
+                                            <TextBlock>To change your password click "Change Password"</TextBlock>
+                                            <Label Style="{StaticResource lblSubHeading}" Margin="5">Registration</Label>
+                                            <TextBlock>Usernames must be 3-10 characters, unique and consist of letters, numbers and separator characters.</TextBlock>
+                                            <TextBlock>Passwords must be 8-20 characters and consist of letters, numbers and symbols. Passwords must contain at least one capital letter, number and symbol.</TextBlock>
+                                            <TextBlock>If you wish to see your password as you type it, click the eye icon to show your password.</TextBlock>
+                                            <TextBlock>The rules for usernames and passwords can be read again by hovering over the respective help buttons marked by a '?'</TextBlock>
+                                            <TextBlock>Once you have typed your desired username and password press the enter key or click "Register" to create an account.</TextBlock>
+                                            <TextBlock>If you are successful, you will automatically be logged in.</TextBlock>
+                                            <TextBlock>If your details do not meet the criteria, passwords do not match or an error occurs, an error message will be displayed and may give details telling you how to correct the error.</TextBlock>
+                                            <Label Style="{StaticResource lblSubHeading}" Margin="5">Login</Label>
+                                            <TextBlock>Login by entering your details here and use the enter key or "Login" button to submit them.</TextBlock>
+                                            <TextBlock>If an error occurs, you will be greeted by a message describing what went wrong.</TextBlock>
+                                            <Label Style="{StaticResource lblSubHeading}" Margin="5">Change Password</Label>
+                                            <TextBlock>Accessed via the Change Password button on the Login and Register Window.</TextBlock>
+                                            <TextBlock>Usage is the same as Login and Register.</TextBlock>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Border>
+                            </Expander>
+                            <Expander>
+                                <Expander.Header>
+                                    <Label Style="{StaticResource lblSubHeading}">Game Setup Window</Label>
+                                </Expander.Header>
+                                <Border Style="{StaticResource brd_ScrollViewer}">
+                                    <ScrollViewer>
+                                        <StackPanel>
+                                            <TextBlock>The Login and Register menu allows you to create a user account and login to the game.</TextBlock>
+                                        </StackPanel>
+                                    </ScrollViewer>
+                                </Border>
+                            </Expander>
+                        </StackPanel>
+                    </ScrollViewer>
+                </StackPanel>
+            </Border>
+        </Viewbox>
+    </Border>
 </Window>

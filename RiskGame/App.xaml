@@ -222,12 +222,16 @@
             <Setter Property="TickFrequency" Value="0.1"></Setter>
             <EventSetter Event="ValueChanged" Handler="ChangeMediaVolume"></EventSetter>
         </Style>
-        <!-- Other Styles -->
+        <!-- Border Styles -->
         <Style TargetType="Border" x:Key="brd_Background">
             <Setter Property="BorderBrush" Value="Black"></Setter>
             <Setter Property="BorderThickness" Value="1"></Setter>
             <Setter Property="Margin" Value="5"></Setter>
         </Style>
+        <Style TargetType="Border" x:Key="brd_BlueBackground" BasedOn="{StaticResource brd_Background}">
+            <Setter Property="Background" Value="#7F00D1FF"/>
+        </Style>
+        <!-- Other Styles -->
         <Style TargetType="PasswordBox" x:Key="pwdbox">
             <Setter Property="Margin" Value="5"></Setter>
             <Setter Property="BorderBrush" Value="Black"></Setter>
