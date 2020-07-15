@@ -68,7 +68,6 @@ namespace RiskGame.Windows
         public Highscores(GameDetails gameDetails)
         {
             // If loading from completed game show the current players game.
-            GameDetails.Save(gameDetails);
             playergame = new ObservableCollection<GameDetails>() { gameDetails };
             Initialise();
             PlayerScoreList.ItemsSource = playergame;
