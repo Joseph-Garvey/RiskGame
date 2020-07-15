@@ -192,8 +192,8 @@
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Map" Width="55" Binding="{Binding Map}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Last Save" Width="80" Binding="{Binding LastSave}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="No. Players" Width="60" Binding="{Binding NoPlayers}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Mode" Width="55" Binding="{Binding Gamemode}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Last Save" Width="85" Binding="{Binding LastSave}"></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
                             <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">

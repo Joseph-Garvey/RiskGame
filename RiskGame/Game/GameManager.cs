@@ -173,7 +173,7 @@ namespace RiskGame.Game
                         }
                         if (containsplayer)
                         {
-                            GameDetails game = new GameDetails(tmp.GameID.ToString(), tmp.lastsave.ToString("g"), tmp.players[0].Username, tmp.players.Count().ToString());
+                            GameDetails game = new GameDetails(tmp.lastsave.ToString("g"), tmp.players[0].Username, tmp.map.ToString(), tmp.gamemode.ToString());
                             games.Add(game);
                         }
                     }
