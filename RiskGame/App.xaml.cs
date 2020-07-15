@@ -76,8 +76,7 @@ namespace RiskGame
                     chkFullscreen.IsChecked = false;
                 }
             }
-            catch (NullReferenceException) { }
-            catch (ArgumentNullException) { }
+            catch (Exception) { }
         }
         private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(RetrieveActiveWindow()); }
         // Methods //
