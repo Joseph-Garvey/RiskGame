@@ -30,8 +30,8 @@
                             <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Score" Width="35" Binding="{Binding Score}"></DataGridTextColumn>
                             <DataGridTextColumn Header="No.Players" Width="50" Binding="{Binding NoPlayers}"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Map" Width="40"></DataGridTextColumn>
-                            <DataGridTextColumn Header="Game Mode" Width="60"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Map" Width="40" Binding="{Binding Map}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Game Mode" Width="60" Binding="{Binding Gamemode}"></DataGridTextColumn>
                             <DataGridTextColumn Header="Date" Width="55" Binding="{Binding LastSave}"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
