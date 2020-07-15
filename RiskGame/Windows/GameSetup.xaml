@@ -190,9 +190,9 @@
                             <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
                             <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="170" CanUserResizeRows="False" CanUserSortColumns="True">
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="GameID" Width="40" Binding="{Binding GameID}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
-                                    <DataGridTextColumn Header="Last Save" Width="95" Binding="{Binding LastSave}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Map" Width="55" Binding="{Binding Map}"></DataGridTextColumn>
+                                    <DataGridTextColumn Header="Last Save" Width="80" Binding="{Binding LastSave}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="No. Players" Width="60" Binding="{Binding NoPlayers}"></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
