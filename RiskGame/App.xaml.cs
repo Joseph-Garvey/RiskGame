@@ -127,6 +127,7 @@ namespace RiskGame
         // Methods //
         private void ChangeDisplay(Window window)
         {
+            if(window is ChangePassword) { return; }
             StackPanel panel_MainUI = (StackPanel)window.FindName("panel_MainUI");
             Panel object_Settings = (Panel)window.FindName("panel_Settings");
             if (panel_MainUI.Visibility == Visibility.Visible)
@@ -223,14 +224,14 @@ namespace RiskGame
                     RetrieveMediaPlayer(w).Pause();
                     break;
                 }
-                /*else if (w is RiskGame.GameWindow)
+                else if (w is RiskGame.GameWindow)
                 {
                     (w as RiskGame.GameWindow).Music_enabled = true;
                 }
                 else if (w is RiskGame.Windows.Highscores)
                 {
                     (w as RiskGame.Windows.Highscores).Music_enabled = true;
-                }*/
+                }
             }
         }
         private void MediaPlay(object sender, RoutedEventArgs e)
@@ -249,14 +250,14 @@ namespace RiskGame
                     RetrieveMediaPlayer(w).Play();
                     break;
                 }
-                /*else if (w is RiskGame.GameWindow)
+                else if (w is RiskGame.GameWindow)
                 {
                     (w as RiskGame.GameWindow).Music_enabled = true;
                 }
                 else if (w is RiskGame.Windows.Highscores)
                 {
                     (w as RiskGame.Windows.Highscores).Music_enabled = true;
-                }*/
+                }
             }
         }
         private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e) { MediaForward(sender, e); }
@@ -265,7 +266,7 @@ namespace RiskGame
             try
             {
                 Window window = RetrieveActiveWindow();
-                if (window is Tutorial)
+                if (window is Tutorial || window is ChangePassword)
                 {
                     foreach (Window w in Application.Current.Windows)
                     {
@@ -276,9 +277,15 @@ namespace RiskGame
                         }
                     }
                 }
-                ((Label)window.FindName("lblMediaDetails")).Content = ((MediaElement)sender).Source.ToString().Substring(30);
+                UpdateMediaText((MediaElement)sender, (Label)window.FindName("lblMediaDetails"));
             }
             catch (NullReferenceException) { UpdateMediaText(Application.Current.MainWindow, sender); }
+        }
+
+        // Methods //
+        private void UpdateMediaText(MediaElement sender, Label l)
+        {
+            l.Content = sender.Source.ToString().Substring(30);
         }
         private void UpdateMediaText(Window window, object sender)
         {
@@ -295,11 +302,10 @@ namespace RiskGame
                         }
                     }
                 }
-            ((Label)window.FindName("lblMediaDetails")).Content = ((MediaElement)sender).Source.ToString().Substring(30);
+                UpdateMediaText((MediaElement)sender, (Label)window.FindName("lblMediaDetails"));
             }
             catch (Exception) { }
         }
-        // Methods //
         private MediaElement RetrieveMediaPlayer()
         {
             Window window = RetrieveActiveWindow();
