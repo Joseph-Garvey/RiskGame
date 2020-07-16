@@ -124,18 +124,21 @@ namespace RiskGame
             {
                 lblError.Visibility = Visibility.Collapsed;
                 // DEV OPTIONS // to be removed before publish // used for quick testing
-                if ((String)((Button)sender).Content == "Admin")
+                if(sender is Button)
                 {
-                    txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
-                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                    players.Add(player);
-                    txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
-                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                    players.Add(player);
-                    txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
-                    player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                    players.Add(player);
-                    txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
+                    if ((String)((Button)sender).Content == "Admin")
+                    {
+                        txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
+                        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                        players.Add(player);
+                        txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
+                        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                        players.Add(player);
+                        txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
+                        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                        players.Add(player);
+                        txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
+                    }
                 }
                 // Signs player in when Login button is clicked //
                 // Checks entered details against those on file, retrieves the player's details, returning a player object.
