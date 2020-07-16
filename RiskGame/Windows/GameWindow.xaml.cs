@@ -1077,15 +1077,15 @@ namespace RiskGame
             else
             {
                 String[] tmp = txtOutput.Text.Split('\n');
-                if (tmp.Length >= 7)
+                if (tmp.Length >= 6)
                 {
                     tmp[0] = tmp[1];
                     for (int i = 1; i < (tmp.Length - 1); i++)
                     {
                         tmp[i] = "\n" + tmp[i + 1];
                     }
-                    tmp[6] = ("\n" + s);
-                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5] + tmp[6];
+                    tmp[5] = ("\n" + s);
+                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5];
                 }
                 else { txtOutput.Text += String.Format("\n{0}", s); }
             }
@@ -1397,7 +1397,8 @@ namespace RiskGame
                     {
                         if(NextTerritory != null)
                         {
-                            Output("You must finish or cancel your current move before selecting another territory.");
+                            Output("You must finish or cancel your current move");
+                            Output("before selecting another territory");
                             return;
                         }
                         SelectTerritory(t, btnTerritory, Brushes.Green, true);
