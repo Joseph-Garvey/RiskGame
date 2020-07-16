@@ -1473,7 +1473,7 @@ namespace RiskGame
                         if(gamemode == GameMode.NewRisk)
                         {
                             double num = rng.NextDouble();
-                            double prob = 1 / (1 + Math.Exp(-3 * (((NextTerritory.temparmies - NextTerritory.currentarmies)/NextTerritory.currentarmies) - DefenseBias)));
+                            double prob = 1 / (1 + Math.Exp(-3 * (((double)(NextTerritory.temparmies - NextTerritory.currentarmies)/NextTerritory.currentarmies) - DefenseBias)));
                             if (num <= prob)
                             {
                                 NextTerritory.owner.Territoriesowned -= 1;
@@ -1486,7 +1486,7 @@ namespace RiskGame
                                 bool won = true;
                                 foreach (Player p in Players)
                                 {
-                                    if (p != CurrentPlayer && p.Territoriesowned > 0) { won = false; }
+                                    if (p != CurrentPlayer && p.Territoriesowned > 0) { won = false; break; }
                                 }
                                 if (won) { Win(); }
                                 int lost = NextTerritory.temparmies - (int)Math.Ceiling(prob * NextTerritory.temparmies);
