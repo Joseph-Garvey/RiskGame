@@ -110,7 +110,11 @@ namespace RiskGame
                 if(p is Human) { humanusers.Add(p as Human); }
             }
             ObservableCollection<GameDetails> loadedgames = GameManager.RetrieveGames(humanusers);
-            if (loadedgames == null || loadedgames.Count == 0) { panel_LoadGame.Visibility = Visibility.Collapsed; }
+            if (loadedgames == null || loadedgames.Count == 0) {
+                panel_LoadGame.Visibility = Visibility.Collapsed;
+                btnNewGameSettings.Visibility = Visibility.Visible;
+                btnNewGame.Width = 150;
+            }
             GameList.ItemsSource = loadedgames;
             // Updates UI with details of currently logged in players, showing new "Player Panels" as required.
             lblPlayer1.Content = players[0].Username;

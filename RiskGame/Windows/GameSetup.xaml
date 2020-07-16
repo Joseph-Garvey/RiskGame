@@ -181,14 +181,18 @@
                                 <CheckBox x:Name="chkRandomise" Style="{StaticResource Default}" Margin="10,5,5,5"/>
                                 <Button Style="{StaticResource btnUI}" Width="20" Margin="10,6,5,6" ToolTip="This option speeds up the start of a game by randomly placing all players' initial armies around the map." Content="?"/>
                             </StackPanel>
-                            <Button Content="New Game" Click="New_Game" Style="{StaticResource btnUI}"></Button>
+                            <StackPanel Style="{StaticResource HorizontalStretch}">
+                                <Button Name="btnNewGame" Content="New Game" Click="New_Game" Style="{StaticResource btnUI}" Width="190"></Button>
+                                <!--Normal 190, short is 150-->
+                                <Button x:Name="btnNewGameSettings" Style="{StaticResource btnSettingsThin}" Visibility="Collapsed"></Button>
+                            </StackPanel>
                         </StackPanel>
                     </Border>
                     <!-- Load Game Panel -->
                     <Border Style="{StaticResource brd_Background}" VerticalAlignment="Top">
                         <StackPanel x:Name="panel_LoadGame" Style="{StaticResource panel_Background}">
                             <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
-                            <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="170" CanUserResizeRows="False" CanUserSortColumns="True">
+                            <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="230" CanUserResizeRows="False" CanUserSortColumns="True">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Player" Width="55" Binding="{Binding Player}"></DataGridTextColumn>
                                     <DataGridTextColumn Header="Map" Width="55" Binding="{Binding Map}"></DataGridTextColumn>
