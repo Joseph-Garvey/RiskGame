@@ -393,7 +393,7 @@ namespace RiskGame
                     Territory Port_Richmond = new Territory("Port_Richmond", new List<string> { "Bayonne", "Dongan_Hills","Emerson_Hill" }, btnPort_Richmond );
                     Territory Unionport = new Territory("Unionport", new List<string> { "Flushing", "Laconia", "Concourse" }, btnUnionport );
                     Territory Laconia = new Territory("Laconia", new List<string> { "Unionport", "Concourse", "Riverdale" }, btnLaconia );
-                    Territory Concourse = new Territory("Concourse", new List<string> { "Unionport", "Astoria", "Washington_Heights", "Riverdale", "Laconica" }, btnConcourse );
+                    Territory Concourse = new Territory("Concourse", new List<string> { "Unionport", "Astoria", "Washington_Heights", "Riverdale", "Laconia" }, btnConcourse );
                     Territory Riverdale = new Territory("Riverdale", new List<string> { "Laconia", "Concourse" }, btnRiverdale );
                     Territory Bayonne = new Territory("Bayonne", new List<string> { "Port_Richmond","Jersey_City"}, btnBayonne );
                     Territory Jersey_City = new Territory("Jersey_City", new List<string> { "Bayonne", "Hoboken", "North_Bergen" },btnJersey_City );
@@ -1038,17 +1038,17 @@ namespace RiskGame
                 while (start <= end)
                 {
                     int mid = Decimal.ToInt32(Math.Floor((decimal)(start + end) / 2));
-                    if (territoryname == Territories[mid].name)
-                    {
-                        return Territories[mid];
-                    }
-                    else if (String.Compare(territoryname, Territories[mid].name) < 0)
+                    if (String.Compare(territoryname, Territories[mid].name) < 0)
                     {
                         end = mid - 1;
                     }
-                    else
+                    else if(String.Compare(territoryname, Territories[mid].name) > 0)
                     {
                         start = mid + 1;
+                    }
+                    else
+                    {
+                        return Territories[mid];
                     }
                 }
                 throw new TerritoryNotFoundException();

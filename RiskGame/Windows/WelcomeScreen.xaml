@@ -22,7 +22,7 @@
                         <Button Style="{StaticResource btnHelpThin}"></Button> <!--Event set in style-->
                     </StackPanel>
                 </StackPanel>
-                <DockPanel x:Name="panel_Settings" >
+                <DockPanel x:Name="panel_Settings" Visibility="Collapsed">
                     <DockPanel.Resources>
                         <Style TargetType="Border">
                             <Setter Property="BorderBrush" Value="Black"></Setter>
