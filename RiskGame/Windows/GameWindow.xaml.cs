@@ -15,6 +15,7 @@ using RiskGame.enemyAI;
 using RiskGame.Game;
 using RiskGame.Game.Locations;
 using System.Collections.ObjectModel;
+using RiskGame.CustomExceptions;
 using System.Threading;
 using System.ComponentModel;
 using RiskGame.Windows;
@@ -1028,27 +1029,41 @@ namespace RiskGame
         //// Backend Methods ////
         private Territory RetrieveTerritory(String territoryname)
         {
-            // Binary Search //
-            int start = 0;
-            int end = Territories.Count - 1;
             territoryname = territoryname.Replace(' ', '_');
-            while (start <= end)
+            try
             {
-                int mid = Decimal.ToInt32(Math.Floor((decimal)(start + end) / 2));
-                if (territoryname == Territories[mid].name)
+                // Binary Search //
+                int start = 0;
+                int end = Territories.Count - 1;
+                while (start <= end)
                 {
-                    return Territories[mid];
+                    int mid = Decimal.ToInt32(Math.Floor((decimal)(start + end) / 2));
+                    if (territoryname == Territories[mid].name)
+                    {
+                        return Territories[mid];
+                    }
+                    else if (String.Compare(territoryname, Territories[mid].name) < 0)
+                    {
+                        end = mid - 1;
+                    }
+                    else
+                    {
+                        start = mid + 1;
+                    }
                 }
-                else if(String.Compare(territoryname, Territories[mid].name) < 0)
-                {
-                    end = mid - 1;
-                }
-                else
-                {
-                    start = mid + 1;
-                }
+                throw new TerritoryNotFoundException();
             }
-            throw new Exception("Territory does not exist");
+            catch (TerritoryNotFoundException)
+            {
+                foreach(Territory t in Territories)
+                {
+                    if(t.name == territoryname)
+                    {
+                        return t;
+                    }
+                }
+                throw new Exception();
+            }
         }
         private void SelectTerritory(Territory t, Button b, Brush color, bool next)
         {
