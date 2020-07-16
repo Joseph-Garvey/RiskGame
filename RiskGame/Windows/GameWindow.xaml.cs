@@ -1489,7 +1489,7 @@ namespace RiskGame
                                     if (p != CurrentPlayer && p.Territoriesowned > 0) { won = false; break; }
                                 }
                                 if (won) { Win(); }
-                                int lost = NextTerritory.temparmies - (int)Math.Ceiling(prob * NextTerritory.temparmies);
+                                int lost = NextTerritory.temparmies - (int)Math.Ceiling((1-prob) * (Double)NextTerritory.temparmies);
                                 NextTerritory.temparmies -= lost;
                                 Output(String.Format("You have captured this territory and lost {0} armies in battle.", lost));
                                 UpdateState(GameState.Conquer);
@@ -1497,7 +1497,7 @@ namespace RiskGame
                             else
                             {
                                 NextTerritory.temparmies = 0;
-                                int survived = (int)(Math.Ceiling(1 - prob) * NextTerritory.currentarmies);
+                                int survived = (int)(Math.Ceiling((1 - prob) * (Double)NextTerritory.currentarmies));
                                 int loss = NextTerritory.currentarmies - survived;
                                 Output(String.Format("You have lost this battle, the enemy suffered {0} casualties.", loss));
                                 NextTerritory.currentarmies = survived; // can be simplified /\
