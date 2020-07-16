@@ -170,7 +170,7 @@
                                         </StackPanel>
                                         <StackPanel x:Name="panel_Bias" Style="{StaticResource panel_Background}" Orientation="Horizontal" HorizontalAlignment="Stretch">
                                             <Label Content="Defence Bias" FontSize="8" Style="{StaticResource lblHeader}"></Label>
-                                            <Slider x:Name="sldBias" Minimum="0" Maximum="1" Value="0.5" TickFrequency="0.1" Style="{StaticResource sld_Base}" Width="80"></Slider>
+                                            <Slider x:Name="sldBias" Minimum="0" Maximum="0.3" Value="0.15" TickFrequency="0.05" Style="{StaticResource sld_Base}" Width="80"></Slider>
                                             <TextBox Width="25" Margin="0,5,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding ElementName=sldBias, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                         </StackPanel>
                                     </StackPanel>

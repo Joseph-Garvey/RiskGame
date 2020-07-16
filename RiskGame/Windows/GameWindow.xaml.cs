@@ -1034,7 +1034,7 @@ namespace RiskGame
             territoryname = territoryname.Replace(' ', '_');
             while (start <= end)
             {
-                int mid = (start + end) / 2;
+                int mid = Decimal.ToInt32(Math.Floor((decimal)(start + end) / 2));
                 if (territoryname == Territories[mid].name)
                 {
                     return Territories[mid];
@@ -1458,7 +1458,7 @@ namespace RiskGame
                         if(gamemode == GameMode.NewRisk)
                         {
                             double num = rng.NextDouble();
-                            double prob = 1 / (1 + Math.Exp(-0.7 * ((NextTerritory.temparmies - NextTerritory.currentarmies) - DefenseBias)));
+                            double prob = 1 / (1 + Math.Exp(-3 * (((NextTerritory.temparmies - NextTerritory.currentarmies)/NextTerritory.currentarmies) - DefenseBias)));
                             if (num <= prob)
                             {
                                 NextTerritory.owner.Territoriesowned -= 1;
