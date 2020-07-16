@@ -1388,14 +1388,19 @@ namespace RiskGame
                         List<Territory> blank = new List<Territory>();
                         scanterritories = blank;
                     }
-                    else if (btnTerritory.BorderBrush == Brushes.Aqua)
-                    {
-                        SelectTerritory(t, btnTerritory, Brushes.Green, true);
-                        AdjustAttackMoves(1);
-                    }
                     else if(btnTerritory.BorderBrush == Brushes.Green)
                     {
                         PlayerActions(true);
+                        return;
+                    }
+                    else if (btnTerritory.BorderBrush == Brushes.Aqua)
+                    {
+                        if(NextTerritory != null)
+                        {
+                            Output("You must finish or cancel your current move before selecting another territory.");
+                        }
+                        SelectTerritory(t, btnTerritory, Brushes.Green, true);
+                        AdjustAttackMoves(1);
                     }
                     else { Output("You cannot move armies to here from your selected territory."); }
                     break;
