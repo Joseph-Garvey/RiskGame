@@ -1398,6 +1398,7 @@ namespace RiskGame
                         if(NextTerritory != null)
                         {
                             Output("You must finish or cancel your current move before selecting another territory.");
+                            return;
                         }
                         SelectTerritory(t, btnTerritory, Brushes.Green, true);
                         AdjustAttackMoves(1);
