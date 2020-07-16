@@ -40,21 +40,21 @@
                         <Button x:Name="btnArgentina" Content="Argentina" Margin="238,398,758,93" Height="Auto"/>
                         <Button x:Name="btnBrazil" Content="Brazil" Width="76" Margin="300,319,704,177"/>
                         <Button x:Name="btnPeru" Content="Peru" Width="41" Margin="228,339,812,157"/>
-                        <Button x:Name="btnVenezuela" Content="Venezuela" Margin="216,266,783,227" Height="Auto"/>
+                        <Button x:Name="btnVenezuela" Content="Venezuela" Margin="216,266,783,227"/>
                         <Button x:Name="btnUK_Ireland" Content="UK and Ireland" Margin="356,151,615,345"/>
-                        <Button x:Name="btnIceland" Content="Iceland" Margin="436,64,582,431" Height="Auto"/>
-                        <Button x:Name="btnNorthern_Europe" Content="Northern Europe" Margin="474,157,476,335" Height="Auto"/>
-                        <Button x:Name="btnScandinavia" Content="Scandinavia" Margin="498,86,482,408" Height="Auto"/>
-                        <Button x:Name="btnSouthern_Europe" Content="Southern Europe" Margin="496,206,462,287" Height="Auto"/>
-                        <Button x:Name="btnSoviet_Bloc" Content ="Soviet Bloc" Margin="594,123,402,370" Height="Auto"/>
-                        <Button x:Name="btnWestern_Europe" Content="Western Europe" Margin="353,225,599,270" Height="Auto"/>
+                        <Button x:Name="btnIceland" Content="Iceland" Margin="436,64,582,431"/>
+                        <Button x:Name="btnNorthern_Europe" Content="Northern Europe" Margin="474,157,476,335"/>
+                        <Button x:Name="btnScandinavia" Content="Scandinavia" Margin="498,86,482,408"/>
+                        <Button x:Name="btnSouthern_Europe" Content="Southern Europe" Margin="496,206,462,287"/>
+                        <Button x:Name="btnSoviet_Bloc" Content ="Soviet Bloc" Margin="594,123,402,370"/>
+                        <Button x:Name="btnWestern_Europe" Content="Western Europe" Margin="353,225,599,270"/>
                         <Button x:Name="btnCentral_Africa" Content="Central Africa" Margin="507,364,469,132"/>
-                        <Button x:Name="btnEast_Africa" Content="East Africa" Margin="617,334,374,158" Height="Auto"/>
-                        <Button x:Name="btnMadagascar" Content="Madagascar" Margin="677,427,307,65" Height="Auto"/>
-                        <Button x:Name="btnEgypt" Content="Egypt" Width="51" Height="Auto" Margin="556,272,472,220"/>
+                        <Button x:Name="btnEast_Africa" Content="East Africa" Margin="617,334,374,158"/>
+                        <Button x:Name="btnMadagascar" Content="Madagascar" Margin="677,427,307,65"/>
+                        <Button x:Name="btnEgypt" Content="Egypt" Width="51"  Margin="556,272,472,220"/>
                         <Button x:Name="btnNorth_Africa" Content="North Africa" Width="90" Margin="460,303,530,193"/>
                         <Button x:Name="btnSouth_Africa" Content="South Africa" Margin="540,422,443,74"/>
-                        <Button x:Name="btnAfghanistan" Content="Afghanistan" Margin="674,175,312,318" Height="Auto"/>
+                        <Button x:Name="btnAfghanistan" Content="Afghanistan" Margin="674,175,312,318"/>
                         <Button x:Name="btnChina" Content="China" Width="58" Margin="821,215,201,281"/>
                         <Button x:Name="btnIndia" Content="India" Width="50" Margin="759,251,271,245"/>
                         <Button x:Name="btnJapan" Content="Japan" Width="46" Margin="969,168,65,328"/>
@@ -112,9 +112,9 @@
                                         </Style>
                                         <!-- Rectangle Style -->
                                         <Style TargetType="Rectangle">
-                                            <Setter Property="Margin" Value="10,3,0,3"></Setter>
+                                            <Setter Property="Margin" Value="10,5,0,5"></Setter>
                                             <!-- usually 10,5,0,5-->
-                                            <Setter Property="Height" Value="17"></Setter>
+                                            <Setter Property="Height" Value="20"></Setter>
                                             <!-- usually 20 -->
                                             <Setter Property="Width" Value="30"></Setter>
                                             <Setter Property="Stroke" Value="Black"></Setter>
@@ -201,7 +201,7 @@
                                     <!-- Number Selection -->
                                     <StackPanel x:Name="panel_NumberSelection">
                                         <Button x:Name="btnStateDisp" Style="{StaticResource btnPresenter}" Margin="10,10,10,5" FontSize="20" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF00B9FF" BorderThickness="2">GameState</Button>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                        <StackPanel Style="{StaticResource HorizontalCentred}">
                                             <StackPanel.Resources>
                                                 <Style TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
                                                     <Setter Property="FontSize" Value="30"></Setter>
@@ -218,12 +218,12 @@
                                             <Button Click="Decrease">
                                                 <Image Source="pack://siteoforigin:,,,/Images/minus.png" Margin="2"></Image>
                                             </Button>
-                                            <Button x:Name="btnNumber" Style="{StaticResource btnCornerUI}" BorderThickness="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="24" Width="70" Height="45">0</Button>
+                                            <Button x:Name="btnNumber" FontSize="24" Width="70">0</Button>
                                             <Button  Click="Increase">
                                                 <Image Source="pack://siteoforigin:,,,/Images/plus.png" Margin="2"></Image>
                                             </Button>
                                         </StackPanel>
-                                        <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Margin="23,0,23,10" Width="200" Click="Confirm" FontSize="16" FontWeight="Bold" HorizontalContentAlignment="Center" Background="#FF4ACB00" BorderThickness="2">Confirm Action</Button>
+                                        <Button x:Name="btnState" Style="{StaticResource btnCornerUI}" Margin="23,0,23,10" Width="200" Click="Confirm" FontSize="16" Background="#FF4ACB00" BorderThickness="2">Confirm Action</Button>
                                     </StackPanel>
                                     <!-- Dice Roll -->
                                     <Grid x:Name="panel_Die" VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="Collapsed">
