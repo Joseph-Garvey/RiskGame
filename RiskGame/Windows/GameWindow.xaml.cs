@@ -1489,7 +1489,7 @@ namespace RiskGame
                                     if (p != CurrentPlayer && p.Territoriesowned > 0) { won = false; break; }
                                 }
                                 if (won) { Win(); }
-                                int lost = NextTerritory.temparmies - (int)Math.Ceiling((1-prob) * (Double)NextTerritory.temparmies);
+                                int lost = (int)Math.Floor((1-prob) * (Double)NextTerritory.temparmies);
                                 NextTerritory.temparmies -= lost;
                                 Output(String.Format("You have captured this territory and lost {0} armies in battle.", lost));
                                 UpdateState(GameState.Conquer);
