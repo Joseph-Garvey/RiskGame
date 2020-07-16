@@ -291,7 +291,7 @@ namespace RiskGame
         {
             try
             {
-                if (window is Tutorial)
+                if (window is Tutorial || window is ChangePassword)
                 {
                     foreach (Window w in Application.Current.Windows)
                     {
