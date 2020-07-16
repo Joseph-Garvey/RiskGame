@@ -6,24 +6,14 @@
         xmlns:local="clr-namespace:RiskGame"
         mc:Ignorable="d"
         Title="Game Setup" Height="600" Width="800" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}">
-    <Border>
-        <Border.Background>
-            <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
-                <VisualBrush.Visual>
-                    <Image Source="pack://siteoforigin:,,,/Resources/RiskBackground.jpg">
-                        <Image.Effect>
-                            <BlurEffect Radius="20" />
-                        </Image.Effect>
-                    </Image>
-                </VisualBrush.Visual>
-            </VisualBrush>
-        </Border.Background>
+    <Border Style="{StaticResource brd_ImageBackground}">
         <Viewbox>
             <StackPanel>
                 <!-- Main UI -->
                 <StackPanel x:Name="panel_MainUI" Orientation="Horizontal">
-                    <Border Style="{StaticResource brd_Background}">
-                        <StackPanel Style="{StaticResource panel_Background}">
+                    <!-- New Game Panel -->
+                    <Border Style="{StaticResource brd_BlueBackground}">
+                        <StackPanel>
                             <StackPanel.Resources>
                                 <Style TargetType="ComboBox">
                                     <Setter Property="FontSize" Value="8"></Setter>
@@ -161,14 +151,14 @@
                                 <Expander.Header>
                                     <Label FontSize="8" HorizontalAlignment="Stretch" Style="{StaticResource lblSubHeading}">Advanced Options</Label>
                                 </Expander.Header>
-                                <Border Style="{StaticResource brd_Background}" Margin="2">
+                                <Border Style="{StaticResource brd_BlueBackground}" Margin="2">
                                     <StackPanel>
-                                        <StackPanel x:Name="panel_Time" Style="{StaticResource panel_Background}" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <StackPanel x:Name="panel_Time" Style="{StaticResource HorizontalStretch}">
                                             <Label Content="Turn Time" FontSize="8" Style="{StaticResource lblHeader}"></Label>
                                             <Slider x:Name="sldTime" Minimum="20" Maximum="120" Value="60" Style="{StaticResource sld_Base}" Width="90"></Slider>
                                             <TextBox Width="25" Margin="0,5,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding ElementName=sldTime, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
                                         </StackPanel>
-                                        <StackPanel x:Name="panel_Bias" Style="{StaticResource panel_Background}" Orientation="Horizontal" HorizontalAlignment="Stretch">
+                                        <StackPanel x:Name="panel_Bias" Style="{StaticResource HorizontalStretch}">
                                             <Label Content="Defence Bias" FontSize="8" Style="{StaticResource lblHeader}"></Label>
                                             <Slider x:Name="sldBias" Minimum="0" Maximum="0.3" Value="0.15" TickFrequency="0.05" Style="{StaticResource sld_Base}" Width="80"></Slider>
                                             <TextBox Width="25" Margin="0,5,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Text="{Binding ElementName=sldBias, Path=Value, UpdateSourceTrigger=PropertyChanged}"></TextBox>
@@ -189,8 +179,8 @@
                         </StackPanel>
                     </Border>
                     <!-- Load Game Panel -->
-                    <Border Style="{StaticResource brd_Background}" VerticalAlignment="Top">
-                        <StackPanel x:Name="panel_LoadGame" Style="{StaticResource panel_Background}">
+                    <Border Style="{StaticResource brd_BlueBackground}" VerticalAlignment="Top">
+                        <StackPanel x:Name="panel_LoadGame">
                             <Label Content="Load Game" Style="{StaticResource lblHeader}"></Label>
                             <DataGrid Name="GameList" HorizontalScrollBarVisibility="Disabled" MaxHeight="230" CanUserResizeRows="False" CanUserSortColumns="True">
                                 <DataGrid.Columns>
@@ -200,7 +190,7 @@
                                     <DataGridTextColumn Header="Last Save" Width="85" Binding="{Binding LastSave}"></DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Center">
+                            <StackPanel Style="{StaticResource HorizontalCentred}" VerticalAlignment="Top">
                                 <Button Content="Load Game" Click="Load_Game" Style="{StaticResource btnCornerUI}" HorizontalAlignment="Stretch" Width="200"></Button>
                                 <Button Style="{StaticResource btnSettings}" HorizontalAlignment="Right"></Button>
                             </StackPanel>
@@ -209,7 +199,6 @@
                             </Label>
                         </StackPanel>
                     </Border>
-
                 </StackPanel>
                 <!-- Settings Panel -->
                 <DockPanel x:Name="panel_Settings" Visibility="Collapsed">

@@ -129,28 +129,20 @@ namespace RiskGame
         {
             if(window is ChangePassword) { return; }
             StackPanel panel_MainUI = (StackPanel)window.FindName("panel_MainUI");
-            Panel object_Settings = (Panel)window.FindName("panel_Settings");
+            UIElement object_Settings = (UIElement)window.FindName("panel_Settings");
             if (panel_MainUI.Visibility == Visibility.Visible)
             { Settings(panel_MainUI, object_Settings); }
             else
             { Return(panel_MainUI, object_Settings); }
         }
-        private void Settings(StackPanel panel_MainUI)
+        private void Settings(StackPanel panel_MainUI, UIElement panel_Settings)
         {
             panel_MainUI.Visibility = Visibility.Collapsed;
-        }
-        private void Settings(StackPanel panel_MainUI, Panel panel_Settings)
-        {
-            Settings(panel_MainUI);
             panel_Settings.Visibility = Visibility.Visible;
         }
-        private void Return(StackPanel panel_MainUI)
+        private void Return(StackPanel panel_MainUI, UIElement panel_Settings)
         {
             panel_MainUI.Visibility = Visibility.Visible;
-        }
-        private void Return(StackPanel panel_MainUI, Panel panel_Settings)
-        {
-            Return(panel_MainUI);
             panel_Settings.Visibility = Visibility.Collapsed;
         }
         // Login, Register and Change Password //

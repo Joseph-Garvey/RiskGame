@@ -70,7 +70,7 @@ namespace RiskGame.Windows
 
             }
         }
-        private void RegisterKeyDown(object sender, KeyEventArgs e)
+        private void ChangePasswordKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return) { ChangeUserPassword(sender, e); }
         }
