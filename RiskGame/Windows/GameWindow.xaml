@@ -282,8 +282,8 @@
                                 <StackPanel VerticalAlignment="Center">
                                     <StackPanel.Resources>
                                         <Style TargetType="Button" BasedOn="{StaticResource btnCornerUI}">
-                                            <Setter Property="Margin" Value="15,5,15,0"></Setter>
-                                            <Setter Property="FontSize" Value="18"></Setter>
+                                            <Setter Property="Margin" Value="15,2,15,0"></Setter>
+                                            <Setter Property="FontSize" Value="15"></Setter>
                                             <Setter Property="Width" Value="150"></Setter>
                                             <Setter Property="BorderThickness" Value="2"></Setter>
                                         </Style>
@@ -292,6 +292,7 @@
                                     <Button Click="Cancel">Cancel</Button>
                                     <Button Click="SaveGame">Save Game</Button>
                                     <Button Click="Settings">Settings - Help</Button>
+                                    <Button Click="Quit">Quit</Button>
                                 </StackPanel>
                             </Border>
                             <TextBlock x:Name="txtOutput" Margin="20,11,10,10" HorizontalAlignment="Right" Width="350" Foreground="White" Background="Black" TextWrapping="Wrap"/>

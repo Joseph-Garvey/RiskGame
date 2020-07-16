@@ -437,7 +437,7 @@ namespace RiskGame
                     Continent Bronx = new Continent("Bronx", new List<Territory> { Unionport, Laconia, Concourse, Riverdale }, 2);
                     Continent New_Jersey = new Continent("New_Jersey", new List<Territory> { Bayonne, Jersey_City, Hoboken, North_Bergen, Union_City, Palisades_Park, Englewood }, 3);
                     Continent Manhattan = new Continent("Manhattan", new List<Territory> { Lower_East_Side, Financial_District, Midtown_East, Hells_Kitchen, Upper_East_Side, Upper_West_Side, Central_Park, Harlem, Washington_Heights }, 5);
-                    Continent Brooklyn = new Continent("", new List<Territory> { East_New_York, Canarsie, Bedford_Stuyvesant, Flatbush, Flatlands, Sheepshead_Bay, Bay_Ridge, Coney_Island, Park_Slope, Red_Hook, Williamsburg}, 7);
+                    Continent Brooklyn = new Continent("Brooklyn", new List<Territory> { East_New_York, Canarsie, Bedford_Stuyvesant, Flatbush, Flatlands, Sheepshead_Bay, Bay_Ridge, Coney_Island, Park_Slope, Red_Hook, Williamsburg}, 7);
                     Continents = new List<Continent> { Queens, Staten_Island, Bronx, New_Jersey, Manhattan, Brooklyn };
                 }
                 else { throw new Exception("An error has occured"); }
@@ -1817,6 +1817,11 @@ namespace RiskGame
         {
             if(enemy >= player) { return false; }
             else { return true; }
+        }
+
+        private void Quit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
