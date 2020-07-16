@@ -225,6 +225,21 @@
         <Style TargetType="Border" x:Key="brd_BlueBackground" BasedOn="{StaticResource brd_Background}">
             <Setter Property="Background" Value="#7F00D1FF"/>
         </Style>
+        <Style TargetType="Border" x:Key="brd_ImageBackground">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
+                        <VisualBrush.Visual>
+                            <Image Source="pack://siteoforigin:,,,/Resources/RiskBackground.jpg">
+                                <Image.Effect>
+                                    <BlurEffect Radius="20" />
+                                </Image.Effect>
+                            </Image>
+                        </VisualBrush.Visual>
+                    </VisualBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!-- Other Styles -->
         <Style TargetType="PasswordBox" x:Key="pwdbox">
             <Setter Property="Margin" Value="5"></Setter>

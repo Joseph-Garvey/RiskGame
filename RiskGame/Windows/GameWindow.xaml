@@ -7,18 +7,7 @@
         mc:Ignorable="d"
         Title="GameWindow" Width="1280" Height="720" WindowStyle="None"
         ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Style="{StaticResource windowResizeable}">
-    <Border>
-        <Border.Background>
-            <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
-                <VisualBrush.Visual>
-                    <Image Source="pack://siteoforigin:,,,/Resources/RiskBackground.jpg">
-                        <Image.Effect>
-                            <BlurEffect Radius="20" />
-                        </Image.Effect>
-                    </Image>
-                </VisualBrush.Visual>
-            </VisualBrush>
-        </Border.Background>
+    <Border Style="{StaticResource brd_ImageBackground}">
         <Viewbox>
             <StackPanel Width="1280" Height="720">
                 <!-- Main UI Panel -->
