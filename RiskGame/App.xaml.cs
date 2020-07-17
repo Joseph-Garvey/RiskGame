@@ -44,6 +44,7 @@ namespace RiskGame
             });
         }
 
+
         /// Window Management ///
         // Events //
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -127,7 +128,7 @@ namespace RiskGame
         // Methods //
         private void ChangeDisplay(Window window)
         {
-            if(window is ChangePassword) { return; }
+            if(window is ChangePassword || window is Tutorial) { return; }
             StackPanel panel_MainUI = (StackPanel)window.FindName("panel_MainUI");
             UIElement object_Settings = (UIElement)window.FindName("panel_Settings");
             if (panel_MainUI.Visibility == Visibility.Visible)
@@ -301,13 +302,7 @@ namespace RiskGame
         private MediaElement RetrieveMediaPlayer()
         {
             Window window = RetrieveActiveWindow();
-            try
-            {
-                MediaElement m = (MediaElement)window.FindName("mediaplayer");
-                if(m != null) { return m;  }
-                else { return RetrieveMediaPlayer(Application.Current.MainWindow); }
-            }
-            catch { return new MediaElement(); }
+            return RetrieveMediaPlayer(window);
         }
         private MediaElement RetrieveMediaPlayer(Window window)
         {
@@ -315,21 +310,19 @@ namespace RiskGame
             {
                 MediaElement m = (MediaElement)window.FindName("mediaplayer");
                 if (m != null) { return m; }
-                else { throw new NullReferenceException(); }
+                else { return RetrieveMediaPlayer(Application.Current.MainWindow); }
             }
             catch { return new MediaElement(); }
         }
         private void ChangeMedia()
         {
             MediaElement mediaplayer = RetrieveMediaPlayer();
-            mediaplayer.Source = Music.sources[Music.MusicIndex];
-            mediaplayer.Play();
+            ChangeMedia(mediaplayer);
         }
         private void ChangeMedia(MediaElement sender)
         {
-            MediaElement mediaplayer = sender;
-            mediaplayer.Source = Music.sources[Music.MusicIndex];
-            mediaplayer.Play();
+            sender.Source = Music.sources[Music.MusicIndex];
+            sender.Play();
         }
     }
 }

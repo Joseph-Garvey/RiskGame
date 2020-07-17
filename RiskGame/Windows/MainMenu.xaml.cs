@@ -68,35 +68,25 @@ namespace RiskGame
         // Constructors //
         public MainWindow(bool _music_enabled, bool _hints_enabled, WindowState ws)
         {
-            // Called on first launch
-            // Clears empty save files to prevent crashes, hides the error message.
-            InitializeComponent();
-            GameManager.ClearEmptyFile();
             players = new List<Player>();
             Music_enabled = _music_enabled;
-            SetupWindow();
             Hints_enabled = _hints_enabled;
-            this.WindowState = ws;
-        }
-        public MainWindow()
-        {
-            // Clears empty save files to prevent crashes, hides the error message.
-            InitializeComponent();
-            GameManager.ClearEmptyFile();
-            players = new List<Player>();
             SetupWindow();
+            this.WindowState = ws;
         }
         public MainWindow(List<Player> _players)
         {
             // Called when adding a new player via gamesetup window.
-            InitializeComponent();
             players = _players;
-            music_enabled = ((Human)players[0]).music_enabled;
+            Music_enabled = ((Human)players[0]).music_enabled;
+            Hints_enabled = ((Human)players[0]).hints_enabled;
             SetupWindow();
         }
         // Methods //
         private void SetupWindow()
         {
+            InitializeComponent();
+            GameManager.ClearEmptyFile();
             this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             this.DataContext = this;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
