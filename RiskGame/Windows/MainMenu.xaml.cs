@@ -51,7 +51,6 @@ namespace RiskGame
             get => hints_enabled;
             set
             {
-
                 if (players.Count != 0)
                 {
                     try
