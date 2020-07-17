@@ -40,8 +40,14 @@
                             <ColumnDefinition Width="3*"></ColumnDefinition>
                             <ColumnDefinition Width="2*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Button Style="{StaticResource btnCornerUI}" FontSize="10" Height="20" Click="New_Game">New Game</Button>
-                        <Button Style="{StaticResource btnCornerUI}" FontSize="10"  Height="20"  Grid.Column="2" Click="Quit">Quit</Button>
+                        <Grid.Resources>
+                            <Style TargetType="Button" x:Key="btnLeaderboard" BasedOn="{StaticResource btnCornerUI}">
+                                <Setter Property="FontSize" Value="10"/>
+                                <Setter Property="Height" Value="20"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Button Style="{StaticResource btnLeaderboard}" Click="New_Game">New Game</Button>
+                        <Button Style="{StaticResource btnLeaderboard}" Grid.Column="2" Click="Quit">Quit</Button>
                         <Button Style="{StaticResource btnSettingsThin}" FontSize="10" Height="20" Grid.Column="1" >Settings</Button>
                     </Grid>
                     <Label x:Name="lblError" Style="{StaticResource lblError}" Width="290" Visibility="Collapsed" >
