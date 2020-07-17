@@ -83,8 +83,7 @@ namespace RiskGame.Windows
         {
             try
             {
-                lblError.Visibility = Visibility.Collapsed;
-                lblSuccess.Visibility = Visibility.Collapsed;
+                ClearMsg();
                 if (txtNewPass.Password == txtNewPassConf.Password)
                 {
                     Human.Validation(txtNewPass.Password);
@@ -111,6 +110,11 @@ namespace RiskGame.Windows
             // Shows message on successful registration //
             txtSuccess.Text = message;
             lblSuccess.Visibility = Visibility.Visible;
+        }
+        private void ClearMsg()
+        {
+            lblError.Visibility = Visibility.Collapsed;
+            lblSuccess.Visibility = Visibility.Collapsed;
         }
     }
 }

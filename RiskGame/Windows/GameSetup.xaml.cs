@@ -222,7 +222,7 @@ namespace RiskGame
             {
                 if (players.Count == 2)
                 {
-                    players.Add(new NeutralAI("Neutral Player"));
+                    players.Add(new NeutralAI("Neutral"));
                     CyclePlayerColours(btnPlayer3Forward);
                 }
                 if (cmbMap.SelectedIndex != -1)

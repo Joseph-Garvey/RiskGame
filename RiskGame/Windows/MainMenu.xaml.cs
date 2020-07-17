@@ -80,7 +80,6 @@ namespace RiskGame
         }
         public MainWindow()
         {
-            // Called on launch from highscores - delete later
             // Clears empty save files to prevent crashes, hides the error message.
             InitializeComponent();
             GameManager.ClearEmptyFile();
