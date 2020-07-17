@@ -5,19 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RiskGame.Windows"
         mc:Ignorable="d"
-        Title="Tutorial" Height="800" Width="600" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}" Closing="Window_Closing" LostFocus="Window_LostFocus">
-    <Border>
-        <Border.Background>
-            <VisualBrush Viewbox="0.05,0.05,0.9,0.9" Stretch="UniformToFill">
-                <VisualBrush.Visual>
-                    <Image Source="pack://siteoforigin:,,,/Resources/RiskBackground.jpg">
-                        <Image.Effect>
-                            <BlurEffect Radius="20" />
-                        </Image.Effect>
-                    </Image>
-                </VisualBrush.Visual>
-            </VisualBrush>
-        </Border.Background>
+        Title="Tutorial" Height="800" Width="600" WindowStartupLocation="CenterScreen" Style="{StaticResource windowResizeable}">
+    <Border Style="{StaticResource brd_ImageBackground}">
         <Border.Resources>
             <Style TargetType="TextBlock">
                 <Setter Property="Margin" Value="0,0,0,5"/>
@@ -101,7 +90,7 @@
                                 <Border Style="{StaticResource brd_ScrollViewer}">
                                     <ScrollViewer>
                                         <StackPanel>
-                                            <TextBlock>The Login and Register menu allows you to create a user account and login to the game. An example Game Setup window is shown below.</TextBlock>
+                                            <TextBlock>An example Game Setup window is shown below.</TextBlock>
                                             <Image Source="pack://siteoforigin:,,,/Images/Tutorial/gamesetup.png"/>
                                             <Label Style="{StaticResource lblSubHeading}" Margin="5">Players</Label>
                                             <TextBlock>In the players panel you can see the list of currently logged in player(s). To change your selected colour, use the arrows beside your name.</TextBlock>
@@ -155,7 +144,7 @@
                                             You can only attack adjacent territories or those joined by black paths on the map. To attack, click on a territory you own and the enemy territories you can attack
                                              from that location will be highlighted with a light blue border. Click one of these to attack it from the selected location. It will be highlighted with a red border. You can attack as many times in a turn as you wish,
                                              provided you have the time.</TextBlock>
-                                            <Image Source="pack://siteoforigin:,,,/Images/Tutorial/place.png"/>
+                                            <Image Source="pack://siteoforigin:,,,/Images/Tutorial/attack.png"/>
                                             <TextBlock>Adjust the number of armies you wish to attack with use left and right click on your selected territories or the + and - buttons. In New Risk you can attack with as many armies
                                                  as you wish provided you have at least one remain in the territory. In New Risk you can attack with a maximum of 3. Click Confirm to carry out the attack. See the relevant section for your game-mode below next.-</TextBlock>
                                             <Label Style="{StaticResource lblSubHeading}">Attack 2 - New Risk</Label>

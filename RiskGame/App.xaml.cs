@@ -178,7 +178,7 @@ namespace RiskGame
         public void Tutorial_Window(object sender, RoutedEventArgs e)
         {
             // Open Tutorial Window when help button is clicked //
-            Tutorial tutorial = new Tutorial(Application.Current.MainWindow);
+            Tutorial tutorial = new Tutorial();
             tutorial.Show();
         }
 

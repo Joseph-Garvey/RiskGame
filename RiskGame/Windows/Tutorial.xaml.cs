@@ -19,29 +19,9 @@ namespace RiskGame.Windows
     /// </summary>
     public partial class Tutorial : Window
     {
-        private Window lastwindow;
-        public Tutorial(Window _sender)
+        public Tutorial()
         {
             InitializeComponent();
-            lastwindow = _sender;
-        }
-        // not needed anymore
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            RestoreFocus();
-        }
-
-        private void Window_LostFocus(object sender, RoutedEventArgs e)
-        {
-            RestoreFocus();
-        }
-        private void RestoreFocus()
-        {
-            try
-            {
-                App.Current.MainWindow = lastwindow;
-            }
-            catch (Exception) { }
         }
     }
 }

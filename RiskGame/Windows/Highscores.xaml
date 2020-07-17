@@ -60,16 +60,10 @@
                     <Label Style="{StaticResource lblHeader}" FontSize="12" DockPanel.Dock="Top">Settings:</Label>
                     <Border DockPanel.Dock="Right"  VerticalAlignment="Top">
                         <StackPanel Style="{StaticResource panel_Background}">
-                            <StackPanel.Resources>
-                                <Style TargetType="StackPanel" BasedOn="{StaticResource HorizontalCentred}" x:Key="MusicControls">
-                                    <Setter Property="Width" Value="145"></Setter>
-                                    <Setter Property="Margin" Value="3"></Setter>
-                                </Style>
-                            </StackPanel.Resources>
                             <Label Style="{StaticResource lblHeader}">Music:</Label>
                             <Label x:Name="lblMediaDetails" Style="{StaticResource lblSubHeading}"></Label>
                             <MediaElement x:Name="mediaplayer" Style="{StaticResource media_Music}"></MediaElement>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <StackPanel Style="{StaticResource HorizontalCentred}">
                                 <Button Style="{StaticResource btnMusicBack}"/>
                                 <Button Style="{StaticResource btnMusicPause}"/>
                                 <Button Style="{StaticResource btnMusicPlay}"/>
@@ -86,8 +80,8 @@
                         </StackPanel>
                     </Border>
                     <StackPanel DockPanel.Dock ="Left">
-                        <Border>
-                            <StackPanel Style="{StaticResource panel_Background}">
+                        <Border Style="{StaticResource brd_BlueBackground}">
+                            <StackPanel>
                                 <Label Style="{StaticResource lblHeader}">General:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">Fullscreen:</Label>
@@ -95,8 +89,8 @@
                                 </StackPanel>
                             </StackPanel>
                         </Border>
-                        <Border>
-                            <StackPanel Style="{StaticResource panel_Background}">
+                        <Border Style="{StaticResource brd_BlueBackground}">
+                            <StackPanel>
                                 <Label Style="{StaticResource lblHeader}">Help:</Label>
                                 <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                     <Label Style="{StaticResource lblSubHeading}" Width="75">In-Game hints:</Label>
