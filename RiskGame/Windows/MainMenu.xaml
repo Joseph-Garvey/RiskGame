@@ -80,7 +80,7 @@
                                     <Label Style="{StaticResource lblSubHeading}">Password:</Label>
                                     <StackPanel Orientation="Horizontal">
                                         <PasswordBox x:Name="txtLogPass" Style="{StaticResource pwdbox}" Width="100" TabIndex="5" KeyDown="LoginKeyDown"></PasswordBox>
-                                        <TextBox x:Name="txtLogPassShow" Style="{StaticResource showBox}" KeyDown="LoginKeyDown"></TextBox>
+                                        <TextBox x:Name="txtLogPassShow" Style="{StaticResource showBox}" Width="100" KeyDown="LoginKeyDown"></TextBox>
                                         <Button Style="{StaticResource btnCornerUI}" Width="25" Margin="0,5,5,5">
                                             <CheckBox x:Name="chkLogPass" Click="ShowHidePassword" Style="{StaticResource chkShowHide}"></CheckBox>
                                         </Button>
