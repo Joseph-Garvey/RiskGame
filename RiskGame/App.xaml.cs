@@ -51,7 +51,7 @@ namespace RiskGame
         {
             Window window = (Window)sender;
             if (e.Key == Key.F11) { ChangeWindowState(window); }
-            if (e.Key == Key.Escape && !(window is Tutorial))
+            if (e.Key == Key.Escape)
             {
                 if (window.WindowState == WindowState.Maximized)
                 {
@@ -79,7 +79,7 @@ namespace RiskGame
             }
             catch (Exception) { }
         }
-        private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(RetrieveActiveWindow()); }
+        private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(RetrieveMainWindow()); }
         // Methods //
         private void ChangeWindowState(Window window)
         {
@@ -101,16 +101,9 @@ namespace RiskGame
             }
             catch(NullReferenceException) { }
         }
-        private Window RetrieveActiveWindow()
+        private Window RetrieveMainWindow()
         {
-            try
-            {
-                Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
-                if (window == null) { throw new NullReferenceException(); }
-                return window;
-            }
-            catch (ArgumentNullException) { return Application.Current.MainWindow; }
-            catch (NullReferenceException) { return Application.Current.MainWindow; }
+            return Application.Current.MainWindow;
         }
 
         /// Panel Management ///
@@ -119,7 +112,7 @@ namespace RiskGame
         {
             try
             {
-                Window window = RetrieveActiveWindow();
+                Window window = RetrieveMainWindow();
                 if(window == null) { throw new NullReferenceException(); }
                 ChangeDisplay(window);
             }
@@ -150,7 +143,7 @@ namespace RiskGame
         private void ShowPassword_TextChanged(object sender, TextChangedEventArgs e)
         {
             TextBox textBox = (TextBox)sender;
-            Window window = RetrieveActiveWindow();
+            Window window = RetrieveMainWindow();
             PasswordBox passwordBox = new PasswordBox();
             switch (textBox.Name)
             {
@@ -203,79 +196,39 @@ namespace RiskGame
         }
         private void MediaPause(object sender, RoutedEventArgs e)
         {
-            foreach (Window w in Application.Current.Windows)
-            {
-                if(w is GameSetup)
-                {
-                    (w as GameSetup).Music_enabled = true;
-                    RetrieveMediaPlayer(w).Pause();
-                    break;
-                }
-                else if(w is RiskGame.MainWindow)
-                {
-                    (w as RiskGame.MainWindow).Music_enabled = true;
-                    RetrieveMediaPlayer(w).Pause();
-                    break;
-                }
-                else if (w is RiskGame.GameWindow)
-                {
-                    (w as RiskGame.GameWindow).Music_enabled = true;
-                }
-                else if (w is RiskGame.Windows.Highscores)
-                {
-                    (w as RiskGame.Windows.Highscores).Music_enabled = true;
-                }
-            }
+            Window w = RetrieveMainWindow();
+            MediaEnabled(w);
+            RetrieveMediaPlayer(w).Pause();
         }
         private void MediaPlay(object sender, RoutedEventArgs e)
         {
-            foreach (Window w in Application.Current.Windows)
-            {
-                if (w is GameSetup)
-                {
-                    (w as GameSetup).Music_enabled = true;
-                    RetrieveMediaPlayer(w).Play();
-                    break;
-                }
-                else if (w is RiskGame.MainWindow)
-                {
-                    (w as RiskGame.MainWindow).Music_enabled = true;
-                    RetrieveMediaPlayer(w).Play();
-                    break;
-                }
-                else if (w is RiskGame.GameWindow)
-                {
-                    (w as RiskGame.GameWindow).Music_enabled = true;
-                }
-                else if (w is RiskGame.Windows.Highscores)
-                {
-                    (w as RiskGame.Windows.Highscores).Music_enabled = true;
-                }
-            }
+            Window w = RetrieveMainWindow();
+            MediaEnabled(w);
+            RetrieveMediaPlayer(w).Play();
         }
         private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e) { MediaForward(sender, e); }
         private void UpdateMediaText(object sender, RoutedEventArgs e)
         {
             try
             {
-                Window window = RetrieveActiveWindow();
-                if (window is Tutorial || window is ChangePassword)
-                {
-                    foreach (Window w in Application.Current.Windows)
-                    {
-                        if ((w is GameSetup) || (w is RiskGame.MainWindow) || (w is RiskGame.GameWindow) || (w is RiskGame.Windows.Highscores))
-                        {
-                            window = w;
-                            break;
-                        }
-                    }
-                }
+                Window window = RetrieveMainWindow();
                 UpdateMediaText((MediaElement)sender, (Label)window.FindName("lblMediaDetails"));
             }
-            catch (NullReferenceException) { UpdateMediaText(Application.Current.MainWindow, sender); }
+            catch (NullReferenceException) { }
         }
 
         // Methods //
+        private void MediaEnabled(Window w)
+        {
+            if (w is GameSetup)
+            { (w as GameSetup).Music_enabled = true; }
+            else if (w is RiskGame.MainWindow)
+            { (w as RiskGame.MainWindow).Music_enabled = true; }
+            else if (w is RiskGame.GameWindow)
+            { (w as RiskGame.GameWindow).Music_enabled = true; }
+            else if (w is RiskGame.Windows.Highscores)
+            { (w as RiskGame.Windows.Highscores).Music_enabled = true; }
+        }
         private void UpdateMediaText(MediaElement sender, Label l)
         {
             l.Content = sender.Source.ToString().Substring(30);
@@ -284,24 +237,13 @@ namespace RiskGame
         {
             try
             {
-                if (window is Tutorial || window is ChangePassword)
-                {
-                    foreach (Window w in Application.Current.Windows)
-                    {
-                        if ((w is GameSetup) || (w is RiskGame.MainWindow) || (w is RiskGame.GameWindow) || (w is RiskGame.Windows.Highscores))
-                        {
-                            window = w;
-                            break;
-                        }
-                    }
-                }
                 UpdateMediaText((MediaElement)sender, (Label)window.FindName("lblMediaDetails"));
             }
             catch (Exception) { }
         }
         private MediaElement RetrieveMediaPlayer()
         {
-            Window window = RetrieveActiveWindow();
+            Window window = RetrieveMainWindow();
             return RetrieveMediaPlayer(window);
         }
         private MediaElement RetrieveMediaPlayer(Window window)
@@ -310,7 +252,7 @@ namespace RiskGame
             {
                 MediaElement m = (MediaElement)window.FindName("mediaplayer");
                 if (m != null) { return m; }
-                else { return RetrieveMediaPlayer(Application.Current.MainWindow); }
+                else { throw new NullReferenceException(); }
             }
             catch { return new MediaElement(); }
         }
