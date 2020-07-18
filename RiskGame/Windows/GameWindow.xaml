@@ -196,7 +196,7 @@
                                 </StackPanel>
                             </Border>
                             <!-- Action Panels -->
-                            <Border Margin="20,5,20,5" Style="{StaticResource brd_CornerCurve}" Width="260" Height="154">
+                            <Border Name="brd_ActionPanel" Margin="20,5,20,5" Style="{StaticResource brd_CornerCurve}" Width="260" Height="154">
                                 <StackPanel VerticalAlignment="Center">
                                     <!-- Number Selection -->
                                     <StackPanel x:Name="panel_NumberSelection">

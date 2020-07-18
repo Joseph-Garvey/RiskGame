@@ -855,7 +855,7 @@ namespace RiskGame
             GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), map.ToString(), gamemode.ToString());
             GameDetails.Save(gamedetails);
             GameManager.DeleteGame(game.GameID);
-            Highscores Setup = new Highscores(gamedetails);
+            Highscores Setup = new Highscores(gamedetails, Players);
             App.Current.MainWindow = Setup;
             this.Close();
             Setup.Show();

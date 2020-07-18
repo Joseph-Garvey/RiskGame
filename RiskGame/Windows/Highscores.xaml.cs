@@ -22,8 +22,8 @@ namespace RiskGame.Windows
     public partial class Highscores : Window
     {
         // Variables //
-        List<Player> players; // used for when highscores is clicked from within gamesetup?
-        ObservableCollection<GameDetails> playergame;
+        private List<Player> players; // used for when highscores is clicked from within gamesetup?
+        private ObservableCollection<GameDetails> playergame;
         private bool music_enabled;
         public bool Music_enabled
         {
@@ -65,11 +65,20 @@ namespace RiskGame.Windows
             }
         }
         // Constructor(s) //
-        public Highscores(GameDetails gameDetails)
+        public Highscores(GameDetails gameDetails, List<Player> _players)
         {
             // If loading from completed game show the current players game.
             playergame = new ObservableCollection<GameDetails>() { gameDetails };
             Initialise();
+            players = _players;
+            foreach(Player p in players)
+            {
+                p.Army_strength = 0;
+                p.army_undeployed = 0;
+                p.Territoriesowned = 0;
+                p.score = 0;
+                p.Color = null;
+            }
             PlayerScoreList.ItemsSource = playergame;
             lblPlayerScore.Visibility = Visibility.Visible;
             PlayerScoreList.Visibility = Visibility.Visible;

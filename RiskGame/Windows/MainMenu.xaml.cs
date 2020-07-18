@@ -68,27 +68,26 @@ namespace RiskGame
         public MainWindow(bool _music_enabled, bool _hints_enabled, WindowState ws)
         {
             players = new List<Player>();
-            Music_enabled = _music_enabled;
             Hints_enabled = _hints_enabled;
-            SetupWindow();
+            SetupWindow(_music_enabled);
             this.WindowState = ws;
         }
         public MainWindow(List<Player> _players)
         {
             // Called when adding a new player via gamesetup window.
             players = _players;
-            Music_enabled = ((Human)players[0]).music_enabled;
             Hints_enabled = ((Human)players[0]).hints_enabled;
-            SetupWindow();
+            SetupWindow(((Human)players[0]).music_enabled);
         }
         // Methods //
-        private void SetupWindow()
+        private void SetupWindow(bool _musicenabled)
         {
             InitializeComponent();
             GameManager.ClearEmptyFile();
             this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             this.DataContext = this;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
+            Music_enabled = _musicenabled;
             if (music_enabled) { mediaplayer.Play(); }
         }
         /// Message management ///

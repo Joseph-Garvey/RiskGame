@@ -68,9 +68,18 @@ namespace RiskGame
             set
             {
                 color = value;
-                r = color.Color.R;
-                g = color.Color.G;
-                b = color.Color.B;
+                if (color == null)
+                {
+                    r = 0;
+                    g = 0;
+                    b = 0;
+                }
+                else
+                {
+                    r = color.Color.R;
+                    g = color.Color.G;
+                    b = color.Color.B;
+                }
             }
         }
         [NonSerialized]
