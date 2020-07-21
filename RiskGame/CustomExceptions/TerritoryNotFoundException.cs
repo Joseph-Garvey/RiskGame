@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace RiskGame.CustomExceptions
 {
-    class TerritoryNotFoundException : Exception
+    internal class TerritoryNotFoundException : Exception
     {
+        public TerritoryNotFoundException()
+        {
+        }
     }
 }

@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 namespace RiskGame.CustomExceptions
 {
     [Serializable]
-    class GameNotFoundException : Exception
+    internal class GameNotFoundException : Exception
     {
+        public GameNotFoundException()
+        {
+        }
     }
 }

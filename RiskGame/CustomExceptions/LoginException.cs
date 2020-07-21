@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RiskGame.CustomExceptions
 {
     [Serializable]
-    public class LoginException:Exception
+    public class LoginException : Exception
     {
         public LoginException() : base("Incorrect Password") { }
     }

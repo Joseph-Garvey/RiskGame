@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RiskGame.CustomExceptions
 {
     [Serializable]
-    class AccountNotFoundException : Exception
+    internal class AccountNotFoundException : Exception
     {
         public AccountNotFoundException(string message = "Account not found.") : base(message)
         {
