@@ -19,7 +19,7 @@ namespace RiskGame.Game
             WorkerReportsProgress = true,
             WorkerSupportsCancellation = true
         };
-        public static List<Uri> sources = new List<Uri>
+        private static readonly Uri[] sources = new Uri[]
         {
             new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice1.png"),
             new Uri("pack://siteoforigin:,,,/Images/Dice/imgDice2.png"),
@@ -60,7 +60,7 @@ namespace RiskGame.Game
                 }
             }
         }
-        void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             dieimage.Source = new BitmapImage(sources[current]);
         }
