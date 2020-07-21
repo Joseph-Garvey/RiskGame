@@ -84,6 +84,7 @@
     <Compile Include="Windows\ChangePassword.xaml.cs">
       <DependentUpon>ChangePassword.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Game\Extensions.cs" />
     <Compile Include="Windows\GameSetup.xaml.cs">
       <DependentUpon>GameSetup.xaml</DependentUpon>
     </Compile>
@@ -96,6 +97,7 @@
     <Compile Include="Windows\SplashScreenWindow.xaml.cs">
       <DependentUpon>SplashScreenWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Game\ThreadSafeRandom.cs" />
     <Compile Include="Windows\Tutorial.xaml.cs">
       <DependentUpon>Tutorial.xaml</DependentUpon>
     </Compile>

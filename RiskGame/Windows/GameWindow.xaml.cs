@@ -22,33 +22,6 @@ using RiskGame.Windows;
 
 namespace RiskGame
 {
-    // Class Extensions for threaded randomisation of territory order //
-    static class Extensions
-    {
-        // Fisher Yates Shuffle //
-        public static void Shuffle<T>(this IList<T> list)
-        {
-            int n = list.Count;
-            while (n > 1)
-            {
-                n--;
-                int k = ThreadSafeRandom.ThisThreadsRandom.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
-                list[n] = value;
-            }
-        }
-
-    }
-    public static class ThreadSafeRandom
-    { // C# randomisation threading library
-        [ThreadStatic] private static Random Local;
-
-        public static Random ThisThreadsRandom
-        {
-            get { return Local ?? (Local = new Random(unchecked(Environment.TickCount * 31 + Thread.CurrentThread.ManagedThreadId))); }
-        }
-    }
 
     ////////////////////////////////////////////////////
     ///
@@ -95,7 +68,7 @@ namespace RiskGame
         public String CurrentPlayerUsername
         {
             get { return CurrentPlayer.Username; }
-        }
+        } // redundant property never used.
         private GameState gamestate
         {
             get { return game.gameState; }
@@ -726,7 +699,6 @@ namespace RiskGame
                 gap = new Thickness(5, 0, 5, i);
                 brd_Player1.Margin = new Thickness(5, i, 5, i);
             }
-
             brd_Player2.Margin = gap;
             brd_Player3.Margin = gap;
             brd_Player4.Margin = gap;
@@ -805,25 +777,26 @@ namespace RiskGame
             {
                 Turn += 1;
                 CyclePlayers();
-                List<String> ownedContinents = new List<string>();
-                int bonus = 0;
-                foreach (Continent c in Continents)
-                {
-                    if (ContinentOwned(c))
-                    {
-                        ownedContinents.Add(c.name);
-                        bonus += c.bonus;
-                    }
-                }
                 if(CurrentPlayer is NeutralAI)
                 {
                     NextTurn();
                 }
                 else
                 {
+                    List<String> ownedContinents = new List<string>();
+                    int bonus = 0;
+                    foreach (Continent c in Continents)
+                    {
+                        if (ContinentOwned(c))
+                        {
+                            ownedContinents.Add(c.name);
+                            bonus += c.bonus;
+                        }
+                    }
                     CurrentPlayer.army_undeployed += ((CurrentPlayer.Territoriesowned / 3) + bonus);
                     UpdatePlayerPanelUI();
                     UpdateState(GameState.PlacingArmy);
+                    // simplify
                     switch (ownedContinents.Count)
                     {
                         case 1:
@@ -898,7 +871,6 @@ namespace RiskGame
         } // Updates selected territory's armies
         private void UpdateNumOutput()
         {
-
             switch (gamestate)
             {
                 case GameState.PlacingArmy:
@@ -918,14 +890,8 @@ namespace RiskGame
         private void UpdatePlayerPanelUI()
         {
             int i = Players.IndexOf(CurrentPlayer);
-            foreach (Border s in panel_Players.Children)
-            {
-                panel_Player1.Background = panel_Players.Background;
-                panel_Player2.Background = panel_Players.Background;
-                panel_Player3.Background = panel_Players.Background;
-                panel_Player4.Background = panel_Players.Background;
-                panel_Player5.Background = panel_Players.Background;
-                panel_Player6.Background = panel_Players.Background;
+            foreach (Border s in panel_Players.Children) {
+                s.Background = panel_Players.Background;
             }
             panel_UI.Background = CurrentPlayer.Color;
             switch (i)
@@ -1073,7 +1039,7 @@ namespace RiskGame
         }
         private void Output(String s)
         {
-            if (txtOutput.Text == "") { txtOutput.Text = s; }
+            if ((txtOutput.Text == "") || (txtOutput.Text == null)) { txtOutput.Text = s; }
             else
             {
                 String[] tmp = txtOutput.Text.Split('\n');
@@ -1273,11 +1239,11 @@ namespace RiskGame
                 }
             }
         }
-        void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             pb_Timer.Value = e.ProgressPercentage;
         }
-        void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
             else
@@ -1303,7 +1269,7 @@ namespace RiskGame
                         CyclePlayers();
                         NextTurn();
                     }
-                    else { Output("You cannot capture this territory."); SlctTerritory = null; }
+                    else { Output("You cannot capture this territory."); SlctTerritory = null; } // use clear selections to prevent bugs
                     break;
                 case GameState.PlacingArmy:
                     if(t == SlctTerritory) { PlayerActions(true); break; }
@@ -1319,17 +1285,20 @@ namespace RiskGame
                         break;
                     }
                 case GameState.Attacking:
-                    if ((String)btnDieStatus.Content == "Continue to Attack")
+                    if (gamemode == GameMode.Classic)
                     {
-                        btnDieStatus.Visibility = Visibility.Collapsed;
-                        panel_Die.Visibility = Visibility.Collapsed;
-                        panel_NumberSelection.Visibility = Visibility.Visible;
-                        CancelUnconfirmedActions();
-                    }
-                    else if((String)btnDieStatus.Content == "Continue to Conquer")
-                    {
-                        Output("You must continue to conquer.");
-                        return;
+                        if ((String)btnDieStatus.Content == "Continue to Attack")
+                        {
+                            btnDieStatus.Visibility = Visibility.Collapsed; // redundant?
+                            panel_Die.Visibility = Visibility.Collapsed;
+                            panel_NumberSelection.Visibility = Visibility.Visible;
+                            CancelUnconfirmedActions();
+                        }
+                        else if ((String)btnDieStatus.Content == "Continue to Conquer")
+                        {
+                            Output("You must continue to conquer.");
+                            return;
+                        }
                     }
                     if (t.owner == CurrentPlayer)
                     {
@@ -1385,7 +1354,7 @@ namespace RiskGame
                             }
                         }
                         else { Output("There are no friendly territories to move to from here."); ClearSelectionsUI(); }
-                        List<Territory> blank = new List<Territory>();
+                        List<Territory> blank = new List<Territory>(); // redundant?
                         scanterritories = blank;
                     }
                     else if(btnTerritory.BorderBrush == Brushes.Green)
@@ -1434,7 +1403,7 @@ namespace RiskGame
                         if (t == NextTerritory) { PlayerActions(false); }
                         else if(t == SlctTerritory)
                         {
-                            if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; }
+                            if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; } // fix this should be classic risk
                             else { PlayerActions(true); }
                         }
                         break;
@@ -1480,7 +1449,7 @@ namespace RiskGame
                         if(gamemode == GameMode.NewRisk)
                         {
                             double num = rng.NextDouble();
-                            double prob = 1 / (1 + Math.Exp(-3 * (((double)(NextTerritory.temparmies - NextTerritory.currentarmies)/NextTerritory.currentarmies) - DefenseBias)));
+                            double prob = (double)1 / (1 + Math.Exp(-3 * (((double)(NextTerritory.temparmies - NextTerritory.currentarmies)/NextTerritory.currentarmies) - DefenseBias)));
                             if (num <= prob)
                             {
                                 NextTerritory.owner.Territoriesowned -= 1;
@@ -1573,19 +1542,22 @@ namespace RiskGame
         }
         private void Continue(object sender, RoutedEventArgs e)
         {
-            if ((String)btnDieStatus.Content == "Continue to Attack")
+            if(gamemode == GameMode.Classic)
             {
-                btnDieStatus.Visibility = Visibility.Collapsed;
-                panel_Die.Visibility = Visibility.Collapsed;
-                panel_NumberSelection.Visibility = Visibility.Visible;
+                if ((String)btnDieStatus.Content == "Continue to Attack")
+                {
+                    btnDieStatus.Visibility = Visibility.Collapsed; // redundant?
+                    panel_Die.Visibility = Visibility.Collapsed;
+                    panel_NumberSelection.Visibility = Visibility.Visible;
+                    CancelUnconfirmedActions();
+                }
+                else if ((String)btnDieStatus.Content == "Continue to Conquer")
+                {
+                    Output("You must continue to conquer.");
+                    return;
+                }
             }
-            else if ((String)btnDieStatus.Content == "Continue to Conquer")
-            {
-                Output("You must continue to conquer.");
-                return;
-            }
-            CancelUnconfirmedActions();
-            if (gamestate != GameState.Conquer) { NextAction(); }
+            if (gamestate != GameState.Conquer) { CancelUnconfirmedActions(); NextAction(); }
         }
         private void Cancel(object sender, RoutedEventArgs e) { CancelUnconfirmedActions(); }
         private void Increase(object sender, RoutedEventArgs e) { PlayerActions(true); }
@@ -1666,7 +1638,7 @@ namespace RiskGame
                         UpdateNumOutput();
                         break;
                     case GameState.Attacking:
-                        if ((SlctTerritory != null) && (NextTerritory != null))
+                        if (NextTerritory != null)
                         {
                             if (increase == true) { i = 1; }
                             AdjustAttackMoves(i);
@@ -1674,9 +1646,6 @@ namespace RiskGame
                         else { Output("You must select the territories you wish to attack to/from."); }
                         break;
                     case GameState.Conquer:
-                        if (increase == true) { i = 1; } // merge this with above
-                        AdjustAttackMoves(i);
-                        break;
                     case GameState.Move:
                         if (increase == true) { i = 1; } // merge this with above
                         AdjustAttackMoves(i);
@@ -1692,7 +1661,6 @@ namespace RiskGame
             if(gamestate == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
             else if(gamestate == GameState.Conquer) { Output("You must finish conquering before saving."); }
             else if ((gamestate == GameState.Attacking) && (gamemode == GameMode.Classic)) { Output("You must finish your attack before saving."); }
-            //else if(action == true) { Output("You must finish your current action before saving"); }
             else
             {
                 try
@@ -1747,12 +1715,10 @@ namespace RiskGame
                 if (playerdie3.current != -1) { DetermineHigherRoll(ref playerHighestRoll, ref playerNextHighest, playerdie3.current); }
                 if (enemydie2.current != -1) { DetermineHigherRoll(ref enemyHighestRoll, ref enemyNextHighest, enemydie2.current); }
             }
-            Output(String.Format("Players highest {0}, {1}. Enemy {2}, {3}", playerHighestRoll, playerNextHighest, enemyHighestRoll, enemyNextHighest));
             foreach(Dice d in dices)
             {
                 d.current = -1;
             }
-            //dices.Clear();
             int playerloss = 0;
             int enemyloss = 0;
             if((playerNextHighest != -1) && (enemyNextHighest != -1))
@@ -1783,7 +1749,7 @@ namespace RiskGame
             {
                 return;
             }
-            btnDieStatus.Visibility = Visibility.Collapsed;
+            btnDieStatus.Visibility = Visibility.Collapsed; // redundant?
             panel_Die.Visibility = Visibility.Collapsed;
             panel_NumberSelection.Visibility = Visibility.Visible;
             if (((String)((Button)sender).Content) == "Continue to Attack")

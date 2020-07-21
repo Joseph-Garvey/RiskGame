@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RiskGame.CustomExceptions
 {
     [Serializable]
-    class AccountCreationException : Exception
+    internal class AccountCreationException : Exception
     {
         // custom parameter for exception or create string, con-cat then pass into message if exception created, or Exception with message = prefab as parameter as constructor. String from individual methods passed up chain?
         // or use exception method trace (targetsite exception) and a series of try finally
