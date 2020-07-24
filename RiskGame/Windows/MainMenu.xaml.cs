@@ -65,19 +65,16 @@ namespace RiskGame
         }
 
         // Constructors //
-        public MainWindow(bool _music_enabled, bool _hints_enabled, WindowState ws)
+        public MainWindow(bool _music_enabled, bool _hints_enabled, bool fullscreen)
         {
             players = new List<Player>();
-            Hints_enabled = _hints_enabled;
-            SetupWindow(_music_enabled);
-            this.WindowState = ws;
+            SetupWindow(_music_enabled, _hints_enabled, fullscreen);
         }
-        public MainWindow(List<Player> _players)
+        public MainWindow(List<Player> _players, bool fullscreen)
         {
             // Called when adding a new player via gamesetup window.
             players = _players;
-            Hints_enabled = ((Human)players[0]).hints_enabled;
-            SetupWindow(((Human)players[0]).music_enabled);
+            SetupWindow(((Human)players[0]).music_enabled, ((Human)players[0]).hints_enabled, fullscreen);
         }
         // Methods //
         private void SetupWindow(bool _musicenabled, bool _hintsenabled, bool fullscreen)
@@ -86,9 +83,15 @@ namespace RiskGame
             GameManager.ClearEmptyFile();
             this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             this.DataContext = this;
-            mediaplayer.Source = Music.sources[Music.MusicIndex];
             Music_enabled = _musicenabled;
+            Hints_enabled = _hintsenabled;
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
+            if (fullscreen)
+            {
+                ((App)Application.Current).ChangeWindowState(this);
+                ((App)Application.Current).Window_StateChanged(this);
+            }
         }
         /// Message management ///
         private void DispErrorMsg(String message)

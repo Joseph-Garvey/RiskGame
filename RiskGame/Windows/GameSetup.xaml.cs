@@ -209,7 +209,7 @@ namespace RiskGame
             else if(cmbPlayer6.SelectedIndex == 0)
             {
                 // Only if selecting human, direct to Login Screen so that human can log in.
-                MainWindow newLogin = new MainWindow(players);
+                MainWindow newLogin = new MainWindow(players, ((App)Application.Current).RetrieveWindowState(this));
                 App.Current.MainWindow = newLogin;
                 this.Close();
                 newLogin.Show();

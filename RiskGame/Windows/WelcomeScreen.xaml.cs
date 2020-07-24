@@ -54,7 +54,7 @@ namespace RiskGame.Windows
         private void Play_Game(object sender, RoutedEventArgs e)
         {
             // Sends the user to the Login/Registration menu and closes this window.
-            Window Login = new MainWindow(music_enabled, hints_enabled, this.WindowState);
+            Window Login = new MainWindow(music_enabled, hints_enabled, ((App)Application.Current).RetrieveWindowState(this));
             App.Current.MainWindow = Login;
             this.Close();
             Login.Show();

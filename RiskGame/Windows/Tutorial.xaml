@@ -29,7 +29,7 @@
             <Border Style="{StaticResource brd_BlueBackground}" HorizontalAlignment="Stretch">
                 <StackPanel>
                     <Label Style="{StaticResource lblHeader}">Tutorial</Label>
-                    <ScrollViewer Margin="0">
+                    <ScrollViewer Margin="0"  MaxHeight="400">
                            <StackPanel>
                            <StackPanel.Resources>
                                         <Style TargetType="Border" x:Key="brd_ScrollViewer" BasedOn="{StaticResource brd_BlueBackground}">

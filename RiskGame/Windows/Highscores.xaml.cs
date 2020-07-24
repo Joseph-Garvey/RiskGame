@@ -124,7 +124,7 @@ namespace RiskGame.Windows
         {
             if(players == null || players.Count == 0) // Verified working
             {
-                Window Login = new MainWindow(Music_enabled, Hints_enabled, this.WindowState);
+                Window Login = new MainWindow(Music_enabled, Hints_enabled, ((App)Application.Current).RetrieveWindowState(this));
                 App.Current.MainWindow = Login;
                 this.Close();
                 Login.Show();
