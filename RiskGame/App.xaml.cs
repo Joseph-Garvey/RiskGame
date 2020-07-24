@@ -66,11 +66,13 @@ namespace RiskGame
         }
         public void Window_StateChanged(object sender, EventArgs e)
         {
+            Window_StateChanged((Window)sender);
+        }
+        public void Window_StateChanged(Window window)
+        {
             try
             {
-                Window window = (Window)sender;
-                //Window window = Application.Current.Windows.OfType<Window>().SingleOrDefault(w => w.IsActive);
-                if(window == null) { throw new NullReferenceException(); }
+                if (window == null) { throw new NullReferenceException(); }
                 CheckBox chkFullscreen = (CheckBox)window.FindName("chkFullscreen");
                 if (window.WindowState == WindowState.Maximized)
                 {

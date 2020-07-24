@@ -80,7 +80,7 @@ namespace RiskGame
             SetupWindow(((Human)players[0]).music_enabled);
         }
         // Methods //
-        private void SetupWindow(bool _musicenabled)
+        private void SetupWindow(bool _musicenabled, bool _hintsenabled, bool fullscreen)
         {
             InitializeComponent();
             GameManager.ClearEmptyFile();

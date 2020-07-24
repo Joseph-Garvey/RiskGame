@@ -98,17 +98,21 @@ namespace RiskGame.Windows
             // Initialise UI and show list of saved scores.
             InitializeComponent();
             this.DataContext = this;
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             Music_enabled = _musicenabled;
             Hints_enabled = _hintsenabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
-            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
             try
             {
                 ScoreList.ItemsSource = GameDetails.RetrieveGames();
             }
             catch (Exception) { DispErrorMsg("An error occurred while attempting to retrieve the leaderboard."); }
-            if (fullscreen) { ((App)Application.Current).ChangeWindowState(this); }
+            if (fullscreen)
+            {
+                ((App)Application.Current).ChangeWindowState(this);
+                ((App)Application.Current).Window_StateChanged(this);
+            }
         }
         private void DispErrorMsg(String Message)
         {
