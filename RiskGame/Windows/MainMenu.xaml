@@ -111,7 +111,7 @@
                     </Label>
                 </StackPanel>
                 <!--Settings Panel-->
-                <DockPanel x:Name="panel_Settings" Visibility="Collapsed" >
+                <DockPanel x:Name="panel_Settings" Visibility="Collapsed">
                     <Label Style="{StaticResource lblHeader}" FontSize="12" DockPanel.Dock="Top">Settings:</Label>
                     <Border DockPanel.Dock="Right"  VerticalAlignment="Top">
                         <StackPanel Style="{StaticResource panel_Background}">

@@ -90,7 +90,7 @@ namespace RiskGame
                     string tmppassword = line.Substring(10, 15); // Extract the password from the line.
                     if ((tmpplayername == tmpusername) && (tmpplayerpassword == tmppassword)) // if this line matches the player
                     {
-                        lines.Add(String.Format("{0}{1}{2}{3}", tmpplayername, tmpplayerpassword, player.music_enabled.ToString().PadRight(5), player.music_enabled.ToString().PadRight(5)));
+                        lines.Add(String.Format("{0}{1}{2}{3}", tmpplayername, tmpplayerpassword, player.music_enabled.ToString().PadRight(5), player.hints_enabled.ToString().PadRight(5)));
                     }
                     else { lines.Add(line); }
                 }

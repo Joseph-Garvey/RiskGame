@@ -208,14 +208,18 @@ namespace RiskGame
         private void MediaPause(object sender, RoutedEventArgs e)
         {
             Window w = RetrieveMainWindow();
-            MediaEnabled(w);
-            RetrieveMediaPlayer(w).Pause();
+            if (IsMediaEnabled(w))
+            {
+                RetrieveMediaPlayer(w).Pause();
+            }
         }
         private void MediaPlay(object sender, RoutedEventArgs e)
         {
             Window w = RetrieveMainWindow();
-            MediaEnabled(w);
-            RetrieveMediaPlayer(w).Play();
+            if (IsMediaEnabled(w))
+            {
+                RetrieveMediaPlayer(w).Play();
+            }
         }
         private void Mediaplayer_MediaEnded(object sender, RoutedEventArgs e) { MediaForward(sender, e); }
         private void UpdateMediaText(object sender, RoutedEventArgs e)
@@ -229,16 +233,14 @@ namespace RiskGame
         }
 
         // Methods //
-        private void MediaEnabled(Window w)
+        // MediaEnabled removed //
+        private bool IsMediaEnabled(Window w)
         {
-            if (w is GameSetup)
-            { (w as GameSetup).Music_enabled = true; }
-            else if (w is RiskGame.MainWindow)
-            { (w as RiskGame.MainWindow).Music_enabled = true; }
-            else if (w is RiskGame.GameWindow)
-            { (w as RiskGame.GameWindow).Music_enabled = true; }
-            else if (w is RiskGame.Windows.Highscores)
-            { (w as RiskGame.Windows.Highscores).Music_enabled = true; }
+            if (w is GameSetup) { return (w as GameSetup).Music_enabled; }
+            else if (w is MainWindow) { return (w as MainWindow).Music_enabled; }
+            else if (w is GameWindow) { return (w as GameWindow).Music_enabled; }
+            else if (w is Highscores) { return (w as Highscores).Music_enabled; }
+            else { return false; }
         }
         private void UpdateMediaText(MediaElement sender, Label l)
         {
@@ -274,8 +276,12 @@ namespace RiskGame
         }
         private void ChangeMedia(MediaElement sender)
         {
+            Window w = RetrieveMainWindow();
             sender.Source = Music.sources[Music.MusicIndex];
-            sender.Play();
+            if (IsMediaEnabled(w))
+            {
+                sender.Play();
+            }
         }
     }
 }
