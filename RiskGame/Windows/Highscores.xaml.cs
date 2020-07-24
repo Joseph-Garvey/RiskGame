@@ -87,7 +87,7 @@ namespace RiskGame.Windows
             lblPlayerScore.Visibility = Visibility.Visible;
             PlayerScoreList.Visibility = Visibility.Visible;
         }
-        public Highscores(List<Player> _players, bool fullscreen) { Initialise(fullscreen, ((Human)players[0]).music_enabled, ((Human)players[0]).hints_enabled); players = _players; }
+        public Highscores(List<Player> _players, bool fullscreen) { Initialise(fullscreen, ((Human)_players[0]).music_enabled, ((Human)_players[0]).hints_enabled); players = _players; }
         public Highscores(bool _musicenabled, bool _hintsenabled, bool _fullscreen)
         {
             Initialise(_musicenabled, _hintsenabled, _fullscreen);

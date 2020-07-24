@@ -233,7 +233,11 @@ namespace RiskGame
         }
         private void Leaderboard(object sender, RoutedEventArgs e)
         {
-            Highscores highscores = new Highscores(players, ((App)Application.Current).RetrieveWindowState(this));
+            Highscores highscores = new Highscores(Music_enabled, Hints_enabled, ((App)Application.Current).RetrieveWindowState(this));
+            if(players.Count > 0)
+            {
+                highscores = new Highscores(players, ((App)Application.Current).RetrieveWindowState(this));
+            }
             App.Current.MainWindow = highscores;
             this.Close();
             highscores.Show();
@@ -253,6 +257,14 @@ namespace RiskGame
         {
             PasswordBox P = (PasswordBox)sender;
             P.Password = "";
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            foreach(Window w in App.Current.Windows)
+            {
+                if(w is ChangePassword) { w.Close(); }
+            }
         }
     }
 }

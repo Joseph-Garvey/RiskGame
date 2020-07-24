@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RiskGame"
         mc:Ignorable="d"
-        Title="Login and Register" WindowStartupLocation="CenterScreen" Width="600" Height="600" Style="{StaticResource windowResizeable}">
+        Title="Login and Register" WindowStartupLocation="CenterScreen" Width="600" Height="600" Style="{StaticResource windowResizeable}" Closing="Window_Closing">
     <Border Style="{StaticResource brd_ImageBackground}">
         <Viewbox Margin="10">
             <StackPanel>
@@ -46,7 +46,7 @@
                                 <TextBox x:Name="txtRegName" TabIndex="0" KeyDown="RegisterKeyDown"></TextBox>
                                 <StackPanel Orientation="Horizontal">
                                     <Label Style="{StaticResource lblSubHeading}" Width="110">Password:</Label>
-                                    <Button Style="{StaticResource btnUI}" Width="25" Margin="0,0,5,0" ToolTip="Passwords must be 8-20 characters and consist of letters, numbers and symbols. Passwords must contain at least one capital letter, number and symbol.">?</Button>
+                                    <Button Style="{StaticResource btnUI}" Width="25" Margin="0,0,5,0" ToolTip="Passwords must be 8-15 characters and consist of letters, numbers and symbols. Passwords must contain at least one capital letter, number and symbol.">?</Button>
                                 </StackPanel>
                                 <StackPanel Orientation="Horizontal">
                                     <PasswordBox x:Name="txtRegPass" Style="{StaticResource pwdbox}" TabIndex="1" KeyDown="RegisterKeyDown"></PasswordBox>
