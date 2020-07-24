@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RiskGame
 {
-    static class Music
+    internal static class Music
     {
         public static List<Uri> sources = new List<Uri>
         {
@@ -28,7 +28,7 @@ namespace RiskGame
                 {
                     musicIndex = 0;
                 }
-                else if (value <= 0) { musicIndex = Music.sources.Count - 1; }
+                else if (value < 0) { musicIndex = Music.sources.Count - 1; }
                 else { musicIndex = value; }
             }
         }

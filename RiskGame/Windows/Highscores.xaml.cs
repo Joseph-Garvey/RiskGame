@@ -30,19 +30,21 @@ namespace RiskGame.Windows
             get => music_enabled;
             set
             {
-
-                if (players.Count != 0)
+                if(players != null)
                 {
-                    try
+                    if (players.Count != 0)
                     {
-                        ((Human)players[0]).music_enabled = value;
-                        Human.Update(players[0] as Human);
+                        try
+                        {
+                            ((Human)players[0]).music_enabled = value;
+                            Human.Update(players[0] as Human);
+                        }
+                        catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
                     }
-                    catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
+                    if (value == true) { mediaplayer.Play(); }
+                    else if (value == false) { mediaplayer.Pause(); }
+                    music_enabled = value;
                 }
-                if (value == true) { mediaplayer.Play(); }
-                else if (value == false) { mediaplayer.Pause(); }
-                music_enabled = value;
             }
         }
         private bool hints_enabled;
@@ -51,25 +53,27 @@ namespace RiskGame.Windows
             get => hints_enabled;
             set
             {
-
-                if (players.Count != 0)
+                if(players != null)
                 {
-                    try
+                    if (players.Count != 0)
                     {
-                        ((Human)players[0]).hints_enabled = value;
-                        Human.Update(players[0] as Human);
+                        try
+                        {
+                            ((Human)players[0]).hints_enabled = value;
+                            Human.Update(players[0] as Human);
+                        }
+                        catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
                     }
-                    catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
+                    hints_enabled = value;
                 }
-                hints_enabled = value;
             }
         }
         // Constructor(s) //
-        public Highscores(GameDetails gameDetails, List<Player> _players)
+        public Highscores(GameDetails gameDetails, List<Player> _players, bool fullscreen)
         {
             // If loading from completed game show the current players game.
             playergame = new ObservableCollection<GameDetails>() { gameDetails };
-            Initialise();
+            Initialise(fullscreen);
             players = _players;
             foreach(Player p in players)
             {
@@ -83,14 +87,15 @@ namespace RiskGame.Windows
             lblPlayerScore.Visibility = Visibility.Visible;
             PlayerScoreList.Visibility = Visibility.Visible;
         }
-        public Highscores(List<Player> _players) { Initialise(); players = _players; }
-        public Highscores(bool _musicenabled)
+        public Highscores(List<Player> _players, bool fullscreen) { Initialise(fullscreen); players = _players; }
+        public Highscores(bool _musicenabled, bool _hintsenabled, bool _fullscreen)
         {
-            music_enabled = _musicenabled;
-            Initialise();
+            Music_enabled = _musicenabled;
+            Hints_enabled = _hintsenabled;
+            Initialise(_fullscreen);
         }
         // Methods //
-        private void Initialise()
+        private void Initialise(bool fullscreen)
         {
             // Initialise UI and show list of saved scores.
             InitializeComponent();
@@ -107,6 +112,7 @@ namespace RiskGame.Windows
                 ScoreList.ItemsSource = GameDetails.RetrieveGames();
             }
             catch (Exception) { DispErrorMsg("An error occurred while attempting to retrieve the leaderboard."); }
+            if (fullscreen) { ((App)Application.Current).ChangeWindowState(this); }
         }
         private void DispErrorMsg(String Message)
         {

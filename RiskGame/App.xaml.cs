@@ -15,33 +15,37 @@ namespace RiskGame
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
-            // Start Splash Screen and Show
-            SplashScreenWindow splashScreen = new SplashScreenWindow();
-            this.MainWindow = splashScreen;
-            splashScreen.Show();
-            // Show Progress Bar on a new thread
-            Task.Factory.StartNew(() =>
+            try
             {
-                //we need to do the work in batches so that we can report progress
-                for (int i = 1; i <= 110; i++)
+                base.OnStartup(e);
+                // Start Splash Screen and Show
+                SplashScreenWindow splashScreen = new SplashScreenWindow();
+                this.MainWindow = splashScreen;
+                splashScreen.Show();
+                // Show Progress Bar on a new thread
+                Task.Factory.StartNew(() =>
                 {
-                    //simulate a part of work being done
-                    System.Threading.Thread.Sleep(10);
-                    splashScreen.Dispatcher.Invoke(() => splashScreen.Progress = i);
-                }
-                //once we're done we need to use the Dispatcher
-                //to create and show the main window
-                this.Dispatcher.Invoke(() =>
-                {
-                    //initialize the Welcome Screen window, set as main app window.
-                    //and close the splash screen
-                    WelcomeScreen mainWindow = new WelcomeScreen();
-                    this.MainWindow = mainWindow;
-                    mainWindow.Show();
-                    splashScreen.Close();
+                    //we need to do the work in batches so that we can report progress
+                    for (int i = 1; i <= 110; i++)
+                    {
+                        //simulate a part of work being done
+                        System.Threading.Thread.Sleep(10);
+                        splashScreen.Dispatcher.Invoke(() => splashScreen.Progress = i);
+                    }
+                    //once we're done we need to use the Dispatcher
+                    //to create and show the main window
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //initialize the Welcome Screen window, set as main app window.
+                        //and close the splash screen
+                        WelcomeScreen mainWindow = new WelcomeScreen();
+                        this.MainWindow = mainWindow;
+                        mainWindow.Show();
+                        splashScreen.Close();
+                    });
                 });
-            });
+            }
+            catch (TaskCanceledException) { }
         }
 
 
@@ -81,7 +85,7 @@ namespace RiskGame
         }
         private void Fullscreen_Click(object sender, RoutedEventArgs e) { ChangeWindowState(RetrieveMainWindow()); }
         // Methods //
-        private void ChangeWindowState(Window window)
+        public void ChangeWindowState(Window window)
         {
             try
             {
@@ -104,6 +108,11 @@ namespace RiskGame
         private Window RetrieveMainWindow()
         {
             return Application.Current.MainWindow;
+        }
+        public bool RetrieveWindowState(Window window)
+        {
+            if (window.WindowState == WindowState.Maximized) { return true; }
+            else { return false; }
         }
 
         /// Panel Management ///

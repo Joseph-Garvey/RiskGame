@@ -60,7 +60,6 @@ namespace RiskGame.Game
 
         public static ObservableCollection<GameDetails> RetrieveGames() // Return actual game perhaps? // Can be made more efficient and combined with LoadGame once I learn more about DataBinding to objects.
         { // adapt
-            /// Retrieve the list of games for the datagrid on GameSetup.
             List < GameDetails > games = new List<GameDetails>();
             if (File.Exists(FileName))
             {
@@ -85,17 +84,11 @@ namespace RiskGame.Game
         }
 
         public string NoPlayers => noPlayers;
-
         public string Player => player;
-
         public string LastSave => lastsave;
-
         public string GameID => gameID;
-
         public string Score => score;
-
         public string Map => map;
-
         public string Gamemode => gamemode;
     }
 }

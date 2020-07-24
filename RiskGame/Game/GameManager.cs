@@ -55,7 +55,7 @@ namespace RiskGame.Game
                     }
                 }
             }
-            else { gameID = 0; }
+            else { this.gameID = 0; }
         }
 
         // Constructor ///
@@ -196,7 +196,6 @@ namespace RiskGame.Game
                 }
                 catch (SerializationException) { File.Delete(FileName);
                 }
-
             }
         }
     }

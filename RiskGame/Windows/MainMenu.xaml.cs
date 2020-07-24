@@ -230,7 +230,7 @@ namespace RiskGame
         }
         private void Leaderboard(object sender, RoutedEventArgs e)
         {
-            Highscores highscores = new Highscores(players);
+            Highscores highscores = new Highscores(players, ((App)Application.Current).RetrieveWindowState(this));
             App.Current.MainWindow = highscores;
             this.Close();
             highscores.Show();

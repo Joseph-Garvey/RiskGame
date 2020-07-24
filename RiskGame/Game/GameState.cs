@@ -16,22 +16,16 @@ namespace RiskGame.Game
         PlacingArmy,
         InitialArmyPlace
     }
+    [Serializable]
     public enum GameMode
     {
         NewRisk,
         Classic
     }
+    [Serializable]
     public enum GameMap
     {
         Default,
         NewYork
-    }
-    public enum Die
-    {
-        Player1,
-        Player2,
-        Player3,
-        Enemy1,
-        Enemy2
     }
 }

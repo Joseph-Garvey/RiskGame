@@ -12,9 +12,9 @@ namespace RiskGame
             while (n > 1)
             {
                 n--;
-                int k = ThreadSafeRandom.ThisThreadsRandom.Next(n + 1);
-                T value = list[k];
-                list[k] = list[n];
+                int x = ThreadSafeRandom.ThisThreadsRandom.Next(n + 1);
+                T value = list[x];
+                list[x] = list[n];
                 list[n] = value;
             }
         }

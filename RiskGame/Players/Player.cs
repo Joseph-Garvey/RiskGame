@@ -12,14 +12,12 @@ using System.ComponentModel;
 namespace RiskGame
 {
     [Serializable]
-    public class Player : INotifyPropertyChanged
+    public abstract class Player : INotifyPropertyChanged
     {
         /// <summary>
         /// The basic player class which contains the basic variables for human and ai players.
         /// Used for polymorphism ///
         /// </summary>
-        /// <param name="username"></param>
-        ///
         // Constructors //
         public Player(string username)
         {
@@ -30,7 +28,7 @@ namespace RiskGame
         // Variables //
         public String Username { get; set; }
         public int army_undeployed;
-        private int territoriesowned = 0;
+        private int territoriesowned;
         public int Territoriesowned
         {
             get { return this.territoriesowned; }
