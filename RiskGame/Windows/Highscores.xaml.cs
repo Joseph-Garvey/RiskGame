@@ -43,8 +43,8 @@ namespace RiskGame.Windows
                     }
                     if (value == true) { mediaplayer.Play(); }
                     else if (value == false) { mediaplayer.Pause(); }
-                    music_enabled = value;
                 }
+                music_enabled = value;
             }
         }
         private bool hints_enabled;
@@ -64,8 +64,8 @@ namespace RiskGame.Windows
                         }
                         catch { DispErrorMsg("An error has occurred. Your music preferences have not been saved."); }
                     }
-                    hints_enabled = value;
                 }
+                hints_enabled = value;
             }
         }
         // Constructor(s) //
@@ -73,7 +73,7 @@ namespace RiskGame.Windows
         {
             // If loading from completed game show the current players game.
             playergame = new ObservableCollection<GameDetails>() { gameDetails };
-            Initialise(fullscreen);
+            Initialise(fullscreen, ((Human)players[0]).music_enabled, ((Human)players[0]).hints_enabled);
             players = _players;
             foreach(Player p in players)
             {
@@ -87,23 +87,19 @@ namespace RiskGame.Windows
             lblPlayerScore.Visibility = Visibility.Visible;
             PlayerScoreList.Visibility = Visibility.Visible;
         }
-        public Highscores(List<Player> _players, bool fullscreen) { Initialise(fullscreen); players = _players; }
+        public Highscores(List<Player> _players, bool fullscreen) { Initialise(fullscreen, ((Human)players[0]).music_enabled, ((Human)players[0]).hints_enabled); players = _players; }
         public Highscores(bool _musicenabled, bool _hintsenabled, bool _fullscreen)
         {
-            Music_enabled = _musicenabled;
-            Hints_enabled = _hintsenabled;
-            Initialise(_fullscreen);
+            Initialise(_musicenabled, _hintsenabled, _fullscreen);
         }
         // Methods //
-        private void Initialise(bool fullscreen)
+        private void Initialise(bool _musicenabled, bool _hintsenabled, bool fullscreen)
         {
             // Initialise UI and show list of saved scores.
             InitializeComponent();
             this.DataContext = this;
-            if (players != null)
-            {
-                music_enabled = ((Human)players[0]).music_enabled;
-            }
+            Music_enabled = _musicenabled;
+            Hints_enabled = _hintsenabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
             this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);

@@ -66,7 +66,7 @@ namespace RiskGame.Windows
         }
         private void Leaderboard(object sender, RoutedEventArgs e)
         {
-            Highscores highscores = new Highscores(music_enabled, hints_enabled, ((App)Application.Current).RetrieveWindowState(this));
+            Highscores highscores = new Highscores(Music_enabled, Hints_enabled, ((App)Application.Current).RetrieveWindowState(this));
             App.Current.MainWindow = highscores;
             this.Close();
             highscores.Show();
