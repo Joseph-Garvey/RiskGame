@@ -155,9 +155,10 @@ namespace RiskGame
         private static bool ValidCharUser(Char[] chararray) // cannot use if else on validation classes as then it will return earlier than expected.
         {
             // Checks the username consists of only letters digits and seperators.
+            List<char> legalseperators = new List<char> { '_', '-', '.', ',', '/' };
             foreach (Char c in chararray)
             {
-                if (!((Char.IsLetterOrDigit(c)) || (Char.IsSeparator(c)))) { return false; }
+                if (!((Char.IsLetterOrDigit(c)) || (legalseperators.Contains(c)))) { return false; }
             }
             return true;
         }

@@ -132,6 +132,8 @@ namespace RiskGame
                 }
                 // Signs player in when Login button is clicked //
                 // Checks entered details against those on file, retrieves the player's details, returning a player object.
+                if(txtLogName.Text == null || txtLogName.Text == "" ||
+                    txtLogPass.Password == null || txtLogPass.Password == "") { throw new ArgumentNullException(); }
                 player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
                 if (players.Contains(player))
                 {
@@ -146,6 +148,10 @@ namespace RiskGame
                 Setup.Show();
             }
             // Exception Handling //
+            catch (ArgumentNullException)
+            {
+                DispErrorMsg("Please enter a username and password.");
+            }
             catch (AccountNotFoundException K)
             {
                 DispErrorMsg(K.Message);
@@ -169,8 +175,11 @@ namespace RiskGame
             {
                 lblError.Visibility = Visibility.Collapsed;
                 lblSuccess.Visibility = Visibility.Collapsed;
+                if (txtRegName.Text == null || txtRegPass.Password == null || txtRegPassConf.Password == null ||
+                    txtRegName.Text == "" || txtRegPass.Password == "" || txtRegPassConf.Password == "")
+                    { throw new ArgumentNullException(); }
                 // If passwords match, attempt to register the player.
-                if(txtRegPass.Password == txtRegPassConf.Password)
+                if (txtRegPass.Password == txtRegPassConf.Password)
                 {
                     Human.Register(txtRegName.Text, txtRegPass.Password, music_enabled, hints_enabled); // Ensure details are valid, username is not taken and write details to file.
                     DispSuccessMsg("Registration successful. Click login to continue.");
@@ -187,6 +196,10 @@ namespace RiskGame
             catch (IOException)
             {
                 DispErrorMsg("An error reading or writing from the file has occurred. Please try again or delete the Usersaves.txt file in the game directory.");
+            }
+            catch (ArgumentNullException)
+            {
+                DispErrorMsg("Please provide an input for every field.");
             }
         }
         private void RegisterKeyDown(object sender, KeyEventArgs e)
