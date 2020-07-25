@@ -257,13 +257,21 @@ namespace RiskGame
         }
         private void ChangePassword(object sender, RoutedEventArgs e)
         {
-            ChangePassword window;
-            if (txtLogName.Text != null)
+            bool open = false;
+            foreach (Window w in Application.Current.Windows)
             {
-                window = new ChangePassword(txtLogName.Text);
+                if (w is ChangePassword) { open = true; break; }
             }
-            else { window = new ChangePassword(); }
-            window.Show();
+            if (!open)
+            {
+                ChangePassword window;
+                if (txtLogName.Text != null)
+                {
+                    window = new ChangePassword(txtLogName.Text);
+                }
+                else { window = new ChangePassword(); }
+                window.Show();
+            }
         }
         // Clear password on keyboard focus to prevent user error and/or copying password.
         private void ClearPwdText(object sender, KeyboardFocusChangedEventArgs e)
