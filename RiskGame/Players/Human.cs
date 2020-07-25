@@ -25,6 +25,7 @@ namespace RiskGame
         public String Password { set => password = value; } // Makes password write-only
         public bool music_enabled;
         public bool hints_enabled;
+        private static List<char> legalsymbols = new List<char> { '!', '£', '$', '€', '%', '^', '&', '*', '+', '-', '=', '_', '<', '>', '@','?','~', '#'};
 
         // Account Management //
         public static Human SignIn(String username, String password) // Must use inside try/catch
@@ -193,7 +194,7 @@ namespace RiskGame
             // Ensures the password only consists of letters, digits, symbols and punctuation.
             foreach (Char c in chararray)
             {
-                if (!((Char.IsLetterOrDigit(c)) || (Char.IsSymbol(c)) || (Char.IsPunctuation(c)))) { return false; }
+                if (!((Char.IsLetterOrDigit(c)) || legalsymbols.Contains(c) )) { return false; }
             }
             return true;
         }
@@ -208,9 +209,8 @@ namespace RiskGame
             {
                 if (Char.IsUpper(c)) { uppercase = true; }
                 else if(Char.IsLower(c)) { lowercase = true; }
-                else if (Char.IsSymbol(c)) { symbol = true; }
+                else if (legalsymbols.Contains(c)) { symbol = true; }
                 else if (Char.IsDigit(c)) { digit = true; }
-                else if (Char.IsPunctuation(c)) { symbol = true; } // as some Unicode 'symbols' are considered punctuation e.g @
             }
             if (uppercase && symbol && digit && lowercase) { return true; } // If it matches all criteria, return true.
             return false;

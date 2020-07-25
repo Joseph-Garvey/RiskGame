@@ -16,7 +16,8 @@ namespace RiskGame.CustomExceptions
         private static readonly String invalidUserExists = "This username is taken. ";
         private static readonly String invalidPassLength = "Passwords must be between 8 and 15 characters. ";
         private static readonly String invalidPassChar = "Password must consist of letters, numbers and symbols. ";
-        private static readonly String invalidPassSecurity = "Passwords must contain a minimum of one number, symbol, upper and lower case character.";
+        private static readonly String invalidPassSecurity = "Passwords must contain a minimum of one number, symbol, upper and lower case character. ";
+        private static readonly String invalidSymbol = "Refer to the tutorial window for the list of allowed symbols.";
         public String error = "";
         public AccountCreationException(bool validlength, bool validcharuser, bool validuserexists, bool validpasslength, bool validpasschar, bool validpasssecurity)
         {
@@ -26,6 +27,7 @@ namespace RiskGame.CustomExceptions
             if (!validpasslength) { error += invalidPassLength; }
             if (!validpasschar) { error += invalidPassChar; }
             if (!validpasssecurity) { error += invalidPassSecurity; }
+            if(!validpasschar || !validpasssecurity) { error += invalidSymbol; }
         }
     }
 }
