@@ -183,8 +183,16 @@ namespace RiskGame
         public void Tutorial_Window(object sender, RoutedEventArgs e)
         {
             // Open Tutorial Window when help button is clicked //
-            Tutorial tutorial = new Tutorial();
-            tutorial.Show();
+            bool open = false;
+            foreach(Window w in Application.Current.Windows)
+            {
+                if(w is Tutorial) { open = true; break; }
+            }
+            if (!open)
+            {
+                Tutorial tutorial = new Tutorial();
+                tutorial.Show();
+            }
         }
 
         /// Music Controls ///
