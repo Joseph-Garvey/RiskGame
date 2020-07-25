@@ -66,8 +66,8 @@
                                             <TextBlock>The tab key can be used to cycle between on-screen inputs and buttons,</TextBlock>
                                             <TextBlock>To change your password click "Change Password"</TextBlock>
                                             <Label Style="{StaticResource lblSubHeading}" Margin="5">Registration</Label>
-                                            <TextBlock>Usernames must be 3-10 characters, unique and consist of letters, numbers and separator characters.</TextBlock>
-                                            <TextBlock>Passwords must be 8-15 characters and consist of letters, numbers and symbols. Passwords must contain at least one capital letter, number and symbol.</TextBlock>
+                                            <TextBlock>Usernames must be 3-10 characters, unique and consist of letters, numbers and separator (Underscore, dash, period, comma, slash) characters.</TextBlock>
+                                            <TextBlock>Passwords must be 8-15 characters and consist of letters, numbers and symbols. Passwords must contain at least one upper and lower case letter, number and symbol.</TextBlock>
                                             <TextBlock>If you wish to see your password as you type it, click the eye icon to show your password.</TextBlock>
                                             <TextBlock>The rules for usernames and passwords can be read again by hovering over the respective help buttons marked by a '?'</TextBlock>
                                             <TextBlock>Once you have typed your desired username and password press the enter key or click "Register" to create an account.</TextBlock>

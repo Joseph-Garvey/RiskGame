@@ -203,14 +203,16 @@ namespace RiskGame
             bool uppercase = false;
             bool symbol = false;
             bool digit = false;
+            bool lowercase = false;
             foreach (Char c in chararray) // For every character, make the boolean true if it matches one of these conditions.
             {
                 if (Char.IsUpper(c)) { uppercase = true; }
+                else if(Char.IsLower(c)) { lowercase = true; }
                 else if (Char.IsSymbol(c)) { symbol = true; }
                 else if (Char.IsDigit(c)) { digit = true; }
                 else if (Char.IsPunctuation(c)) { symbol = true; } // as some Unicode 'symbols' are considered punctuation e.g @
-                if (uppercase && symbol && digit) { return true; } // If it matches all criteria, return true.
             }
+            if (uppercase && symbol && digit && lowercase) { return true; } // If it matches all criteria, return true.
             return false;
         }
     }
