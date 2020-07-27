@@ -110,5 +110,24 @@ namespace RiskGame.Windows
             lblError.Visibility = Visibility.Collapsed;
             lblSuccess.Visibility = Visibility.Collapsed;
         }
+
+        private void ShowPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            PasswordBox passwordBox = new PasswordBox();
+            switch (textBox.Name)
+            {
+                case "txtPassShow":
+                    passwordBox = txtPass;
+                    break;
+                case "txtNewPassShow":
+                    passwordBox = txtNewPass;
+                    break;
+                case "txtNewPassConfShow":
+                    passwordBox = txtNewPassConf;
+                    break;
+            }
+            passwordBox.Password = textBox.Text;
+        }
     }
 }
