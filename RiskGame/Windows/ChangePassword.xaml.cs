@@ -67,17 +67,11 @@ namespace RiskGame.Windows
                 passwordBox.Password = textBox.Text;
                 passwordBox.Visibility = Visibility.Visible;
                 textBox.Visibility = Visibility.Collapsed;
-
             }
         }
         private void ChangePasswordKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return) { ChangeUserPassword(sender, e); }
-        }
-        private void ClearPwdText(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            PasswordBox P = (PasswordBox)sender;
-            P.Password = "";
         }
         private void ChangeUserPassword(object sender, RoutedEventArgs e)
         {

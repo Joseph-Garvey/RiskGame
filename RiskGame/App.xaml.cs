@@ -176,6 +176,15 @@ namespace RiskGame
                 case "txtLogPassShow":
                     passwordBox = (PasswordBox)(window.FindName("txtLogPass"));
                     break;
+                case "txtPass":
+                    passwordBox = (PasswordBox)(window.FindName("txtPass"));
+                    break;
+                case "txtNewPass":
+                    passwordBox = (PasswordBox)(window.FindName("txtNewPass"));
+                    break;
+                case "txtNewPassConf":
+                    passwordBox = (PasswordBox)(window.FindName("txtNewPassConf"));
+                    break;
             }
             passwordBox.Password = textBox.Text;
         }
