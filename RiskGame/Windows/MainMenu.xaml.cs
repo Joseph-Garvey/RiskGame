@@ -132,8 +132,6 @@ namespace RiskGame
                 }
                 // Signs player in when Login button is clicked //
                 // Checks entered details against those on file, retrieves the player's details, returning a player object.
-                if(txtLogName.Text == null || txtLogName.Text == "" ||
-                    txtLogPass.Password == null || txtLogPass.Password == "") { throw new ArgumentNullException(); }
                 player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
                 if (players.Contains(player))
                 {

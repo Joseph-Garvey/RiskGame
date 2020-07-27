@@ -78,6 +78,11 @@ namespace RiskGame.Windows
             try
             {
                 ClearMsg();
+                if (txtName.Text == null || txtName.Text == "" ||
+                txtPass.Password == null || txtPass.Password == "" ||
+                txtNewPass.Password == null || txtNewPass.Password == "" ||
+                txtNewPassConf.Password == null || txtNewPassConf.Password == "")
+                    { throw new ArgumentNullException(); }
                 if (txtNewPass.Password == txtNewPassConf.Password)
                 {
                     Human.Validation(txtNewPass.Password);
@@ -87,6 +92,7 @@ namespace RiskGame.Windows
                 }
                 else { DispErrorMsg("The password(s) do not match"); }
             }
+            catch (ArgumentNullException) { DispErrorMsg("Please provide an input for every field."); }
             catch (IOException) { DispErrorMsg("An error reading or writing from the file has occurred. Please try again or delete the Usersaves.txt file in the game directory."); }
             catch (AccountCreationException k) { DispErrorMsg(k.error); }
             catch (AccountNotFoundException) { DispErrorMsg("Your account was not found. Please check your password."); }

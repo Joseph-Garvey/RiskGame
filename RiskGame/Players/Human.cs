@@ -30,6 +30,7 @@ namespace RiskGame
         // Account Management //
         public static Human SignIn(String username, String password) // Must use inside try/catch
         {
+            if(username == "" || username == null || password == "" || password == null) { throw new ArgumentNullException(); }
             /// Attempts to find the given details in the text file. Creates a new object and returns it if successful
             using (StreamReader sr = new StreamReader(FileName)) // using auto-cleans up on leave
             {
@@ -136,6 +137,7 @@ namespace RiskGame
         // Validation
         public static void Validation(String username, String password) // Must be used in try/catch
         {
+            if (username == "" || username == null || password == "" || password == null) { throw new ArgumentNullException(); }
             // Validates if the user's name and password are valid by checking them against certain rules.
             Char[] userchar = username.ToCharArray();
             Char[] passchar = password.ToCharArray();
@@ -144,6 +146,7 @@ namespace RiskGame
         }
         public static void Validation(String password)
         {
+            if (password == "" || password == null) { throw new ArgumentNullException(); }
             Char[] passchar = password.ToCharArray();
             if ((!ValidPassLength(passchar)) || (!ValidPassChar(passchar)) || (!ValidPassSecurity(passchar))) { throw new AccountCreationException(true, true, true, ValidPassLength(passchar), ValidPassChar(passchar), ValidPassSecurity(passchar)); }
         }
