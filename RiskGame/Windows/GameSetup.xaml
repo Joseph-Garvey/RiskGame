@@ -176,7 +176,7 @@
                                 <!--Normal 190, short is 150-->
                                 <Button x:Name="btnNewGameSettings" Style="{StaticResource btnSettingsThin}" Visibility="Collapsed"></Button>
                             </StackPanel>
-                            <Label x:Name="lblErrorAlt" Margin="5,5,5,0" Style="{StaticResource lblError}" MaxWidth="300" Visibility="Collapsed" >
+                            <Label x:Name="lblErrorAlt" Margin="5" Style="{StaticResource lblError}" MaxWidth="200" Visibility="Collapsed" >
                                 <TextBlock x:Name="txtErrorAlt">Error message</TextBlock>
                             </Label>
                         </StackPanel>
