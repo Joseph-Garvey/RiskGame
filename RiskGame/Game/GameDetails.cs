@@ -37,12 +37,13 @@ namespace RiskGame.Game
             this.gamemode = gamemode ?? throw new ArgumentNullException(nameof(gamemode));
         }
 
-        public GameDetails(string lastsave, string player, string map, string gamemode)
+        public GameDetails(string lastsave, string player, string map, string gamemode, string gameID)
         {
             this.lastsave = lastsave ?? throw new ArgumentNullException(nameof(lastsave));
             this.player = player ?? throw new ArgumentNullException(nameof(player));
             this.map = map ?? throw new ArgumentNullException(nameof(map));
             this.gamemode = gamemode ?? throw new ArgumentNullException(nameof(gamemode));
+            this.gameID = gameID ?? throw new ArgumentNullException(nameof(gameID));
         }
 
         public static void Save(GameDetails gameDetails)
