@@ -338,7 +338,7 @@
                                     <Label Style="{StaticResource lblHeader}">General:</Label>
                                     <StackPanel Style="{StaticResource HorizontalCentred}" Margin="5">
                                         <Label Style="{StaticResource lblSubHeading}" Width="75">Fullscreen:</Label>
-                                        <CheckBox x:Name="chkFullscreen" Style="{StaticResource chkFullscreen}"></CheckBox>
+                                        <CheckBox x:Name="chkFullscreen" Style="{StaticResource chkFullscreen}" IsChecked="True"></CheckBox>
                                     </StackPanel>
                                 </StackPanel>
                             </Border>

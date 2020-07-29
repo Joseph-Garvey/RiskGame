@@ -69,12 +69,12 @@ namespace RiskGame.Windows
             }
         }
         // Constructor(s) //
-        public Highscores(GameDetails gameDetails, List<Player> _players, bool fullscreen)
+        public Highscores(GameDetails gameDetails, List<Player> _players)
         {
             // If loading from completed game show the current players game.
             playergame = new ObservableCollection<GameDetails>() { gameDetails };
-            Initialise(fullscreen, ((Human)players[0]).music_enabled, ((Human)players[0]).hints_enabled);
             players = _players;
+            Initialise(false, ((Human)players[0]).music_enabled, ((Human)players[0]).hints_enabled);
             foreach(Player p in players)
             {
                 p.Army_strength = 0;

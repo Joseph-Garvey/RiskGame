@@ -69,7 +69,7 @@ namespace RiskGame
         {
             get { return CurrentPlayer.Username; }
         } // redundant property never used.
-        private GameState gamestate
+        private GameState Gamestate
         {
             get { return game.gameState; }
             set { game.gameState = value; }
@@ -204,9 +204,6 @@ namespace RiskGame
                 MapSetup();
             }
             catch (Exception) {
-                GameSetup g = new GameSetup(Players);
-                Application.Current.MainWindow = g;
-                g.Show();
                 MessageBox.Show("An error occurred loading the map.");
                 this.Close();
                 return;
@@ -476,7 +473,7 @@ namespace RiskGame
         private void StartGame()
         {
             Output("The Game is beginning.");
-            gamestate = GameState.PlacingArmy;
+            Gamestate = GameState.PlacingArmy;
             NextTurnThreaded();
         }
         private void SetupRandom()
@@ -684,6 +681,12 @@ namespace RiskGame
             rectPlayerColor4.Height = i;
             rectPlayerColor5.Height = i;
             rectPlayerColor6.Height = i;
+            rectPlayerColor1.Margin = margin;
+            rectPlayerColor2.Margin = margin;
+            rectPlayerColor3.Margin = margin;
+            rectPlayerColor4.Margin = margin;
+            rectPlayerColor5.Margin = margin;
+            rectPlayerColor6.Margin = margin;
         }
         private void SetGap(int i)
         {
@@ -711,6 +714,7 @@ namespace RiskGame
         { // Cycles through the list of players, for a new turn or placing armies.
             if ((Players.IndexOf(CurrentPlayer) + 1) == (Players.Count)) { CurrentPlayer = Players[0]; }
             else { CurrentPlayer = Players[(Players.IndexOf(CurrentPlayer) + 1)]; }
+            UpdatePlayerPanelUI();
         }
         private bool AllPlaced()
         {
@@ -729,7 +733,7 @@ namespace RiskGame
         {
             if(Time > 0)
             {
-                if (gamestate == GameState.InitialArmyPlace) { NextTurnThreaded(); return; }
+                if (Gamestate == GameState.InitialArmyPlace) { NextTurnThreaded(); return; }
                 if (workerthread != null && workerthread.IsBusy == true)
                 {
                     workerthread.CancelAsync();
@@ -747,12 +751,11 @@ namespace RiskGame
         private void NextTurnThreaded()
         {
             ClearSelections();
-            if (gamestate == GameState.InitialArmyPlace)
+            if (Gamestate == GameState.InitialArmyPlace)
             {
                 if ((!(CurrentPlayer is NeutralAI)) && CurrentPlayer.army_undeployed > 0)
                 {
                     Output(String.Format("It is now {0}'s turn.", CurrentPlayer.Username));
-                    UpdatePlayerPanelUI();
                 }
                 else
                 {
@@ -794,7 +797,6 @@ namespace RiskGame
                         }
                     }
                     CurrentPlayer.army_undeployed += ((CurrentPlayer.Territoriesowned / 3) + bonus);
-                    UpdatePlayerPanelUI();
                     UpdateState(GameState.PlacingArmy);
                     // simplify
                     switch (ownedContinents.Count)
@@ -828,10 +830,10 @@ namespace RiskGame
             GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), map.ToString(), gamemode.ToString());
             GameDetails.Save(gamedetails);
             GameManager.DeleteGame(game.GameID);
-            Highscores Setup = new Highscores(gamedetails, Players, ((App)Application.Current).RetrieveWindowState(this));
-            App.Current.MainWindow = Setup;
+            Highscores finish = new Highscores(gamedetails, Players);
+            App.Current.MainWindow = finish;
             this.Close();
-            Setup.Show();
+            finish.Show();
         }
 
         //// UI /////
@@ -840,7 +842,7 @@ namespace RiskGame
             UISetup();
             UpdatePlayerPanelUI();
             UpdateState(game.gameState);
-            if(gamestate == GameState.PlacingArmy)
+            if(Gamestate == GameState.PlacingArmy)
             {
                 UpdatePlayerUndeployed();
             }
@@ -871,7 +873,7 @@ namespace RiskGame
         } // Updates selected territory's armies
         private void UpdateNumOutput()
         {
-            switch (gamestate)
+            switch (Gamestate)
             {
                 case GameState.PlacingArmy:
                     btnNumber.Content = SlctTerritory.temparmies;
@@ -890,29 +892,29 @@ namespace RiskGame
         private void UpdatePlayerPanelUI()
         {
             int i = Players.IndexOf(CurrentPlayer);
-            foreach (Border s in panel_Players.Children) {
-                s.Background = panel_Players.Background;
+            foreach (Border b in panel_Players.Children) {
+                b.Background = panel_Players.Background;
             }
             panel_UI.Background = CurrentPlayer.Color;
             switch (i)
             {
                 case 0:
-                    panel_Player1.Background = Brushes.LightBlue;
+                    brd_Player1.Background = Brushes.LightBlue;
                     break;
                 case 1:
-                    panel_Player2.Background = Brushes.LightBlue;
+                    brd_Player2.Background = Brushes.LightBlue;
                     break;
                 case 2:
-                    panel_Player3.Background = Brushes.LightBlue;
+                    brd_Player3.Background = Brushes.LightBlue;
                     break;
                 case 3:
-                    panel_Player4.Background = Brushes.LightBlue;
+                    brd_Player4.Background = Brushes.LightBlue;
                     break;
                 case 4:
-                    panel_Player5.Background = Brushes.LightBlue;
+                    brd_Player5.Background = Brushes.LightBlue;
                     break;
                 case 5:
-                    panel_Player6.Background = Brushes.LightBlue;
+                    brd_Player6.Background = Brushes.LightBlue;
                     break;
             }
         }  // Updates currently highlighted player in UI stack
@@ -922,7 +924,7 @@ namespace RiskGame
         } // Use to update undeployed on place
         private void UpdateStateUI()
         {
-            switch (gamestate)
+            switch (Gamestate)
             {
                 case GameState.Attacking:
                     btnStateDisp.Content = "Attack";
@@ -967,6 +969,18 @@ namespace RiskGame
                     btnStateDisp.Content = "Move";
                     btnStateDisp.Background = new SolidColorBrush(Color.FromRgb(245, 245, 78));
                     btnState.Content = "Confirm Fortify";
+                    if (CurrentPlayer is Human)
+                    {
+                        if (((Human)CurrentPlayer).hints_enabled)
+                        {
+                            Output("Click to select a territory");
+                            Output("to move armies from.");
+                            Output("Click again to select where you");
+                            Output("wish to move them to.");
+                            Output("Use +- and L/R click");
+                            Output("to adjust the number moved.");
+                        }
+                    }
                     break;
                 case GameState.Conquer:
                     btnStateDisp.Content = "Conquer";
@@ -976,7 +990,9 @@ namespace RiskGame
                     {
                         if (((Human)CurrentPlayer).hints_enabled)
                         {
-                            Output("Use + - or left/right click and then confirm to send armies to the newly captured territory.");
+                            Output("Use Click, Right-Click, + and -");
+                            Output("to move armies to or from");
+                            Output("your new territory.");
                         }
                     }
                     break;
@@ -1065,8 +1081,8 @@ namespace RiskGame
         }
         private void UpdateState(GameState g)
         {
-            gamestate = g;
-            if(gamestate == GameState.Conquer) { ConquerTerritoryUI(); }
+            Gamestate = g;
+            if(Gamestate == GameState.Conquer) { ConquerTerritoryUI(); }
             UpdateStateUI();
         }
         private void ShowAttack()
@@ -1118,7 +1134,7 @@ namespace RiskGame
                     Output("At least one army must remain in a friendly territory.");
                     return;
                 }
-                else if(gamemode == GameMode.Classic && gamestate == GameState.Attacking && NextTerritory.temparmies >= 3)
+                else if(gamemode == GameMode.Classic && Gamestate == GameState.Attacking && NextTerritory.temparmies >= 3)
                 {
                     Output("You can attack with a maximum of 3 armies at once.");
                     return;
@@ -1128,7 +1144,7 @@ namespace RiskGame
             {
                 if(NextTerritory.temparmies <= 1)
                 {
-                    switch (gamestate)
+                    switch (Gamestate)
                     {
                         case GameState.Attacking:
                             Output("You cannot attack with less than one army.");
@@ -1143,7 +1159,7 @@ namespace RiskGame
                     }
                     return;
                 }
-                else if(gamemode == GameMode.Classic && gamestate == GameState.Conquer)
+                else if(gamemode == GameMode.Classic && Gamestate == GameState.Conquer)
                 {
                     int count = 0;
                     foreach(Dice d in dices) { if (d is PlayerDice) { count += 1; } }
@@ -1158,11 +1174,11 @@ namespace RiskGame
             NextTerritory.temparmies += i;
             UpdateNumOutput();
             AttackTerritoryUI();
-            if(gamestate == GameState.Conquer) { ConquerTerritoryUI(); }
+            if(Gamestate == GameState.Conquer) { ConquerTerritoryUI(); }
         }
         private void CancelUnconfirmedActions()
         {
-            switch (gamestate)
+            switch (Gamestate)
             {
                 case GameState.PlacingArmy:
                     foreach (Territory t in Territories)
@@ -1245,7 +1261,7 @@ namespace RiskGame
         }
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
+            if (Gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
             else
             {
                 CancelUnconfirmedActions();
@@ -1259,7 +1275,7 @@ namespace RiskGame
             // context in which it was clicked.
             Territory t = RetrieveTerritory(((Button)sender).Name.TrimStart(new char[] { 'b', 't', 'n' }));
             Button btnTerritory = t.button;
-            switch (gamestate)
+            switch (Gamestate)
             {
                 case GameState.InitialArmyPlace:
                     SlctTerritory = t;
@@ -1310,7 +1326,7 @@ namespace RiskGame
                         }
                         else { Output("You do not have enough armies to attack from here."); break; }
                     }
-                    else if (SlctTerritory != null)
+                    if (SlctTerritory != null) // if a territory is selected
                     {
                         if(t.owner != null)
                         {
@@ -1389,7 +1405,7 @@ namespace RiskGame
         {
             Territory t = RetrieveTerritory(((Button)sender).Name.TrimStart(new char[] { 'b', 't', 'n' }));
             Button btnTerritory = t.button;
-            switch (gamestate)
+            switch (Gamestate)
             {
                 case GameState.PlacingArmy:
                     if (t == SlctTerritory) { PlayerActions(false); }
@@ -1428,7 +1444,7 @@ namespace RiskGame
         }
         private void Confirm(object sender, RoutedEventArgs e)
         { // Confirms the current action(s)
-            switch (gamestate)
+            switch (Gamestate)
             {
                 case GameState.PlacingArmy:
                     foreach(Territory t in Territories)
@@ -1557,7 +1573,7 @@ namespace RiskGame
                     return;
                 }
             }
-            if (gamestate != GameState.Conquer) { CancelUnconfirmedActions(); NextAction(); }
+            if (Gamestate != GameState.Conquer) { CancelUnconfirmedActions(); NextAction(); }
         }
         private void Cancel(object sender, RoutedEventArgs e) { CancelUnconfirmedActions(); }
         private void Increase(object sender, RoutedEventArgs e) { PlayerActions(true); }
@@ -1588,15 +1604,15 @@ namespace RiskGame
                 CurrentPlayer.score += 1;
             }
             // Sets up game-board, sets owner and places army into territory
-            if ((gamestate == GameState.InitialArmyPlace) || (gamestate == GameState.PlacingArmy)) { CurrentPlayer.Army_strength += num; }
+            if ((Gamestate == GameState.InitialArmyPlace) || (Gamestate == GameState.PlacingArmy)) { CurrentPlayer.Army_strength += num; }
             T.currentarmies += num;
-            if(gamestate == GameState.InitialArmyPlace) { CurrentPlayer.army_undeployed -= num; }
+            if(Gamestate == GameState.InitialArmyPlace) { CurrentPlayer.army_undeployed -= num; }
             T.button.Content = T.currentarmies;
         }
         private void NextAction()
         {
             ClearSelectionsUI();
-            switch (gamestate)
+            switch (Gamestate)
             {
                 case GameState.InitialArmyPlace:
                     Output("You must place all of your armies.");
@@ -1620,7 +1636,7 @@ namespace RiskGame
             if (SlctTerritory != null)
             {
                 int i = -1;
-                switch (gamestate)
+                switch (Gamestate)
                 {
                     case GameState.PlacingArmy:
                         // if increase == false ensure no negatives
@@ -1658,9 +1674,9 @@ namespace RiskGame
         // Save Game //
         private void SaveGame(object sender, RoutedEventArgs e)
         { // Creates a gamemanager instance, serializes it and saves it to a file. Reporting back to the player if the save was successful.
-            if(gamestate == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
-            else if(gamestate == GameState.Conquer) { Output("You must finish conquering before saving."); }
-            else if ((gamestate == GameState.Attacking) && (gamemode == GameMode.Classic)) { Output("You must finish your attack before saving."); }
+            if(Gamestate == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
+            else if(Gamestate == GameState.Conquer) { Output("You must finish conquering before saving."); }
+            else if ((Gamestate == GameState.Attacking) && (gamemode == GameMode.Classic)) { Output("You must finish your attack before saving."); }
             else
             {
                 try
@@ -1767,7 +1783,7 @@ namespace RiskGame
                 bool won = true;
                 foreach (Player p in Players)
                 {
-                    if (p.Territoriesowned > 0) { won = false; }
+                    if (p != CurrentPlayer && p.Territoriesowned > 0) { won = false; }
                 }
                 if (won) { Win(); }
                 UpdateState(GameState.Conquer);
