@@ -277,9 +277,13 @@ namespace RiskGame
                 }
                 // Creates a new GameWindow, sending the GameManager containing the game details to the GameWindow. Closes window on completion.
                 GameWindow Game = new GameWindow(game) { WindowStartupLocation = WindowStartupLocation.CenterScreen };
+            try
+            {
                 App.Current.MainWindow = Game;
-                this.Close();
                 Game.Show();
+                this.Close();
+            }
+            catch (Exception) { }
         }
 
         ///////////////////////////////////////////////////////////

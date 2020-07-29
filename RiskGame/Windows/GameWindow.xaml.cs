@@ -234,7 +234,7 @@ namespace RiskGame
                 Territory Alberta = new Territory("Alberta", new List<string> { "Alaska", "Northwest_Canada", "Ontario", "Western_US" }, btnAlberta);
                 Territory Quebec = new Territory("Quebec", new List<string> { "Ontario", "Greenland", "Eastern_US" }, btnQuebec);
                 Territory Ontario = new Territory("Ontario", new List<string> { "Greenland", "Quebec", "Eastern_US", "Western_US", "Northwest_Canada", "Alberta" }, btnOntario);
-                Territory Western_US = new Territory("Western_US", new List<string> { "Quebec", "Ontario", "Eastern_US", "Central_America" }, btnWestern_US);
+                Territory Western_US = new Territory("Western_US", new List<string> { "Quebec", "Ontario", "Eastern_US", "Central_America", "Alberta"}, btnWestern_US);
                 Territory Eastern_US = new Territory("Eastern_US", new List<string> { "Western_US", "Ontario", "Central America", "Quebec" }, btnEastern_US);
                 Territory Central_America = new Territory("Central_America", new List<string> { "Western_US", "Eastern_US", "Venezuela" }, btnCentral_America);
                 Territory Venezuela = new Territory("Venezuela", new List<string> { "Central_America", "Peru", "Brazil" }, btnVenezuela);
@@ -248,7 +248,7 @@ namespace RiskGame
                 Territory Southern_Europe = new Territory("Southern_Europe", new List<string> { "Western_Europe", "Northern_Europe", "Soviet_Bloc", "Middle_East", "Egypt" }, btnSouthern_Europe);
                 Territory Northern_Europe = new Territory("Northern_Europe", new List<string> { "UK_Ireland", "Scandinavia", "Soviet_Bloc", "Southern_Europe", "Western_Europe" }, btnNorthern_Europe);
                 Territory Western_Europe = new Territory("Western_Europe", new List<string> { "UK_Ireland", "Northern_Europe", "Southern_Europe", "North_Africa" }, btnWestern_Europe);
-                Territory North_Africa = new Territory("North_Africa", new List<string> { "Brazil", "Egypt", "East_Africa", "Central_Africa", "Western_Europe" }, btnNorth_Africa);
+                Territory North_Africa = new Territory("North_Africa", new List<string> { "Brazil", "Egypt", "East_Africa", "Central_Africa", "Western_Europe", "Southern_Europe" }, btnNorth_Africa);
                 Territory Egypt = new Territory("Egypt", new List<string> { "North_Africa", "Southern_Europe", "Middle_East", "East_Africa" }, btnEgypt);
                 Territory Central_Africa = new Territory("Central_Africa", new List<string> { "North_Africa", "East_Africa", "South_Africa" }, btnCentral_Africa);
                 Territory East_Africa = new Territory("East_Africa", new List<string> { "Egypt", "Middle_East", "Madagascar", "South_Africa", "Central_Africa", "North_Africa" }, btnEast_Africa);

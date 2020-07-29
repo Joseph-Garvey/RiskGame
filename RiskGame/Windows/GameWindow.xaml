@@ -31,12 +31,12 @@
                         <Button x:Name="btnAlaska" Content="Alaska" Margin="49,72,974,424"/>
                         <Button x:Name="btnAlberta" Content="Alberta" Margin="145,110,871,386"/>
                         <Button x:Name="btnCentral_America" Content="Central America" Margin="117,229,840,267"/>
-                        <Button x:Name="btnEastern_US" Content="Eastern US" Margin="130,156,864,340"/>
+                        <Button x:Name="btnEastern_US" Content="Eastern US" Margin="220,176,774,320"/>
                         <Button x:Name="btnGreenland" Content="Greenland" Margin="339,42,659,454"/>
                         <Button x:Name="btnNorthwest_Canada" Content="Northwest Canada" Margin="121,71,827,425"/>
                         <Button x:Name="btnOntario" Content="Ontario" Margin="213,123,803,373"/>
                         <Button x:Name="btnQuebec" Content="Quebec" Margin="288,121,730,375"/>
-                        <Button x:Name="btnWestern_US" Content="Western US" Height="Auto" Margin="235,178,749,315"/>
+                        <Button x:Name="btnWestern_US" Content="Western US" Height="Auto" Margin="119,163,865,330"/>
                         <Button x:Name="btnArgentina" Content="Argentina" Margin="238,398,758,93" Height="Auto"/>
                         <Button x:Name="btnBrazil" Content="Brazil" Width="76" Margin="300,319,704,177"/>
                         <Button x:Name="btnPeru" Content="Peru" Width="41" Margin="228,339,812,157"/>
@@ -63,8 +63,8 @@
                         <Button x:Name="btnSoutheast_Asia" Content="Southeast Asia" Margin="825,281,143,215"/>
                         <Button x:Name="btnSiberia" Content="Siberia" Width="55" Margin="770,76,256,420"/>
                         <Button x:Name="btnUral" Content="Ural" Width="45" Margin="722,115,314,381"/>
-                        <Button x:Name="btnEastern_Australia" Content="Eastern Australia" Width="120" Margin="868,435,92,61"/>
-                        <Button x:Name="btnWestern_Australia" Content="Western Australia" Margin="947,401,-1,95"/>
+                        <Button x:Name="btnEastern_Australia" Content="Eastern Australia" Width="120" Margin="960,400,0,96"/>
+                        <Button x:Name="btnWestern_Australia" Content="Western Australia" Margin="861,431,85,65"/>
                         <Button x:Name="btnNew_Guinea" Content="New Guinea" Margin="942,339,46,157"/>
                         <Button x:Name="btnIndonesia" Content="Indonesia" Margin="834,355,170,141"/>
                         <Button x:Name="btnIrkutsk" Content="Irkutsk" Width="62" Margin="833,113,185,383"/>
