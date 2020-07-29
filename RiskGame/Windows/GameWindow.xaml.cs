@@ -1254,7 +1254,22 @@ namespace RiskGame
             }
             return owned;
         }
-
+        private bool DieOpen()
+        {
+            if(panel_Die.Visibility == Visibility.Visible)
+            {
+                if((String)btnDieStatus.Content == "Continue to Attack")
+                {
+                    Output("Click \"continue to attack\" to proceed.");
+                }
+                else if((String)btnDieStatus.Content == "Continue to Conquer")
+                {
+                    Output("You must conquer the territory.");
+                }
+                return false;
+            }
+            return true;
+        }
         // Timer Control //
         private void StartTimer()
         {
@@ -1287,11 +1302,7 @@ namespace RiskGame
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (Gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
-            else if(panel_Die.Visibility == Visibility.Visible)
-            {
-                Output("Please finish your attack to end your turn.");
-            }
-            else
+            else if (!DieOpen())
             {
                 CancelUnconfirmedActions();
                 NextTurnThreaded();
@@ -1331,26 +1342,7 @@ namespace RiskGame
                         break;
                     }
                 case GameState.Attacking:
-                    if (gamemode == GameMode.Classic && panel_Die.Visibility == Visibility.Visible)
-                    {
-                        if ((String)btnDieStatus.Content == "Continue to Attack")
-                        {
-                            btnDieStatus.Visibility = Visibility.Collapsed; // redundant?
-                            panel_Die.Visibility = Visibility.Collapsed;
-                            panel_NumberSelection.Visibility = Visibility.Visible;
-                            CancelUnconfirmedActions();
-                        }
-                        else if ((String)btnDieStatus.Content == "Continue to Conquer")
-                        {
-                            Output("You must continue to conquer.");
-                            return;
-                        }
-                        else
-                        {
-                            Output("You must finish the current attack before progressing.");
-                            return;
-                        }
-                    }
+                    if (DieOpen()) { return; }
                     if (t.owner == CurrentPlayer)
                     {
                         if(t.currentarmies > 1)
@@ -1450,36 +1442,20 @@ namespace RiskGame
                     // error is output by adjust attack moves if invalid
                     try
                     {
-                        if (gamemode == GameMode.Classic)
+                        if (!DieOpen())
                         {
-                            if ((String)btnDieStatus.Content == "Continue to Attack")
-                            {
-                                btnDieStatus.Visibility = Visibility.Collapsed; // redundant?
-                                panel_Die.Visibility = Visibility.Collapsed;
-                                panel_NumberSelection.Visibility = Visibility.Visible;
-                                CancelUnconfirmedActions();
-                            }
-                            else if ((String)btnDieStatus.Content == "Continue to Conquer")
-                            {
-                                Output("You must continue to conquer.");
-                                return;
-                            }
-                            else if (panel_Die.Visibility == Visibility.Visible)
-                            {
-                                Output("You must finish the current attack before progressing.");
-                                return;
-                            }
-                        }
                         // if nextterritory null break otherwise continue
-                        else if (t == NextTerritory) { PlayerActions(false); }
-                        else if(t == SlctTerritory)
-                        {
-                            if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; } // fix this should be classic risk
-                            else { PlayerActions(true); }
+                            if (t == NextTerritory) { PlayerActions(false); }
+                            else if (t == SlctTerritory)
+                            {
+                                if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; } // fix this should be classic risk
+                                else { PlayerActions(true); }
+                            }
+                            break;
                         }
-                        break;
                     }
                     catch (NullReferenceException) { break; }
+                    break;
                 case GameState.Conquer:
                     try
                     {
@@ -1555,7 +1531,7 @@ namespace RiskGame
                         // Classic Mode
                         else if(gamemode == GameMode.Classic)
                         {
-                            if(panel_Die.Visibility == Visibility.Visible) { Output("This action is not possible at this time."); return;  }
+                            if (DieOpen()) { return; }
                             panel_NumberSelection.Visibility = Visibility.Collapsed;
                             panel_Die.Visibility = Visibility.Visible;
                             dices.Clear();
@@ -1643,25 +1619,7 @@ namespace RiskGame
         }
         private void Cancel(object sender, RoutedEventArgs e)
         {
-            if (gamemode == GameMode.Classic)
-            {
-                if ((String)btnDieStatus.Content == "Continue to Attack")
-                {
-                    btnDieStatus.Visibility = Visibility.Collapsed; // redundant?
-                    panel_Die.Visibility = Visibility.Collapsed;
-                    panel_NumberSelection.Visibility = Visibility.Visible;
-                }
-                else if ((String)btnDieStatus.Content == "Continue to Conquer")
-                {
-                    Output("You must continue to conquer.");
-                    return;
-                }
-                else if (panel_Die.Visibility == Visibility.Visible)
-                {
-                    Output("You must finish the current attack before progressing.");
-                    return;
-                }
-            }
+            if (DieOpen()) { return; }
             CancelUnconfirmedActions();
         }
         private void Increase(object sender, RoutedEventArgs e) { PlayerActions(true); }
