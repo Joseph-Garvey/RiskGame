@@ -1262,6 +1262,10 @@ namespace RiskGame
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (Gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
+            else if(panel_Die.Visibility == Visibility.Visible)
+            {
+                Output("Please finish your attack to end your turn.");
+            }
             else
             {
                 CancelUnconfirmedActions();
@@ -1566,6 +1570,11 @@ namespace RiskGame
                     panel_Die.Visibility = Visibility.Collapsed;
                     panel_NumberSelection.Visibility = Visibility.Visible;
                     CancelUnconfirmedActions();
+                    btnDieStatus.Content = "Outcome";
+                    if (Time > 0)
+                    {
+                        if (workerthread.IsBusy == false) { NextTurnThreaded(); return; }
+                    }
                 }
                 else if ((String)btnDieStatus.Content == "Continue to Conquer")
                 {
@@ -1771,6 +1780,10 @@ namespace RiskGame
             if (((String)((Button)sender).Content) == "Continue to Attack")
             {
                 CancelUnconfirmedActions();
+                if (Time > 0)
+                {
+                    if (workerthread.IsBusy == false) { NextTurnThreaded(); return; }
+                }
             }
             else
             {
