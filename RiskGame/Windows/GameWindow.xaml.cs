@@ -1580,9 +1580,14 @@ namespace RiskGame
                     NextAction();
                     break;
                 case GameState.Move:
-                    Place_Reinforce(NextTerritory, NextTerritory.temparmies);
-                    NextTerritory.temparmies = 0;
-                    NextAction();
+                    if(SlctTerritory == null) { Output("You must select a territory to move armies from."); }
+                    else if(NextTerritory == null) { Output("You must select a territory to move armies to."); }
+                    else
+                    {
+                        Place_Reinforce(NextTerritory, NextTerritory.temparmies);
+                        NextTerritory.temparmies = 0;
+                        NextAction();
+                    }
                     break;
             }
         }
