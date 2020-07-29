@@ -865,7 +865,16 @@ namespace RiskGame
         {  // use binding in future
             UISetup();
             UpdatePlayerPanelUI();
-            MapSetup(true);
+            try
+            {
+                MapSetup(true);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("An error occurred loading the map.");
+                this.Close();
+                return;
+            }
             UpdateState(game.gameState);
             if (Gamestate == GameState.PlacingArmy)
             {
