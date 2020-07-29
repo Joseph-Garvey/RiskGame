@@ -105,7 +105,12 @@ namespace RiskGame.Windows
             if (music_enabled) { mediaplayer.Play(); }
             try
             {
-                ScoreList.ItemsSource = GameDetails.RetrieveGames();
+                ObservableCollection<GameDetails> records = GameDetails.RetrieveGames();
+                ScoreList.ItemsSource = records;
+                if(records.Count == 0)
+                {
+                    DispErrorMsg("There aren't any completed games saved on file.");
+                }
             }
             catch (Exception) { DispErrorMsg("An error occurred while attempting to retrieve the leaderboard."); }
             if (fullscreen)

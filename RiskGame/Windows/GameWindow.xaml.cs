@@ -159,6 +159,8 @@ namespace RiskGame
             InitializeComponent();
             game = _game;
             paused = false;
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
+            chkFullscreen.IsChecked = true;
             game.territories.Sort();
             if (Time > 0)
             {
@@ -184,6 +186,8 @@ namespace RiskGame
         {
             InitializeComponent();
             DataContext = this;
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
+            chkFullscreen.IsChecked = true;
             GameManager.ClearEmptyFile();
             game = new GameManager();
             Time = timerduration * 100;
@@ -1355,7 +1359,7 @@ namespace RiskGame
                         }
                         else { Output("You do not have enough armies to attack from here."); break; }
                     }
-                    if (SlctTerritory != null) // if a territory is selected
+                    else if (SlctTerritory != null) // if a territory is selected
                     {
                         if(t.owner != null)
                         {
