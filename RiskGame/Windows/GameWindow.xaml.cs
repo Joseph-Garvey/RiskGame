@@ -1300,6 +1300,7 @@ namespace RiskGame
                         if (t.owner == null || t.owner == CurrentPlayer)
                         {
                             SelectTerritory(t, btnTerritory, Brushes.Lime, false);
+                            PlayerActions(true);
                             UpdateNumOutput();
                         }
                         else { Output("This is not your territory."); SlctTerritory = null; }
@@ -1709,6 +1710,14 @@ namespace RiskGame
                             else
                             {
                                 Output("You have no armies left to place");
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if(SlctTerritory.temparmies <= 1)
+                            {
+                                Output("You must place at least one army");
                                 break;
                             }
                         }
