@@ -776,7 +776,7 @@ namespace RiskGame
         }
         private void NextTurnThreaded()
         {
-            ClearSelections();
+            ClearSelectionsUI();
             if (Gamestate == GameState.InitialArmyPlace)
             {
                 if ((!(CurrentPlayer is NeutralAI)) && CurrentPlayer.army_undeployed > 0)
@@ -1268,9 +1268,9 @@ namespace RiskGame
                 {
                     Output("You must conquer the territory.");
                 }
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
         // Timer Control //
         private void StartTimer()

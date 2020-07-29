@@ -87,7 +87,7 @@ namespace RiskGame.Game
         }
         public int CompareTo(GameDetails other)
         {
-#          // Default comparer for the GameDetails class
+          // Default comparer for the GameDetails class
             // Used to sort records by the highest score
             return int.Parse(other.score).CompareTo(int.Parse(this.score)) ;
         }
