@@ -9,6 +9,9 @@ namespace RiskGame.CustomExceptions
     [Serializable]
     internal class GameNotFoundException : Exception
     {
+        /// <summary>
+        /// Custom exception thrown when a game is not found in the gamesaves file.
+        /// </summary>
         public GameNotFoundException()
         {
         }

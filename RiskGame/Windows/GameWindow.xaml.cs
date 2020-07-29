@@ -91,12 +91,12 @@ namespace RiskGame
             set { game.turn = value; }
         }
         private static List<Territory> scanterritories = new List<Territory>();
-        private GameMap map
+        private GameMap Map
         {
             get { return game.map; }
             set { game.map = value; }
         }
-        private GameMode gamemode
+        private GameMode Gamemode
         {
             get { return game.gamemode; }
             set { game.gamemode = value; }
@@ -170,7 +170,7 @@ namespace RiskGame
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
             Output("The game has loaded.");
-            if (gamemode == GameMode.Classic)
+            if (Gamemode == GameMode.Classic)
             {
                 playerdie1 = new PlayerDice(imgPlayerDie1);
                 playerdie2 = new PlayerDice(imgPlayerDie2);
@@ -197,7 +197,7 @@ namespace RiskGame
             if (music_enabled) { mediaplayer.Play(); }
             paused = false;
             // Creation of Territories and Map Setup //
-            map = _map;
+            Map = _map;
             try
             {
                 MapSetup(false);
@@ -207,8 +207,8 @@ namespace RiskGame
                 this.Close();
                 return;
             }
-            gamemode = mode;
-            if (gamemode == GameMode.Classic)
+            Gamemode = mode;
+            if (Gamemode == GameMode.Classic)
             {
                 playerdie1 = new PlayerDice(imgPlayerDie1);
                 playerdie2 = new PlayerDice(imgPlayerDie2);
@@ -226,7 +226,7 @@ namespace RiskGame
         private void MapSetup(bool load)
         {
             List<Button> mapbuttons = new List<Button>();
-            if (map == GameMap.Default && !load)
+            if (Map == GameMap.Default && !load)
             {
                 Territory Alaska = new Territory("Alaska", new List<string> { "Kamchatka", "Alberta", "Northwest_Canada" }, btnAlaska);
                 Territory Northwest_Canada = new Territory("Northwest_Canada", new List<string> { "Alaska", "Alberta", "Greenland", "Ontario" }, btnNorthwest_Canada);
@@ -287,10 +287,10 @@ namespace RiskGame
                 Continent Australia = new Continent("Australia", (new List<Territory> { Eastern_Australia, Indonesia, New_Guinea, Western_Australia }), 2);
                 Continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Australia };
             }
-            else if(map != GameMap.Default)
+            else if(Map != GameMap.Default)
             {
                 GameGrid.Children.Clear();
-                if (map == GameMap.NewYork)
+                if (Map == GameMap.NewYork)
                 {
                     img_Map.ImageSource = new BitmapImage(new Uri("pack://siteoforigin:,,,/Images/Maps/NewYork.jpg"));
                     img_Map.Stretch = Stretch.Uniform;
@@ -419,7 +419,7 @@ namespace RiskGame
             if (load)
             {
                 string buttonprefix = "btn";
-                if(map == GameMap.Default)
+                if(Map == GameMap.Default)
                 {
                     foreach (Territory t in Territories)
                     {
@@ -450,9 +450,11 @@ namespace RiskGame
         }
         private void TimerSetup()
         {
-            workerthread = new BackgroundWorker();
-            workerthread.WorkerReportsProgress = true;
-            workerthread.WorkerSupportsCancellation = true;
+            workerthread = new BackgroundWorker
+            {
+                WorkerReportsProgress = true,
+                WorkerSupportsCancellation = true
+            };
             workerthread.DoWork += Worker_DoWork;
             workerthread.ProgressChanged += Worker_ProgressChanged;
             workerthread.RunWorkerCompleted += Worker_RunWorkerCompleted;
@@ -851,7 +853,7 @@ namespace RiskGame
         {
             CurrentPlayer.score += CurrentPlayer.Army_strength / 3;
             int finalscore = CurrentPlayer.score / Turn;
-            GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), map.ToString(), gamemode.ToString());
+            GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), Map.ToString(), Gamemode.ToString());
             GameDetails.Save(gamedetails);
             GameManager.DeleteGame(game.GameID);
             Highscores finish = new Highscores(gamedetails, Players);
@@ -1158,7 +1160,7 @@ namespace RiskGame
                     Output("At least one army must remain in a friendly territory.");
                     return;
                 }
-                else if(gamemode == GameMode.Classic && Gamestate == GameState.Attacking && NextTerritory.temparmies >= 3)
+                else if(Gamemode == GameMode.Classic && Gamestate == GameState.Attacking && NextTerritory.temparmies >= 3)
                 {
                     Output("You can attack with a maximum of 3 armies at once.");
                     return;
@@ -1183,7 +1185,7 @@ namespace RiskGame
                     }
                     return;
                 }
-                else if(gamemode == GameMode.Classic && Gamestate == GameState.Conquer)
+                else if(Gamemode == GameMode.Classic && Gamestate == GameState.Conquer)
                 {
                     int count = 0;
                     foreach(Dice d in dices) { if (d is PlayerDice) { count += 1; } }
@@ -1360,8 +1362,8 @@ namespace RiskGame
                             if(btnTerritory.BorderBrush == Brushes.Aqua)
                             {
                                 SelectTerritory(t, btnTerritory, Brushes.Red, true);
-                                if(gamemode == GameMode.NewRisk) { AdjustAttackMoves((SlctTerritory.currentarmies - 1)); }
-                                else if(gamemode == GameMode.Classic) { AdjustAttackMoves(Math.Min(SlctTerritory.currentarmies - 1, 3)); }
+                                if(Gamemode == GameMode.NewRisk) { AdjustAttackMoves((SlctTerritory.currentarmies - 1)); }
+                                else if(Gamemode == GameMode.Classic) { AdjustAttackMoves(Math.Min(SlctTerritory.currentarmies - 1, 3)); }
                                 if(CurrentPlayer is Human)
                                 {
                                     if (((Human)CurrentPlayer).hints_enabled)
@@ -1448,7 +1450,7 @@ namespace RiskGame
                             if (t == NextTerritory) { PlayerActions(false); }
                             else if (t == SlctTerritory)
                             {
-                                if (gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; } // fix this should be classic risk
+                                if (Gamemode == GameMode.NewRisk && (NextTerritory.temparmies == 3)) { Output("You cannot attack with more than 3 armies at a time."); return; } // fix this should be classic risk
                                 else { PlayerActions(true); }
                             }
                             break;
@@ -1493,7 +1495,7 @@ namespace RiskGame
                 case GameState.Attacking:
                     if((SlctTerritory != null) && (NextTerritory != null))
                     {
-                        if(gamemode == GameMode.NewRisk)
+                        if(Gamemode == GameMode.NewRisk)
                         {
                             double num = rng.NextDouble();
                             double prob = (double)1 / (1 + Math.Exp(-3 * (((double)(NextTerritory.temparmies - NextTerritory.currentarmies)/NextTerritory.currentarmies) - DefenseBias)));
@@ -1529,7 +1531,7 @@ namespace RiskGame
                             }
                         }
                         // Classic Mode
-                        else if(gamemode == GameMode.Classic)
+                        else if(Gamemode == GameMode.Classic)
                         {
                             if (DieOpen()) { return; }
                             panel_NumberSelection.Visibility = Visibility.Collapsed;
@@ -1561,7 +1563,7 @@ namespace RiskGame
                             paused = true;
                             foreach (Dice d in dices)
                             {
-                                d.workerthread.RunWorkerCompleted += dieRollComplete;
+                                d.workerthread.RunWorkerCompleted += DieRollComplete;
                                 d.StartRoll();
                             }
                             // make invisible at end of roll
@@ -1730,7 +1732,7 @@ namespace RiskGame
         { // Creates a gamemanager instance, serializes it and saves it to a file. Reporting back to the player if the save was successful.
             if(Gamestate == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
             else if(Gamestate == GameState.Conquer) { Output("You must finish conquering before saving."); }
-            else if ((Gamestate == GameState.Attacking) && (gamemode == GameMode.Classic)) { Output("You must finish your attack before saving."); }
+            else if ((Gamestate == GameState.Attacking) && (Gamemode == GameMode.Classic)) { Output("You must finish your attack before saving."); }
             else
             {
                 try
@@ -1751,7 +1753,7 @@ namespace RiskGame
 
         // die rolling
 
-        private void dieRollComplete(object sender, RunWorkerCompletedEventArgs e) { Rolled += 1; }
+        private void DieRollComplete(object sender, RunWorkerCompletedEventArgs e) { Rolled += 1; }
 
         private int rolled;
         public int Rolled
