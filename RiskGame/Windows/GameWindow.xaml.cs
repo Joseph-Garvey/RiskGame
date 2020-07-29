@@ -169,7 +169,6 @@ namespace RiskGame
             music_enabled = ((Human)Players[0]).music_enabled;
             mediaplayer.Source = Music.sources[Music.MusicIndex];
             if (music_enabled) { mediaplayer.Play(); }
-            MapSetup();
             Output("The game has loaded.");
             if (gamemode == GameMode.Classic)
             {
@@ -201,7 +200,7 @@ namespace RiskGame
             map = _map;
             try
             {
-                MapSetup();
+                MapSetup(false);
             }
             catch (Exception) {
                 MessageBox.Show("An error occurred loading the map.");
@@ -224,9 +223,10 @@ namespace RiskGame
             else { pb_Timer.Visibility = Visibility.Collapsed; }
             SetupGame(randomise_initial);
         }
-        private void MapSetup()
+        private void MapSetup(bool load)
         {
-            if (map == GameMap.Default)
+            List<Button> mapbuttons = new List<Button>();
+            if (map == GameMap.Default && !load)
             {
                 Territory Alaska = new Territory("Alaska", new List<string> { "Kamchatka", "Alberta", "Northwest_Canada" }, btnAlaska);
                 Territory Northwest_Canada = new Territory("Northwest_Canada", new List<string> { "Alaska", "Alberta", "Greenland", "Ontario" }, btnNorthwest_Canada);
@@ -287,7 +287,7 @@ namespace RiskGame
                 Continent Australia = new Continent("Australia", (new List<Territory> { Eastern_Australia, Indonesia, New_Guinea, Western_Australia }), 2);
                 Continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Australia };
             }
-            else
+            else if(map != GameMap.Default)
             {
                 GameGrid.Children.Clear();
                 if (map == GameMap.NewYork)
@@ -337,7 +337,7 @@ namespace RiskGame
                     Button btnUpper_West_Side = SetupButton("btnUpper_West_Side", new Thickness(651, 228, 399, 273));
                     Button btnCentral_Park = SetupButton("btnCentral_Park", new Thickness(668, 247, 382, 253));
                     Button btnUpper_East_Side = SetupButton("btnUpper_East_Side", new Thickness(639, 257, 412, 244));
-                    List<Button> buttons = new List<Button>
+                    mapbuttons = new List<Button>
                     {
                         btnRockaway, btnSaint_Albans, btnBayside, btnSouth_Queens, btnFlushing, btnMiddle_Village, btnAstoria,
                         btnWoodrow, btnEmerson_Hill, btnDongan_Hills, btnPort_Richmond,
@@ -346,71 +346,95 @@ namespace RiskGame
                         btnEast_New_York, btnCanarsie, btnBedford_Stuyvesant, btnFlatbush, btnFlatlands, btnSheepshead_Bay, btnBay_Ridge, btnConey_Island, btnPark_Slope, btnRed_Hook, btnWilliamsburg, btnBorough_Park,
                         btnLower_East_Side, btnFinancial_District, btnMidtown_East, btnHells_Kitchen, btnUpper_East_Side, btnUpper_West_Side, btnCentral_Park, btnHarlem, btnWashington_Heights
                     };
-                    foreach(Button b in buttons)
+                    foreach(Button b in mapbuttons)
                     {
                         GameGrid.Children.Add(b);
                     }
-                    Territory Rockaway = new Territory("Rockaway", new List<String> { "Sheepshead_Bay", "South_Queens" }, btnRockaway);
-                    Territory Saint_Albans = new Territory("Saint_Albans", new List<string> { "South_Queens", "Bayside" }, btnSaint_Albans);
-                    Territory Bayside = new Territory("Bayside", new List<string> { "Saint_Albans", "Flushing", "South_Queens" }, btnBayside);
-                    Territory South_Queens = new Territory("South_Queens", new List<string> { "East_New_York", "Rockaway", "Middle_Village", "Saint_Albans", "Bayside" },btnSouth_Queens);
-                    Territory Flushing = new Territory("Flushing", new List<string> { "Bayside", "Middle_Village","Unionport" }, btnFlushing);
-                    Territory Middle_Village = new Territory("Middle_Village", new List<string> { "Flushing", "Bayside", "South_Queens", "East_New_York", "Bedford_Stuyvesant", "Williamsburg", "Astoria"}, btnMiddle_Village);
-                    Territory Astoria = new Territory("Astoria", new List<string> { "Middle_Village", "Upper_East_Side", "Concourse"}, btnAstoria);
-                    Territory Woodrow = new Territory("Woodrow", new List<string> { "Emerson_Hill", "Dongan_Hills" }, btnWoodrow);
-                    Territory Emerson_Hill = new Territory("Emerson_Hill", new List<string> { "Dongan_Hills", "Woodrow", "Port_Richmond" }, btnEmerson_Hill );
-                    Territory Dongan_Hills = new Territory("Dongan_Hills", new List<string> { "Woodrow", "Emerson_Hill","Port_Richmond", "Bay_Ridge" },btnDongan_Hills );
-                    Territory Port_Richmond = new Territory("Port_Richmond", new List<string> { "Bayonne", "Dongan_Hills","Emerson_Hill" }, btnPort_Richmond );
-                    Territory Unionport = new Territory("Unionport", new List<string> { "Flushing", "Laconia", "Concourse" }, btnUnionport );
-                    Territory Laconia = new Territory("Laconia", new List<string> { "Unionport", "Concourse", "Riverdale" }, btnLaconia );
-                    Territory Concourse = new Territory("Concourse", new List<string> { "Unionport", "Astoria", "Washington_Heights", "Riverdale", "Laconia" }, btnConcourse );
-                    Territory Riverdale = new Territory("Riverdale", new List<string> { "Laconia", "Concourse" }, btnRiverdale );
-                    Territory Bayonne = new Territory("Bayonne", new List<string> { "Port_Richmond","Jersey_City"}, btnBayonne );
-                    Territory Jersey_City = new Territory("Jersey_City", new List<string> { "Bayonne", "Hoboken", "North_Bergen" },btnJersey_City );
-                    Territory Hoboken = new Territory("Hoboken", new List<string> { "Jersey_City", "Union_City", "North_Bergen" }, btnHoboken );
-                    Territory Union_City = new Territory("Union_City", new List<string> { "Hoboken", "North_Bergen" }, btnUnion_City );
-                    Territory North_Bergen = new Territory("North_Bergen", new List<string> { "Hoboken", "Union_City", "Palisades_Park", "Jersey_City" }, btnNorth_Bergen);
-                    Territory Palisades_Park = new Territory("Palisades_Park", new List<string> { "North_Bergen","Washington_Heights", "Englewood" }, btnPalisades_Park);
-                    Territory Englewood = new Territory("Englewood", new List<string> { "Palisades_Park" }, btnEnglewood);
-                    Territory East_New_York = new Territory("East_New_York", new List<string> { "Canarsie", "Bedford_Stuyvesant", "Middle_Village", "South_Queens" }, btnEast_New_York);
-                    Territory Canarsie = new Territory("Canarsie", new List<string> { "East_New_York", "Flatbush", "Bedford_Stuyvesant", "Flatlands" }, btnCanarsie );
-                    Territory Bedford_Stuyvesant = new Territory("Bedford_Stuyvesant", new List<string> { "Canarsie", "East_New_York", "Flatbush","Park_Slope","Williamsburg","Red_Hook", "Middle_Village"}, btnBedford_Stuyvesant );
-                    Territory Flatbush = new Territory("Flatbush", new List<string> { "Canarsie", "Bedford_Stuyvesant","Flatlands","Borough_Park","Park_Slope"},btnFlatbush );
-                    Territory Borough_Park = new Territory("Borough_Park", new List<string> { "Park_Slope", "Flatbush","Flatlands","Sheepshead_Bay","Bay_Ridge"}, btnBorough_Park );
-                    Territory Flatlands = new Territory("Flatlands", new List<string> { "Canarsie", "Flatbush","Borough_Park","Sheepshead_Bay" }, btnFlatlands);
-                    Territory Sheepshead_Bay = new Territory("Sheepshead_Bay", new List<string> { "Bay_Ridge", "Borough_Park","Flatlands", "Coney_Island","Rockaway" }, btnSheepshead_Bay );
-                    Territory Bay_Ridge = new Territory("Bay_Ridge", new List<string> { "Dongan_Hills", "Borough_Park", "Park_Slope", "Sheepshead_Bay" }, btnBay_Ridge );
-                    Territory Coney_Island = new Territory("Coney_Island", new List<string> { "Sheepshead_Bay" }, btnConey_Island );
-                    Territory Park_Slope = new Territory("Park_Slope", new List<string> { "Red_Hook", "Bedford_Stuyvesant","Flatbush","Borough_Park", "Bay_Ridge"}, btnPark_Slope );
-                    Territory Red_Hook = new Territory("Red_Hook", new List<string> { "Park_Slope", "Bedford_Stuyvesant" }, btnRed_Hook);
-                    Territory Williamsburg = new Territory("Williamsburg", new List<string> { "Bedford_Stuyvesant", "Lower_East_Side", "Middle_Village" }, btnWilliamsburg );
-                    Territory Lower_East_Side = new Territory("Lower_East_Side", new List<string> { "Williamsburg", "Financial_District", "Midtown_East" }, btnLower_East_Side );
-                    Territory Financial_District = new Territory("Financial_District", new List<string> { "Midtown_East", "Lower_East_Side", "Hells_Kitchen" }, btnFinancial_District );
-                    Territory Midtown_East = new Territory("Midtown_East", new List<string> { "Financial_District", "Lower_East_Side", "Hells_Kitchen", "Upper_West_Side", "Central_Park", "Upper_East_Side" }, btnMidtown_East );
-                    Territory Hells_Kitchen = new Territory("Hells_Kitchen", new List<string> { "Financial_District", "Midtown_East", "Upper_West_Side" }, btnHells_Kitchen );
-                    Territory Upper_West_Side = new Territory("Upper_West_Side", new List<string> { "Midtown_East", "Hells_Kitchen", "Central_Park", "Harlem" },btnUpper_West_Side );
-                    Territory Central_Park = new Territory("Central_Park", new List<string> { "Midtown_East", "Harlem", "Upper_West_Side", "Upper_East_Side" }, btnCentral_Park );
-                    Territory Upper_East_Side = new Territory("Upper_East_Side", new List<string> { "Midtown_East", "Harlem", "Central_Park", "Astoria" }, btnUpper_East_Side );
-                    Territory Harlem = new Territory("Harlem", new List<string> { "Upper_West_Side", "Central_Park", "Upper_East_Side", "Washington_Heights" }, btnHarlem );
-                    Territory Washington_Heights = new Territory("Washington_Heights", new List<string> { "Harlem", "Concourse", "Palisades_Park" }, btnWashington_Heights );
-                    Territories = new List<Territory>
+                    GameGrid.UpdateLayout();
+                    if (!load)
                     {
+                        Territory Rockaway = new Territory("Rockaway", new List<String> { "Sheepshead_Bay", "South_Queens" }, btnRockaway);
+                        Territory Saint_Albans = new Territory("Saint_Albans", new List<string> { "South_Queens", "Bayside" }, btnSaint_Albans);
+                        Territory Bayside = new Territory("Bayside", new List<string> { "Saint_Albans", "Flushing", "South_Queens" }, btnBayside);
+                        Territory South_Queens = new Territory("South_Queens", new List<string> { "East_New_York", "Rockaway", "Middle_Village", "Saint_Albans", "Bayside" }, btnSouth_Queens);
+                        Territory Flushing = new Territory("Flushing", new List<string> { "Bayside", "Middle_Village", "Unionport" }, btnFlushing);
+                        Territory Middle_Village = new Territory("Middle_Village", new List<string> { "Flushing", "Bayside", "South_Queens", "East_New_York", "Bedford_Stuyvesant", "Williamsburg", "Astoria" }, btnMiddle_Village);
+                        Territory Astoria = new Territory("Astoria", new List<string> { "Middle_Village", "Upper_East_Side", "Concourse" }, btnAstoria);
+                        Territory Woodrow = new Territory("Woodrow", new List<string> { "Emerson_Hill", "Dongan_Hills" }, btnWoodrow);
+                        Territory Emerson_Hill = new Territory("Emerson_Hill", new List<string> { "Dongan_Hills", "Woodrow", "Port_Richmond" }, btnEmerson_Hill);
+                        Territory Dongan_Hills = new Territory("Dongan_Hills", new List<string> { "Woodrow", "Emerson_Hill", "Port_Richmond", "Bay_Ridge" }, btnDongan_Hills);
+                        Territory Port_Richmond = new Territory("Port_Richmond", new List<string> { "Bayonne", "Dongan_Hills", "Emerson_Hill" }, btnPort_Richmond);
+                        Territory Unionport = new Territory("Unionport", new List<string> { "Flushing", "Laconia", "Concourse" }, btnUnionport);
+                        Territory Laconia = new Territory("Laconia", new List<string> { "Unionport", "Concourse", "Riverdale" }, btnLaconia);
+                        Territory Concourse = new Territory("Concourse", new List<string> { "Unionport", "Astoria", "Washington_Heights", "Riverdale", "Laconia" }, btnConcourse);
+                        Territory Riverdale = new Territory("Riverdale", new List<string> { "Laconia", "Concourse" }, btnRiverdale);
+                        Territory Bayonne = new Territory("Bayonne", new List<string> { "Port_Richmond", "Jersey_City" }, btnBayonne);
+                        Territory Jersey_City = new Territory("Jersey_City", new List<string> { "Bayonne", "Hoboken", "North_Bergen" }, btnJersey_City);
+                        Territory Hoboken = new Territory("Hoboken", new List<string> { "Jersey_City", "Union_City", "North_Bergen" }, btnHoboken);
+                        Territory Union_City = new Territory("Union_City", new List<string> { "Hoboken", "North_Bergen" }, btnUnion_City);
+                        Territory North_Bergen = new Territory("North_Bergen", new List<string> { "Hoboken", "Union_City", "Palisades_Park", "Jersey_City" }, btnNorth_Bergen);
+                        Territory Palisades_Park = new Territory("Palisades_Park", new List<string> { "North_Bergen", "Washington_Heights", "Englewood" }, btnPalisades_Park);
+                        Territory Englewood = new Territory("Englewood", new List<string> { "Palisades_Park" }, btnEnglewood);
+                        Territory East_New_York = new Territory("East_New_York", new List<string> { "Canarsie", "Bedford_Stuyvesant", "Middle_Village", "South_Queens" }, btnEast_New_York);
+                        Territory Canarsie = new Territory("Canarsie", new List<string> { "East_New_York", "Flatbush", "Bedford_Stuyvesant", "Flatlands" }, btnCanarsie);
+                        Territory Bedford_Stuyvesant = new Territory("Bedford_Stuyvesant", new List<string> { "Canarsie", "East_New_York", "Flatbush", "Park_Slope", "Williamsburg", "Red_Hook", "Middle_Village" }, btnBedford_Stuyvesant);
+                        Territory Flatbush = new Territory("Flatbush", new List<string> { "Canarsie", "Bedford_Stuyvesant", "Flatlands", "Borough_Park", "Park_Slope" }, btnFlatbush);
+                        Territory Borough_Park = new Territory("Borough_Park", new List<string> { "Park_Slope", "Flatbush", "Flatlands", "Sheepshead_Bay", "Bay_Ridge" }, btnBorough_Park);
+                        Territory Flatlands = new Territory("Flatlands", new List<string> { "Canarsie", "Flatbush", "Borough_Park", "Sheepshead_Bay" }, btnFlatlands);
+                        Territory Sheepshead_Bay = new Territory("Sheepshead_Bay", new List<string> { "Bay_Ridge", "Borough_Park", "Flatlands", "Coney_Island", "Rockaway" }, btnSheepshead_Bay);
+                        Territory Bay_Ridge = new Territory("Bay_Ridge", new List<string> { "Dongan_Hills", "Borough_Park", "Park_Slope", "Sheepshead_Bay" }, btnBay_Ridge);
+                        Territory Coney_Island = new Territory("Coney_Island", new List<string> { "Sheepshead_Bay" }, btnConey_Island);
+                        Territory Park_Slope = new Territory("Park_Slope", new List<string> { "Red_Hook", "Bedford_Stuyvesant", "Flatbush", "Borough_Park", "Bay_Ridge" }, btnPark_Slope);
+                        Territory Red_Hook = new Territory("Red_Hook", new List<string> { "Park_Slope", "Bedford_Stuyvesant" }, btnRed_Hook);
+                        Territory Williamsburg = new Territory("Williamsburg", new List<string> { "Bedford_Stuyvesant", "Lower_East_Side", "Middle_Village" }, btnWilliamsburg);
+                        Territory Lower_East_Side = new Territory("Lower_East_Side", new List<string> { "Williamsburg", "Financial_District", "Midtown_East" }, btnLower_East_Side);
+                        Territory Financial_District = new Territory("Financial_District", new List<string> { "Midtown_East", "Lower_East_Side", "Hells_Kitchen" }, btnFinancial_District);
+                        Territory Midtown_East = new Territory("Midtown_East", new List<string> { "Financial_District", "Lower_East_Side", "Hells_Kitchen", "Upper_West_Side", "Central_Park", "Upper_East_Side" }, btnMidtown_East);
+                        Territory Hells_Kitchen = new Territory("Hells_Kitchen", new List<string> { "Financial_District", "Midtown_East", "Upper_West_Side" }, btnHells_Kitchen);
+                        Territory Upper_West_Side = new Territory("Upper_West_Side", new List<string> { "Midtown_East", "Hells_Kitchen", "Central_Park", "Harlem" }, btnUpper_West_Side);
+                        Territory Central_Park = new Territory("Central_Park", new List<string> { "Midtown_East", "Harlem", "Upper_West_Side", "Upper_East_Side" }, btnCentral_Park);
+                        Territory Upper_East_Side = new Territory("Upper_East_Side", new List<string> { "Midtown_East", "Harlem", "Central_Park", "Astoria" }, btnUpper_East_Side);
+                        Territory Harlem = new Territory("Harlem", new List<string> { "Upper_West_Side", "Central_Park", "Upper_East_Side", "Washington_Heights" }, btnHarlem);
+                        Territory Washington_Heights = new Territory("Washington_Heights", new List<string> { "Harlem", "Concourse", "Palisades_Park" }, btnWashington_Heights);
+                        Territories = new List<Territory>
+                        {
                         Rockaway, Saint_Albans, Bayside, South_Queens, Flushing, Middle_Village, Astoria,
                         Woodrow, Emerson_Hill, Dongan_Hills, Port_Richmond,
                         Unionport, Laconia, Concourse, Riverdale,
                         Bayonne, Jersey_City, Hoboken, North_Bergen, Union_City, Palisades_Park, Englewood,
                         East_New_York, Canarsie, Bedford_Stuyvesant, Flatbush, Flatlands, Sheepshead_Bay, Bay_Ridge, Coney_Island, Park_Slope, Red_Hook, Williamsburg, Borough_Park,
                         Lower_East_Side, Financial_District, Midtown_East, Hells_Kitchen, Upper_East_Side, Upper_West_Side, Central_Park, Harlem, Washington_Heights
-                    };
-                    Continent Queens = new Continent("Queens", new List<Territory> { Rockaway, Saint_Albans, Bayside, South_Queens, Flushing, Middle_Village, Astoria }, 5);
-                    Continent Staten_Island = new Continent("Staten_Island", new List<Territory> {Woodrow, Emerson_Hill, Dongan_Hills, Port_Richmond  }, 2);
-                    Continent Bronx = new Continent("Bronx", new List<Territory> { Unionport, Laconia, Concourse, Riverdale }, 2);
-                    Continent New_Jersey = new Continent("New_Jersey", new List<Territory> { Bayonne, Jersey_City, Hoboken, North_Bergen, Union_City, Palisades_Park, Englewood }, 3);
-                    Continent Manhattan = new Continent("Manhattan", new List<Territory> { Lower_East_Side, Financial_District, Midtown_East, Hells_Kitchen, Upper_East_Side, Upper_West_Side, Central_Park, Harlem, Washington_Heights }, 5);
-                    Continent Brooklyn = new Continent("Brooklyn", new List<Territory> { East_New_York, Canarsie, Bedford_Stuyvesant, Flatbush, Flatlands, Sheepshead_Bay, Bay_Ridge, Coney_Island, Park_Slope, Red_Hook, Williamsburg}, 7);
-                    Continents = new List<Continent> { Queens, Staten_Island, Bronx, New_Jersey, Manhattan, Brooklyn };
+                        };
+                        Continent Queens = new Continent("Queens", new List<Territory> { Rockaway, Saint_Albans, Bayside, South_Queens, Flushing, Middle_Village, Astoria }, 5);
+                        Continent Staten_Island = new Continent("Staten_Island", new List<Territory> { Woodrow, Emerson_Hill, Dongan_Hills, Port_Richmond }, 2);
+                        Continent Bronx = new Continent("Bronx", new List<Territory> { Unionport, Laconia, Concourse, Riverdale }, 2);
+                        Continent New_Jersey = new Continent("New_Jersey", new List<Territory> { Bayonne, Jersey_City, Hoboken, North_Bergen, Union_City, Palisades_Park, Englewood }, 3);
+                        Continent Manhattan = new Continent("Manhattan", new List<Territory> { Lower_East_Side, Financial_District, Midtown_East, Hells_Kitchen, Upper_East_Side, Upper_West_Side, Central_Park, Harlem, Washington_Heights }, 5);
+                        Continent Brooklyn = new Continent("Brooklyn", new List<Territory> { East_New_York, Canarsie, Bedford_Stuyvesant, Flatbush, Flatlands, Sheepshead_Bay, Bay_Ridge, Coney_Island, Park_Slope, Red_Hook, Williamsburg }, 7);
+                        Continents = new List<Continent> { Queens, Staten_Island, Bronx, New_Jersey, Manhattan, Brooklyn };
+                    }
                 }
                 else { throw new Exception("An error has occured"); }
+            }
+            if (load)
+            {
+                string buttonprefix = "btn";
+                if(map == GameMap.Default)
+                {
+                    foreach (Territory t in Territories)
+                    {
+                        String concat = buttonprefix + t.name;
+                        t.button = (Button)GameGrid.FindName(concat);
+                    }
+                }
+                else
+                {
+                    foreach(Territory t in Territories)
+                    {
+                        String concat = buttonprefix + t.name;
+                        t.button = mapbuttons.Find(Button => Button.Name == concat);
+                    }
+                }
             }
         }
         private Button SetupButton(String name, Thickness margin)
@@ -841,23 +865,14 @@ namespace RiskGame
         {  // use binding in future
             UISetup();
             UpdatePlayerPanelUI();
+            MapSetup(true);
             UpdateState(game.gameState);
-            if(Gamestate == GameState.PlacingArmy)
+            if (Gamestate == GameState.PlacingArmy)
             {
                 UpdatePlayerUndeployed();
             }
-            foreach(Territory t in Territories)
+            foreach (Territory t in Territories)
             {
-                foreach(UIElement e in GameGrid.Children)
-                {
-                    if(e is Button)
-                    {
-                        if (t.name == ((Button)e).Name.Substring(3))
-                        {
-                            t.button = ((Button)e);
-                        }
-                    }
-                }
                 t.button.Background = t.owner.Color;
                 t.button.Content = t.currentarmies;
             }
@@ -1709,7 +1724,7 @@ namespace RiskGame
                             if (CurrentPlayer.army_undeployed > 0) { i = 1; }
                             else
                             {
-                                Output("You have no armies left to place");
+                                Output("You do not have any armies left to place");
                                 break;
                             }
                         }
