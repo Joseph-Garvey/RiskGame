@@ -859,7 +859,10 @@ namespace RiskGame
         /// </summary>
         private void CyclePlayers()
         { // Cycles through the list of players, for a new turn or placing armies.
-            if ((Players.IndexOf(CurrentPlayer) + 1) == (Players.Count)) { CurrentPlayer = Players[0]; } // if at end of list loop back to start.
+            if ((Players.IndexOf(CurrentPlayer) + 1) == (Players.Count))
+            { CurrentPlayer = Players[0];
+                if (Gamestate != GameState.InitialArmyPlace) { Turn += 1; }
+            } // if at end of list loop back to start.
             else { CurrentPlayer = Players[(Players.IndexOf(CurrentPlayer) + 1)]; } // else set to next player in list.
             UpdatePlayerPanelUI(); // update UI
         }
@@ -935,7 +938,6 @@ namespace RiskGame
             }
             else // If game has started
             {
-                Turn += 1; // Increase turn count by one
                 CyclePlayers(); // Cycle to next player
                 if(CurrentPlayer is NeutralAI) // If neutral AI skip turn
                 {
@@ -1738,7 +1740,6 @@ namespace RiskGame
                             {
                                 // change values
                                 NextTerritory.owner.Territoriesowned -= 1;
-                                NextTerritory.owner.score -= 1;
                                 NextTerritory.owner.Army_strength -= NextTerritory.currentarmies;
                                 NextTerritory.currentarmies = 0; // enemy loses all armies
                                 NextTerritory.owner = CurrentPlayer;
@@ -2048,6 +2049,7 @@ namespace RiskGame
         /// </summary>
         private void AllRollsCompleted()
         {
+            // determine player and enemy's highest die roll(s)
             int playerHighestRoll = playerdie1.current;
             int enemyHighestRoll = enemydie1.current;
             int playerNextHighest = -1;
@@ -2064,18 +2066,21 @@ namespace RiskGame
             }
             int playerloss = 0;
             int enemyloss = 0;
+            // determine which player won each battle
             if((playerNextHighest != -1) && (enemyNextHighest != -1))
             {
-                if(ClassicBattle(playerNextHighest, enemyNextHighest)) { enemyloss += 1; }
+                if(ClassicBattle(playerNextHighest, enemyNextHighest)) { enemyloss += 1; CurrentPlayer.score += 1; }
                 else { playerloss += 1; }
             }
-            if(ClassicBattle(playerHighestRoll, enemyHighestRoll)) { enemyloss += 1; }
+            // carry out result of battle
+            if(ClassicBattle(playerHighestRoll, enemyHighestRoll)) { enemyloss += 1; CurrentPlayer.score += 1; }
             else { playerloss += 1; }
             CurrentPlayer.Army_strength -= playerloss;
             NextTerritory.temparmies -= playerloss;
             NextTerritory.owner.Army_strength -= enemyloss;
             NextTerritory.currentarmies -= enemyloss;
             NextTerritory.button.Content = NextTerritory.currentarmies;
+            // Output to user result
             Output(String.Format("You lost {0} armies in battle. The enemy lost {1}", playerloss, enemyloss));
             if (NextTerritory.currentarmies == 0)
             {
@@ -2084,6 +2089,7 @@ namespace RiskGame
             }
             else { btnDieStatus.Content = "Continue to Attack"; }
             btnDieStatus.Visibility = Visibility.Visible;
+            // un-pause game
             paused = false;
         }
         /// <summary>
@@ -2113,11 +2119,9 @@ namespace RiskGame
             {
                 // adjust properties
                 NextTerritory.owner.Territoriesowned -= 1;
-                NextTerritory.owner.score -= 1;
                 //NextTerritory.owner.Army_strength -= NextTerritory.currentarmies;
                 NextTerritory.owner = CurrentPlayer;
                 CurrentPlayer.Territoriesowned += 1;
-                CurrentPlayer.score += 1;
                 // check if player has won game
                 bool won = true;
                 foreach (Player p in Players)
