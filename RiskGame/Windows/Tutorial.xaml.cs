@@ -19,6 +19,9 @@ namespace RiskGame.Windows
     /// </summary>
     public partial class Tutorial : Window
     {
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public Tutorial()
         {
             InitializeComponent();

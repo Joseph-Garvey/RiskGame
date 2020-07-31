@@ -33,185 +33,246 @@ namespace RiskGame
 
     public partial class GameWindow : Window
     {
-        //// Variables ////
+        #region Variables and Properties
+        /// <summary>
+        /// Current game object
+        /// </summary>
         private GameManager game;
+        /// <summary>
+        /// Accessor for list of game players
+        /// </summary>
         private List<Player> Players
         {
             get { return game.players; }
             set { game.players = value; }
         }
+        /// <summary>
+        /// Accessor for list of game territories
+        /// </summary>
         private List<Territory> Territories
         {
             get { return game.territories; }
             set { game.territories = value; }
         }
+        /// <summary>
+        /// Accessor for list of game continents.
+        /// </summary>
         private List<Continent> Continents
         {
             get { return game.continents; }
             set { game.continents = value; }
         }
+        /// <summary>
+        /// Accessor for current selected territory.
+        /// </summary>
         private Territory SlctTerritory
         {
             get { return game.slctTerritory; }
             set { game.slctTerritory = value; }
         }
+        /// <summary>
+        /// Accessor for second selected territory.
+        /// </summary>
         private Territory NextTerritory
         {
             get { return game.nextTerritory; }
             set { game.nextTerritory = value; }
         }
+        /// <summary>
+        /// Accessor for current player
+        /// </summary>
         private Player CurrentPlayer
         {
             get { return game.currentplayer; }
             set { game.currentplayer = value; }
         }
-        public String CurrentPlayerUsername
-        {
-            get { return CurrentPlayer.Username; }
-        } // redundant property never used.
+        /// <summary>
+        /// Accessor for current game-state.
+        /// </summary>
         private GameState Gamestate
         {
             get { return game.gameState; }
             set { game.gameState = value; }
         }
+        /// <summary>
+        /// Accessor for defense bias.
+        /// </summary>
         private double DefenseBias
         {
             get { return game.defenderbias; }
             set { game.defenderbias = value; }
         }
+        /// <summary>
+        /// Accessor for maximum turn time.
+        /// </summary>
         private int Time
         {
             get { return game.time; }
             set { game.time = value; }
         }
+        /// <summary>
+        /// Random number generator.
+        /// </summary>
         private static Random rng = new Random();
+        /// <summary>
+        /// Accessor for number of turns players have taken.
+        /// </summary>
         private int Turn
         {
             get { return game.turn; }
             set { game.turn = value; }
         }
+        /// <summary>
+        /// LIst of territories scanned by the possiblemoves method.
+        /// Prevents code loops.
+        /// </summary>
         private static List<Territory> scanterritories = new List<Territory>();
+        /// <summary>
+        /// Accessor for game's map.
+        /// </summary>
         private GameMap Map
         {
             get { return game.map; }
             set { game.map = value; }
         }
+        /// <summary>
+        /// Accessor for game's game-mode.
+        /// </summary>
         private GameMode Gamemode
         {
             get { return game.gamemode; }
             set { game.gamemode = value; }
         }
+        /// <summary>
+        /// Stores the user's music preference
+        /// </summary>
         private bool music_enabled;
+        /// <summary>
+        /// Accessor for the music enabled variable.
+        /// </summary>
         public bool Music_enabled
         {
             get => music_enabled;
             set
             {
-
-                if (Players.Count != 0)
+                if (Players.Count != 0) // if players are logged in
                 {
                     try
                     {
-                        ((Human)Players[0]).music_enabled = value;
+                        ((Human)Players[0]).music_enabled = value; // save the user's preferences to the file
                         Human.Update(Players[0] as Human);
                     }
-                    catch {  }
+                    catch {  } // Output an error if the preference did not save
                 }
-                if (value == true) { mediaplayer.Play(); }
-                else if (value == false) { mediaplayer.Pause(); }
-                music_enabled = value;
+                if (value == true) { mediaplayer.Play(); } // If music is enabled, start playback.
+                else if (value == false) { mediaplayer.Pause(); } // If music is disabled, stop playback.
+                music_enabled = value; // Set the value
             }
         }
+        /// <summary>
+        /// Stores the user's hints preference.
+        /// </summary>
         private bool hints_enabled;
+        /// <summary>
+        /// Accessor for the hints enabled variable.
+        /// </summary>
         public bool Hints_enabled
         {
             get => hints_enabled;
             set
             {
-
-                if (Players.Count != 0)
+                if (Players.Count != 0) // If players are logged in
                 {
                     try
                     {
-                        ((Human)Players[0]).hints_enabled = value;
+                        ((Human)Players[0]).hints_enabled = value; // Save the preference
                         Human.Update(Players[0] as Human);
                     }
                     catch {  }
                 }
-                hints_enabled = value;
+                hints_enabled = value; // Set the value
             }
         }
+        /// <summary>
+        /// Thread that runs the timer.
+        /// </summary>
         private BackgroundWorker workerthread = null;
+        /// <summary>
+        /// Stores whether game timer is paused.
+        /// </summary>
         private bool paused;
-        #region Dice
-        PlayerDice playerdie1;
-        PlayerDice playerdie2;
-        PlayerDice playerdie3;
-        EnemyDice enemydie1;
-        EnemyDice enemydie2;
-        List<Dice> dices = new List<Dice>();
         #endregion
 
-        //// Constructors ////
-        // Load Game //
+        #region Constructors
+        /// <summary>
+        /// COnstructor used when loading a game from file.
+        /// </summary>
+        /// <param name="_game">Loaded game from file</param>
         public GameWindow(GameManager _game)
         {
-            InitializeComponent();
-            game = _game;
-            paused = false;
-            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
-            chkFullscreen.IsChecked = true;
-            game.territories.Sort();
-            if (Time > 0)
+            game = _game; // Set game object
+            SetupWindow(); // Setup the window
+            game.territories.Sort(); // Sort the list of territories.
+            if (Time > 0) // If timer enabled
             {
-                TimerSetup();
-                StartTimer();
+                TimerSetup(); // Setup the timer
+                StartTimer(); // Start the timer
             }
-            LoadPlayerUI();
-            music_enabled = ((Human)Players[0]).music_enabled;
-            mediaplayer.Source = Music.sources[Music.MusicIndex];
-            if (music_enabled) { mediaplayer.Play(); }
-            Output("The game has loaded.");
-            if (Gamemode == GameMode.Classic)
-            {
-                playerdie1 = new PlayerDice(imgPlayerDie1);
-                playerdie2 = new PlayerDice(imgPlayerDie2);
-                playerdie3 = new PlayerDice(imgPlayerDie3);
-                enemydie1 = new EnemyDice(imgEnemyDie1);
-                enemydie2 = new EnemyDice(imgEnemyDie2);
-            }
+            LoadPlayerUI(); // Setup UI + Map
+            Output("The game has loaded."); // Alert user
         }
-        // New Game //
+        /// <summary>
+        /// Constructor used when creating a new game.
+        /// </summary>
+        /// <param name="_players">List of players playing game.</param>
+        /// <param name="randomise_initial">Is initial setup of territories randomised?</param>
+        /// <param name="_map">Desired Game Map</param>
+        /// <param name="mode">Desired Game-Mode</param>
+        /// <param name="timerduration">Length of time allowed for a turn, 0 if disabled.</param>
+        /// <param name="defensebias">New Risk bias towards defending players.</param>
         public GameWindow(List<Player> _players, bool randomise_initial, GameMap _map, GameMode mode, int timerduration, double defensebias)
         {
-            InitializeComponent();
-            DataContext = this;
-            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
-            chkFullscreen.IsChecked = true;
-            GameManager.ClearEmptyFile();
-            game = new GameManager();
+            GameManager.ClearEmptyFile(); // Clear empty save files.
+            game = new GameManager(); // Create new game object.
+            // Set properties
             Time = timerduration * 100;
             Players = _players;
-            Music_enabled = ((Human)Players[0]).music_enabled;
-            Hints_enabled = ((Human)Players[0]).hints_enabled;
+            SetupWindow(); // Setup the window
             Turn = 0;
             DefenseBias = defensebias;
-            music_enabled = ((Human)Players[0]).music_enabled;
-            mediaplayer.Source = Music.sources[Music.MusicIndex];
-            if (music_enabled) { mediaplayer.Play(); }
-            paused = false;
-            // Creation of Territories and Map Setup //
             Map = _map;
             try
             {
-                MapSetup(false);
+                MapSetup(false); // Setup map with new territory and continent objects. If not default map, setup UI.
             }
-            catch (Exception) {
+            catch (Exception) { // Exit if error occurs loading map.
                 MessageBox.Show("An error occurred loading the map.");
                 this.Close();
                 return;
             }
             Gamemode = mode;
+            if (Time > 0)
+            {
+                TimerSetup(); // If timer enabled setup the timer.
+            }
+            SetupGame(randomise_initial); // Setup the initial game board.
+        }
+        #endregion
+        #region Setup Methods
+        /// <summary>
+        /// Contains code shared between constructors.
+        /// Sets up UI, events, Data-binding and properties.
+        /// </summary>
+        private void SetupWindow()
+        {
+            InitializeComponent();
+            paused = false;
+            this.StateChanged += new EventHandler(((App)Application.Current).Window_StateChanged);
+            DataContext = this;
+            chkFullscreen.IsChecked = true;
+            music_enabled = ((Human)Players[0]).music_enabled;
+            mediaplayer.Source = Music.sources[Music.MusicIndex];
+            if (music_enabled) { mediaplayer.Play(); }
             if (Gamemode == GameMode.Classic)
             {
                 playerdie1 = new PlayerDice(imgPlayerDie1);
@@ -220,18 +281,17 @@ namespace RiskGame
                 enemydie1 = new EnemyDice(imgEnemyDie1);
                 enemydie2 = new EnemyDice(imgEnemyDie2);
             }
-            if (Time > 0)
-            {
-                TimerSetup();
-            }
-            else { pb_Timer.Visibility = Visibility.Collapsed; }
-            SetupGame(randomise_initial);
         }
+        /// <summary>
+        /// Sets up map UI, territories and continents.
+        /// </summary>
+        /// <param name="load">Is the game loaded from a file or a new game?</param>
         private void MapSetup(bool load)
         {
             List<Button> mapbuttons = new List<Button>();
-            if (Map == GameMap.Default && !load)
+            if (Map == GameMap.Default && !load) // If the map is default and the game is a new game
             {
+                // Setup each territory.
                 Territory Alaska = new Territory("Alaska", new List<string> { "Kamchatka", "Alberta", "Northwest_Canada" }, btnAlaska);
                 Territory Northwest_Canada = new Territory("Northwest_Canada", new List<string> { "Alaska", "Alberta", "Greenland", "Ontario" }, btnNorthwest_Canada);
                 Territory Greenland = new Territory("Greenland", new List<string> { "Northwest_Canada", "Quebec", "Ontario", "Iceland" }, btnGreenland);
@@ -283,6 +343,7 @@ namespace RiskGame
                 Indonesia,New_Guinea,Eastern_Australia,Western_Australia,
                 Middle_East,Afghanistan,India,Ural,Siberia,China,Southeast_Asia,Mongolia,Irkutsk,Yakutsk,Kamchatka,Japan
                 };
+                // Setup each continent
                 Continent North_America = new Continent("North America", (new List<Territory> { Alaska, Alberta, Central_America, Eastern_US, Greenland, Northwest_Canada, Ontario, Quebec, Western_US }), 5);
                 Continent South_America = new Continent("South America", (new List<Territory> { Argentina, Brazil, Peru, Venezuela }), 2);
                 Continent Europe = new Continent("Europe", (new List<Territory> { UK_Ireland, Iceland, Northern_Europe, Scandinavia, Southern_Europe, Soviet_Bloc, Western_Europe }), 5);
@@ -291,13 +352,14 @@ namespace RiskGame
                 Continent Australia = new Continent("Australia", (new List<Territory> { Eastern_Australia, Indonesia, New_Guinea, Western_Australia }), 2);
                 Continents = new List<Continent> { North_America, South_America, Europe, Africa, Asia, Australia };
             }
-            else if(Map != GameMap.Default)
+            else if(Map != GameMap.Default) // If map is not default
             {
-                GameGrid.Children.Clear();
+                GameGrid.Children.Clear(); // Clear gamegrid UI elements.
                 if (Map == GameMap.NewYork)
                 {
-                    img_Map.ImageSource = new BitmapImage(new Uri("pack://siteoforigin:,,,/Images/Maps/NewYork.jpg"));
+                    img_Map.ImageSource = new BitmapImage(new Uri("pack://siteoforigin:,,,/Images/Maps/NewYork.jpg")); // Set map image
                     img_Map.Stretch = Stretch.Uniform;
+                    // Setup UI buttons
                     Button btnRockaway = SetupButton("btnRockaway", new Thickness(376, 395, 667, 98));
                     Button btnSaint_Albans = SetupButton("btnSaint_Albans", new Thickness(521, 458, 488, 36));
                     Button btnSouth_Queens = SetupButton("btnSouth_Queens", new Thickness(518, 384, 514, 110));
@@ -355,7 +417,7 @@ namespace RiskGame
                         GameGrid.Children.Add(b);
                     }
                     GameGrid.UpdateLayout();
-                    if (!load)
+                    if (!load) // If new game, setup territories
                     {
                         Territory Rockaway = new Territory("Rockaway", new List<String> { "Sheepshead_Bay", "South_Queens" }, btnRockaway);
                         Territory Saint_Albans = new Territory("Saint_Albans", new List<string> { "South_Queens", "Bayside" }, btnSaint_Albans);
@@ -420,7 +482,7 @@ namespace RiskGame
                 }
                 else { throw new Exception("An error has occured"); }
             }
-            if (load)
+            if (load) // If loading from file, reconnect each territory to its button.
             {
                 string buttonprefix = "btn";
                 if(Map == GameMap.Default)
@@ -428,7 +490,7 @@ namespace RiskGame
                     foreach (Territory t in Territories)
                     {
                         String concat = buttonprefix + t.name;
-                        t.button = (Button)GameGrid.FindName(concat);
+                        t.button = (Button)GameGrid.FindName(concat); // find the button whose name matches the name of the territory on-screen.
                     }
                 }
                 else
@@ -436,11 +498,17 @@ namespace RiskGame
                     foreach(Territory t in Territories)
                     {
                         String concat = buttonprefix + t.name;
-                        t.button = mapbuttons.Find(Button => Button.Name == concat);
+                        t.button = mapbuttons.Find(Button => Button.Name == concat); // set the button to the button in the list whose name matches the name of the territory.
                     }
                 }
             }
         }
+        /// <summary>
+        /// Instantiates each territory UI button with the desired properties.
+        /// </summary>
+        /// <param name="name">Name of button</param>
+        /// <param name="margin">Margin of territory from edge of game grid.</param>
+        /// <returns></returns>
         private Button SetupButton(String name, Thickness margin)
         {
             Button b = new Button()
@@ -452,36 +520,43 @@ namespace RiskGame
             };
             return b;
         }
+        /// <summary>
+        /// Sets up the game turn timer thread.
+        /// </summary>
         private void TimerSetup()
         {
-            workerthread = new BackgroundWorker
+            workerthread = new BackgroundWorker // instantiate thread
             {
-                WorkerReportsProgress = true,
-                WorkerSupportsCancellation = true
+                WorkerReportsProgress = true, // report progress to UI
+                WorkerSupportsCancellation = true // timer can be cancelled.
             };
+            // setup events
             workerthread.DoWork += Worker_DoWork;
             workerthread.ProgressChanged += Worker_ProgressChanged;
             workerthread.RunWorkerCompleted += Worker_RunWorkerCompleted;
         }
-        // Game Setup and UI Management //
+        /// <summary>
+        /// Setup the game when creating a new game.
+        /// </summary>
+        /// <param name="randomise_initial">Are armies going to be placed randomly around the map?</param>
         private void SetupGame(bool randomise_initial)
         {
-            // Determines how many armies players have.
+            // Counts the number of players that are not NeutralAI
             int playercount = 0;
-            foreach(Player p in Players)
+            foreach (Player p in Players)
             {
-                if(!(p is NeutralAI))
+                if (!(p is NeutralAI))
                 {
                     playercount += 1;
                 }
             }
-            int initialarmies = (50 - (5 * playercount));
-            CurrentPlayer = Players[0];
+            int initialarmies = (50 - (5 * playercount)); // Calculate number of initial armies
+            CurrentPlayer = Players[0]; // Set the current player
             // Setup Board and initial armies //
-            UISetup();
-            foreach (Player p in Players) { p.army_undeployed = initialarmies; }
-            UpdateState(GameState.InitialArmyPlace);
-            if (randomise_initial == true)
+            UISetup(); // Setup UI
+            foreach (Player p in Players) { p.army_undeployed = initialarmies; } // Assign each player their initial armies
+            UpdateState(GameState.InitialArmyPlace); // Set game state and update UI
+            if (randomise_initial == true) // If random placement enabled, randomise initial placement
             {
                 SetupRandom();
                 Territories.Sort();
@@ -490,9 +565,9 @@ namespace RiskGame
             else
             {
                 Territories.Sort();
-                if(CurrentPlayer is Human)
+                if (CurrentPlayer is Human)
                 {
-                    if (((Human)CurrentPlayer).hints_enabled)
+                    if (((Human)CurrentPlayer).hints_enabled) // If hints enabled give player hints in text output.
                     {
                         Output("Place armies around the map using left click.");
                         Output("You can capture any territory not already taken by another player.");
@@ -500,19 +575,26 @@ namespace RiskGame
                 }
             }
         }
+        /// <summary>
+        /// Starts the game.
+        /// Alerts user and sets gamestate.
+        /// </summary>
         private void StartGame()
         {
             Output("The Game is beginning.");
             Gamestate = GameState.PlacingArmy;
-            NextTurnThreaded();
+            NextTurnThreaded(); // Start the next turn
         }
+        /// <summary>
+        /// Distributes armies at random around the game board, ensuring each territory is owned by a player and that the distribution is pseudo-random but fair.
+        /// </summary>
         private void SetupRandom()
         {
             // originally tried various methods of randomising player and territory assignments to varying degrees of success.
             // However many would get stuck in loops, or to avoid loops would become overly complex.
             // I realised I could instead randomise the order of territories in the list and then assign each territory to a player methodically.
             // This achieves the same effect with far less complexity.
-            Territories.Shuffle();
+            Territories.Shuffle(); // Shuffle to randomise order in which territories are assigned to players.
             // Assigned initial placements of armies.
             foreach (Territory t in Territories)
             {
@@ -520,34 +602,38 @@ namespace RiskGame
                 bool assigned = false;
                 do
                 {
-                    CyclePlayers();
-                    if (CurrentPlayer.army_undeployed > 0)
+                    CyclePlayers(); // select the next player
+                    if (CurrentPlayer.army_undeployed > 0) // if they have armies left to deploy
                     {
-                        Place_Reinforce(t, 1);
+                        Place_Reinforce(t, 1); // conquer this territory
                         assigned = true;
                     }
-                } while (assigned == false);
+                } while (assigned == false); // repeat until territory owned by a player.
             }
             // Places remaining armies around map in friendly territory until there are none left //
             foreach (Player p in Players)
             {
                 CurrentPlayer = p;
-                while (p.army_undeployed > 0)
+                while (p.army_undeployed > 0) // while the player still has armies left to deploy
                 {
-                    foreach (Territory t in Territories)
+                    foreach (Territory t in Territories) // cycle through each territory
                     {
-                        if(p.army_undeployed > 0)
+                        if (p.army_undeployed > 0) // while the player still has armies left to deploy
                         {
-                            if(t.owner == p)
+                            if (t.owner == p) // if the player owns the territory
                             {
-                                Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed,4)));
+                                Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed, 4))); // place a random number of armies on the territory
+                                // between the number the player has left to deploy and 4.
                             }
                         }
-                        else { break; }
+                        else { break; } // exit if no armies left to deploy
                     }
                 }
             }
         }
+        /// <summary>
+        /// Distributes the neutral AI armies among unowned territories.
+        /// </summary>
         private void NeutralAISetup()
         {
             bool alltaken = true;
@@ -558,34 +644,35 @@ namespace RiskGame
                 do
                 {
                     if (t.owner != null) { assigned = true; break; }
-                    CycleNeutralAI();
-                    if (CurrentPlayer.army_undeployed > 0)
+                    CycleNeutralAI(); // cycle to the next neutral AI
+                    if (CurrentPlayer.army_undeployed > 0) // if they have armies left to deploy
                     {
                         alltaken = false;
-                        Place_Reinforce(t, 1);
+                        Place_Reinforce(t, 1); // conquer the territory.
                         assigned = true;
                     }
-                } while (assigned == false);
+                } while (assigned == false); // repeat until territory owned.
             }
-            if (alltaken == false)
+            if (alltaken == false) // if all territories are not owned by players; some territories are owned by neutral AI
             {
-                foreach (Player p in Players)
+                foreach (Player p in Players) // cycle each neutral AI
                 {
                     if (p is NeutralAI)
                     {
                         CurrentPlayer = p;
-                        while (p.army_undeployed > 0)
+                        while (p.army_undeployed > 0) // while neutral AI has armies left to deploy
                         {
                             foreach (Territory t in Territories)
                             {
-                                if (p.army_undeployed > 0)
+                                if (p.army_undeployed > 0) // while neutral AI has armies left to deploy
                                 {
-                                    if (t.owner == p)
+                                    if (t.owner == p) // if AI owns territory
                                     {
-                                        Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed, 4)));
+                                        Place_Reinforce(t, rng.Next(1, Math.Min(p.army_undeployed, 4))); // place a random number of armies on the territory
+                                        // between the number the player has left to deploy and 4.
                                     }
                                 }
-                                else { break; }
+                                else { break; } // else exit
                             }
                         }
                     }
@@ -593,6 +680,9 @@ namespace RiskGame
             }
             // Places remaining armies around map in friendly territory until there are none left //
         }
+        /// <summary>
+        /// Cycles the current player through each neutral AI in the game.
+        /// </summary>
         private void CycleNeutralAI()
         {
             CyclePlayers();
@@ -601,10 +691,16 @@ namespace RiskGame
                 CycleNeutralAI();
             }
         }
-        // Game Start UI setup //
+        #endregion
+        #region Player-Panel UI Setup
+        /// <summary>
+        /// Sets up the player panel UI for each player
+        /// </summary>
         private void UISetup()
         {
-            // This code sets up the "player panel" with the players details, resizing certain elements to avoid white borders.
+            // foreach player set their username display,
+            // bind their army strength and number of territories owned to the onscreen labels
+            // set their player colour indicator
             lblPlayerName1.Content = Players[0].Username;
             Players[0].Disp_ArmyStrength = lblPlayer1Strength;
             Players[0].Disp_Owned = lblPlayer1Territories;
@@ -617,7 +713,7 @@ namespace RiskGame
             rectPlayerColor3.Fill = (SolidColorBrush)Players[2].Color;
             Players[2].Disp_ArmyStrength = lblPlayer3Strength;
             Players[2].Disp_Owned = lblPlayer3Territories;
-            // make this more efficient
+            ///<remarks> Make this more efficient in future </remarks>
             if (Players.Count >= 4)
             {
                 lblPlayerName4.Content = Players[3].Username;
@@ -626,11 +722,11 @@ namespace RiskGame
                 Players[3].Disp_ArmyStrength = lblPlayer4Strength;
                 Players[3].Disp_Owned = lblPlayer4Territories;
                 if (Players.Count >= 5)
-                {
+                { // If there are more than 5 players UI elements must be resized to fit all players on-screen.
                     int fs;
-                    int rect_height = 17;
-                    Thickness th = new Thickness(10, 3, 0, 3);
-                    int gap = 2;
+                    int rect_height = 17; // player colour indicator height
+                    Thickness th = new Thickness(10, 3, 0, 3); // margin around player colour indicators
+                    int gap = 2; // margin around player panel entries
                     lblPlayerName5.Content = Players[4].Username;
                     rectPlayerColor5.Fill = (SolidColorBrush)Players[4].Color;
                     brd_Player5.Visibility = Visibility.Visible;
@@ -638,20 +734,24 @@ namespace RiskGame
                     Players[4].Disp_Owned = lblPlayer5Territories;
                     if (Players.Count >= 6)
                     {
-                        fs = 11;
-                        gap = 0;
+                        fs = 11; // reduce fontsize to 11
+                        gap = 0; // reduce margin around player panel entries to 0
                         rectPlayerColor6.Fill = (SolidColorBrush)Players[5].Color;
                         lblPlayerName6.Content = Players[5].Username;
                         brd_Player6.Visibility = Visibility.Visible;
                         Players[5].Disp_ArmyStrength = lblPlayer6Strength;
                         Players[5].Disp_Owned = lblPlayer6Territories;
-                        SetFontSize(fs);
+                        SetFontSize(fs); // set the new font-size
                     }
-                    SetGap(gap);
-                    SetRect(rect_height, th);
+                    SetGap(gap); // set the margin around player panel entries.
+                    SetRect(rect_height, th); // set the dimensions and margin around the player colour indicators.
                 }
             }
         }
+        /// <summary>
+        /// Sets the font-size of labels within the player panel
+        /// </summary>
+        /// <param name="i">Desired font-size</param>
         private void SetFontSize(int i)
         {
             foreach (UIElement L in panel_Player1.Children)
@@ -703,14 +803,21 @@ namespace RiskGame
 
             }
         }
+        /// <summary>
+        /// Sets the players' colour indicators dimensions and margin
+        /// </summary>
+        /// <param name="i">Desired height</param>
+        /// <param name="margin">Desired margin</param>
         private void SetRect(int i, Thickness margin)
         {
+            // set height
             rectPlayerColor1.Height = i;
             rectPlayerColor2.Height = i;
             rectPlayerColor3.Height = i;
             rectPlayerColor4.Height = i;
             rectPlayerColor5.Height = i;
             rectPlayerColor6.Height = i;
+            // set margin
             rectPlayerColor1.Margin = margin;
             rectPlayerColor2.Margin = margin;
             rectPlayerColor3.Margin = margin;
@@ -718,40 +825,52 @@ namespace RiskGame
             rectPlayerColor5.Margin = margin;
             rectPlayerColor6.Margin = margin;
         }
+        /// <summary>
+        /// Sets the margin around player panel entries.
+        /// </summary>
+        /// <param name="i">Desired margin</param>
         private void SetGap(int i)
         {
             Thickness gap;
-            if (i == 0)
+            if (i == 0) // if margin is 0
             {
                 gap = new Thickness(0, 0, 0, 0);
-                brd_Player1.Margin = gap;
+                brd_Player1.Margin = gap; // set the first player entry's margin to 0
                 brd_Players.BorderThickness = new Thickness(0);
             }
             else
             {
                 gap = new Thickness(5, 0, 5, i);
-                brd_Player1.Margin = new Thickness(5, i, 5, i);
+                brd_Player1.Margin = new Thickness(5, i, 5, i); // set the first player entry's margin to the same as others but with an additional top margin
             }
+            // set margins
             brd_Player2.Margin = gap;
             brd_Player3.Margin = gap;
             brd_Player4.Margin = gap;
             brd_Player5.Margin = gap;
             brd_Player6.Margin = gap;
         }
-
-        //// Game Methods ////
+        #endregion
+        #region Game Methods
+        /// <summary>
+        /// Sets current player to next player in list and updates UI
+        /// </summary>
         private void CyclePlayers()
         { // Cycles through the list of players, for a new turn or placing armies.
-            if ((Players.IndexOf(CurrentPlayer) + 1) == (Players.Count)) { CurrentPlayer = Players[0]; }
-            else { CurrentPlayer = Players[(Players.IndexOf(CurrentPlayer) + 1)]; }
-            UpdatePlayerPanelUI();
+            if ((Players.IndexOf(CurrentPlayer) + 1) == (Players.Count)) { CurrentPlayer = Players[0]; } // if at end of list loop back to start.
+            else { CurrentPlayer = Players[(Players.IndexOf(CurrentPlayer) + 1)]; } // else set to next player in list.
+            UpdatePlayerPanelUI(); // update UI
         }
+        /// <summary>
+        /// returns a boolean indicating if every player has placed their initial armies
+        /// </summary>
+        /// <returns>Have all players (except NeutralAI) placed their initial armies</returns>
         private bool AllPlaced()
         {
             bool allplaced = true;
             foreach(Player p in Players)
             {
-                if(p.army_undeployed > 0 && !(p is NeutralAI))
+                if(p.army_undeployed > 0 && !(p is NeutralAI)) // if player has undeployed armies and is not a neutral AI
                 {
                     allplaced = false;
                     break;
@@ -759,6 +878,9 @@ namespace RiskGame
             }
             return allplaced;
         }
+        /// <summary>
+        /// Cancels timer before continuing to next turn
+        /// </summary>
         private void NextTurn()
         {
             if(Time > 0)
@@ -778,21 +900,24 @@ namespace RiskGame
                 NextTurnThreaded();
             }
         }
+        /// <summary>
+        /// Starts the next player's turn in the game.
+        /// </summary>
         private void NextTurnThreaded()
         {
-            ClearSelectionsUI();
-            if (Gamestate == GameState.InitialArmyPlace)
+            ClearSelectionsUI(); // Clear previous player's selection(s)
+            if (Gamestate == GameState.InitialArmyPlace) // During setup
             {
-                if ((!(CurrentPlayer is NeutralAI)) && CurrentPlayer.army_undeployed > 0)
+                if ((!(CurrentPlayer is NeutralAI)) && CurrentPlayer.army_undeployed > 0) // If next player has armies to deploy and is not a neutral AI
                 {
-                    Output(String.Format("It is now {0}'s turn.", CurrentPlayer.Username));
+                    Output(String.Format("It is now {0}'s turn.", CurrentPlayer.Username)); // Alert the player their turn is starting
                 }
                 else
                 {
-                    if (CurrentPlayer is NeutralAI) { CyclePlayers(); NextTurn(); }
-                    if (AllPlaced())
+                    if (CurrentPlayer is NeutralAI) { CyclePlayers(); NextTurn(); } // If the player is a neutral AI skip their turn
+                    if (AllPlaced()) // If all human players have placed their initial armies
                     {
-                        foreach(Player p in Players)
+                        foreach(Player p in Players) // Setup the Neutral AI placement
                         {
                             if(p is NeutralAI)
                             {
@@ -800,17 +925,17 @@ namespace RiskGame
                                 break;
                             }
                         }
-                        Territories.Sort();
-                        CurrentPlayer = Players[Players.Count - 1];
+                        Territories.Sort(); // After shuffling during setup, must be sorted for binary search to work.
+                        CurrentPlayer = Players[Players.Count - 1]; // Set current player to end of list
                         StartGame();
                     }
                 }
             }
-            else
+            else // If game has started
             {
-                Turn += 1;
-                CyclePlayers();
-                if(CurrentPlayer is NeutralAI)
+                Turn += 1; // Increase turn count by one
+                CyclePlayers(); // Cycle to next player
+                if(CurrentPlayer is NeutralAI) // If neutral AI skip turn
                 {
                     NextTurn();
                 }
@@ -818,7 +943,7 @@ namespace RiskGame
                 {
                     List<String> ownedContinents = new List<string>();
                     int bonus = 0;
-                    foreach (Continent c in Continents)
+                    foreach (Continent c in Continents) // If continent owned by player give them bonus armies
                     {
                         if (ContinentOwned(c))
                         {
@@ -826,10 +951,10 @@ namespace RiskGame
                             bonus += c.bonus;
                         }
                     }
-                    CurrentPlayer.army_undeployed += ((CurrentPlayer.Territoriesowned / 3) + bonus);
+                    CurrentPlayer.army_undeployed += ((CurrentPlayer.Territoriesowned / 3) + bonus); // Give player reinforcements
                     UpdateState(GameState.PlacingArmy);
-                    // simplify
-                    switch (ownedContinents.Count)
+                    /// <remarks>simplify this code?</remarks>
+                    switch (ownedContinents.Count) // alert user that they have received reinforcements
                     {
                         case 1:
                             Output(String.Format("You have received {0} bonus armies from capturing all of {1}", bonus, ownedContinents[0]));
@@ -849,84 +974,100 @@ namespace RiskGame
                             Output(String.Format("{0} and {1}", ownedContinents[3], ownedContinents[4]));
                             break;
                     }
-                    if (Time > 0) { StartTimer(); }
+                    if (Time > 0) { StartTimer(); } // If timer enabled start the timer
                 }
             }
         }
+        /// <summary>
+        ///Called when a player wins the game.
+        /// </summary>
+        ///Opens a new high-scores window and closes this window.
         private void Win()
         {
-            CurrentPlayer.score += CurrentPlayer.Army_strength / 3;
+            CurrentPlayer.score += CurrentPlayer.Army_strength / 3; // Calculate player's final score
             int finalscore = CurrentPlayer.score / Turn;
             GameDetails gamedetails = new GameDetails(DateTime.Now.ToString(), CurrentPlayer.Username, Players.Count.ToString(), finalscore.ToString(),Turn.ToString(), Map.ToString(), Gamemode.ToString());
-            GameDetails.Save(gamedetails);
-            GameManager.DeleteGame(game.GameID);
-            Highscores finish = new Highscores(gamedetails, Players);
+            GameDetails.Save(gamedetails); // Save their score details to file.
+            GameManager.DeleteGame(game.GameID); // Delete their game save
+            Highscores finish = new Highscores(gamedetails, Players); // Open new highscores window
             App.Current.MainWindow = finish;
-            this.Close();
+            this.Close(); // Close this window
             finish.Show();
         }
-
-        //// UI /////
+        #endregion
+        #region UI Update Methods
+        /// <summary>
+        /// Instantiates UI when game is loaded.
+        /// </summary>
         private void LoadPlayerUI()
-        {  // use binding in future
-            UISetup();
-            UpdatePlayerPanelUI();
+        {
+            /// <remarks>use data binding in future now that it is working correctly</remarks>
+            UISetup(); // Setup UI
+            UpdatePlayerPanelUI(); // set player panel to indicate current player
             try
             {
-                MapSetup(true);
+                MapSetup(true); // Setup map in load game mode
             }
-            catch (Exception)
+            catch (Exception) // exit if failure
             {
                 MessageBox.Show("An error occurred loading the map.");
                 this.Close();
                 return;
             }
-            UpdateState(game.gameState);
-            if (Gamestate == GameState.PlacingArmy)
+            UpdateState(game.gameState); // Update state
+            if (Gamestate == GameState.PlacingArmy) // Output number of armies player has to place
             {
                 UpdatePlayerUndeployed();
             }
-            foreach (Territory t in Territories)
+            foreach (Territory t in Territories) // Update territory UI
             {
                 t.button.Background = t.owner.Color;
                 t.button.Content = t.currentarmies;
             }
         }
+        /// <summary>
+        /// Updates nextTerritory UI when conquering
+        /// </summary>
         private void ConquerTerritoryUI()
         {
-            NextTerritory.button.Background = NextTerritory.owner.Color;
-            NextTerritory.button.Content = NextTerritory.temparmies;
-        } // Updates nextTerritory UI for Conquer
+            NextTerritory.button.Background = NextTerritory.owner.Color; // set colour
+            NextTerritory.button.Content = NextTerritory.temparmies; // set content
+        }
+        /// <summary>
+        /// Updates selected territories' armies
+        /// </summary>
         private void AttackMoveTerritoryUI()
         {
-            SlctTerritory.button.Content = SlctTerritory.currentarmies;
-        } // Updates selected territory's armies
+            SlctTerritory.button.Content = SlctTerritory.currentarmies; // set content
+        }
+        /// <summary>
+        /// Updates number output to the relevant value
+        /// </summary>
         private void UpdateNumOutput()
         {
             switch (Gamestate)
             {
-                case GameState.PlacingArmy:
+                case GameState.PlacingArmy: // During placing it shows how many armies you are placing on the selected territory.
                     btnNumber.Content = SlctTerritory.temparmies;
                     break;
-                case GameState.Attacking:
-                    btnNumber.Content = NextTerritory.temparmies;
-                    break;
-                case GameState.Conquer:
-                    btnNumber.Content = NextTerritory.temparmies;
-                    break;
-                case GameState.Move:
+                case GameState.Attacking: // During attack it shows how many armies you are attacking with.
+                case GameState.Conquer: // During conquer it shows how many armies you are moving into the new territory.
+                case GameState.Move: // During move it shows how many armies you are moving to the next territory.
                     btnNumber.Content = NextTerritory.temparmies;
                     break;
             }
-        } // Updates UI Label Number
+        }
+        /// <summary>
+        /// Updates currently highlighted player in player panel to current player
+        /// </summary>
         private void UpdatePlayerPanelUI()
         {
-            int i = Players.IndexOf(CurrentPlayer);
-            foreach (Border b in panel_Players.Children) {
+            int i = Players.IndexOf(CurrentPlayer); // i = index of player in list
+            foreach (Border b in panel_Players.Children) { // reset every other player's background
                 b.Background = panel_Players.Background;
             }
-            panel_UI.Background = CurrentPlayer.Color;
-            switch (i)
+            panel_UI.Background = CurrentPlayer.Color; // update UI background to current player's colour.
+            switch (i) // Highlight player matching index.
             {
                 case 0:
                     brd_Player1.Background = Brushes.LightBlue;
@@ -947,15 +1088,27 @@ namespace RiskGame
                     brd_Player6.Background = Brushes.LightBlue;
                     break;
             }
-        }  // Updates currently highlighted player in UI stack
+        }
+        /// <summary>
+        /// Outputs number of armies player has not yet deployed.
+        /// </summary>
         private void UpdatePlayerUndeployed()
-        { // Updates the UI to show the player's undeployed armies.
+        {
             Output(String.Format("You have {0} armies to place.", CurrentPlayer.army_undeployed));
-        } // Use to update undeployed on place
+        }
+        /// <summary>
+        /// Updates the UI to reflect the current game state.
+        /// Outputs hints for player if they have enabled hints.
+        /// </summary>
         private void UpdateStateUI()
         {
             switch (Gamestate)
             {
+                /// <remarks>
+                /// In each state, the state display button's content and colour is changed.
+                /// The confirmation button's (on the number display) content is also changed.
+                /// If the current player has hints enabled a contextual text hint is output.
+                /// </remarks>
                 case GameState.Attacking:
                     btnStateDisp.Content = "Attack";
                     btnStateDisp.Background = new SolidColorBrush(Color.FromRgb(235, 64, 45));
@@ -1027,47 +1180,55 @@ namespace RiskGame
                     }
                     break;
             }
-        } // Start of turn instructions and UI State change
+        }
+        /// <summary>
+        /// Clears all player territory selections and clears UI
+        /// </summary>
         private void ClearSelectionsUI()
         {
             foreach(Territory t in Territories)
             {
-                t.button.BorderBrush = Brushes.Black;
+                t.button.BorderBrush = Brushes.Black; // reset border
             }
-            btnNumber.Content = 0;
-            ClearSelections();
-        } // Clears Selections and UI
-
-        //// Backend Methods ////
+            btnNumber.Content = 0; // reset indicator
+            ClearSelections(); // clear player's selections
+        }
+        #endregion
+        #region Back-end Methods
+        /// <summary>
+        /// Retrieves the territory from the list matching the territory name.
+        /// </summary>
+        /// <param name="territoryname">Name of desired territory</param>
+        /// <returns Territory found from list></returns>
         private Territory RetrieveTerritory(String territoryname)
         {
-            territoryname = territoryname.Replace(' ', '_');
+            territoryname = territoryname.Replace(' ', '_'); // ensures c# string parameter does not cause error (can sometimes remove spaces)
             try
             {
                 // Binary Search //
                 int start = 0;
                 int end = Territories.Count - 1;
-                while (start <= end)
+                while (start <= end) // repeat until found
                 {
-                    int mid = Decimal.ToInt32(Math.Floor((decimal)(start + end) / 2));
-                    if (String.Compare(territoryname, Territories[mid].name) < 0)
+                    int mid = Decimal.ToInt32(Math.Floor((decimal)(start + end) / 2)); // find midpoint
+                    if (String.Compare(territoryname, Territories[mid].name) < 0) // compare order alphabetically
                     {
-                        end = mid - 1;
+                        end = mid - 1; // move endpoint
                     }
-                    else if(String.Compare(territoryname, Territories[mid].name) > 0)
+                    else if(String.Compare(territoryname, Territories[mid].name) > 0) // compare order alphabetically
                     {
-                        start = mid + 1;
+                        start = mid + 1; // move start-point
                     }
                     else
                     {
-                        return Territories[mid];
+                        return Territories[mid]; // return midpoint
                     }
                 }
-                throw new TerritoryNotFoundException();
+                throw new TerritoryNotFoundException(); // if not found (old bugs in binary search meant that it sometimes failed)
             }
-            catch (TerritoryNotFoundException)
+            catch (TerritoryNotFoundException) // if not found
             {
-                foreach(Territory t in Territories)
+                foreach(Territory t in Territories) // perform linear search
                 {
                     if(t.name == territoryname)
                     {
@@ -1077,89 +1238,120 @@ namespace RiskGame
                 throw new Exception();
             }
         }
+        /// <summary>
+        /// Selects and highlights the given territory in the UI
+        /// </summary>
+        /// <param name="t">The desired territory</param>
+        /// <param name="b">The button of the territory</param>
+        /// <param name="color">colour button should be highlighted with</param>
+        /// <param name="next">select next territory?</param>
+        /// <remarks>button parameter can be removed as it is redundant, t.button can be used instead</remarks>
         private void SelectTerritory(Territory t, Button b, Brush color, bool next)
         {
-            if (next) { NextTerritory = t; }
-            else { SlctTerritory = t; }
+            if (next) { NextTerritory = t; } // if next territory set next
+            else { SlctTerritory = t; } // otherwise set primary selection
             b.BorderBrush = color;
         }
+        /// <summary>
+        /// Provide text output to user
+        /// </summary>
+        /// <param name="s">Output message</param>
         private void Output(String s)
         {
-            if ((txtOutput.Text == "") || (txtOutput.Text == null)) { txtOutput.Text = s; }
+            if ((txtOutput.Text == "") || (txtOutput.Text == null)) { txtOutput.Text = s; } // if output is empty set text to s
             else
             {
-                String[] tmp = txtOutput.Text.Split('\n');
-                if (tmp.Length >= 6)
+                String[] tmp = txtOutput.Text.Split('\n'); // split the text output by line into an array
+                if (tmp.Length >= 6) // if longer than max lines in output
                 {
-                    tmp[0] = tmp[1];
+                    tmp[0] = tmp[1]; // move each line up one line in the array
                     for (int i = 1; i < (tmp.Length - 1); i++)
                     {
                         tmp[i] = "\n" + tmp[i + 1];
                     }
-                    tmp[5] = ("\n" + s);
-                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5];
+                    tmp[5] = ("\n" + s); // add string to final line
+                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5]; // set output
                 }
-                else { txtOutput.Text += String.Format("\n{0}", s); }
+                else { txtOutput.Text += String.Format("\n{0}", s); } // if lines remaining append as new line
             }
         }
+        /// <summary>
+        /// Clears the selected Territories.
+        /// </summary>
         private void ClearSelections()
-        { // Clears the selected Territories and players so as to prevent bugs.
-            // This method is not entirely necessary and the program would be more efficient
-            // without, however it protects against human error in the code.
+        {
             SlctTerritory = null;
             NextTerritory = null;
         }
+        /// <summary>
+        /// Updates UI and game state to parameter.
+        /// </summary>
+        /// <param name="g">Next game-state</param>
         private void UpdateState(GameState g)
         {
-            Gamestate = g;
-            if(Gamestate == GameState.Conquer) { ConquerTerritoryUI(); }
-            UpdateStateUI();
+            Gamestate = g; // set gamestate
+            if(Gamestate == GameState.Conquer) { ConquerTerritoryUI(); } // update territory UI during conquer
+            UpdateStateUI(); // update main UI panel
         }
+        /// <summary>
+        /// Highlights all territories player could possibly attack from the selected territory.
+        /// </summary>
+        /// <remarks> Merge with move for efficiency at some point</remarks>
         private void ShowAttack()
-        { // Shows territories that can be attacked from current position
-            // merge with move in next update
-
-            bool canmove = false;
-            foreach(String s in SlctTerritory.links)
+        {
+            bool canmove = false; // player cannot attack unless a possible move is found
+            foreach(String s in SlctTerritory.links) // iterate through each link
             {
-                Territory t = RetrieveTerritory(s);
-                if(t.owner != CurrentPlayer)
+                Territory t = RetrieveTerritory(s); // retrieve the object matching the link name
+                if(t.owner != CurrentPlayer) // If the owner is not the current player
                 {
-                    canmove = true;
-                    t.button.BorderBrush = Brushes.Aqua;
+                    canmove = true; // player can move
+                    t.button.BorderBrush = Brushes.Aqua; // highlight territory
                 }
             }
-            if(canmove == false)
+            if(canmove == false) // if player cannot attack,
             {
-                Output("There is nowhere to attack from here.");
+                Output("There is nowhere to attack from here."); // alert player
             }
         }
+        /// <summary>
+        /// Performs branching search to highlight all territories player
+        /// could move to from territory.
+        /// </summary>
+        /// <param name="t">Territory to scan links</param>
+        /// <returns>can player move from supplied territory</returns>
+        /// <remarks>this is very much a bodge. please fix with a proper solution later.
+        /// fix the twice add to list too</remarks>
         private bool ShowMoves(Territory t)
         { // merge with show attack for efficiency
-            // this is very much a bodge. please fix with a proper solution later.
-            scanterritories.Add(t);
-            bool canmove = false;
-            foreach(String s in t.links)
+            //
+            scanterritories.Add(t); // this line is inefficient as added twice
+            bool canmove = false; // player cannot move unless move is found
+            foreach(String s in t.links) // iterate through each link
             {
                 Territory y = RetrieveTerritory(s);
-                if (!scanterritories.Contains(y))
+                if (!scanterritories.Contains(y)) // if territory already scanned, skip that path
                 {
-                    scanterritories.Add(y);
-                    if (y.owner == CurrentPlayer)
+                    scanterritories.Add(y); // add to list to prevent loops
+                    if (y.owner == CurrentPlayer) // if owned by player,
                     {
-                        canmove = true;
-                        y.button.BorderBrush = Brushes.Aqua;
-                        ShowMoves(y);
+                        canmove = true; // player can move
+                        y.button.BorderBrush = Brushes.Aqua; // highlight territory
+                        ShowMoves(y); // scan the path leading from that territory.
                     }
                 }
             }
             return canmove;
         }
+        /// <summary>
+        /// Increments or decrements the number of armies the player is using to attack or move.
+        /// </summary>
+        /// <param name="i">number to increment or decrement by</param>
         private void AdjustAttackMoves(int i)
         {
-            if(i >= 1) // moving out of slct
+            if(i >= 1) // moving armies out of slct territory
             {
-                if (SlctTerritory.currentarmies < 2)
+                if (SlctTerritory.currentarmies < 2) // ensure territory always has army
                 {
                     Output("At least one army must remain in a friendly territory.");
                     return;
@@ -1167,15 +1359,16 @@ namespace RiskGame
                 else if(Gamemode == GameMode.Classic && Gamestate == GameState.Attacking && NextTerritory.temparmies >= 3)
                 {
                     Output("You can attack with a maximum of 3 armies at once.");
-                    return;
+                    return; // players can only roll 3 die during attack in classic risk
                 }
             }
-            if(i <= -1) // moving back to slct
+            if(i <= -1) // moving armies back to slct territory
             {
-                if(NextTerritory.temparmies <= 1)
+                if(NextTerritory.temparmies <= 1) // player cannot perform an action with less than one
                 {
                     switch (Gamestate)
                     {
+                        // alert user
                         case GameState.Attacking:
                             Output("You cannot attack with less than one army.");
                             Output("Click cancel to stop the attack.");
@@ -1189,199 +1382,236 @@ namespace RiskGame
                     }
                     return;
                 }
-                else if(Gamemode == GameMode.Classic && Gamestate == GameState.Conquer)
+                else if(Gamemode == GameMode.Classic && Gamestate == GameState.Conquer) // during conquer in classic risk
                 {
                     int count = 0;
-                    foreach(Dice d in dices) { if (d is PlayerDice) { count += 1; } }
-                    if(NextTerritory.temparmies <= count)
+                    foreach(Dice d in dices) { if (d is PlayerDice) { count += 1; } } // count number of dice player rolled.
+                    if(NextTerritory.temparmies <= count) // player must move at least as many as used to attack, even if player loses an army they cannot decrease
                     {
                         Output("You must move at least as many armies used to attack into the new territory.");
                         return;
                     }
                 }
             }
-            SlctTerritory.currentarmies -= i;
+            SlctTerritory.currentarmies -= i; // adjust numbers
             NextTerritory.temparmies += i;
-            UpdateNumOutput();
-            AttackMoveTerritoryUI();
-            if(Gamestate == GameState.Conquer) { ConquerTerritoryUI(); }
+            UpdateNumOutput(); // update the number output
+            AttackMoveTerritoryUI(); // update territory UI
+            if(Gamestate == GameState.Conquer) { ConquerTerritoryUI(); } // update next territory UI
         }
+        /// <summary>
+        /// Cancels player actions that have not been confirmed
+        /// </summary>
         private void CancelUnconfirmedActions()
         {
-            switch (Gamestate)
+            switch (Gamestate) // determine game-state
             {
                 case GameState.PlacingArmy:
                     foreach (Territory t in Territories)
                     {
                         if (t.owner == CurrentPlayer)
                         {
-                            CurrentPlayer.army_undeployed += t.temparmies;
+                            CurrentPlayer.army_undeployed += t.temparmies; // return unconfirmed armies to undeployed
                             t.temparmies = 0;
                         }
                     }
-                    ClearSelectionsUI();
+                    ClearSelectionsUI(); // clear selections and UI
                     break;
                 case GameState.Attacking:
-                    if(SlctTerritory != null)
+                    if(SlctTerritory != null) // if player has selected a territory
                     {
-                        if(NextTerritory != null)
+                        if(NextTerritory != null) // if player has selected both territories
                         {
-                            SlctTerritory.currentarmies += NextTerritory.temparmies;
+                            SlctTerritory.currentarmies += NextTerritory.temparmies; // move armies "home"
                             NextTerritory.temparmies = 0;
-                            SlctTerritory.button.Content = SlctTerritory.currentarmies;
+                            AttackMoveTerritoryUI(); // update UI
                             NextTerritory.button.Content = NextTerritory.currentarmies;
                         }
-                        ClearSelectionsUI();
+                        ClearSelectionsUI(); // clear selections and UI
                     }
                     break;
                 case GameState.Conquer:
-                    Output("You must move armies into the newly captured territory.");
+                    Output("You must move armies into the newly captured territory."); // cannot cancel confirmed
                     break;
                 case GameState.Move:
                     if(SlctTerritory != null)
                     {
                         if(NextTerritory != null)
                         {
-                            SlctTerritory.currentarmies += NextTerritory.temparmies;
-                            AttackMoveTerritoryUI();
+                            SlctTerritory.currentarmies += NextTerritory.temparmies; // move armies to original location
+                            AttackMoveTerritoryUI(); // update UI
                             NextTerritory.temparmies = 0;
                         }
-                        ClearSelectionsUI();
+                        ClearSelectionsUI(); // clear selections and UI
                     }
                     break;
             }
         }
+        /// <summary>
+        /// Determines if continent is owned by player
+        /// </summary>
+        /// <param name="c">Continent being tested.</param>
+        /// <returns>Player owns continent?</returns>
         private bool ContinentOwned(Continent c)
         {
-            bool owned = true;
-            foreach(Territory t in c.territories)
+            bool owned = true; // player owns continent unless someone else owns a territory within
+            foreach(Territory t in c.territories) // search each territory
             {
-                if(t.owner != CurrentPlayer) { owned = false; break; }
+                if(t.owner != CurrentPlayer) { owned = false; break; } // if another player owns a territory within the player does not own the continent
             }
             return owned;
         }
+        /// <summary>
+        /// Determines if die menu is open and outputs error text
+        /// </summary>
+        /// <returns>Is die menu open?</returns>
         private bool DieOpen()
         {
-            if(panel_Die.Visibility == Visibility.Visible)
+            if(panel_Die.Visibility == Visibility.Visible) // if open
             {
                 if((String)btnDieStatus.Content == "Continue to Attack")
                 {
-                    Output("Click \"continue to attack\" to proceed.");
+                    Output("Click \"continue to attack\" to proceed."); // output error
                 }
                 else if((String)btnDieStatus.Content == "Continue to Conquer")
                 {
-                    Output("You must conquer the territory.");
+                    Output("You must conquer the territory."); // output error
                 }
                 return true;
             }
             return false;
         }
-        // Timer Control //
+        #endregion
+        #region Timer Control Methods and Events
+        /// <summary>
+        /// Starts turn timer
+        /// </summary>
         private void StartTimer()
         {
-            pb_Timer.Value = 0;
-            workerthread.CancelAsync();
-            workerthread.RunWorkerAsync();
+            pb_Timer.Value = 0; // reset value
+            workerthread.CancelAsync(); // cancel previous timer
+            workerthread.RunWorkerAsync(); // start timer
         }
+        /// <summary>
+        /// Timer start event. Runs timer and sends updates to progress bar.
+        /// </summary>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            for(int i = 0; i < Time; i++)
+            for(int i = 0; i < Time; i++) // while timer has time left
             {
-                if (workerthread.CancellationPending == true)
+                if (workerthread.CancellationPending == true) // if cancellation pending,
                 {
-                    e.Cancel = true;
+                    e.Cancel = true; // cancel timer
                     return;
                 }
                 else
                 {
-                    while(paused == true) { Thread.Sleep(100); }
-                    int progressPercentage = Convert.ToInt32(((double)i / Time) * 100);
-                    (sender as BackgroundWorker).ReportProgress(progressPercentage);
-                    Thread.Sleep(10);
+                    while(paused == true) { Thread.Sleep(100); } // while game paused sleep timer thread.
+                    int progressPercentage = Convert.ToInt32(((double)i / Time) * 100); // calculate timer complete percentage
+                    (sender as BackgroundWorker).ReportProgress(progressPercentage); // send progress report to UI
+                    Thread.Sleep(10); // wait before updating again
                 }
             }
         }
+        /// <summary>
+        /// Updates timer progress bar.
+        /// </summary>
+        /// <param name="sender">Background worker that sent update</param>
+        /// <param name="e">Percentage timer complete.</param>
         private void Worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            pb_Timer.Value = e.ProgressPercentage;
+            pb_Timer.Value = e.ProgressPercentage; // update progress bar to value
         }
+        /// <summary>
+        /// Called when timer ends, cancels actions and ends turn if allowed.
+        /// </summary>
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (Gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); }
-            else if (!DieOpen())
+            if (Gamestate == GameState.Conquer) { Output("Move your armies to end your turn."); } // turn cannot end during conquer
+            else if (!DieOpen()) // if die menu not open
             {
                 CancelUnconfirmedActions();
-                NextTurnThreaded();
+                NextTurnThreaded(); // start next turn
             }
         }
-
-        ////  Button Events  ////
+        #endregion
+        #region Button Click Events
+        /// <summary>
+        /// Territory left click event. Performs contextual action.
+        /// </summary>
+        /// <param name="sender">Button that was clicked</param>
         private void Click(object sender, RoutedEventArgs e)
         {   // Called when a territory is clicked on and performs an action based on the
             // context in which it was clicked.
-            Territory t = RetrieveTerritory(((Button)sender).Name.TrimStart(new char[] { 'b', 't', 'n' }));
+            Territory t = RetrieveTerritory(((Button)sender).Name.TrimStart(new char[] { 'b', 't', 'n' })); // Retrieve territory based on name of button clicked
             Button btnTerritory = t.button;
             switch (Gamestate)
             {
-                case GameState.InitialArmyPlace:
-                    SlctTerritory = t;
-                    if (SlctTerritory.owner == null || SlctTerritory.owner == CurrentPlayer)
+                case GameState.InitialArmyPlace: // During setup
+                    SlctTerritory = t; // select territory
+                    if (SlctTerritory.owner == null || SlctTerritory.owner == CurrentPlayer) // if available,
                     {
-                        Place_Reinforce(SlctTerritory, 1);
-                        CyclePlayers();
-                        NextTurn();
+                        Place_Reinforce(SlctTerritory, 1); // place an army on territory
+                        CyclePlayers(); // next player
+                        NextTurn(); // start next turn
                     }
-                    else { Output("You cannot capture this territory."); SlctTerritory = null; } // use clear selections to prevent bugs
+                    else { Output("You cannot capture this territory."); ClearSelectionsUI(); } // output error and clear selection
                     break;
                 case GameState.PlacingArmy:
-                    if(t == SlctTerritory) { PlayerActions(true); break; }
+                    if(t == SlctTerritory) { PlayerActions(true); break; } // if selected attempt to deploy another army
                     else
                     {
-                        ClearSelectionsUI();
-                        if (t.owner == null || t.owner == CurrentPlayer)
+                        ClearSelectionsUI(); // clear selections
+                        if (t.owner == null || t.owner == CurrentPlayer) // if available to place,
                         {
-                            SelectTerritory(t, btnTerritory, Brushes.Lime, false);
-                            PlayerActions(true);
-                            UpdateNumOutput();
+                            SelectTerritory(t, btnTerritory, Brushes.Lime, false); // select clicked territory
+                            PlayerActions(true); // add one army
+                            UpdateNumOutput(); // update number output
                         }
-                        else { Output("This is not your territory."); SlctTerritory = null; }
+                        else { Output("This is not your territory."); ClearSelectionsUI(); } // output error and clear selections
                         break;
                     }
                 case GameState.Attacking:
-                    if (DieOpen()) { return; }
-                    if (t.owner == CurrentPlayer)
+                    if (DieOpen()) { return; } // if die open player cannot adjust
+                    if (t.owner == CurrentPlayer) // if own territory clicked
                     {
-                        if(t.currentarmies > 1)
+                        if(t.currentarmies > 1) // if enough armies to attack
                         {
-                            CancelUnconfirmedActions();
+                            CancelUnconfirmedActions(); // cancel previous attacks
                             SelectTerritory(t, btnTerritory, Brushes.Lime, false);
                             ShowAttack();
                         }
-                        else { Output("You do not have enough armies to attack from here."); break; }
+                        else { Output("You do not have enough armies to attack from here."); break; } // output error
                     }
                     else if (SlctTerritory != null) // if a territory is selected
                     {
-                        if(t.owner != null)
+                        if(NextTerritory == null) // if the next territory is not selected.
                         {
-                            if(btnTerritory.BorderBrush == Brushes.Aqua)
+                            if (t.owner != null) // if territory owned (but not by player, checked in previous line)
                             {
-                                SelectTerritory(t, btnTerritory, Brushes.Red, true);
-                                if(Gamemode == GameMode.NewRisk) { AdjustAttackMoves((SlctTerritory.currentarmies - 1)); }
-                                else if(Gamemode == GameMode.Classic) { AdjustAttackMoves(Math.Min(SlctTerritory.currentarmies - 1, 3)); }
-                                if(CurrentPlayer is Human)
+                                if (btnTerritory.BorderBrush == Brushes.Aqua) // if marked as available to attack
                                 {
-                                    if (((Human)CurrentPlayer).hints_enabled)
+                                    SelectTerritory(t, btnTerritory, Brushes.Red, true); // select the territory
+                                    // set default attack number
+                                    if (Gamemode == GameMode.NewRisk) { AdjustAttackMoves((SlctTerritory.currentarmies - 1)); }
+                                    else if (Gamemode == GameMode.Classic) { AdjustAttackMoves(Math.Min(SlctTerritory.currentarmies - 1, 3)); }
+                                    if (CurrentPlayer is Human)
                                     {
-                                        Output("Select the number of armies you wish to attack with.");
+                                        if (((Human)CurrentPlayer).hints_enabled)
+                                        {
+                                            Output("Select the number of armies you wish to attack with.");
+                                        }
                                     }
                                 }
+                                else { Output("You cannot attack this territory from here"); break; } // error
                             }
-                            else if(btnTerritory.BorderBrush == Brushes.Red){
-                                PlayerActions(true);
-                            }
-                            else { Output("You cannot attack this territory from here"); break; }
+                            else { Output("There is nothing here to attack."); break; } // error output
                         }
-                        else { Output("There is nothing here to attack."); break; }
+                        else if(NextTerritory == t && btnTerritory.BorderBrush == Brushes.Red) // if next territory clicked
+                        {
+                            PlayerActions(true);
+                        }
+                        else { Output("You must cancel your previous selection before attacking a different territory."); break; }
                     }
                     else { Output("You do not own this territory");
                         Output("Select where you wish to attack from"); }
@@ -1434,6 +1664,10 @@ namespace RiskGame
                     catch (NullReferenceException) { break; }
             }
         }
+        /// <summary>
+        /// Territory right click event. Performs contextual action.
+        /// </summary>
+        /// <param name="sender">Button that was clicked</param>
         private void RightClick(object sender, MouseEventArgs e)
         {
             Territory t = RetrieveTerritory(((Button)sender).Name.TrimStart(new char[] { 'b', 't', 'n' }));
@@ -1642,8 +1876,28 @@ namespace RiskGame
             panel_MainUI.Visibility = Visibility.Visible;
             panel_Settings.Visibility = Visibility.Collapsed;
         }
-
-        ////  Player Actions ////
+        private void SaveGame(object sender, RoutedEventArgs e)
+        { // Creates a gamemanager instance, serializes it and saves it to a file. Reporting back to the player if the save was successful.
+            if (Gamestate == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
+            else if (Gamestate == GameState.Conquer) { Output("You must finish conquering before saving."); }
+            else if ((Gamestate == GameState.Attacking) && (Gamemode == GameMode.Classic)) { Output("You must finish your attack before saving."); }
+            else
+            {
+                try
+                {
+                    CancelUnconfirmedActions();
+                    GameManager.SaveGame(game);
+                    Output("Game saved successfully");
+                }
+                catch { Output("An error has occurred. The game may not have saved, please try again."); };
+            }
+        }
+        private void Quit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        #endregion
+        #region Player Actions
         private void Place_Reinforce(Territory T, int num)
         {
             if (T.owner != CurrentPlayer)
@@ -1730,35 +1984,13 @@ namespace RiskGame
             }
             else { Output("Please select a territory."); }
         }
-
-        // Save Game //
-        private void SaveGame(object sender, RoutedEventArgs e)
-        { // Creates a gamemanager instance, serializes it and saves it to a file. Reporting back to the player if the save was successful.
-            if(Gamestate == GameState.InitialArmyPlace) { Output("You must finish setup before attempting to save."); }
-            else if(Gamestate == GameState.Conquer) { Output("You must finish conquering before saving."); }
-            else if ((Gamestate == GameState.Attacking) && (Gamemode == GameMode.Classic)) { Output("You must finish your attack before saving."); }
-            else
-            {
-                try
-                {
-                    CancelUnconfirmedActions();
-                    GameManager.SaveGame(game);
-                    Output("Game saved successfully");
-                }
-                catch { Output("An error has occurred. The game may not have saved, please try again."); };
-            }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Win();
-        }
-
-
-        // die rolling
-
-        private void DieRollComplete(object sender, RunWorkerCompletedEventArgs e) { Rolled += 1; }
-
+        #endregion
+        #region Dice Methods, Events and Properties
+        PlayerDice playerdie1;
+        PlayerDice playerdie2;
+        PlayerDice playerdie3;
+        EnemyDice enemydie1;
+        EnemyDice enemydie2;
         private int rolled;
         public int Rolled
         {
@@ -1766,19 +1998,20 @@ namespace RiskGame
             set
             {
                 rolled = value;
-                if(rolled == toRoll)
+                if (rolled == toRoll)
                 {
                     AllRollsCompleted();
                 }
             }
         }
-
         private int toRoll;
         public int ToRoll
         {
             get { return toRoll; }
             set { toRoll = value; }
         }
+        List<Dice> dices = new List<Dice>();
+        private void DieRollComplete(object sender, RunWorkerCompletedEventArgs e) { Rolled += 1; }
         private void AllRollsCompleted()
         {
             int playerHighestRoll = playerdie1.current;
@@ -1871,10 +2104,11 @@ namespace RiskGame
             if(enemy >= player) { return false; }
             else { return true; }
         }
-
-        private void Quit(object sender, RoutedEventArgs e)
+        #endregion
+        // testing method
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            Win();
         }
     }
 }

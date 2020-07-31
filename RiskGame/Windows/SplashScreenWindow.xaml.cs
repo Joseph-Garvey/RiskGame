@@ -19,11 +19,16 @@ namespace RiskGame.Windows
     /// </summary>
     public partial class SplashScreenWindow : Window
     {
+        /// <summary>
+        /// Default constructor.
+        /// </summary>
         public SplashScreenWindow()
         {
             InitializeComponent();
         }
-
+        /// <summary>
+        /// Accessor for progress bar value.
+        /// </summary>
         public Double Progress
         {
             get { return progressBar.Value; }
