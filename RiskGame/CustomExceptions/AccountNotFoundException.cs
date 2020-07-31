@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace RiskGame.CustomExceptions
 {
+    /// <summary>
+    /// This class is used when an account cannot be found in the user-saves file.
+    /// </summary>
     [Serializable]
     internal class AccountNotFoundException : Exception
     {
         /// <summary>
-        /// This class is used when an account cannot be found in the usersaves file.
-        /// It passes a default message to the base exception class on instantiation.
+        /// Default constructor passes "Account not found" message to base class.
         /// </summary>
         public AccountNotFoundException() : base("Account not found.")
         {

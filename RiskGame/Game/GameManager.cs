@@ -12,28 +12,77 @@ using RiskGame.Game.Locations;
 
 namespace RiskGame.Game
 {
+    /// <summary>
+    /// Class that contains all game properties and objects.
+    /// Also contains additional methods for file management.
+    /// </summary>
     [Serializable]
     public class GameManager
     {
+        #region Variables and Properties
+        /// <summary>
+        /// File-path for saved games.
+        /// </summary>
         private static readonly String FileName = "GameSaves.bin";
+        /// <summary>
+        /// Players in game.
+        /// </summary>
         public List<Player> players = new List<Player>();
+        /// <summary>
+        /// List of territories in map.
+        /// </summary>
         public List<Territory> territories;
+        /// <summary>
+        /// List of regions in map.
+        /// </summary>
         public List<Continent> continents;
+        /// <summary>
+        /// Currently selected territory.
+        /// </summary>
         public Territory slctTerritory;
+        /// <summary>
+        /// Second selected territory.
+        /// </summary>
         public Territory nextTerritory;
         public Player currentplayer;
+        /// <summary>
+        /// Number of completed turns in game.
+        /// </summary>
         public int turn;
+        /// <summary>
+        /// Maximum time allowed for a turn.
+        /// </summary>
         public int time;
-        public double defenderbias; // def 0.5 range 0 to 1
+        /// <summary>
+        /// New Risk bias towards defending players.
+        /// </summary>
+        /// <remarks>Default 0.5, range 0 to 1</remarks>
+        public double defenderbias;
         public DateTime lastsave;
         public GameState gameState;
         public GameMode gamemode;
         public GameMap map;
-
+        /// <summary>
+        /// Unique identifier for each saved game object.
+        /// </summary>
         private int gameID;
+        /// <summary>
+        /// Read-only accessor for gameID.
+        /// </summary>
         public int GameID { get => gameID;}
+        #endregion
 
-        // Constructor method for setting gameID
+        #region Constructor and related method(s).
+        /// <summary>
+        /// Default constructor, sets gameID.
+        /// </summary>
+        public GameManager()
+        {
+            SetGameID();
+        }
+        /// <summary>
+        /// Sets unique gameID
+        /// </summary>
         private void SetGameID()
         {
             /// Check what gameIDs currently exist and assign a unique ID
@@ -57,14 +106,13 @@ namespace RiskGame.Game
             }
             else { this.gameID = 0; }
         }
+        #endregion
 
-        // Constructor ///
-        public GameManager()
-        {
-            SetGameID();
-        }
-
-
+        #region File Management
+        /// <summary>
+        /// Finds game on file matching gameID and removes the game from the file.
+        /// </summary>
+        /// <param name="_gameID">Game ID to be deleted.</param>
         public static void DeleteGame(int _gameID)
         {
             ClearEmptyFile();
@@ -82,11 +130,12 @@ namespace RiskGame.Game
                         read = (GameManager)bf.Deserialize(sr);
                         if (read.GameID != _gameID)
                         {
-                            gm.Add(read);
+                            gm.Add(read); // if game is not that to be deleted, add it to list.
                         }
                     }
                 }
-                File.Delete(FileName);
+                File.Delete(FileName); // delete file.
+                // Rewrite file without the deleted game.
                 using (Stream sr = new FileStream(FileName,FileMode.Create))
                 {
                     foreach (GameManager g in gm)
@@ -96,6 +145,10 @@ namespace RiskGame.Game
                 }
             }
         }
+        /// <summary>
+        /// Saves game to file.
+        /// </summary>
+        /// <param name="newGame">Game object to be saved.</param>
         public static void SaveGame(GameManager newGame)
         {
             /// Saves games to binary file via serialisation.
@@ -132,6 +185,10 @@ namespace RiskGame.Game
                 bf.Serialize(sr, newGame);
             }
         }
+        /// <summary>
+        /// Loads game object from file.
+        /// </summary>
+        /// <param name="_GameID">ID of game to be loaded.</param>
         public static GameManager LoadGame(int _GameID)
         {
             // Loads game objects from the file.
@@ -154,24 +211,30 @@ namespace RiskGame.Game
             }
             else { throw new GameNotFoundException(); } // If the file does not exist you cannot load a game.
         }
-        public static ObservableCollection<GameDetails> RetrieveGames(List<Human> loggedinplayers) // Return actual game perhaps? // Can be made more efficient and combined with LoadGame once I learn more about DataBinding to objects.
+        /// <summary>
+        /// Returns list of saved games owned by logged in players.
+        /// </summary>
+        /// <param name="loggedinplayers">Currently logged in players.</param>
+        /// <returns>List of saved games.</returns>
+        /// <remarks>// Return actual game perhaps? Can be made more efficient and combined with LoadGame once I learn more about DataBinding to objects.</remarks>
+        public static ObservableCollection<GameDetails> RetrieveGames(List<Human> loggedinplayers)
         {
             /// Retrieve the list of games for the data grid on GameSetup.
             ObservableCollection<GameDetails> games = new ObservableCollection<GameDetails>();
             if (File.Exists(FileName))
             {
-                using (Stream sr = new FileStream(FileName, FileMode.Open))
+                using (Stream sr = new FileStream(FileName, FileMode.Open)) // Open file
                 {
                     BinaryFormatter bf = new BinaryFormatter();
-                    while (sr.Position < sr.Length)
+                    while (sr.Position < sr.Length) // While not at end of file
                     {
-                        GameManager tmp = ((GameManager)bf.Deserialize(sr));
+                        GameManager tmp = ((GameManager)bf.Deserialize(sr)); // De-serialize next object
                         bool containsplayer = false;
-                        foreach (Human h in loggedinplayers)
+                        foreach (Human h in loggedinplayers) // if a logged in player owns the game
                         {
                             if (h.Username == tmp.players[0].Username) { containsplayer = true; break; }
                         }
-                        if (containsplayer)
+                        if (containsplayer) // add game to list
                         {
                             GameDetails game = new GameDetails(tmp.lastsave.ToString("g"), tmp.players[0].Username, tmp.map.ToString(), tmp.gamemode.ToString(), tmp.GameID.ToString());
                             games.Add(game);
@@ -181,7 +244,9 @@ namespace RiskGame.Game
             }
             return games;
         }
-        // If an empty file exists delete it so as to avoid serialization errors later on.
+        /// <summary>
+        /// Deletes empty game save files to avoid errors when de-serializing.
+        /// </summary>
         public static void ClearEmptyFile()
         {
             if (File.Exists(FileName))
@@ -198,5 +263,6 @@ namespace RiskGame.Game
                 }
             }
         }
+        #endregion
     }
 }

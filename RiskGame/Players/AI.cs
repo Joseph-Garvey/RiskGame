@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RiskGame.enemyAI
 {
+    /// <summary>
+    /// Base AI class type.
+    /// </summary>
     [Serializable]
     public abstract class AI : Player
     {

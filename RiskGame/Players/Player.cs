@@ -11,13 +11,13 @@ using System.ComponentModel;
 
 namespace RiskGame
 {
+    /// <summary>
+    /// The basic player class which acts as a template for human and AI players.
+    /// Used for polymorphism.
+    /// </summary>
     [Serializable]
     public abstract class Player : INotifyPropertyChanged
     {
-        /// <summary>
-        /// The basic player class which contains the basic variables for human and ai players.
-        /// Used for polymorphism ///
-        /// </summary>
         // Constructors //
         public Player(string username)
         {
@@ -25,10 +25,20 @@ namespace RiskGame
             army_strength = 0;
             Territoriesowned = 0;
         }
-        // Variables //
+
+        #region Variables
         public String Username { get; set; }
+        /// <summary>
+        /// Number of armies not yet deployed.
+        /// </summary>
         public int army_undeployed;
+        /// <summary>
+        /// Number of territories owned by player.
+        /// </summary>
         private int territoriesowned;
+        /// <summary>
+        /// Accessor for territoriesowned. Notifies UI when value changed, used for data-binding.
+        /// </summary>
         public int Territoriesowned
         {
             get { return this.territoriesowned; }
@@ -41,7 +51,13 @@ namespace RiskGame
                 }
             }
         }
+        /// <summary>
+        /// Stores number of armies deployed by player.
+        /// </summary>
         private int army_strength;
+        /// <summary>
+        /// Accessor for territoriesowned. Notifies UI when value changed, used for data-binding.
+        /// </summary>
         public int Army_strength
         {
             get { return this.army_strength; }
@@ -55,11 +71,26 @@ namespace RiskGame
             }
         }
         public int score = 0;
+        /// <summary>
+        /// Red value of player colour.
+        /// </summary>
         private byte r;
+        /// <summary>
+        /// Green value of player colour.
+        /// </summary>
         private byte g;
+        /// <summary>
+        /// Blue value of player colour.
+        /// </summary>
         private byte b;
+        /// <summary>
+        /// Player's selected colour.
+        /// </summary>
         [NonSerialized]
         private SolidColorBrush color;
+        /// <summary>
+        /// Accessor for color. Sets value and splits colour into its RGB values, setting r, g and b values if class.
+        /// </summary>
         public SolidColorBrush Color
         {
             get => color;
@@ -74,16 +105,26 @@ namespace RiskGame
                 }
                 else
                 {
+                    // split colour into its component values.
                     r = color.Color.R;
                     g = color.Color.G;
                     b = color.Color.B;
                 }
             }
         }
+        /// <summary>
+        /// UI element displaying the player's army strength.
+        /// </summary>
         [NonSerialized]
         private Label disp_ArmyStrength;
+        /// <summary>
+        /// UI element displaying the player's number of owned territories.
+        /// </summary>
         [NonSerialized]
         private Label disp_Owned;
+        /// <summary>
+        /// Accessor for disp_ArmyStrength, binds the label content to the player's property.
+        /// </summary>
         public Label Disp_ArmyStrength
         {
             get => disp_ArmyStrength;
@@ -93,6 +134,9 @@ namespace RiskGame
                 BindLabel(ref disp_ArmyStrength, "Army_strength");
             }
         }
+        /// <summary>
+        /// Accessor for disp_Owned, binds the label content to the player's property.
+        /// </summary>
         public Label Disp_Owned
         {
             get => disp_Owned;
@@ -102,8 +146,12 @@ namespace RiskGame
                 BindLabel(ref disp_Owned, "Territoriesowned");
             }
         }
+        #endregion
 
         // Methods //
+        /// <summary>
+        /// Reconstructs the solid color brush from the saved R,G,B values.
+        /// </summary>
         public void RetrieveColor()
         {
             Color = new SolidColorBrush(System.Windows.Media.Color.FromRgb(r, g, b));
@@ -112,6 +160,10 @@ namespace RiskGame
         // Binding //
         [field: NonSerializedAttribute()]
         public event PropertyChangedEventHandler PropertyChanged;
+        /// <summary>
+        /// Notifies UI that property has changed.
+        /// </summary>
+        /// <param name="propName"></param>
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
@@ -119,6 +171,11 @@ namespace RiskGame
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
             }
         }
+        /// <summary>
+        /// Binds label to supplied property.
+        /// </summary>
+        /// <param name="label"></param>
+        /// <param name="bindingsource"></param>
         private void BindLabel(ref Label label, string bindingsource)
         {
             Binding b = new Binding(bindingsource);

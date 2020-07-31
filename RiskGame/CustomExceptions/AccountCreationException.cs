@@ -6,14 +6,13 @@ using System.Threading.Tasks;
 
 namespace RiskGame.CustomExceptions
 {
+    /// <summary>
+    /// This class is used when validating an account to ensure that each account meets the basic security requirements.
+    /// It outputs a message telling the user what they requirements they failed to meet.
+    /// </summary>
     [Serializable]
     internal class AccountCreationException : Exception
     {
-        /// <summary>
-        /// This class is used when validating an account to ensure that each account meets the basic security requirements.
-        /// It outputs a message telling the user what they requirements they failed to meet.
-        /// </summary>
-
         // Static Variables //
         // Each of these strings contains the output text for each failed test //
         private static readonly String invalidUserLength = "Usernames must be between 3 and 10 characters.";
@@ -25,8 +24,10 @@ namespace RiskGame.CustomExceptions
         private static readonly String invalidSymbol = "Refer to the tutorial window for the list of allowed symbols.";
         public String error = ""; // This string holds the final error output.
 
-        // Constructor
-        // The constructor takes in a boolean indicating whether the user passed or failed a given test and appends the respective error message to the error output.
+        // Constructor //
+        /// <summary>
+        /// The constructor takes in a boolean indicating whether the user passed or failed a given test and appends the respective error message to the error output.
+        /// </summary>
         public AccountCreationException(bool validlength, bool validcharuser, bool validuserexists, bool validpasslength, bool validpasschar, bool validpasssecurity)
         {
             if (!validlength) { error += invalidUserLength; }

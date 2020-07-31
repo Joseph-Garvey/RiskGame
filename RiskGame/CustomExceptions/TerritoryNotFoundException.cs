@@ -9,7 +9,9 @@ namespace RiskGame.CustomExceptions
     [Serializable]
     internal class TerritoryNotFoundException : Exception
     {
-        // Custom exception thrown when the game cannot find the requested territory in the list of territories.
+        /// <summary>
+        /// Custom exception thrown when the game cannot find the requested territory in the list of territories.
+        /// </summary>
         public TerritoryNotFoundException()
         {
         }

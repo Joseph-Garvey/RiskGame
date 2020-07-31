@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RiskGame.Game
 {
+    /// <summary>
+    /// Current phase of game.
+    /// </summary>
     [Serializable]
     public enum GameState
     {
@@ -16,12 +19,18 @@ namespace RiskGame.Game
         PlacingArmy,
         InitialArmyPlace
     }
+    /// <summary>
+    /// Selected game-mode.
+    /// </summary>
     [Serializable]
     public enum GameMode
     {
         NewRisk,
         Classic
     }
+    /// <summary>
+    /// Current game map.
+    /// </summary>
     [Serializable]
     public enum GameMap
     {

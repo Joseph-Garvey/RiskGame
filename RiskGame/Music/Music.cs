@@ -6,8 +6,14 @@ using System.Threading.Tasks;
 
 namespace RiskGame
 {
+    /// <summary>
+    /// Class that manages music sources within the application.
+    /// </summary>
     internal static class Music
     {
+        /// <summary>
+        /// File-paths of game's music tracks.
+        /// </summary>
         public static List<Uri> sources = new List<Uri>
         {
             new Uri("pack://siteoforigin:,,,/Music/FallenSoldier.mp3"),
@@ -18,7 +24,14 @@ namespace RiskGame
             new Uri("pack://siteoforigin:,,,/Music/1812Overture.mp3"),
             new Uri("pack://siteoforigin:,,,/Music/TheRising.mp3"),
         };
+        /// <summary>
+        /// Index of current track in list of sources.
+        /// </summary>
         private static int musicIndex;
+        /// <summary>
+        /// Accessor for music index property.
+        /// Limits music index within the range of indexes of the sources list.
+        /// </summary>
         public static int MusicIndex
         {
             get { return musicIndex; }

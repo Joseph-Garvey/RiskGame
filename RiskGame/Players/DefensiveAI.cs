@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RiskGame.enemyAI
 {
+    /// <summary>
+    /// AI Class type that prefers to fortify its own borders before attacking.
+    /// </summary>
     [Serializable]
     public class DefensiveAI : AI
     {

@@ -11,12 +11,12 @@ using System.Collections.ObjectModel;
 
 namespace RiskGame.Game
 {
+    /// <summary>
+    /// GameDetails class is used to display Highscores and details of games on Datagrids.
+    /// </summary>
     [Serializable]
     public class GameDetails :IComparable<GameDetails>
     {
-        /// <summary>
-        /// GameDetails class is used to display Highscores and details of games on Datagrids.
-        /// </summary>
         #region Variables
         private static readonly String FileName = "Leaderboard.bin"; // Location of highscores records.
         private readonly String gameID; // Stores the unique identifier for the game
@@ -30,7 +30,12 @@ namespace RiskGame.Game
         #endregion
 
         #region Constructors
-        // Used to store highscores records, takes in necessary details for displaying the highscore record.
+        /// <summary>
+        /// Used to store highscores records, takes in necessary details for displaying the highscore record.
+        /// </summary>
+        /// <param name="player">Player who won game</param>
+        /// <param name="score">Winning player's score</param>
+        /// <param name="turns">Number of turns taken to win</param>
         public GameDetails(string lastsave, string player, string noPlayers, string score, string turns, string map, string gamemode)
         {
             this.lastsave = lastsave ?? throw new ArgumentNullException(nameof(lastsave));
@@ -41,7 +46,10 @@ namespace RiskGame.Game
             this.map = map ?? throw new ArgumentNullException(nameof(map));
             this.gamemode = gamemode ?? throw new ArgumentNullException(nameof(gamemode));
         }
-        // Used to display the details of a game for loading
+        /// <summary>
+        ///Used to display the details of a game for loading
+        /// </summary>
+        /// <param name="player">Owner of game-save</param>
         public GameDetails(string lastsave, string player, string map, string gamemode, string gameID)
         {
             this.lastsave = lastsave ?? throw new ArgumentNullException(nameof(lastsave));
@@ -53,6 +61,10 @@ namespace RiskGame.Game
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Saves high-score records to binary file via serialisation.
+        /// </summary>
+        /// <param name="gameDetails">Record of highscore</param>
         public static void Save(GameDetails gameDetails)
         {
             /// Saves highscore records to binary file via serialisation.
@@ -65,9 +77,12 @@ namespace RiskGame.Game
                 bf.Serialize(sr, gameDetails); // Serialise the object to the file.
             }
         }
+        /// <summary>
+        /// Retrieves the details of every high-score.
+        /// </summary>
+        /// <returns></returns>
         public static ObservableCollection<GameDetails> RetrieveGames()
         {
-            // Retrieves the details of every highscore
             List < GameDetails > games = new List<GameDetails>();
             if (File.Exists(FileName)) // If the file exists
             {
@@ -85,10 +100,13 @@ namespace RiskGame.Game
             ObservableCollection<GameDetails> gamessorted = new ObservableCollection<GameDetails>(games); // Convert it to a bind-able list.
             return gamessorted;
         }
+        /// <summary>
+        /// Default comparer for the GameDetails class,
+        /// used to sort records by the highest score.
+        /// </summary>
+        /// <param name="other">Object to compare</param>
         public int CompareTo(GameDetails other)
         {
-          // Default comparer for the GameDetails class
-            // Used to sort records by the highest score
             return int.Parse(other.score).CompareTo(int.Parse(this.score)) ;
         }
         #endregion

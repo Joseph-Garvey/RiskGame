@@ -12,12 +12,12 @@ using System.Windows.Media.Imaging;
 
 namespace RiskGame.Game
 {
+    /// <summary>
+    /// Base class for all dice in game.
+    /// Contains multithreading code for animating dice and generating the random number.
+    /// </summary>
     public abstract class Dice
     {
-        /// <summary>
-        /// Base class for all dice in game.
-        /// Contains multithreading code for animating dice and generating the random number.
-        /// </summary>
         #region Variables and Properties
         public BackgroundWorker workerthread = new BackgroundWorker() // The thread that generates random numbers and animates the die image.
         {
