@@ -295,7 +295,9 @@
                                     <Button Click="Quit">Quit</Button>
                                 </StackPanel>
                             </Border>
-                            <TextBlock x:Name="txtOutput" Margin="20,11,10,10" HorizontalAlignment="Right" Width="350" Foreground="White" Background="Black" TextWrapping="Wrap"/>
+                            <ScrollViewer x:Name="scrlOutput" Margin="20,11,10,10" Background="Black">
+                                <TextBlock x:Name="txtOutput" Margin="5" HorizontalAlignment="Right" Width="330" Foreground="White" TextWrapping="Wrap"/>
+                            </ScrollViewer>
                             <!-- Output Console -->
                         </StackPanel>
                     </Border>

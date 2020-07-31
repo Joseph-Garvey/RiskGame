@@ -237,10 +237,11 @@ namespace RiskGame
             // Set properties
             Time = timerduration * 100;
             Players = _players;
-            SetupWindow(); // Setup the window
-            Turn = 0;
+            Gamemode = mode;
             DefenseBias = defensebias;
             Map = _map;
+            SetupWindow(); // Setup the window
+            Turn = 0;
             try
             {
                 MapSetup(false); // Setup map with new territory and continent objects. If not default map, setup UI.
@@ -250,7 +251,6 @@ namespace RiskGame
                 this.Close();
                 return;
             }
-            Gamemode = mode;
             if (Time > 0)
             {
                 TimerSetup(); // If timer enabled setup the timer.
@@ -258,6 +258,7 @@ namespace RiskGame
             SetupGame(randomise_initial); // Setup the initial game board.
         }
         #endregion
+
         #region Setup Methods
         /// <summary>
         /// Contains code shared between constructors.
@@ -851,6 +852,7 @@ namespace RiskGame
             brd_Player6.Margin = gap;
         }
         #endregion
+
         #region Game Methods
         /// <summary>
         /// Sets current player to next player in list and updates UI
@@ -995,6 +997,7 @@ namespace RiskGame
             finish.Show();
         }
         #endregion
+
         #region UI Update Methods
         /// <summary>
         /// Instantiates UI when game is loaded.
@@ -1194,6 +1197,7 @@ namespace RiskGame
             ClearSelections(); // clear player's selections
         }
         #endregion
+
         #region Back-end Methods
         /// <summary>
         /// Retrieves the territory from the list matching the territory name.
@@ -1258,22 +1262,9 @@ namespace RiskGame
         /// <param name="s">Output message</param>
         private void Output(String s)
         {
-            if ((txtOutput.Text == "") || (txtOutput.Text == null)) { txtOutput.Text = s; } // if output is empty set text to s
-            else
-            {
-                String[] tmp = txtOutput.Text.Split('\n'); // split the text output by line into an array
-                if (tmp.Length >= 6) // if longer than max lines in output
-                {
-                    tmp[0] = tmp[1]; // move each line up one line in the array
-                    for (int i = 1; i < (tmp.Length - 1); i++)
-                    {
-                        tmp[i] = "\n" + tmp[i + 1];
-                    }
-                    tmp[5] = ("\n" + s); // add string to final line
-                    txtOutput.Text = tmp[0] + tmp[1] + tmp[2] + tmp[3] + tmp[4] + tmp[5]; // set output
-                }
-                else { txtOutput.Text += String.Format("\n{0}", s); } // if lines remaining append as new line
-            }
+            if (txtOutput.Text == null || txtOutput.Text == "") { txtOutput.Text = s; }
+            else { txtOutput.Text += ("\n" + s); }
+            scrlOutput.ScrollToEnd();
         }
         /// <summary>
         /// Clears the selected Territories.
@@ -1482,6 +1473,7 @@ namespace RiskGame
             return false;
         }
         #endregion
+
         #region Timer Control Methods and Events
         /// <summary>
         /// Starts turn timer
@@ -1535,6 +1527,7 @@ namespace RiskGame
             }
         }
         #endregion
+
         #region Button Click Events
         /// <summary>
         /// Territory left click event. Performs contextual action.
@@ -1897,6 +1890,7 @@ namespace RiskGame
             this.Close();
         }
         #endregion
+
         #region Player Actions
         private void Place_Reinforce(Territory T, int num)
         {
@@ -1985,6 +1979,7 @@ namespace RiskGame
             else { Output("Please select a territory."); }
         }
         #endregion
+
         #region Dice Methods, Events and Properties
         PlayerDice playerdie1;
         PlayerDice playerdie2;
