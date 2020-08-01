@@ -160,6 +160,11 @@ namespace RiskGame
                 cmbPlayer6.Visibility = Visibility.Collapsed;
                 btnAddPlayer.IsEnabled = false;
             }
+            if (fullscreen)
+            {
+                ((App)Application.Current).ChangeWindowState(this);
+                ((App)Application.Current).Window_StateChanged(this);
+            }
         }
         #endregion
 
