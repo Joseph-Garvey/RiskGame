@@ -141,23 +141,23 @@ namespace RiskGame
             try
             {
                 lblError.Visibility = Visibility.Collapsed; // Hide previous error
-                // DEV OPTIONS // to be removed before publish // used for quick testing
-                if(sender is Button)
-                {
-                    if ((String)((Button)sender).Content == "Admin")
-                    {
-                        txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
-                        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                        players.Add(player);
-                        txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
-                        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                        players.Add(player);
-                        txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
-                        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
-                        players.Add(player);
-                        txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
-                    }
-                }
+                //// DEV OPTIONS // to be removed before publish // used for quick testing
+                //if(sender is Button)
+                //{
+                //    if ((String)((Button)sender).Content == "Admin")
+                //    {
+                //        txtLogName.Text = "Example"; txtLogPass.Password = "P@ssword123";
+                //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                //        players.Add(player);
+                //        txtLogName.Text = "SeanF"; txtLogPass.Password = "P@ssword1";
+                //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                //        players.Add(player);
+                //        txtLogName.Text = "HarveyD"; txtLogPass.Password = "Belf@st1";
+                //        player = Human.SignIn(txtLogName.Text, txtLogPass.Password);
+                //        players.Add(player);
+                //        txtLogName.Text = "BrandesTom"; txtLogPass.Password = "Cork1234%";
+                //    }
+                //}
                 // Signs player in when Login button is clicked //
                 // Checks entered details against those on file, retrieves the player's details, returning a player object.
                 player = Human.SignIn(txtLogName.Text, txtLogPass.Password);

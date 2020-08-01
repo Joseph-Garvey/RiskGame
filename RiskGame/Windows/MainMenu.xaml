@@ -82,7 +82,7 @@
                                             <CheckBox x:Name="chkLogPass" Click="ShowHidePassword" Style="{StaticResource chkShowHide}"></CheckBox>
                                         </Button>
                                     </StackPanel>
-                                    <Button Style="{StaticResource btnUI}" Click="Login" TabIndex="6">Admin</Button>
+                                    <Button Style="{StaticResource btnUI}" Click="Login" TabIndex="6">Login</Button>
                                 </StackPanel>
                             </Border>
                             <Grid>
